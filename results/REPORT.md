@@ -875,9 +875,13 @@ k=8 的全集不变，所以此前按 k=8 采过的运行不受影响。
 - ✅ `runs/rollout_v2/examples.jsonl` — 128 题的入选队列
 - ✅ `runs/rollout_v2/rollouts.jsonl` — 780 题 × k=4 的 rollout 与 oracle 标签
 - ✅ `runs/rollout_v2/screening_summary.json` — 上表的全部数字
-- ✅ `rubrics_shipped` 128/128（免费）、`rubrics_baseline` 67/128
-- ❌ `agentic` / `agentic-goldonly` / `agentic-negonly` 各 62/128（只有导入的那批）
+- ✅ `rubrics_shipped` **128/128**（免费）、`rubrics_baseline` **128/128**（端点断掉前刚好跑完）
+- ❌ `agentic` / `agentic-goldonly` / `agentic-negonly` 各 **62/128**（只有从 pilot 导入的那批）
 - ❌ k=4 → k=8 加采、逐 rollout 判定、主表——**全部未开始**
+
+零错误、零空 rubric；平均条目数 shipped 8.6 / baseline 9.5 / agentic 10.1 /
+goldonly 10.5 / negonly 12.7，与 pilot 的分布一致，说明中断没有污染已产出的部分。
+**缺的是三个 agentic 变体各 66 题，以及全部判定。**
 
 **恢复方法**：端点恢复后跑 `bash scripts/run_rollout_v2.sh`。
 所有阶段按 uid 断点续跑，所有已完成的调用命中 `runs/cache/`，
