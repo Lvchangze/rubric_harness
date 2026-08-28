@@ -82,12 +82,18 @@ CHECKPOINT_EVERY = 20
 #: reasoning trace without ever emitting a reply, which costs several retries at
 #: escalating token budgets and yields nothing — the failure is a stall, not a
 #: worse answer, so it buys no quality spread.
+#: Order matters. ``_draw_plan(k)`` takes the first ``k``, and screening runs at
+#: k=4 to decide which questions are worth generating rubrics for. A prefix of
+#: three careful settings would call a question "the policy always gets this
+#: right" mostly because the screen never tried a weak setting, so the first four
+#: are deliberately balanced 2 careful / 2 degraded. The full k=8 set is
+#: unchanged, so runs drawn at k=8 before this reordering are unaffected.
 ROLLOUT_SETTINGS: list[dict[str, Any]] = [
     {"name": "careful_t02", "reasoning_effort": "high", "temperature": 0.2},
-    {"name": "careful_t07", "reasoning_effort": "high", "temperature": 0.7},
-    {"name": "careful_t10", "reasoning_effort": "high", "temperature": 1.0},
     {"name": "terse_t07", "reasoning_effort": "high", "temperature": 0.7, "style": "terse"},
     {"name": "rushed_t09", "reasoning_effort": "high", "temperature": 0.9, "style": "rushed"},
+    {"name": "careful_t07", "reasoning_effort": "high", "temperature": 0.7},
+    {"name": "careful_t10", "reasoning_effort": "high", "temperature": 1.0},
     {"name": "terse_t10", "reasoning_effort": "high", "temperature": 1.0, "style": "terse"},
     {"name": "rushed_t05", "reasoning_effort": "high", "temperature": 0.5, "style": "rushed"},
     {"name": "careful_t05", "reasoning_effort": "high", "temperature": 0.5},
