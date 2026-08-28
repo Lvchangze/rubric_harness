@@ -307,12 +307,19 @@ agentic 的那些改进没有落到"挑出对的那一个"这件事上。
 并检查分数分布是否触顶（`headroom`、`saturation`）：
 AUC 只看排序，best-of-n 受并列和触顶影响，两者背离通常意味着分数被压在天花板附近。
 
-### 无论哪种情形都要做的三件事
+### 无论哪种情形都要做的四件事
 
-1. **全部分域报。** 本项目最初把一个纯 science 效应写成了普遍结论，
+1. **先确认 n 真的是 128。** 生成阶段哪怕少几题，配对队列就会缩小，
+   而表格**不会因此报错**——它只会算出一组"看起来正常但总体不同"的数字。
+   `run_rollout_v2.sh` 第 3 步会打印 `cohort drift: ...`（只打日志、不中断，
+   这样端点再抖一次不至于让整条流水线白跑），
+   所以**跑完请 grep 一遍 `logs/` 里的 `cohort drift`**，
+   并核对主表 `n` 列。`adaptivity/orphan_subpart_rate` 与
+   `coverage/subquestion_coverage` 按构造就只在少数题上有定义，已豁免，不用管。
+2. **全部分域报。** 本项目最初把一个纯 science 效应写成了普遍结论，
    而分域数据一直就在产物里。`aggregate_results.py` 与 `rollout_report.py` 现在默认分域。
-2. **FDR 族在代码里固定**（`rollout_report.py::FDR_FAMILY`），不要临时改族大小再报 q 值。
-3. **标注 n < 30 的行不可用于下结论**（表格里会自动打 ⚠）。
+3. **FDR 族在代码里固定**（`rollout_report.py::FDR_FAMILY`），不要临时改族大小再报 q 值。
+4. **标注 n < 30 的行不可用于下结论**（表格里会自动打 ⚠）。
 
 ---
 
@@ -431,6 +438,9 @@ AUC 只看排序，best-of-n 受并列和触顶影响，两者背离通常意味
 
 - **shell 曾被并发执行 3 次**，3 个 `gen_rubrics` 同时写同一个 jsonl（文件涨到 598 行）。
   所有长任务都用 `mkdir` 原子锁保护（见 `run_rollout_v2.sh`）。
+  锁是目录，进程被 `kill -9` 后不会自动清理——**手动 `rmdir .lock_rollout_v2`**。
+- **不要在 `run_rollout_v2.sh` 跑的时候编辑它。** bash 是按字节偏移边读边执行的，
+  改动运行中的脚本会让它在下一个阶段跳到错误的位置。要改就先等它结束或停掉它。
 - **`reasoning_effort` 在这个端点上基本无效**，medium/low 反而**更慢**
   （245s / 316s vs high 的 34s）且大量空回复。质量梯度靠 prompt 制造。
 - **温度 > 1.0 会让模型在推理里空转**不出结果，是 stall 不是"更差的答案"。

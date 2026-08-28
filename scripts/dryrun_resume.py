@@ -198,7 +198,13 @@ def check_stage_coverage() -> None:
 
 
 def check_generation_resume() -> None:
-    """Generation must skip the 62 questions that already have rubrics."""
+    """Generation must skip questions that already have rubrics.
+
+    This asserts the invariant, not a fixed count. The run resumed while this
+    script was being written, so a hard-coded "62 done" would go red purely
+    because the experiment made progress, and a check that fails on success is
+    worse than no check at all.
+    """
     print("\n== generation resumes rather than regenerates ==")
     from harness.tracing import RunDir
 
@@ -208,12 +214,17 @@ def check_generation_resume() -> None:
         for line in (RUN / "examples.jsonl").read_text(encoding="utf-8").splitlines()
         if line.strip()
     }
-    for source, expect_done in [("shipped", 128), ("baseline", 128), ("agentic", 62),
-                                ("agentic-goldonly", 62), ("agentic-negonly", 62)]:
-        done = run_dir.existing_uids(f"rubrics_{source}")
+    cutoff = json.loads(
+        (RUN / "cutoff_state.json").read_text(encoding="utf-8")
+    )["rubrics_at_cutoff"]
+
+    for source in ["shipped", "baseline", "agentic", "agentic-goldonly", "agentic-negonly"]:
+        done = run_dir.existing_uids(f"rubrics_{source}") & selected
         todo = selected - done
         check(f"{source}: {len(done)} done, {len(todo)} to do",
-              len(done & selected) == expect_done)
+              len(done) + len(todo) == len(selected)
+              and cutoff[source] <= len(done) <= len(selected),
+              f"cutoff was {cutoff[source]}, never regenerates or exceeds {len(selected)}")
 
 
 def main() -> int:

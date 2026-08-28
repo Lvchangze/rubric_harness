@@ -102,6 +102,14 @@ ARROW = {True: "↑", False: "↓", None: "·"}
 #: so the row is flagged in the rendered table rather than read at face value.
 MIN_TRUSTWORTHY_N = 30
 
+#: Metrics defined only on questions with a particular shape, so their paired
+#: cohort is legitimately smaller than the run's. They are exempt from the
+#: cohort assertion — see :func:`check_cohorts`.
+SPARSE_BY_CONSTRUCTION = frozenset({
+    "adaptivity/orphan_subpart_rate",
+    "coverage/subquestion_coverage",
+})
+
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -238,12 +246,20 @@ def check_cohorts(
     A silent change in cohort size is the failure mode that adding a source with
     a different question set produces, so it is raised as an error rather than
     left for a reader to notice in a footnote.
+
+    Metrics that are only defined on a subset of questions are exempt.
+    ``orphan_subpart_rate`` needs a question with multiple sub-parts and lands on
+    a handful; flagging it every single time would train the reader to ignore the
+    message, and an alarm that is always on is not an alarm. Those rows already
+    carry a ``⚠`` and are declared unusable for conclusions. Exempting them is
+    what lets the caller pass ``--strict`` and have a real drift abort the run.
     """
     problems: list[str] = []
     sizes = {r["metric"]: r.get("n_paired") for r in table}
     if expect is not None:
-        bad = {m: n for m, n in sizes.items() if n != expect}
-        for metric, n in sorted(bad.items()):
+        for metric, n in sorted(sizes.items()):
+            if n == expect or metric in SPARSE_BY_CONSTRUCTION:
+                continue
             problems.append(f"[{label}] {metric}: n_paired={n}, expected {expect}")
     return problems
 
