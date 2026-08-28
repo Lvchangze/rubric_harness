@@ -1,0 +1,75 @@
+=== results/ ===
+results/:
+total 38
+drwxr-xr-x  3 root root   5511856 Aug 28 08:33 .
+drwxr-xr-x 10 root root 462337373 Aug 28 00:52 ..
+-rw-r--r--  1 root root     36767 Aug 28 08:33 REPORT.md
+drwxr-xr-x  2 root root   5475271 Aug 28 08:36 pilot_v2
+
+results/pilot_v2/:
+total 5352
+drwxr-xr-x 2 root root 5475271 Aug 28 08:36 .
+drwxr-xr-x 3 root root 5511856 Aug 28 08:33 ..
+-rw-r--r-- 1 root root    4999 Aug 28 08:01 case_study_losses.md
+-rw-r--r-- 1 root root   10623 Aug 28 08:01 case_study_wins.md
+-rw-r--r-- 1 root root 1738280 Aug 28 07:59 cc_per_question_rows.csv
+-rw-r--r-- 1 root root   22250 Aug 28 07:59 cc_summary.csv
+-rw-r--r-- 1 root root   52662 Aug 28 07:59 cc_summary.json
+-rw-r--r-- 1 root root    8112 Aug 28 07:59 cc_summary_table.md
+-rw-r--r-- 1 root root      17 Aug 28 08:36 final_inventory.txt
+-rw-r--r-- 1 root root   20401 Aug 28 06:35 main_table.txt
+-rw-r--r-- 1 root root   12787 Aug 28 06:35 main_table_count_controlled.txt
+-rw-r--r-- 1 root root 3465808 Aug 28 07:59 per_question_rows.csv
+-rw-r--r-- 1 root root    4789 Aug 28 08:28 report_facts.txt
+-rw-r--r-- 1 root root     514 Aug 28 08:35 selftest.txt
+-rw-r--r-- 1 root root   35490 Aug 28 07:59 summary.csv
+-rw-r--r-- 1 root root   86678 Aug 28 07:59 summary.json
+-rw-r--r-- 1 root root   11878 Aug 28 07:59 summary_table.md
+
+=== runs/pilot_v2 (jsonl line counts) ===
+    1586 runs/pilot_v2/adaptivity_per_question.jsonl
+     199 runs/pilot_v2/claims.jsonl
+    1584 runs/pilot_v2/coverage_per_question.jsonl
+    1584 runs/pilot_v2/discriminative_questions.jsonl
+   10760 runs/pilot_v2/discriminative_responses.jsonl
+     200 runs/pilot_v2/examples.jsonl
+   21057 runs/pilot_v2/grounding_per_criterion.jsonl
+    2378 runs/pilot_v2/grounding_per_question.jsonl
+    1188 runs/pilot_v2/headtohead_per_pair.jsonl
+    7986 runs/pilot_v2/intrinsic_per_criterion.jsonl
+     792 runs/pilot_v2/intrinsic_per_question.jsonl
+   15233 runs/pilot_v2/lint_per_criterion.jsonl
+    1586 runs/pilot_v2/lint_per_question.jsonl
+     200 runs/pilot_v2/responses.jsonl
+     200 runs/pilot_v2/rubrics_agentic-noval.jsonl
+     200 runs/pilot_v2/rubrics_agentic.jsonl
+     200 runs/pilot_v2/rubrics_baseline.jsonl
+     200 runs/pilot_v2/rubrics_shipped.jsonl
+    7986 runs/pilot_v2/transfer_per_criterion.jsonl
+     792 runs/pilot_v2/transfer_per_question.jsonl
+   75911 total
+
+=== metric row counts by source ===
+adaptivity_per_question_rows.jsonl {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+cc_coverage_per_question_rows.jsonl {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+cc_discriminative_per_question_rows.jsonl {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+cc_discriminative_per_response_rows.jsonl {'agentic': 1345, 'agentic-noval': 1345, 'baseline': 1345, 'shipped': 1345}
+cc_grounding_per_criterion_rows.jsonl {'agentic': 1456, 'agentic-noval': 1456, 'baseline': 1456, 'shipped': 1456}
+cc_grounding_per_question_rows.jsonl {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+coverage_per_question_rows.jsonl   {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+discriminative_per_question_rows.jsonl {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+discriminative_per_response_rows.jsonl {'agentic': 1345, 'agentic-noval': 1345, 'baseline': 1345, 'shipped': 1345}
+grounding_per_criterion_rows.jsonl {'agentic': 1983, 'agentic-noval': 2453, 'baseline': 1854, 'shipped': 1696}
+grounding_per_question_rows.jsonl  {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+headtohead_per_pair_rows.jsonl     {'?': 1188}
+intrinsic_per_criterion_rows.jsonl {'agentic': 1983, 'agentic-noval': 2453, 'baseline': 1854, 'shipped': 1696}
+intrinsic_per_question_rows.jsonl  {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+lint_per_criterion_rows.jsonl      {'agentic': 1983, 'agentic-noval': 2453, 'baseline': 1854, 'shipped': 1696}
+lint_per_question_rows.jsonl       {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+transfer_per_criterion_rows.jsonl  {'agentic': 1983, 'agentic-noval': 2453, 'baseline': 1854, 'shipped': 1696}
+transfer_per_question_rows.jsonl   {'agentic': 198, 'agentic-noval': 198, 'baseline': 198, 'shipped': 198}
+
+=== REPORT.md / README.md size ===
+  546 results/REPORT.md
+  408 README.md
+  954 total

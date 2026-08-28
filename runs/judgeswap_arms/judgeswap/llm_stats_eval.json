@@ -1,0 +1,19 @@
+{
+  "calls": 1368,
+  "cache_hits": 0,
+  "api_calls": 1393,
+  "retries": 25,
+  "empty_responses": 25,
+  "failures": 0,
+  "json_parse_failures": 0,
+  "prompt_chars": 0,
+  "response_chars": 382555,
+  "reasoning_chars": 0,
+  "wall_seconds": 561847.9530208111,
+  "by_tag": {
+    "headtohead": 1368
+  },
+  "cache_hit_rate": 0.0,
+  "model": "api_azure_openai_gpt-5.1",
+  "concurrency": 64
+}

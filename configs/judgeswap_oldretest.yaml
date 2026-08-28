@@ -1,0 +1,75 @@
+# The incumbent judge, re-run on the swap's exact 114 questions.
+#
+# Two jobs, neither of which the pilot's artefacts can do:
+#
+# 1. Per-criterion verdicts. The pilot persisted only aggregated scores, so
+#    "do the two judges agree criterion by criterion, per rubric source" — the
+#    most direct read on judge/generator affinity — needs the incumbent's
+#    verdicts recorded. Enabled with HARNESS_LOG_VERDICTS=1.
+#
+# 2. A within-judge test-retest floor. Cross-judge agreement means nothing in
+#    isolation: if the incumbent only agrees with *itself* at 0.9 on a source,
+#    then 0.85 agreement with a different judge is not evidence of anything.
+#    This is a fresh sample from the same model under the same prompt, so
+#    comparing it against the pilot's own rows gives that floor per source.
+#
+# RETEST VARIANT: same judge model as configs/judgeswap_oldjudge.yaml, but
+# shuffle_seed 8 instead of 7, which draws an independent sample from the same
+# judge (a different criterion order changes the cache key and the presentation).
+# This is the same mechanism harness.eval.judge uses for self-agreement, and it
+# exists here only to establish the within-judge agreement floor that
+# cross-judge agreement must be read against. It is NOT part of the main
+# comparison, where shuffle_seed stays fixed at 7 for every arm.
+run_name: oldjudge_retest
+runs_dir: runs
+results_dir: results
+
+generators:
+  - shipped
+  - baseline
+  - agentic
+  - agentic-noval
+  - agentic-goldonly
+  - agentic-negonly
+
+llm:
+  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  concurrency: 64
+  reasoning_effort: high
+  max_tokens: 16384
+  max_attempts: 4
+  cache_dir: runs/judgeswap_cache
+  request_timeout_s: 1200
+
+sample:
+  domains: [rar_science, rar_medicine]
+  split: val
+  n_per_domain: 100
+  seed: 1234
+  deduplicate_questions: true
+
+eval:
+  judge_model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  judge_max_tokens: 12288
+  judge_reasoning_effort: high
+  shuffle_criteria: true
+  shuffle_seed: 8
+  response_variants:
+    - gold
+    - missing_step
+    - numeric_error
+    - right_method_wrong_answer
+    - verbose_empty
+    - terse_correct
+    - off_topic
+  aggregation: paper_explicit
+  report_all_aggregations: true
+  polarity_mode: detected
+  polarity_sensitivity_modes: [favourable, all_avoidance, all_failure]
+  comparator_sources: [shipped, baseline]
+  run_implicit_judge: true
+  count_controlled: false
+  metrics:
+    - discriminative
+  self_agreement_repeats: 2
+  bootstrap_iters: 10000

@@ -1,0 +1,491 @@
+====================================================================================================
+CROSS-JUDGE AGREEMENT BY RUBRIC SOURCE
+====================================================================================================
+
+old judge : hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+new judge : api_azure_openai_gpt-5.1
+cells     : identical (question, source, response) triples; n_questions=114
+
+If the agentic rubrics merely suit the incumbent judge's taste, the new judge
+should agree with it LESS on `agentic` than on the comparators. Equal agreement
+across sources is evidence against that story.
+
+====================================================================================================
+SCOPE: all
+====================================================================================================
+
+  cross-judge, pooled over cells
+    source                    n  pearson  spearman     |Δ|  signed Δ  mean_old  mean_new  pass_old  pass_new  min_crit_dis
+    shipped                 797    0.919     0.920   0.069    -0.004     0.446     0.442     0.449     0.448         0.073
+    baseline                796    0.953     0.952   0.049    -0.017     0.459     0.442     0.393     0.378         0.051
+    agentic-noval           798    0.923     0.922   0.066    -0.021     0.450     0.429     0.418     0.395         0.064
+    agentic                 798    0.942     0.943   0.060    -0.023     0.502     0.479     0.489     0.463         0.059
+    agentic-goldonly        796    0.944     0.945   0.063    -0.022     0.508     0.486     0.496     0.472         0.062
+    agentic-negonly         798    0.934     0.933   0.062    -0.021     0.455     0.433     0.423     0.400         0.058
+
+  within-judge retest (incumbent vs itself), pooled over cells — the floor the row above must be read against
+    source                    n  pearson  spearman     |Δ|  r_cross-r_retest  |Δ|cross-|Δ|retest
+    shipped                 798    0.941     0.939   0.054            -0.021              +0.015
+    baseline                798    0.977     0.976   0.027            -0.024              +0.022
+    agentic-noval           798    0.958     0.959   0.043            -0.036              +0.023
+    agentic                 798    0.967     0.968   0.038            -0.025              +0.022
+    agentic-goldonly        797    0.969     0.967   0.038            -0.025              +0.025
+    agentic-negonly         798    0.966     0.964   0.038            -0.033              +0.023
+
+  paired by question — cross_judge, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.069   0.004     +0.019         [0.010,0.029]    0.0001   0.0005***
+      baseline               0.049   0.003(reference)
+      agentic-noval          0.066   0.004     +0.017         [0.008,0.026]    0.0006   0.0015**
+      agentic                0.060   0.005     +0.011         [0.002,0.021]    0.0295   0.0295*
+      agentic-goldonly       0.063   0.005     +0.014         [0.003,0.025]    0.0121   0.0151*
+      agentic-negonly        0.062   0.004     +0.012         [0.003,0.022]    0.0121   0.0151*
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.004   0.005     +0.013         [0.000,0.026]    0.0470   0.2350
+      baseline              -0.017   0.004(reference)
+      agentic-noval         -0.021   0.004     -0.004        [-0.015,0.007]    0.4578   0.4886
+      agentic               -0.023   0.005     -0.006        [-0.018,0.006]    0.3240   0.4886
+      agentic-goldonly      -0.022   0.005     -0.005        [-0.017,0.006]    0.3678   0.4886
+      agentic-negonly       -0.021   0.005     -0.004        [-0.015,0.007]    0.4886   0.4886
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.900   0.008     -0.027       [-0.046,-0.009]    0.0052   0.0130*
+      baseline               0.927   0.007(reference)
+      agentic-noval          0.892   0.010     -0.035       [-0.053,-0.017]    0.0002   0.0010***
+      agentic                0.932   0.007     +0.004        [-0.012,0.021]    0.6096   0.6096
+      agentic-goldonly       0.935   0.007     +0.008        [-0.009,0.025]    0.3543   0.4676
+      agentic-negonly        0.920   0.007     -0.008        [-0.024,0.009]    0.3741   0.4676
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.073   0.004     +0.023         [0.013,0.033]    0.0001   0.0005***
+      baseline               0.051   0.003(reference)
+      agentic-noval          0.064   0.004     +0.013         [0.004,0.022]    0.0040   0.0100**
+      agentic                0.059   0.004     +0.008        [-0.001,0.017]    0.0859   0.1046
+      agentic-goldonly       0.062   0.005     +0.011         [0.001,0.022]    0.0415   0.0692
+      agentic-negonly        0.058   0.004     +0.007        [-0.001,0.016]    0.1046   0.1046
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.910   0.013     -0.038       [-0.067,-0.014]    0.0025   0.0062**
+      baseline               0.948   0.007(reference)
+      agentic-noval          0.902   0.013     -0.047       [-0.074,-0.022]    0.0003   0.0015**
+      agentic                0.951   0.006     +0.003        [-0.013,0.020]    0.7657   0.8137
+      agentic-goldonly       0.950   0.007     +0.002        [-0.015,0.019]    0.8137   0.8137
+      agentic-negonly        0.922   0.010     -0.027       [-0.049,-0.005]    0.0189   0.0315*
+
+  paired by question — within_judge_retest, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.054   0.003     +0.027         [0.019,0.035]    0.0001   0.0005***
+      baseline               0.027   0.002(reference)
+      agentic-noval          0.043   0.003     +0.016         [0.009,0.023]    0.0002   0.0005***
+      agentic                0.038   0.003     +0.011         [0.005,0.017]    0.0006   0.0007***
+      agentic-goldonly       0.038   0.003     +0.011         [0.004,0.018]    0.0046   0.0046**
+      agentic-negonly        0.038   0.003     +0.011         [0.005,0.018]    0.0004   0.0007***
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.002   0.003     -0.000        [-0.008,0.007]    0.9359   0.9359
+      baseline              -0.002   0.002(reference)
+      agentic-noval         -0.002   0.003     -0.001        [-0.008,0.006]    0.8149   0.9359
+      agentic                0.005   0.003     +0.006        [-0.001,0.013]    0.0925   0.4625
+      agentic-goldonly       0.000   0.003     +0.002        [-0.005,0.009]    0.5722   0.9359
+      agentic-negonly        0.001   0.002     +0.003        [-0.004,0.009]    0.3788   0.9359
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.912   0.007     -0.048       [-0.063,-0.033]    0.0001   0.0005***
+      baseline               0.960   0.005(reference)
+      agentic-noval          0.923   0.009     -0.036       [-0.054,-0.020]    0.0003   0.0007***
+      agentic                0.943   0.006     -0.017       [-0.030,-0.004]    0.0154   0.0192*
+      agentic-goldonly       0.950   0.006     -0.009        [-0.022,0.004]    0.1625   0.1625
+      agentic-negonly        0.941   0.006     -0.018       [-0.033,-0.004]    0.0140   0.0192*
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.055   0.003     +0.027         [0.020,0.034]    0.0001   0.0005***
+      baseline               0.028   0.002(reference)
+      agentic-noval          0.040   0.003     +0.012         [0.005,0.018]    0.0006   0.0015**
+      agentic                0.037   0.003     +0.009         [0.003,0.015]    0.0030   0.0050**
+      agentic-goldonly       0.037   0.003     +0.009         [0.002,0.016]    0.0118   0.0118*
+      agentic-negonly        0.036   0.002     +0.008         [0.002,0.013]    0.0064   0.0080**
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.929   0.009     -0.043       [-0.063,-0.025]    0.0001   0.0002***
+      baseline               0.972   0.004(reference)
+      agentic-noval          0.938   0.009     -0.034       [-0.055,-0.016]    0.0001   0.0002***
+      agentic                0.958   0.007     -0.015       [-0.031,-0.000]    0.0699   0.0874
+      agentic-goldonly       0.967   0.005     -0.006        [-0.019,0.006]    0.3805   0.3805
+      agentic-negonly        0.957   0.005     -0.015       [-0.027,-0.004]    0.0127   0.0212*
+
+  paired by question — cross_minus_retest, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.015   0.004     -0.007        [-0.016,0.001]    0.0820   0.4100
+      baseline               0.022   0.003(reference)
+      agentic-noval          0.023   0.004     +0.001        [-0.008,0.010]    0.8499   0.9352
+      agentic                0.022   0.005     -0.000        [-0.010,0.010]    0.9352   0.9352
+      agentic-goldonly       0.026   0.004     +0.003        [-0.007,0.013]    0.5267   0.9352
+      agentic-negonly        0.023   0.004     +0.001        [-0.009,0.011]    0.8548   0.9352
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.002   0.005     +0.014         [0.001,0.026]    0.0346   0.0865
+      baseline              -0.016   0.004(reference)
+      agentic-noval         -0.019   0.005     -0.003        [-0.014,0.007]    0.5472   0.5472
+      agentic               -0.028   0.005     -0.012       [-0.023,-0.001]    0.0282   0.0865
+      agentic-goldonly      -0.023   0.004     -0.007        [-0.019,0.004]    0.1976   0.2470
+      agentic-negonly       -0.023   0.004     -0.007        [-0.017,0.003]    0.1751   0.2470
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.012   0.007     +0.021         [0.002,0.039]    0.0343   0.0800
+      baseline              -0.032   0.007(reference)
+      agentic-noval         -0.031   0.008     +0.001        [-0.018,0.020]    0.9010   0.9010
+      agentic               -0.011   0.007     +0.021         [0.003,0.041]    0.0303   0.0800
+      agentic-goldonly      -0.015   0.006     +0.017         [0.001,0.035]    0.0480   0.0800
+      agentic-negonly       -0.022   0.008     +0.010        [-0.010,0.031]    0.3128   0.3910
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.018   0.004     -0.004        [-0.013,0.004]    0.3332   0.9226
+      baseline               0.023   0.003(reference)
+      agentic-noval          0.024   0.004     +0.001        [-0.008,0.010]    0.7791   0.9226
+      agentic                0.022   0.004     -0.001        [-0.011,0.009]    0.8827   0.9226
+      agentic-goldonly       0.025   0.004     +0.002        [-0.008,0.012]    0.6568   0.9226
+      agentic-negonly        0.022   0.003     -0.000        [-0.010,0.009]    0.9226   0.9226
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.019   0.009     +0.005        [-0.015,0.024]    0.6255   0.6255
+      baseline              -0.024   0.008(reference)
+      agentic-noval         -0.036   0.010     -0.012        [-0.036,0.010]    0.3242   0.5403
+      agentic               -0.007   0.009     +0.017        [-0.004,0.041]    0.1393   0.5403
+      agentic-goldonly      -0.020   0.006     +0.005        [-0.013,0.023]    0.6236   0.6255
+      agentic-negonly       -0.036   0.009     -0.011        [-0.033,0.009]    0.3026   0.5403
+
+====================================================================================================
+SCOPE: rar_medicine
+====================================================================================================
+
+  cross-judge, pooled over cells
+    source                    n  pearson  spearman     |Δ|  signed Δ  mean_old  mean_new  pass_old  pass_new  min_crit_dis
+    shipped                 399    0.956     0.955   0.050    -0.005     0.484     0.479     0.487     0.487         0.057
+    baseline                399    0.959     0.959   0.043    -0.010     0.535     0.525     0.459     0.451         0.048
+    agentic-noval           399    0.925     0.927   0.062    -0.013     0.502     0.488     0.460     0.445         0.059
+    agentic                 399    0.956     0.961   0.054    -0.012     0.546     0.534     0.532     0.516         0.053
+    agentic-goldonly        399    0.957     0.958   0.051    -0.015     0.546     0.531     0.534     0.517         0.051
+    agentic-negonly         399    0.939     0.940   0.058    -0.015     0.507     0.492     0.464     0.445         0.053
+
+  within-judge retest (incumbent vs itself), pooled over cells — the floor the row above must be read against
+    source                    n  pearson  spearman     |Δ|  r_cross-r_retest  |Δ|cross-|Δ|retest
+    shipped                 399    0.963     0.963   0.038            -0.007              +0.011
+    baseline                399    0.977     0.977   0.026            -0.018              +0.018
+    agentic-noval           399    0.954     0.959   0.043            -0.029              +0.019
+    agentic                 399    0.972     0.973   0.033            -0.016              +0.021
+    agentic-goldonly        399    0.973     0.971   0.031            -0.016              +0.020
+    agentic-negonly         399    0.960     0.960   0.039            -0.021              +0.019
+
+  paired by question — cross_judge, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.050   0.003     +0.006        [-0.004,0.017]    0.2446   0.2770
+      baseline               0.043   0.004(reference)
+      agentic-noval          0.062   0.005     +0.019         [0.006,0.031]    0.0057   0.0285*
+      agentic                0.054   0.005     +0.010        [-0.001,0.022]    0.0782   0.1303
+      agentic-goldonly       0.051   0.005     +0.007        [-0.005,0.020]    0.2770   0.2770
+      agentic-negonly        0.058   0.006     +0.014         [0.001,0.027]    0.0412   0.1030
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.005   0.005     +0.005        [-0.009,0.019]    0.4627   0.8344
+      baseline              -0.010   0.005(reference)
+      agentic-noval         -0.013   0.006     -0.003        [-0.020,0.013]    0.7247   0.8344
+      agentic               -0.012   0.006     -0.002        [-0.016,0.012]    0.8344   0.8344
+      agentic-goldonly      -0.015   0.005     -0.005        [-0.019,0.009]    0.5207   0.8344
+      agentic-negonly       -0.015   0.007     -0.005        [-0.023,0.011]    0.5824   0.8344
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.932   0.008     -0.018        [-0.039,0.003]    0.1023   0.2557
+      baseline               0.950   0.007(reference)
+      agentic-noval          0.918   0.010     -0.032       [-0.052,-0.013]    0.0025   0.0125*
+      agentic                0.946   0.007     -0.004        [-0.021,0.014]    0.7315   0.7315
+      agentic-goldonly       0.960   0.006     +0.010        [-0.010,0.029]    0.3579   0.4473
+      agentic-negonly        0.937   0.008     -0.013        [-0.030,0.005]    0.1712   0.2853
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.057   0.004     +0.008        [-0.004,0.020]    0.1821   0.4552
+      baseline               0.048   0.004(reference)
+      agentic-noval          0.059   0.005     +0.011        [-0.001,0.023]    0.0902   0.4510
+      agentic                0.053   0.005     +0.005        [-0.006,0.016]    0.3775   0.5066
+      agentic-goldonly       0.051   0.006     +0.003        [-0.011,0.017]    0.6661   0.6661
+      agentic-negonly        0.053   0.005     +0.005        [-0.007,0.016]    0.4053   0.5066
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.956   0.006     -0.009        [-0.023,0.005]    0.2191   0.3651
+      baseline               0.965   0.005(reference)
+      agentic-noval          0.936   0.009     -0.029       [-0.048,-0.011]    0.0029   0.0145*
+      agentic                0.965   0.005     +0.000        [-0.011,0.011]    0.9517   0.9517
+      agentic-goldonly       0.966   0.005     +0.001        [-0.012,0.013]    0.9096   0.9517
+      agentic-negonly        0.950   0.009     -0.015        [-0.032,0.001]    0.0763   0.1907
+
+  paired by question — within_judge_retest, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.038   0.003     +0.013         [0.004,0.021]    0.0052   0.0130*
+      baseline               0.026   0.003(reference)
+      agentic-noval          0.043   0.005     +0.017         [0.006,0.028]    0.0044   0.0130*
+      agentic                0.033   0.004     +0.007        [-0.001,0.015]    0.0832   0.1040
+      agentic-goldonly       0.031   0.004     +0.005        [-0.004,0.014]    0.3022   0.3022
+      agentic-negonly        0.039   0.004     +0.013         [0.003,0.023]    0.0132   0.0220*
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.006   0.003     -0.005        [-0.013,0.003]    0.2296   0.5739
+      baseline              -0.001   0.003(reference)
+      agentic-noval          0.000   0.004     +0.001        [-0.010,0.012]    0.8579   0.8993
+      agentic                0.005   0.004     +0.005        [-0.003,0.014]    0.2241   0.5739
+      agentic-goldonly      -0.000   0.004     +0.001        [-0.007,0.008]    0.8993   0.8993
+      agentic-negonly        0.001   0.004     +0.002        [-0.008,0.012]    0.6538   0.8993
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.939   0.007     -0.029       [-0.044,-0.014]    0.0008   0.0040**
+      baseline               0.968   0.006(reference)
+      agentic-noval          0.932   0.013     -0.036       [-0.062,-0.012]    0.0037   0.0062**
+      agentic                0.956   0.007     -0.012        [-0.028,0.004]    0.1770   0.1770
+      agentic-goldonly       0.954   0.008     -0.014        [-0.032,0.004]    0.1722   0.1770
+      agentic-negonly        0.937   0.009     -0.031       [-0.051,-0.012]    0.0030   0.0062**
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.042   0.004     +0.014         [0.005,0.023]    0.0027   0.0135*
+      baseline               0.028   0.003(reference)
+      agentic-noval          0.039   0.004     +0.011         [0.000,0.021]    0.0490   0.1225
+      agentic                0.032   0.004     +0.004        [-0.003,0.012]    0.2554   0.3192
+      agentic-goldonly       0.031   0.004     +0.003        [-0.005,0.012]    0.4507   0.4507
+      agentic-negonly        0.034   0.004     +0.006        [-0.002,0.015]    0.1300   0.2166
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.957   0.008     -0.019       [-0.035,-0.004]    0.0113   0.0282*
+      baseline               0.976   0.004(reference)
+      agentic-noval          0.948   0.010     -0.028       [-0.049,-0.010]    0.0033   0.0165*
+      agentic                0.977   0.004     +0.001        [-0.010,0.011]    0.9057   0.9629
+      agentic-goldonly       0.976   0.005     +0.000        [-0.010,0.012]    0.9629   0.9629
+      agentic-negonly        0.958   0.007     -0.018       [-0.033,-0.003]    0.0287   0.0478*
+
+  paired by question — cross_minus_retest, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.011   0.004     -0.006        [-0.016,0.003]    0.2045   0.8713
+      baseline               0.018   0.004(reference)
+      agentic-noval          0.019   0.005     +0.002        [-0.011,0.015]    0.8001   0.8713
+      agentic                0.021   0.005     +0.003        [-0.008,0.014]    0.5658   0.8713
+      agentic-goldonly       0.020   0.004     +0.002        [-0.009,0.014]    0.6851   0.8713
+      agentic-negonly        0.019   0.005     +0.001        [-0.012,0.014]    0.8713   0.8713
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.001   0.005     +0.010        [-0.002,0.022]    0.1219   0.5091
+      baseline              -0.009   0.005(reference)
+      agentic-noval         -0.013   0.006     -0.004        [-0.019,0.010]    0.5952   0.5952
+      agentic               -0.016   0.005     -0.007        [-0.021,0.006]    0.3055   0.5091
+      agentic-goldonly      -0.015   0.005     -0.005        [-0.020,0.009]    0.4701   0.5876
+      agentic-negonly       -0.017   0.006     -0.007        [-0.021,0.006]    0.3041   0.5091
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.007   0.007     +0.011        [-0.008,0.030]    0.3057   0.5094
+      baseline              -0.018   0.008(reference)
+      agentic-noval         -0.014   0.009     +0.004        [-0.019,0.028]    0.8040   0.8040
+      agentic               -0.010   0.007     +0.008        [-0.011,0.029]    0.4495   0.5618
+      agentic-goldonly       0.005   0.006     +0.023         [0.004,0.042]    0.0222   0.1110
+      agentic-negonly        0.000   0.008     +0.018        [-0.002,0.040]    0.1032   0.2580
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.015   0.004     -0.006        [-0.016,0.005]    0.3035   0.9849
+      baseline               0.020   0.004(reference)
+      agentic-noval          0.021   0.005     +0.000        [-0.013,0.014]    0.9694   0.9849
+      agentic                0.021   0.005     +0.000        [-0.011,0.012]    0.9297   0.9849
+      agentic-goldonly       0.020   0.005     -0.000        [-0.013,0.013]    0.9849   0.9849
+      agentic-negonly        0.019   0.004     -0.001        [-0.014,0.011]    0.8187   0.9849
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.001   0.007     +0.010        [-0.003,0.024]    0.1491   0.7454
+      baseline              -0.011   0.005(reference)
+      agentic-noval         -0.012   0.008     -0.001        [-0.022,0.019]    0.9260   0.9640
+      agentic               -0.011   0.004     -0.000        [-0.013,0.014]    0.9640   0.9640
+      agentic-goldonly      -0.011   0.004     +0.000        [-0.011,0.012]    0.9430   0.9640
+      agentic-negonly       -0.008   0.005     +0.003        [-0.011,0.016]    0.7197   0.9640
+
+====================================================================================================
+SCOPE: rar_science
+====================================================================================================
+
+  cross-judge, pooled over cells
+    source                    n  pearson  spearman     |Δ|  signed Δ  mean_old  mean_new  pass_old  pass_new  min_crit_dis
+    shipped                 398    0.884     0.886   0.088    -0.003     0.407     0.405     0.412     0.408         0.090
+    baseline                397    0.938     0.935   0.055    -0.024     0.383     0.359     0.327     0.305         0.053
+    agentic-noval           399    0.916     0.911   0.070    -0.029     0.399     0.370     0.377     0.346         0.068
+    agentic                 399    0.928     0.930   0.066    -0.034     0.458     0.424     0.445     0.410         0.064
+    agentic-goldonly        397    0.931     0.933   0.075    -0.030     0.471     0.441     0.458     0.427         0.072
+    agentic-negonly         399    0.925     0.921   0.066    -0.027     0.402     0.375     0.382     0.355         0.062
+
+  within-judge retest (incumbent vs itself), pooled over cells — the floor the row above must be read against
+    source                    n  pearson  spearman     |Δ|  r_cross-r_retest  |Δ|cross-|Δ|retest
+    shipped                 399    0.919     0.914   0.069            -0.035              +0.018
+    baseline                399    0.974     0.971   0.028            -0.036              +0.027
+    agentic-noval           399    0.960     0.957   0.043            -0.044              +0.027
+    agentic                 399    0.961     0.962   0.043            -0.034              +0.023
+    agentic-goldonly        398    0.965     0.964   0.045            -0.033              +0.031
+    agentic-negonly         399    0.971     0.968   0.038            -0.046              +0.028
+
+  paired by question — cross_judge, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.088   0.006     +0.033         [0.019,0.047]    0.0001   0.0005***
+      baseline               0.055   0.004(reference)
+      agentic-noval          0.070   0.006     +0.015         [0.003,0.028]    0.0210   0.0350*
+      agentic                0.066   0.007     +0.011        [-0.004,0.027]    0.1523   0.1523
+      agentic-goldonly       0.076   0.008     +0.021         [0.004,0.038]    0.0210   0.0350*
+      agentic-negonly        0.066   0.006     +0.011        [-0.002,0.024]    0.1204   0.1505
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.003   0.009     +0.021         [0.000,0.043]    0.0578   0.2890
+      baseline              -0.024   0.006(reference)
+      agentic-noval         -0.029   0.006     -0.005        [-0.019,0.009]    0.4669   0.6554
+      agentic               -0.034   0.008     -0.010        [-0.028,0.008]    0.2739   0.6554
+      agentic-goldonly      -0.030   0.007     -0.006        [-0.024,0.012]    0.5243   0.6554
+      agentic-negonly       -0.027   0.006     -0.003        [-0.018,0.011]    0.6699   0.6699
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.868   0.014     -0.036       [-0.068,-0.006]    0.0225   0.0562
+      baseline               0.905   0.011(reference)
+      agentic-noval          0.867   0.016     -0.038       [-0.069,-0.008]    0.0167   0.0562
+      agentic                0.917   0.011     +0.012        [-0.015,0.040]    0.3949   0.6581
+      agentic-goldonly       0.911   0.011     +0.007        [-0.022,0.035]    0.6469   0.8087
+      agentic-negonly        0.902   0.012     -0.003        [-0.031,0.025]    0.8530   0.8530
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.090   0.007     +0.037         [0.022,0.053]    0.0001   0.0005***
+      baseline               0.053   0.004(reference)
+      agentic-noval          0.068   0.006     +0.015         [0.003,0.028]    0.0183   0.0317*
+      agentic                0.064   0.007     +0.011        [-0.003,0.026]    0.1377   0.1530
+      agentic-goldonly       0.073   0.007     +0.020         [0.004,0.036]    0.0190   0.0317*
+      agentic-negonly        0.062   0.005     +0.009        [-0.003,0.022]    0.1530   0.1530
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.864   0.025     -0.067       [-0.121,-0.021]    0.0050   0.0250*
+      baseline               0.931   0.013(reference)
+      agentic-noval          0.867   0.022     -0.064       [-0.114,-0.018]    0.0108   0.0270*
+      agentic                0.936   0.011     +0.005        [-0.026,0.038]    0.7754   0.8240
+      agentic-goldonly       0.934   0.012     +0.004        [-0.030,0.037]    0.8240   0.8240
+      agentic-negonly        0.893   0.018     -0.038        [-0.080,0.001]    0.0715   0.1192
+
+  paired by question — within_judge_retest, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.069   0.005     +0.041         [0.030,0.053]    0.0001   0.0005***
+      baseline               0.028   0.003(reference)
+      agentic-noval          0.043   0.004     +0.015         [0.006,0.024]    0.0019   0.0033**
+      agentic                0.043   0.004     +0.015         [0.006,0.025]    0.0020   0.0033**
+      agentic-goldonly       0.045   0.004     +0.017         [0.006,0.027]    0.0038   0.0047**
+      agentic-negonly        0.038   0.003     +0.010         [0.001,0.019]    0.0329   0.0329*
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.002   0.005     +0.004        [-0.007,0.016]    0.4709   0.5635
+      baseline              -0.002   0.003(reference)
+      agentic-noval         -0.005   0.004     -0.003        [-0.012,0.006]    0.5610   0.5635
+      agentic                0.004   0.005     +0.007        [-0.004,0.018]    0.2504   0.5635
+      agentic-goldonly       0.001   0.005     +0.004        [-0.008,0.015]    0.5635   0.5635
+      agentic-negonly        0.001   0.003     +0.004        [-0.005,0.012]    0.4150   0.5635
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.884   0.012     -0.067       [-0.093,-0.043]    0.0001   0.0005***
+      baseline               0.951   0.007(reference)
+      agentic-noval          0.914   0.011     -0.037       [-0.062,-0.013]    0.0028   0.0070**
+      agentic                0.929   0.009     -0.022       [-0.043,-0.001]    0.0507   0.0845
+      agentic-goldonly       0.946   0.008     -0.005        [-0.023,0.013]    0.6024   0.6582
+      agentic-negonly        0.946   0.008     -0.005        [-0.027,0.014]    0.6582   0.6582
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.068   0.004     +0.040         [0.030,0.050]    0.0001   0.0005***
+      baseline               0.028   0.003(reference)
+      agentic-noval          0.041   0.003     +0.013         [0.005,0.021]    0.0029   0.0057**
+      agentic                0.041   0.004     +0.013         [0.005,0.022]    0.0034   0.0057**
+      agentic-goldonly       0.043   0.004     +0.015         [0.004,0.025]    0.0074   0.0092**
+      agentic-negonly        0.037   0.003     +0.009         [0.001,0.016]    0.0217   0.0217*
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.902   0.016     -0.067       [-0.101,-0.036]    0.0001   0.0005***
+      baseline               0.969   0.006(reference)
+      agentic-noval          0.928   0.016     -0.041       [-0.078,-0.011]    0.0091   0.0227*
+      agentic                0.939   0.014     -0.030       [-0.060,-0.003]    0.0469   0.0782
+      agentic-goldonly       0.957   0.010     -0.012        [-0.035,0.008]    0.3115   0.3115
+      agentic-negonly        0.956   0.007     -0.013        [-0.031,0.004]    0.1704   0.2130
+
+  paired by question — cross_minus_retest, Δ vs `baseline` (BH-FDR over sources within each metric)
+    abs_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.018   0.006     -0.009        [-0.022,0.005]    0.2261   0.9989
+      baseline               0.027   0.004(reference)
+      agentic-noval          0.027   0.005     -0.000        [-0.012,0.012]    0.9989   0.9989
+      agentic                0.023   0.008     -0.004        [-0.020,0.013]    0.6428   0.9989
+      agentic-goldonly       0.031   0.007     +0.004        [-0.012,0.021]    0.6290   0.9989
+      agentic-negonly        0.028   0.006     +0.001        [-0.013,0.015]    0.9221   0.9989
+
+    signed_diff
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.005   0.009     +0.017        [-0.004,0.039]    0.1428   0.3570
+      baseline              -0.022   0.006(reference)
+      agentic-noval         -0.024   0.007     -0.002        [-0.018,0.013]    0.7583   0.7583
+      agentic               -0.039   0.008     -0.017       [-0.034,-0.001]    0.0535   0.2675
+      agentic-goldonly      -0.031   0.007     -0.009        [-0.027,0.007]    0.2835   0.4725
+      agentic-negonly       -0.028   0.006     -0.007        [-0.021,0.008]    0.3826   0.4782
+
+    rank_agreement
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.016   0.012     +0.031        [-0.001,0.061]    0.0669   0.1672
+      baseline              -0.047   0.012(reference)
+      agentic-noval         -0.048   0.013     -0.001        [-0.032,0.028]    0.9545   0.9545
+      agentic               -0.012   0.012     +0.034         [0.004,0.067]    0.0418   0.1672
+      agentic-goldonly      -0.035   0.009     +0.012        [-0.016,0.040]    0.4323   0.7204
+      agentic-negonly       -0.044   0.013     +0.002        [-0.031,0.035]    0.8871   0.9545
+
+    min_crit_disagree
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped                0.022   0.007     -0.003        [-0.017,0.011]    0.6600   0.9400
+      baseline               0.025   0.004(reference)
+      agentic-noval          0.027   0.005     +0.002        [-0.010,0.015]    0.7072   0.9400
+      agentic                0.023   0.007     -0.002        [-0.018,0.015]    0.8038   0.9400
+      agentic-goldonly       0.030   0.007     +0.005        [-0.011,0.021]    0.5594   0.9400
+      agentic-negonly        0.025   0.005     +0.001        [-0.013,0.015]    0.9400   0.9400
+
+    pearson_within
+      source                  mean      SE   Δ vs ref                95% CI         p    q(BH)
+      shipped               -0.038   0.017     -0.000        [-0.037,0.035]    0.9878   0.9878
+      baseline              -0.037   0.014(reference)
+      agentic-noval         -0.061   0.018     -0.023        [-0.067,0.018]    0.2980   0.4966
+      agentic               -0.003   0.017     +0.035        [-0.006,0.078]    0.1227   0.4966
+      agentic-goldonly      -0.030   0.011     +0.009        [-0.026,0.045]    0.6287   0.7859
+      agentic-negonly       -0.063   0.017     -0.025        [-0.066,0.014]    0.2392   0.4966

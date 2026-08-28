@@ -1,0 +1,24 @@
+# Verified against the environment this harness was developed on
+# (python 3.10+, conda env `torch-base`). Pinned to >= the tested versions.
+pandas>=2.3.1
+pyarrow>=21.0.0
+numpy>=2.1.3
+PyYAML>=6.0.2
+
+# LLM access goes through the in-tree package, not PyPI:
+#   /apdcephfs_zwfy6/share_302970870/hunyuan/changzelv/dev/hyctx_data
+# which itself needs `openai` and `httpx` (already present in the env).
+# harness/llm.py inserts that path into sys.path at import time.
+openai>=1.0
+httpx>=0.27
+
+# scipy is deliberately NOT used: every statistic we report (bootstrap CI,
+# paired permutation test, Wilcoxon, Cohen's kappa, AUC, BH-FDR) is implemented
+# in harness/eval/stats.py with numpy only.
+#
+# sklearn is an optional extra. It is needed only by harness/eval/grounding.py,
+# which imports the forensics detectors from analysis/ so that our numbers are
+# computed by literally the same code that produced the n=45k shipped baselines
+# in docs/01_data_forensics.md. Reimplementing them would risk a silent
+# definitional drift that would make the two sets of numbers incomparable.
+scikit-learn>=1.7.1

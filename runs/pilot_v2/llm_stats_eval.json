@@ -1,0 +1,20 @@
+{
+  "calls": 1386,
+  "cache_hits": 927,
+  "api_calls": 460,
+  "retries": 1,
+  "empty_responses": 1,
+  "failures": 0,
+  "json_parse_failures": 25,
+  "prompt_chars": 0,
+  "response_chars": 706367,
+  "reasoning_chars": 1219796,
+  "wall_seconds": 4912.857505321503,
+  "by_tag": {
+    "judge": 1359,
+    "judge:json_repair": 27
+  },
+  "cache_hit_rate": 0.6688311688311688,
+  "model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
+  "concurrency": 64
+}

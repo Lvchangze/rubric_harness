@@ -1,0 +1,113 @@
+# Pilot configuration: the run whose numbers go into results/REPORT.md.
+#
+# `pilot_v2` rather than `pilot` because the corrections in this config change
+# what a run means, and `resolve_examples` deliberately reuses an existing
+# examples.jsonl so that generation and evaluation always see the same
+# questions. Reusing the old directory would silently keep the pre-correction
+# 160-question sample. The LLM cache is shared across runs and keyed by prompt
+# content, so unchanged stages are still free; only the baseline rubrics
+# actually regenerate, because their prompt text changed.
+run_name: pilot_v2
+runs_dir: runs
+results_dir: results
+
+generators:
+  - shipped           # rubric shipped with the RaR dataset (o3-mini/GPT-4o, per the paper)
+  - baseline          # our single-pass reproduction of the paper's prompt, same model as agentic
+  - agentic           # this study's method
+  - agentic-noval     # ablation: identical pipeline with Stage 6 (critic) disabled
+  # Stage 6 split in half, to separate the part that consults the reference
+  # answer from the part that only consults counterexamples.
+  - agentic-goldonly  # ablation: Stage 6 gold-side filtering only
+  - agentic-negonly   # ablation: Stage 6 negative-side filtering only (synthetic negatives)
+  - agentic-realneg   # ablation: negative-side only, with real failed rollouts as negatives
+
+llm:
+  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  concurrency: 64          # measured: 96-way held with 0 errors; 64 leaves headroom
+  reasoning_effort: high
+  max_tokens: 16384
+  max_attempts: 4
+  cache_dir: runs/cache
+  request_timeout_s: 1200
+
+sample:
+  domains: [rar_science, rar_medicine]
+  split: val
+  # Raised from 80 after dropping the within-question redundancy metrics: the
+  # forensics disproved that failure mode (real redundancy is 0.8%/7.9%, not the
+  # 22%/58% a naive TF-IDF suggests), so that budget buys statistical power on
+  # the main discriminative result instead.
+  n_per_domain: 100
+  seed: 1234
+  # RaR-Science's test split shares 12.3% of its questions with train, and 9.15%
+  # of its rows are outright duplicates. We sample from val and de-duplicate on
+  # question text so no question is scored twice.
+  deduplicate_questions: true
+
+agentic:
+  n_rollouts: 3
+  enable_decompose: true
+  enable_rollouts: true
+  enable_reconcile: true
+  enable_pitfalls: true
+  enable_critic: true       # Stage 6; the `agentic-noval` ablation flips this off
+  enable_calibration: true
+  rollout_max_tokens: 12000
+  drop_gold_failures: true
+  demote_indiscriminate: true
+  # Outer clamps only. The target count is derived from the Stage-1
+  # decomposition so the budget tracks question complexity (forensics F1: the
+  # shipped rubrics are effectively a constant 7 items, CV=0.107, r=0.19).
+  target_min_items: 6
+  target_max_items: 16
+  # The gold-pass filter is asymmetric: a positive criterion can fail a terse
+  # reference answer whereas a Pitfall passes it by default, so the filter
+  # enriches for Pitfalls. Capping the share near the shipped/baseline mix keeps
+  # the comparison from being confounded by category structure.
+  max_pitfall_fraction: 0.25
+
+eval:
+  judge_model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  judge_max_tokens: 12288
+  judge_reasoning_effort: high
+  shuffle_criteria: true
+  shuffle_seed: 7
+  response_variants:
+    - gold
+    - missing_step
+    - numeric_error
+    - right_method_wrong_answer
+    - verbose_empty
+    - terse_correct
+    - off_topic
+  # RaR Eq.(1) weighting. `paper_explicit` remaps categories to
+  # {Essential 1.0, Important 0.7, Optional 0.3, Pitfall 0.9}, which is what
+  # RaR-EXPLICIT actually trains with; the numeric weights in the data are not
+  # used by the paper. The other two modes are robustness checks.
+  aggregation: paper_explicit
+  report_all_aggregations: true
+  # Pitfall polarity. The two corpora use opposite conventions (forensics F6),
+  # so polarity is detected per criterion rather than assumed from the weight
+  # sign. `favourable` was dropped from the sensitivity list after an audit
+  # showed it to be an exact alias of `detected` (0 of 12,484 criteria differed);
+  # the genuine best-case comparator reading is the all_avoidance / all_failure
+  # pair, from which each comparator is given whichever favours it.
+  polarity_mode: detected
+  polarity_sensitivity_modes: [all_avoidance, all_failure]
+  comparator_sources: [shipped, baseline]
+  run_implicit_judge: true    # RaR-IMPLICIT, the paper's strongest variant
+  count_controlled: true      # re-run key metrics at equal item counts
+  # Redundancy is deliberately absent: the forensics disproved it. The one real
+  # redundancy form, the Pitfall mirror (F7), is measured in `lint`.
+  metrics:
+    - grounding      # zero-LLM, reuses the forensics anchor detector
+    - lint           # zero-LLM, paper prompt compliance + schema hygiene
+    - adaptivity     # zero-LLM, item-count vs question complexity
+    - discriminative
+    - coverage
+    - intrinsic
+    - transfer
+    - headtohead
+  self_agreement_repeats: 2
+  bootstrap_iters: 10000

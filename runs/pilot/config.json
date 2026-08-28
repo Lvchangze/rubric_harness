@@ -1,0 +1,68 @@
+{
+  "run_name": "pilot",
+  "runs_dir": "runs",
+  "results_dir": "results",
+  "generators": [
+    "shipped",
+    "baseline",
+    "agentic"
+  ],
+  "llm": {
+    "model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
+    "concurrency": 64,
+    "reasoning_effort": "high",
+    "max_tokens": 16384,
+    "max_attempts": 4,
+    "cache_dir": "runs/cache",
+    "request_timeout_s": 1200
+  },
+  "sample": {
+    "domains": [
+      "rar_science",
+      "rar_medicine"
+    ],
+    "split": "val",
+    "n_per_domain": 80,
+    "seed": 1234
+  },
+  "agentic": {
+    "n_rollouts": 3,
+    "enable_decompose": true,
+    "enable_rollouts": true,
+    "enable_reconcile": true,
+    "enable_pitfalls": true,
+    "enable_critic": true,
+    "enable_calibration": true,
+    "rollout_max_tokens": 12000,
+    "drop_gold_failures": true,
+    "demote_indiscriminate": true,
+    "target_min_items": 6,
+    "target_max_items": 16
+  },
+  "eval": {
+    "judge_model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
+    "judge_max_tokens": 12288,
+    "judge_reasoning_effort": "high",
+    "shuffle_criteria": true,
+    "shuffle_seed": 7,
+    "response_variants": [
+      "gold",
+      "missing_step",
+      "numeric_error",
+      "right_method_wrong_answer",
+      "verbose_empty",
+      "terse_correct",
+      "off_topic"
+    ],
+    "metrics": [
+      "discriminative",
+      "transfer",
+      "coverage",
+      "intrinsic",
+      "headtohead"
+    ],
+    "self_agreement_repeats": 2,
+    "bootstrap_iters": 10000
+  },
+  "_snapshot_time": "2026-08-28 00:57:00"
+}

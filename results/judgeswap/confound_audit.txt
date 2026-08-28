@@ -1,0 +1,356 @@
+==============================================================================
+CONFOUND AUDIT — gold leakage in the discriminative main result
+==============================================================================
+
+paired questions n=109; reference = `baseline`
+
+Stage 6 of the agentic generator filters criteria against example.reference_answer,
+which is the same text the discriminative metric uses as its `gold` positive. Any
+margin gain is therefore ambiguous between a better reward signal and a rubric
+fitted to this particular gold. The analyses below separate the two.
+
+==============================================================================
+1. ABSOLUTE SCORE DECOMPOSITION
+==============================================================================
+
+If a rubric genuinely discriminates better, degraded tiers should move DOWN.
+If it is merely looser, every tier moves UP and gold moves up most.
+
+  tier                                 shipped        baseline   agentic-noval         agenticagentic-goldonly agentic-negonly
+  gold                                   0.698           0.705           0.690           0.817           0.829           0.726
+  missing_step                           0.615           0.625           0.606           0.694           0.722           0.615
+  terse_correct                          0.398           0.456           0.439           0.512           0.527           0.456
+  right_method_wrong_answer              0.515           0.493           0.456           0.497           0.482           0.449
+  numeric_error                          0.469           0.438           0.398           0.435           0.436           0.399
+  verbose_empty                          0.338           0.307           0.298           0.273           0.280           0.275
+  off_topic                              0.070           0.115           0.160           0.147           0.151           0.150
+
+  Paired Δ vs `baseline` (positive = higher score under that source):
+  tier                                 shipped   agentic-noval         agenticagentic-goldonly agentic-negonly
+  gold                               -0.007          -0.014          +0.112***       +0.124***       +0.022   
+  missing_step                       -0.010          -0.019          +0.069**        +0.097***       -0.010   
+  terse_correct                      -0.058**        -0.018          +0.056**        +0.071**        -0.000   
+  right_method_wrong_answer          +0.022          -0.037          +0.004          -0.011          -0.044*  
+  numeric_error                      +0.031          -0.040*         -0.003          -0.001          -0.038*  
+  verbose_empty                      +0.031          -0.009          -0.033          -0.027          -0.032   
+  off_topic                          -0.044***       +0.045**        +0.032*         +0.036*         +0.035*  
+
+
+==============================================================================
+2. DISCRIMINATION WITH THE LEAKED GOLD TIER REMOVED  (decisive)
+==============================================================================
+
+### 2a. WITH gold (as originally reported)
+
+  ranking_accuracy
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.757   0.015     -0.017        [-0.042,0.006]    0.1816
+    baseline               0.774   0.014(reference)
+    agentic-noval          0.778   0.013     +0.004        [-0.019,0.026]    0.7513
+    agentic                0.803   0.012     +0.029         [0.006,0.053]    0.0189*
+    agentic-goldonly       0.817   0.012     +0.043         [0.018,0.068]    0.0013**
+    agentic-negonly        0.790   0.012     +0.016        [-0.006,0.038]    0.1666
+
+  auc
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.752   0.023     -0.036        [-0.073,0.003]    0.0819
+    baseline               0.787   0.022(reference)
+    agentic-noval          0.795   0.019     +0.008        [-0.021,0.038]    0.6226
+    agentic                0.839   0.017     +0.052         [0.022,0.084]    0.0017**
+    agentic-goldonly       0.852   0.015     +0.065         [0.032,0.100]    0.0004***
+    agentic-negonly        0.820   0.018     +0.033         [0.004,0.063]    0.0318*
+
+  separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.222   0.023     -0.035       [-0.068,-0.001]    0.0442*
+    baseline               0.257   0.022(reference)
+    agentic-noval          0.250   0.018     -0.007        [-0.034,0.021]    0.6330
+    agentic                0.336   0.018     +0.079         [0.049,0.110]    0.0001***
+    agentic-goldonly       0.355   0.019     +0.098         [0.065,0.133]    0.0001***
+    agentic-negonly        0.281   0.017     +0.024        [-0.003,0.050]    0.0905
+
+  z_separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.803   0.075     -0.105        [-0.222,0.015]    0.0879
+    baseline               0.908   0.074(reference)
+    agentic-noval          0.979   0.065     +0.071        [-0.023,0.168]    0.1565
+    agentic                1.117   0.058     +0.209         [0.107,0.319]    0.0001***
+    agentic-goldonly       1.176   0.052     +0.227         [0.119,0.341]    0.0001***
+    agentic-negonly        1.055   0.062     +0.147         [0.052,0.246]    0.0024**
+
+  spread
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.751   0.015     +0.051         [0.017,0.085]    0.0032**
+    baseline               0.701   0.017(reference)
+    agentic-noval          0.608   0.018     -0.093       [-0.126,-0.059]    0.0001***
+    agentic                0.743   0.016     +0.043         [0.012,0.073]    0.0090**
+    agentic-goldonly       0.738   0.017     +0.037        [-0.001,0.074]    0.0539
+    agentic-negonly        0.651   0.020     -0.049       [-0.084,-0.014]    0.0076**
+
+### 2b. WITHOUT gold — degraded tiers only, ordered by construction quality
+
+  An advantage that survives here cannot come from fitting the gold text.
+
+  ranking_accuracy
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.725   0.016     -0.018        [-0.048,0.011]    0.2525
+    baseline               0.743   0.013(reference)
+    agentic-noval          0.746   0.013     +0.003        [-0.024,0.030]    0.8290
+    agentic                0.763   0.012     +0.020        [-0.006,0.046]    0.1400
+    agentic-goldonly       0.782   0.012     +0.040         [0.012,0.068]    0.0079**
+    agentic-negonly        0.751   0.012     +0.009        [-0.017,0.034]    0.5410
+
+  auc
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.703   0.026     -0.044        [-0.091,0.005]    0.0883
+    baseline               0.747   0.023(reference)
+    agentic-noval          0.756   0.020     +0.010        [-0.027,0.048]    0.6337
+    agentic                0.799   0.019     +0.052         [0.018,0.088]    0.0041**
+    agentic-goldonly       0.814   0.017     +0.067         [0.030,0.106]    0.0012**
+    agentic-negonly        0.777   0.020     +0.030        [-0.005,0.066]    0.1026
+
+  separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.158   0.022     -0.044       [-0.079,-0.007]    0.0194*
+    baseline               0.202   0.020(reference)
+    agentic-noval          0.194   0.016     -0.008        [-0.037,0.021]    0.5882
+    agentic                0.265   0.018     +0.062         [0.032,0.093]    0.0004***
+    agentic-goldonly       0.287   0.019     +0.085         [0.050,0.121]    0.0001***
+    agentic-negonly        0.217   0.016     +0.015        [-0.013,0.043]    0.3152
+
+  z_separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.670   0.081     -0.131        [-0.269,0.010]    0.0690
+    baseline               0.801   0.075(reference)
+    agentic-noval          0.870   0.069     +0.069        [-0.046,0.186]    0.2540
+    agentic                1.009   0.064     +0.209         [0.096,0.329]    0.0005***
+    agentic-goldonly       1.063   0.059     +0.226         [0.106,0.346]    0.0004***
+    agentic-negonly        0.933   0.068     +0.132         [0.021,0.248]    0.0206*
+
+  spread
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.681   0.017     +0.054         [0.019,0.090]    0.0028**
+    baseline               0.627   0.016(reference)
+    agentic-noval          0.531   0.017     -0.096       [-0.129,-0.063]    0.0001***
+    agentic                0.646   0.015     +0.019        [-0.013,0.051]    0.2519
+    agentic-goldonly       0.643   0.017     +0.017        [-0.022,0.055]    0.3988
+    agentic-negonly        0.563   0.017     -0.064       [-0.097,-0.030]    0.0003***
+
+==============================================================================
+3. SCALE-NORMALISED SEPARATION
+==============================================================================
+
+### 3a. level- and scale-invariant separation
+
+  Removes the 'everything scores higher' effect that raw margin confounds.
+
+  margin
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.297   0.026     -0.002        [-0.031,0.026]    0.8793
+    baseline               0.299   0.024(reference)
+    agentic-noval          0.297   0.021     -0.002        [-0.029,0.025]    0.9077
+    agentic                0.390   0.020     +0.091         [0.062,0.121]    0.0001***
+    agentic-goldonly       0.396   0.019     +0.097         [0.067,0.128]    0.0001***
+    agentic-negonly        0.336   0.020     +0.037         [0.011,0.063]    0.0078**
+
+  margin_over_gold
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.327   0.070     -0.033        [-0.189,0.076]    0.7586
+    baseline               0.199   0.083(reference)
+    agentic-noval          0.373   0.028     +0.061        [-0.004,0.142]    0.1070
+    agentic                0.449   0.022     +0.138         [0.064,0.226]    0.0002***
+    agentic-goldonly       0.451   0.021     +0.139         [0.063,0.233]    0.0001***
+    agentic-negonly        0.427   0.021     +0.115         [0.043,0.204]    0.0009***
+
+  z_separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.803   0.075     -0.105        [-0.222,0.015]    0.0879
+    baseline               0.908   0.074(reference)
+    agentic-noval          0.979   0.065     +0.071        [-0.023,0.168]    0.1565
+    agentic                1.117   0.058     +0.209         [0.107,0.319]    0.0001***
+    agentic-goldonly       1.176   0.052     +0.227         [0.119,0.341]    0.0001***
+    agentic-negonly        1.055   0.062     +0.147         [0.052,0.246]    0.0024**
+
+  cohens_d
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                1.336   0.156     -0.400        [-1.046,0.072]    0.1612
+    baseline               1.736   0.288(reference)
+    agentic-noval          1.677   0.169     -0.059        [-0.650,0.369]    0.8703
+    agentic                2.074   0.225     +0.338        [-0.317,0.903]    0.2956
+    agentic-goldonly       2.325   0.224     +0.527        [-0.125,1.074]    0.0852
+    agentic-negonly        1.866   0.178     +0.130        [-0.479,0.590]    0.7042
+
+==============================================================================
+4. REWARD GEOMETRY — implications for RL
+==============================================================================
+
+### 4a. distribution shape
+
+  good_spread is the usable advantage signal inside a group of
+  plausible rollouts; headroom is 1-gold; saturation is the share of
+  degraded responses already >= 0.8.
+
+  good_spread
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.215   0.013     +0.033         [0.013,0.053]    0.0013**
+    baseline               0.181   0.010(reference)
+    agentic-noval          0.174   0.010     -0.007        [-0.023,0.008]    0.3649
+    agentic                0.200   0.012     +0.018         [0.001,0.037]    0.0475*
+    agentic-goldonly       0.193   0.011     +0.012        [-0.006,0.031]    0.2053
+    agentic-negonly        0.179   0.010     -0.002        [-0.018,0.014]    0.8131
+
+  good_range
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.395   0.024     +0.061         [0.024,0.097]    0.0016**
+    baseline               0.334   0.019(reference)
+    agentic-noval          0.324   0.018     -0.010        [-0.039,0.020]    0.5038
+    agentic                0.372   0.022     +0.038         [0.005,0.072]    0.0266*
+    agentic-goldonly       0.359   0.021     +0.025        [-0.009,0.060]    0.1559
+    agentic-negonly        0.335   0.018     +0.001        [-0.030,0.031]    0.9691
+
+  headroom
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.302   0.027     +0.007        [-0.030,0.043]    0.7054
+    baseline               0.295   0.028(reference)
+    agentic-noval          0.310   0.027     +0.014        [-0.017,0.047]    0.3836
+    agentic                0.183   0.025     -0.112       [-0.151,-0.075]    0.0001***
+    agentic-goldonly       0.171   0.023     -0.124       [-0.164,-0.086]    0.0001***
+    agentic-negonly        0.274   0.026     -0.022        [-0.056,0.013]    0.2240
+
+  saturation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.099   0.013     +0.018        [-0.008,0.044]    0.2100
+    baseline               0.081   0.011(reference)
+    agentic-noval          0.054   0.010     -0.028       [-0.052,-0.003]    0.0344*
+    agentic                0.130   0.014     +0.049         [0.021,0.076]    0.0012**
+    agentic-goldonly       0.128   0.013     +0.047         [0.021,0.073]    0.0009***
+    agentic-negonly        0.078   0.011     -0.003        [-0.028,0.021]    0.9019
+
+  mean_level
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.443   0.012     -0.005        [-0.026,0.016]    0.6473
+    baseline               0.448   0.013(reference)
+    agentic-noval          0.435   0.013     -0.013        [-0.036,0.009]    0.2628
+    agentic                0.482   0.013     +0.034         [0.006,0.062]    0.0177*
+    agentic-goldonly       0.490   0.013     +0.041         [0.015,0.069]    0.0033**
+    agentic-negonly        0.439   0.014     -0.010        [-0.034,0.015]    0.4603
+
+==============================================================================
+5. JUDGE STABILITY — kappa vs its base rate
+==============================================================================
+
+  source                agreement    kappa    PABAK  pass rate  gold pass  n_kappa
+  shipped                       —        —        —      0.440      0.685        0
+  baseline                      —        —        —      0.433      0.685        0
+  agentic-noval                 —        —        —      0.395      0.628        0
+  agentic                       —        —        —      0.463      0.796        0
+  agentic-goldonly              —        —        —      0.472      0.810        0
+  agentic-negonly               —        —        —      0.400      0.665        0
+
+  Kappa falls when verdicts are one-sided even if raters never disagree.
+  Read agreement and PABAK alongside the criterion pass rate before concluding
+  that judge stability actually degraded.
+
+
+==============================================================================
+PER-DOMAIN: rar_medicine (n=57)
+==============================================================================
+
+### gold-excluded discrimination
+
+  ranking_accuracy
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.784   0.020     -0.020        [-0.065,0.024]    0.4041
+    baseline               0.805   0.014(reference)
+    agentic-noval          0.787   0.016     -0.018        [-0.056,0.019]    0.3798
+    agentic                0.804   0.014     -0.001        [-0.034,0.033]    1.0000
+    agentic-goldonly       0.822   0.016     +0.018        [-0.018,0.054]    0.3570
+    agentic-negonly        0.790   0.013     -0.014        [-0.046,0.016]    0.3982
+
+  auc
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.803   0.031     -0.080       [-0.145,-0.016]    0.0174*
+    baseline               0.883   0.018(reference)
+    agentic-noval          0.842   0.022     -0.041        [-0.089,0.006]    0.1054
+    agentic                0.897   0.017     +0.014        [-0.026,0.056]    0.5227
+    agentic-goldonly       0.894   0.018     +0.011        [-0.029,0.052]    0.6354
+    agentic-negonly        0.879   0.017     -0.003        [-0.041,0.035]    0.9091
+
+  separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.261   0.024     -0.079       [-0.126,-0.029]    0.0016**
+    baseline               0.340   0.019(reference)
+    agentic-noval          0.272   0.021     -0.068       [-0.106,-0.031]    0.0016**
+    agentic                0.360   0.019     +0.020        [-0.019,0.059]    0.3109
+    agentic-goldonly       0.373   0.025     +0.033        [-0.014,0.080]    0.1835
+    agentic-negonly        0.311   0.018     -0.029        [-0.064,0.007]    0.1266
+
+  z_separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                1.046   0.088     -0.232       [-0.395,-0.075]    0.0053**
+    baseline               1.279   0.057(reference)
+    agentic-noval          1.189   0.076     -0.089        [-0.229,0.045]    0.2041
+    agentic                1.367   0.054     +0.088        [-0.020,0.200]    0.1263
+    agentic-goldonly       1.331   0.066     +0.052        [-0.073,0.176]    0.4260
+    agentic-negonly        1.306   0.056     +0.028        [-0.081,0.140]    0.6246
+
+  spread
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.673   0.023     -0.004        [-0.046,0.038]    0.8389
+    baseline               0.677   0.019(reference)
+    agentic-noval          0.559   0.020     -0.118       [-0.162,-0.072]    0.0001***
+    agentic                0.659   0.019     -0.018        [-0.055,0.021]    0.3684
+    agentic-goldonly       0.677   0.019     -0.000        [-0.043,0.043]    0.9918
+    agentic-negonly        0.597   0.020     -0.080       [-0.119,-0.042]    0.0001***
+
+
+==============================================================================
+PER-DOMAIN: rar_science (n=52)
+==============================================================================
+
+### gold-excluded discrimination
+
+  ranking_accuracy
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.659   0.020     -0.016        [-0.054,0.022]    0.4495
+    baseline               0.675   0.019(reference)
+    agentic-noval          0.701   0.019     +0.026        [-0.012,0.062]    0.1999
+    agentic                0.718   0.018     +0.043         [0.003,0.082]    0.0441*
+    agentic-goldonly       0.739   0.018     +0.064         [0.022,0.106]    0.0055**
+    agentic-negonly        0.709   0.020     +0.034        [-0.008,0.073]    0.1176
+
+  auc
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.594   0.036     -0.004        [-0.075,0.071]    0.9493
+    baseline               0.597   0.032(reference)
+    agentic-noval          0.662   0.030     +0.065         [0.010,0.120]    0.0329*
+    agentic                0.691   0.027     +0.094         [0.036,0.151]    0.0020**
+    agentic-goldonly       0.726   0.025     +0.129         [0.065,0.191]    0.0003***
+    agentic-negonly        0.665   0.031     +0.067         [0.006,0.126]    0.0342*
+
+  separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.045   0.032     -0.006        [-0.059,0.048]    0.8192
+    baseline               0.052   0.023(reference)
+    agentic-noval          0.110   0.020     +0.058         [0.022,0.094]    0.0028**
+    agentic                0.159   0.022     +0.108         [0.063,0.151]    0.0001***
+    agentic-goldonly       0.193   0.024     +0.142         [0.091,0.193]    0.0001***
+    agentic-negonly        0.114   0.019     +0.062         [0.022,0.101]    0.0036**
+
+  z_separation
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.258   0.114     -0.019        [-0.249,0.219]    0.8717
+    baseline               0.277   0.103(reference)
+    agentic-noval          0.519   0.098     +0.242         [0.061,0.423]    0.0112*
+    agentic                0.618   0.093     +0.340         [0.138,0.542]    0.0013**
+    agentic-goldonly       0.758   0.083     +0.424         [0.226,0.627]    0.0002***
+    agentic-negonly        0.523   0.101     +0.246         [0.048,0.442]    0.0176*
+
+  spread
+    source                  mean      SE   Δ vs ref                95% CI         p
+    shipped                0.690   0.025     +0.118         [0.066,0.169]    0.0003***
+    baseline               0.572   0.023(reference)
+    agentic-noval          0.500   0.026     -0.072       [-0.121,-0.026]    0.0040**
+    agentic                0.630   0.024     +0.058         [0.007,0.110]    0.0267*
+    agentic-goldonly       0.607   0.028     +0.035        [-0.033,0.098]    0.3057
+    agentic-negonly        0.526   0.028     -0.045        [-0.101,0.010]    0.1177

@@ -1,0 +1,32 @@
+{
+  "calls": 1988,
+  "cache_hits": 1871,
+  "api_calls": 119,
+  "retries": 2,
+  "empty_responses": 2,
+  "failures": 0,
+  "json_parse_failures": 28,
+  "prompt_chars": 0,
+  "response_chars": 351554,
+  "reasoning_chars": 1793150,
+  "wall_seconds": 7331.175780534744,
+  "by_tag": {
+    "gen:agentic:decompose": 200,
+    "gen:agentic:decompose:json_repair": 3,
+    "gen:agentic:rollout": 600,
+    "gen:agentic:reconcile": 200,
+    "gen:agentic:pitfalls": 200,
+    "gen:agentic:draft": 200,
+    "gen:agentic:calibrate": 200,
+    "gen:agentic:pitfalls:json_repair": 13,
+    "gen:agentic:lint": 125,
+    "gen:agentic:draft:json_repair": 9,
+    "gen:agentic:lint:json_repair": 2,
+    "gen:agentic:critic:gold": 66,
+    "gen:agentic:critic:negative": 169,
+    "gen:agentic:calibrate:json_repair": 1
+  },
+  "cache_hit_rate": 0.9411468812877264,
+  "model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
+  "concurrency": 48
+}

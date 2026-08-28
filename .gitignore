@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+.env
+
+# LLM response cache: reproducible but large and machine-local.
+runs/cache/
+
+# Run artefacts. The per-question rows are kept: every table in the report is
+# computed from them, so without them no number can be re-derived or checked.
+# The per-criterion rows are not — they run to ~50 MB and exist to answer
+# after-the-fact questions on the machine that produced them, not to be shipped.
+runs/*/traces/
+runs/*/metrics/*_per_criterion_rows.jsonl
+runs/*/metrics/*_per_response_rows.jsonl
+runs/*/metrics/*_per_rollout_rows.jsonl
+runs/_selftest/
+nohup.out
+*.log
+logs/
+
+# The parquet corpora are inputs, not outputs.
+data/
+*.pdf

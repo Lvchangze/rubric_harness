@@ -1,0 +1,70 @@
+{
+  "rar_science": {
+    "recyclable_criterion_rate_pct": 17.67,
+    "mean_recyclable_items_per_question": 1.326,
+    "questions_with_ge2_recyclable_items_pct": 36.86,
+    "questions_with_ge3_recyclable_items_pct": 16.21,
+    "questions_with_zero_recyclable_items_pct": 28.63,
+    "generic_and_subjective_rate_pct": 13.7,
+    "mass_produced_title_rate_pct": 42.27,
+    "multiple_choice": {
+      "n_questions": 2146,
+      "pct_of_questions": 9.36,
+      "mean_criteria": 7.44,
+      "criteria_referring_to_an_answer_option_pct": 42.19,
+      "non_answer_criteria_per_mcq_question": 4.3
+    },
+    "reward_share_of_generic_criteria": {
+      "pct_of_total_absolute_weight_on_generic_criteria": 24.56,
+      "pct_of_total_absolute_weight_on_subjective_or_style_criteria": 40.18
+    },
+    "pitfall_polarity": {
+      "n_pitfall_criteria": 22348,
+      "failure_describing_pct": 6.77,
+      "avoidance_describing_pct": 80.33,
+      "unclassified_pct": 12.9,
+      "questions_mixing_both_phrasings_pct": 0.18,
+      "negative_weight_on_failure_describing_pct": 100.0,
+      "negative_weight_on_avoidance_describing_pct": 100.0
+    },
+    "weight_order_violations": {
+      "n_ordered_pairs": 310260,
+      "pairs_where_lower_category_weighs_ge_higher_pct": 8.64,
+      "questions_with_at_least_one_violation_pct": 41.3
+    }
+  },
+  "rar_medicine": {
+    "recyclable_criterion_rate_pct": 11.6,
+    "mean_recyclable_items_per_question": 1.111,
+    "questions_with_ge2_recyclable_items_pct": 29.18,
+    "questions_with_ge3_recyclable_items_pct": 8.65,
+    "questions_with_zero_recyclable_items_pct": 29.17,
+    "generic_and_subjective_rate_pct": 10.38,
+    "mass_produced_title_rate_pct": 25.26,
+    "multiple_choice": {
+      "n_questions": 93,
+      "pct_of_questions": 0.42,
+      "mean_criteria": 9.41,
+      "criteria_referring_to_an_answer_option_pct": 25.14,
+      "non_answer_criteria_per_mcq_question": 7.04
+    },
+    "reward_share_of_generic_criteria": {
+      "pct_of_total_absolute_weight_on_generic_criteria": 15.2,
+      "pct_of_total_absolute_weight_on_subjective_or_style_criteria": 21.25
+    },
+    "pitfall_polarity": {
+      "n_pitfall_criteria": 30397,
+      "failure_describing_pct": 88.11,
+      "avoidance_describing_pct": 2.9,
+      "unclassified_pct": 8.99,
+      "questions_mixing_both_phrasings_pct": 1.77,
+      "negative_weight_on_failure_describing_pct": 100.0,
+      "negative_weight_on_avoidance_describing_pct": 100.0
+    },
+    "weight_order_violations": {
+      "n_ordered_pairs": 487760,
+      "pairs_where_lower_category_weighs_ge_higher_pct": 0.0,
+      "questions_with_at_least_one_violation_pct": 0.0
+    }
+  }
+}

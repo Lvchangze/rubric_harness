@@ -1,0 +1,227 @@
+{
+  "rar_science": {
+    "rare_token_docfreq_cutoff": 229,
+    "n_rare_tokens": 47997,
+    "anchor_grounding": {
+      "generic_criterion_rate_pct": 28.87,
+      "generic_rate_permutation_control_pct": 96.39,
+      "specificity_lift_pct_points": 67.52,
+      "strictly_generic_rate_ge2_anchors_pct": 52.61,
+      "mean_anchors_per_criterion": 1.777,
+      "median_anchors_per_criterion": 1.0,
+      "questions_with_zero_grounded_criteria_pct": 0.93,
+      "questions_with_majority_generic_criteria_pct": 16.66,
+      "by_category": {
+        "Essential": {
+          "n": 52605,
+          "generic_rate_pct": 14.93,
+          "mean_anchors": 2.437
+        },
+        "Important": {
+          "n": 58345,
+          "generic_rate_pct": 23.0,
+          "mean_anchors": 1.953
+        },
+        "MISSING": {
+          "n": 837,
+          "generic_rate_pct": 30.7,
+          "mean_anchors": 1.613
+        },
+        "Optional": {
+          "n": 37882,
+          "generic_rate_pct": 52.32,
+          "mean_anchors": 0.927
+        },
+        "Pitfall": {
+          "n": 22348,
+          "generic_rate_pct": 37.22,
+          "mean_anchors": 1.21
+        }
+      },
+      "by_reference_answer_length": {
+        "1-5": {
+          "n_criteria": 35606,
+          "generic_rate_pct": 37.0,
+          "mean_anchors": 1.319
+        },
+        "6-20": {
+          "n_criteria": 35373,
+          "generic_rate_pct": 31.71,
+          "mean_anchors": 1.596
+        },
+        "21-60": {
+          "n_criteria": 56904,
+          "generic_rate_pct": 24.25,
+          "mean_anchors": 1.999
+        },
+        "61-150": {
+          "n_criteria": 27698,
+          "generic_rate_pct": 26.99,
+          "mean_anchors": 2.02
+        },
+        ">150": {
+          "n_criteria": 16436,
+          "generic_rate_pct": 24.34,
+          "mean_anchors": 1.984
+        }
+      }
+    },
+    "attribution_retrieval": {
+      "sample_criteria": 60000,
+      "n_distractor_questions": 1000,
+      "top1_attribution_accuracy_pct": 56.82,
+      "top5_attribution_accuracy_pct": 71.77,
+      "random_baseline_top1_pct": 0.1,
+      "mean_own_question_cosine": 0.217,
+      "mean_best_distractor_cosine": 0.166,
+      "criteria_with_zero_own_question_overlap_pct": 10.08,
+      "criteria_beaten_by_ge_10_distractors_pct": 23.66
+    },
+    "reference_coupling": {
+      "mean_trigram_overlap_with_reference": 0.017,
+      "mean_4gram_overlap_with_reference": 0.0071,
+      "mean_4gram_overlap_with_question": 0.0097,
+      "criteria_with_ge50pct_trigram_overlap_pct": 0.43,
+      "criteria_with_ge30pct_trigram_overlap_pct": 1.36,
+      "criteria_with_zero_trigram_overlap_pct": 90.36,
+      "criteria_leaking_reference_only_number_pct": 6.82,
+      "questions_with_any_leaked_number_pct": 28.49
+    },
+    "subquestion_coverage": {
+      "questions_with_detected_subparts_pct": 2.95,
+      "questions_that_are_multiple_choice_pct": 9.36,
+      "mean_rubric_items_multiple_choice": 7.44,
+      "n_multi_part_questions": 677,
+      "mean_rubric_items_single_part": 7.49,
+      "mean_rubric_items_multi_part": 7.99,
+      "extra_items_per_additional_subpart": 0.272,
+      "rubric_items_by_n_subparts": {
+        "2": {
+          "n_questions": 391,
+          "mean_rubric_items": 7.92,
+          "mean_items_per_subpart": 3.96
+        },
+        "3": {
+          "n_questions": 185,
+          "mean_rubric_items": 7.92,
+          "mean_items_per_subpart": 2.64
+        },
+        "4": {
+          "n_questions": 78,
+          "mean_rubric_items": 8.29,
+          "mean_items_per_subpart": 2.07
+        }
+      },
+      "n_subparts_scored": 1777,
+      "min_cosine_threshold": 0.08,
+      "mean_best_subpart_to_criterion_cosine": 0.3576,
+      "orphan_subpart_rate_pct": 4.45,
+      "multi_part_questions_with_any_orphan_subpart_pct": 8.71,
+      "multi_part_questions_naming_at_least_one_part_label_pct": 33.97
+    }
+  },
+  "rar_medicine": {
+    "rare_token_docfreq_cutoff": 224,
+    "n_rare_tokens": 49573,
+    "anchor_grounding": {
+      "generic_criterion_rate_pct": 21.97,
+      "generic_rate_permutation_control_pct": 98.54,
+      "specificity_lift_pct_points": 76.57,
+      "strictly_generic_rate_ge2_anchors_pct": 43.53,
+      "mean_anchors_per_criterion": 2.066,
+      "median_anchors_per_criterion": 2.0,
+      "questions_with_zero_grounded_criteria_pct": 0.07,
+      "questions_with_majority_generic_criteria_pct": 4.37,
+      "by_category": {
+        "Essential": {
+          "n": 46368,
+          "generic_rate_pct": 8.73,
+          "mean_anchors": 2.691
+        },
+        "Important": {
+          "n": 77245,
+          "generic_rate_pct": 10.09,
+          "mean_anchors": 2.65
+        },
+        "MALFORMED": {
+          "n": 5,
+          "generic_rate_pct": 40.0,
+          "mean_anchors": 1.0
+        },
+        "MISSING": {
+          "n": 10,
+          "generic_rate_pct": 10.0,
+          "mean_anchors": 3.0
+        },
+        "Optional": {
+          "n": 60633,
+          "generic_rate_pct": 43.93,
+          "mean_anchors": 1.147
+        },
+        "Pitfall": {
+          "n": 30397,
+          "generic_rate_pct": 28.55,
+          "mean_anchors": 1.458
+        }
+      },
+      "by_reference_answer_length": {
+        "1-5": {
+          "n_criteria": 14631,
+          "generic_rate_pct": 36.5,
+          "mean_anchors": 1.179
+        },
+        "6-20": {
+          "n_criteria": 10486,
+          "generic_rate_pct": 38.27,
+          "mean_anchors": 1.25
+        },
+        "21-60": {
+          "n_criteria": 35064,
+          "generic_rate_pct": 22.55,
+          "mean_anchors": 2.058
+        },
+        "61-150": {
+          "n_criteria": 131493,
+          "generic_rate_pct": 20.2,
+          "mean_anchors": 2.149
+        },
+        ">150": {
+          "n_criteria": 22984,
+          "generic_rate_pct": 14.58,
+          "mean_anchors": 2.537
+        }
+      }
+    },
+    "attribution_retrieval": {
+      "sample_criteria": 60000,
+      "n_distractor_questions": 1000,
+      "top1_attribution_accuracy_pct": 71.88,
+      "top5_attribution_accuracy_pct": 82.88,
+      "random_baseline_top1_pct": 0.1,
+      "mean_own_question_cosine": 0.269,
+      "mean_best_distractor_cosine": 0.1571,
+      "criteria_with_zero_own_question_overlap_pct": 7.56,
+      "criteria_beaten_by_ge_10_distractors_pct": 15.07
+    },
+    "reference_coupling": {
+      "mean_trigram_overlap_with_reference": 0.1092,
+      "mean_4gram_overlap_with_reference": 0.0593,
+      "mean_4gram_overlap_with_question": 0.0164,
+      "criteria_with_ge50pct_trigram_overlap_pct": 7.41,
+      "criteria_with_ge30pct_trigram_overlap_pct": 15.11,
+      "criteria_with_zero_trigram_overlap_pct": 66.78,
+      "criteria_leaking_reference_only_number_pct": 2.97,
+      "questions_with_any_leaked_number_pct": 12.15
+    },
+    "subquestion_coverage": {
+      "questions_with_detected_subparts_pct": 0.0,
+      "questions_that_are_multiple_choice_pct": 0.42,
+      "mean_rubric_items_multiple_choice": 9.41,
+      "n_multi_part_questions": 0,
+      "mean_rubric_items_single_part": 9.58,
+      "mean_rubric_items_multi_part": null,
+      "extra_items_per_additional_subpart": null,
+      "rubric_items_by_n_subparts": {}
+    }
+  }
+}

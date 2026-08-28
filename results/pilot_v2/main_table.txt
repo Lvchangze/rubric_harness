@@ -1,0 +1,355 @@
+
+## Discriminative validity (main result)
+
+  paired questions n=198; reference column = `baseline`; values x1
+
+### Mean margin (gold - degraded)  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.239    0.019      -0.033  [-0.054,-0.012]    0.0046**
+    baseline             0.272    0.018 (reference)
+    agentic-noval        0.274    0.016      +0.001  [-0.018,+0.021]      0.89
+    agentic              0.385    0.016      +0.113  [+0.089,+0.136]    0.0001***
+
+### Pairwise ranking accuracy  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.737    0.011      -0.034  [-0.052,-0.015]    0.0003***
+    baseline             0.771    0.011 (reference)
+    agentic-noval        0.762    0.010      -0.008  [-0.026,+0.010]      0.35
+    agentic              0.801    0.009      +0.030  [+0.013,+0.047]    0.0007***
+
+### AUC gold vs degraded  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.775    0.020      -0.048  [-0.073,-0.024]    0.0002***
+    baseline             0.823    0.018 (reference)
+    agentic-noval        0.827    0.017      +0.003  [-0.022,+0.028]       0.8
+    agentic              0.869    0.015      +0.046  [+0.022,+0.070]    0.0005***
+
+### AUC good vs bad  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.737    0.016      -0.049  [-0.076,-0.021]    0.0006***
+    baseline             0.787    0.015 (reference)
+    agentic-noval        0.793    0.015      +0.006  [-0.016,+0.030]      0.58
+    agentic              0.842    0.013      +0.055  [+0.033,+0.078]    0.0001***
+
+### Score dynamic range  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.737    0.013      +0.050  [+0.023,+0.077]    0.0005***
+    baseline             0.687    0.013 (reference)
+    agentic-noval        0.639    0.016      -0.048  [-0.073,-0.023]    0.0005***
+    agentic              0.769    0.014      +0.081  [+0.055,+0.107]    0.0001***
+
+### Saturation rate  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.108    0.010      +0.013  [-0.008,+0.033]      0.24
+    baseline             0.095    0.010 (reference)
+    agentic-noval        0.076    0.009      -0.019  [-0.038,+0.000]     0.055
+    agentic              0.151    0.012      +0.055  [+0.031,+0.081]    0.0001***
+
+### Reward hack: verbose-empty score  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.357    0.016      +0.039  [+0.012,+0.066]    0.0043**
+    baseline             0.318    0.014 (reference)
+    agentic-noval        0.313    0.013      -0.004  [-0.034,+0.025]      0.78
+    agentic              0.290    0.014      -0.027  [-0.058,+0.002]     0.077
+
+### Reward hack: confident-wrong score  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.515    0.017      +0.025  [-0.003,+0.054]     0.089
+    baseline             0.490    0.015 (reference)
+    agentic-noval        0.471    0.017      -0.019  [-0.044,+0.008]      0.15
+    agentic              0.504    0.018      +0.013  [-0.018,+0.044]      0.39
+
+### Margin vs off-topic  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.556    0.022      -0.004  [-0.033,+0.023]      0.77
+    baseline             0.560    0.021 (reference)
+    agentic-noval        0.532    0.021      -0.028  [-0.054,-0.001]     0.048*
+    agentic              0.694    0.020      +0.134  [+0.105,+0.162]    0.0001***
+
+### Margin vs verbose-empty  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.282    0.030      -0.074  [-0.110,-0.038]    0.0001***
+    baseline             0.354    0.027 (reference)
+    agentic-noval        0.352    0.025      -0.005  [-0.038,+0.029]       0.8
+    agentic              0.523    0.024      +0.168  [+0.134,+0.203]    0.0001***
+
+### Margin vs numeric-error  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.216    0.023      -0.055  [-0.086,-0.024]    0.0009***
+    baseline             0.271    0.021 (reference)
+    agentic-noval        0.283    0.020      +0.010  [-0.016,+0.036]      0.46
+    agentic              0.380    0.021      +0.109  [+0.080,+0.140]    0.0001***
+
+### Margin vs missing-step  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.028    0.020      -0.040  [-0.068,-0.012]    0.0052**
+    baseline             0.067    0.016 (reference)
+    agentic-noval        0.070    0.014      +0.003  [-0.020,+0.026]      0.82
+    agentic              0.113    0.016      +0.045  [+0.018,+0.073]    0.0017**
+
+### Margin vs right-method-wrong-answer  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.124    0.025      -0.060  [-0.095,-0.024]    0.0011**
+    baseline             0.184    0.024 (reference)
+    agentic-noval        0.193    0.022      +0.009  [-0.022,+0.039]      0.59
+    agentic              0.310    0.023      +0.127  [+0.090,+0.164]    0.0001***
+
+### Margin vs terse-correct  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.287    0.024      +0.045  [+0.014,+0.075]    0.0057**
+    baseline             0.242    0.018 (reference)
+    agentic-noval        0.250    0.017      +0.008  [-0.018,+0.034]      0.56
+    agentic              0.305    0.021      +0.063  [+0.039,+0.088]    0.0001***
+
+### Score on gold  (descriptive)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.639    0.022      -0.035  [-0.060,-0.009]     0.011*
+    baseline             0.674    0.022 (reference)
+    agentic-noval        0.665    0.022      -0.009  [-0.033,+0.016]      0.49
+    agentic              0.814    0.020      +0.140  [+0.109,+0.170]    0.0001***
+
+### Score on off-topic  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.083    0.008      -0.030  [-0.051,-0.010]    0.0032**
+    baseline             0.114    0.007 (reference)
+    agentic-noval        0.133    0.008      +0.019  [-0.003,+0.040]     0.081
+    agentic              0.120    0.009      +0.006  [-0.017,+0.029]      0.61
+
+
+## Grounding / query-specificity (zero-LLM)
+
+  paired questions n=198; reference column = `baseline`; values x100
+
+### Generic (recyclable) criterion rate  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             22.642    1.260      +1.667  [-0.913,+4.174]      0.19
+    baseline            20.975    1.468 (reference)
+    agentic-noval        8.932    1.180     -12.042  [-14.452,-9.745]    0.0001***
+    agentic              9.501    1.308     -11.474  [-14.023,-9.017]    0.0001***
+
+### Weight mass on generic criteria  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             18.013    1.221      -0.479  [-3.041,+1.961]       0.7
+    baseline            18.493    1.461 (reference)
+    agentic-noval        8.637    1.160      -9.855  [-12.268,-7.601]    0.0001***
+    agentic              9.011    1.274      -9.481  [-12.068,-7.044]    0.0001***
+
+### Subjective/style criterion rate  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             31.968    1.311     +13.828  [+10.988,+16.617]    0.0001***
+    baseline            18.140    1.290 (reference)
+    agentic-noval        7.336    0.973     -10.804  [-12.993,-8.673]    0.0001***
+    agentic              7.798    1.124     -10.342  [-12.736,-7.961]    0.0001***
+
+### Weakly grounded criterion rate  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             46.442    1.644      +5.444  [+2.419,+8.408]    0.0008***
+    baseline            40.998    1.865 (reference)
+    agentic-noval       28.538    1.881     -12.461  [-15.409,-9.481]    0.0001***
+    agentic             27.125    1.871     -13.873  [-17.146,-10.639]    0.0001***
+
+### Specificity lift vs permuted  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             75.472    1.365      -0.865  [-3.587,+1.937]      0.54
+    baseline            76.337    1.627 (reference)
+    agentic-noval       87.138    1.409     +10.801  [+8.379,+13.298]    0.0001***
+    agentic             86.173    1.597      +9.836  [+7.226,+12.579]    0.0001***
+
+
+## Grounding: anchor counts (zero-LLM)
+
+  paired questions n=198; reference column = `baseline`; values x1
+
+### Anchors per criterion  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              2.033    0.072      -0.157  [-0.259,-0.054]    0.0033**
+    baseline             2.191    0.073 (reference)
+    agentic-noval        2.735    0.086      +0.544  [+0.438,+0.651]    0.0001***
+    agentic              2.821    0.091      +0.630  [+0.508,+0.754]    0.0001***
+
+
+## Schema and prompt-compliance lint (zero-LLM)
+
+  paired questions n=198; reference column = `baseline`; values x100
+
+### RaR prompt-constraint compliance  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             89.333    0.864      +1.463  [-0.642,+3.590]      0.19
+    baseline            87.870    1.014 (reference)
+    agentic-noval       77.852    1.349     -10.017  [-12.534,-7.576]    0.0001***
+    agentic             71.856    1.532     -16.014  [-18.908,-13.192]    0.0001***
+
+### Single-polarity rubric rate  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             52.020    3.550     +35.354  [+27.778,+42.929]    0.0001***
+    baseline            16.667    2.649 (reference)
+    agentic-noval      100.000    0.000     +83.333  [+78.283,+88.384]    0.0001***
+    agentic            100.000    0.000     +83.333  [+78.283,+88.384]    0.0001***
+
+### Unclassified-polarity rate  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              1.868    0.319      -4.877  [-6.164,-3.583]    0.0001***
+    baseline             6.745    0.591 (reference)
+    agentic-noval        0.000    0.000      -6.745  [-7.921,-5.615]    0.0001***
+    agentic              0.000    0.000      -6.745  [-7.921,-5.615]    0.0001***
+
+### Pitfall-mirror (double-count) rate  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              7.576    1.881     -18.182  [-24.747,-11.616]    0.0001***
+    baseline            25.758    3.108 (reference)
+    agentic-noval       21.212    2.905      -4.545  [-12.626,+3.535]      0.34
+    agentic             20.202    2.853      -5.556  [-13.636,+2.525]      0.22
+
+
+## Coverage of the reference answer
+
+  paired questions n=198; reference column = `baseline`; values x100
+
+### Gold-claim recall  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             96.655    0.595      +0.788  [-0.583,+2.208]      0.28
+    baseline            95.867    0.663 (reference)
+    agentic-noval       96.960    0.543      +1.093  [-0.201,+2.412]      0.11
+    agentic             95.685    0.752      -0.182  [-2.035,+1.637]      0.84
+
+### Core gold-claim recall  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             97.733    0.677      +0.515  [-0.663,+1.678]       0.4
+    baseline            97.218    0.706 (reference)
+    agentic-noval       98.018    0.620      +0.800  [-0.277,+1.963]      0.17
+    agentic             96.546    0.832      -0.672  [-2.375,+0.990]      0.44
+
+### Criterion groundedness (precision)  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             58.942    1.464      -5.757  [-8.702,-2.769]    0.0003***
+    baseline            64.699    1.861 (reference)
+    agentic-noval       61.720    2.194      -2.979  [-5.834,-0.100]     0.044*
+    agentic             76.500    1.929     +11.801  [+8.847,+14.806]    0.0001***
+
+### Unsupported criterion fraction  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             19.050    1.435      -6.301  [-9.384,-3.261]    0.0001***
+    baseline            25.351    1.911 (reference)
+    agentic-noval       36.164    2.198     +10.814  [+8.031,+13.588]    0.0001***
+    agentic             22.571    1.938      -2.779  [-5.749,+0.131]     0.062
+
+### Generic criterion fraction (LLM-judged)  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             22.009    0.934     +12.059  [+9.820,+14.265]    0.0001***
+    baseline             9.950    0.776 (reference)
+    agentic-noval        2.115    0.436      -7.835  [-9.631,-6.139]    0.0001***
+    agentic              0.929    0.268      -9.022  [-10.512,-7.607]    0.0001***
+
+### Sub-question coverage  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped            100.000    0.000      +0.000  [+0.000,+0.000]         1
+    baseline           100.000    0.000 (reference)
+    agentic-noval      100.000    0.000      +0.000  [+0.000,+0.000]         1
+    agentic             97.361    1.088      -2.639  [-4.954,-0.741]     0.032*
+
+
+## Transferability / query-specificity (LLM)
+
+  paired questions n=198; reference column = `baseline`; values x100
+
+### Same-question gold pass rate  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             62.117    2.172      -3.586  [-6.198,-1.021]    0.0093**
+    baseline            65.703    2.273 (reference)
+    agentic-noval       61.619    2.218      -4.084  [-6.667,-1.480]    0.0028**
+    agentic             78.940    2.126     +13.237  [+10.161,+16.342]    0.0001***
+
+### Cross-question pass rate  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              7.147    0.570      -3.609  [-5.263,-1.984]    0.0001***
+    baseline            10.756    0.664 (reference)
+    agentic-noval       10.571    0.621      -0.185  [-1.894,+1.522]      0.83
+    agentic              9.662    0.746      -1.094  [-3.072,+0.927]      0.28
+
+### Specificity gap  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             54.970    2.150      +0.022  [-2.561,+2.661]      0.99
+    baseline            54.947    2.195 (reference)
+    agentic-noval       51.048    2.144      -3.899  [-6.461,-1.309]    0.0043**
+    agentic             69.279    2.087     +14.331  [+11.600,+17.099]    0.0001***
+
+### Boilerplate criterion fraction  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              5.124    0.507      -4.292  [-5.769,-2.838]    0.0001***
+    baseline             9.415    0.619 (reference)
+    agentic-noval        8.334    0.678      -1.081  [-2.744,+0.599]       0.2
+    agentic              7.347    0.775      -2.068  [-4.014,-0.096]     0.036*
+
+### Query-specific criterion fraction  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             54.756    2.173      -0.078  [-2.700,+2.566]      0.96
+    baseline            54.834    2.142 (reference)
+    agentic-noval       49.417    2.082      -5.417  [-7.847,-2.931]    0.0003***
+    agentic             67.165    2.106     +12.332  [+9.616,+15.061]    0.0001***
+
+
+## Intrinsic quality (rates)
+
+  paired questions n=198; reference column = `baseline`; values x100
+
+### Objectively checkable fraction  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             70.460    1.273     -22.219  [-25.028,-19.437]    0.0001***
+    baseline            92.679    0.579 (reference)
+    agentic-noval       98.897    0.272      +6.218  [+4.964,+7.500]    0.0001***
+    agentic             98.903    0.270      +6.224  [+4.981,+7.515]    0.0001***
+
+### Subjective criterion fraction  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             28.332    1.245     +21.057  [+18.361,+23.831]    0.0001***
+    baseline             7.275    0.576 (reference)
+    agentic-noval        0.892    0.257      -6.382  [-7.655,-5.157]    0.0001***
+    agentic              0.770    0.220      -6.504  [-7.724,-5.354]    0.0001***
+
+### Self-agreement (Cohen's kappa)  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             73.715    2.584      -9.610  [-16.404,-3.102]    0.0059**
+    baseline            84.658    2.129 (reference)
+    agentic-noval       83.524    2.142      -0.108  [-6.284,+5.944]      0.97
+    agentic             72.161    3.756     -11.911  [-19.729,-4.473]    0.0026**
+
+### Self-agreement raw rate  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             92.900    0.740      -3.693  [-5.266,-2.252]    0.0001***
+    baseline            96.594    0.434 (reference)
+    agentic-noval       96.269    0.460      -0.325  [-1.510,+0.874]      0.59
+    agentic             96.699    0.503      +0.105  [-1.131,+1.331]      0.86
+
+### Atomic criterion fraction  (higher is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped             68.576    1.782     -10.904  [-14.529,-7.370]    0.0001***
+    baseline            79.480    1.493 (reference)
+    agentic-noval       75.449    1.616      -4.032  [-7.440,-0.583]     0.023*
+    agentic             79.848    1.361      +0.367  [-3.008,+3.772]      0.84
+
+
+## Intrinsic quality (scalars)
+
+  paired questions n=198; reference column = `baseline`; values x1
+
+### Checks per criterion (atomicity)  (lower is better)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              1.406    0.030      +0.159  [+0.101,+0.221]    0.0001***
+    baseline             1.248    0.019 (reference)
+    agentic-noval        1.289    0.020      +0.042  [-0.001,+0.084]     0.062
+    agentic              1.231    0.017      -0.017  [-0.060,+0.028]      0.47
+
+### Weight distribution entropy  (descriptive)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              2.036    0.011      -0.084  [-0.126,-0.042]    0.0003***
+    baseline             2.120    0.016 (reference)
+    agentic-noval        2.420    0.018      +0.300  [+0.270,+0.329]    0.0001***
+    agentic              2.174    0.023      +0.054  [+0.005,+0.103]     0.031*
+
+### Max single-criterion weight share  (descriptive)
+    source                mean       SE    Δ vs ref                  95% CI         p
+    shipped              0.181    0.002      +0.008  [+0.002,+0.014]     0.012*
+    baseline             0.172    0.003 (reference)
+    agentic-noval        0.136    0.003      -0.036  [-0.041,-0.032]    0.0001***
+    agentic              0.174    0.004      +0.001  [-0.007,+0.010]      0.74
+

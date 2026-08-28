@@ -1,0 +1,101 @@
+domain,rank,title,count,pct_of_criteria
+rar_science,1,unit consistency,1942,1.13
+rar_science,2,conciseness,1766,1.03
+rar_science,3,clarity and conciseness,1611,0.94
+rar_science,4,concise explanation,1441,0.84
+rar_science,5,final answer clarity,1026,0.6
+rar_science,6,step by step reasoning,956,0.56
+rar_science,7,conciseness and clarity,852,0.5
+rar_science,8,clarity and organization,691,0.4
+rar_science,9,avoid misinterpretation,654,0.38
+rar_science,10,numerical accuracy,572,0.33
+rar_science,11,assumption clarity,563,0.33
+rar_science,12,mathematical rigor,549,0.32
+rar_science,13,significant figures,495,0.29
+rar_science,14,final answer,491,0.29
+rar_science,15,avoid oversimplification,453,0.26
+rar_science,16,clarity and precision,442,0.26
+rar_science,17,avoid overgeneralization,440,0.26
+rar_science,18,avoiding misconceptions,401,0.23
+rar_science,19,units consistency,392,0.23
+rar_science,20,clarity and structure,385,0.22
+rar_science,21,concise presentation,381,0.22
+rar_science,22,clarity and completeness,377,0.22
+rar_science,23,mechanism explanation,377,0.22
+rar_science,24,physical interpretation,373,0.22
+rar_science,25,avoid misconceptions,370,0.22
+rar_science,26,step by step clarity,364,0.21
+rar_science,27,conceptual clarity,360,0.21
+rar_science,28,concise clarity,358,0.21
+rar_science,29,comparative analysis,353,0.21
+rar_science,30,correct formula,344,0.2
+rar_science,31,clarity and brevity,341,0.2
+rar_science,32,clear conclusion,339,0.2
+rar_science,33,logical reasoning,334,0.19
+rar_science,34,unit conversion,330,0.19
+rar_science,35,explanation clarity,325,0.19
+rar_science,36,terminology accuracy,323,0.19
+rar_science,37,avoiding misinterpretation,305,0.18
+rar_science,38,clear explanation,304,0.18
+rar_science,39,mathematical derivation,302,0.18
+rar_science,40,logical flow,292,0.17
+rar_science,41,clarity and detail,283,0.16
+rar_science,42,clear final answer,275,0.16
+rar_science,43,formula application,269,0.16
+rar_science,44,arithmetic accuracy,266,0.15
+rar_science,45,step by step explanation,265,0.15
+rar_science,46,misinterpretation avoidance,255,0.15
+rar_science,47,logical structure,233,0.14
+rar_science,48,logical organization,230,0.13
+rar_science,49,assumption clarification,227,0.13
+rar_science,50,mathematical clarity,217,0.13
+rar_medicine,1,conciseness,4140,1.93
+rar_medicine,2,avoids unnecessary detail,1664,0.78
+rar_medicine,3,contextual relevance,1451,0.68
+rar_medicine,4,avoids unnecessary details,1169,0.54
+rar_medicine,5,concise explanation,960,0.45
+rar_medicine,6,clear conclusion,895,0.42
+rar_medicine,7,brevity and clarity,746,0.35
+rar_medicine,8,identifies condition,744,0.35
+rar_medicine,9,identifies correct answer,620,0.29
+rar_medicine,10,avoids irrelevant details,595,0.28
+rar_medicine,11,patient centered language,534,0.25
+rar_medicine,12,correct diagnosis,521,0.24
+rar_medicine,13,brevity,514,0.24
+rar_medicine,14,identifies diagnosis,492,0.23
+rar_medicine,15,avoids misdiagnosis,430,0.2
+rar_medicine,16,empathetic tone,382,0.18
+rar_medicine,17,avoids misleading information,352,0.16
+rar_medicine,18,clarity and conciseness,344,0.16
+rar_medicine,19,avoids unrelated details,339,0.16
+rar_medicine,20,logical flow,323,0.15
+rar_medicine,21,avoids incorrect options,312,0.15
+rar_medicine,22,describes symptoms,308,0.14
+rar_medicine,23,identify condition,285,0.13
+rar_medicine,24,concise response,282,0.13
+rar_medicine,25,avoids unrelated conditions,258,0.12
+rar_medicine,26,clarity and precision,256,0.12
+rar_medicine,27,explains symptoms,247,0.12
+rar_medicine,28,concise conclusion,236,0.11
+rar_medicine,29,clear conclusion statement,222,0.1
+rar_medicine,30,correct answer identification,221,0.1
+rar_medicine,31,explanation before answer,219,0.1
+rar_medicine,32,clear and concise,200,0.09
+rar_medicine,33,patient centered approach,193,0.09
+rar_medicine,34,avoids incorrect diagnoses,193,0.09
+rar_medicine,35,mechanism explanation,193,0.09
+rar_medicine,36,explains mechanism,184,0.09
+rar_medicine,37,avoids unnecessary tests,182,0.08
+rar_medicine,38,clarity of explanation,179,0.08
+rar_medicine,39,order of explanation,177,0.08
+rar_medicine,40,avoids misidentification,177,0.08
+rar_medicine,41,explanation before conclusion,170,0.08
+rar_medicine,42,final answer statement,169,0.08
+rar_medicine,43,clear final answer,168,0.08
+rar_medicine,44,avoid unnecessary details,166,0.08
+rar_medicine,45,common mistake,165,0.08
+rar_medicine,46,conciseness and clarity,163,0.08
+rar_medicine,47,symptom explanation,162,0.08
+rar_medicine,48,mentions symptoms,162,0.08
+rar_medicine,49,avoid unnecessary detail,156,0.07
+rar_medicine,50,avoids overgeneralization,155,0.07

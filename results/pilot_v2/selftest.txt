@@ -1,0 +1,27 @@
+== byte-compile ==
+
+== module imports ==
+  25/25 modules import
+
+== CLI argument parsing ==
+  OK   gen_rubrics
+  OK   build_responses
+  OK   eval_rubrics
+  OK   aggregate_results
+  OK   main_table
+  OK   report_facts
+  OK   case_study
+  OK   check_prompt_fidelity
+  OK   _repair_jsonl
+  OK   confound_audit
+
+== metric dispatcher binds every signature ==
+  8/8 metrics bind
+
+== numeric self-tests ==
+  OK   harness.eval.stats
+
+== baseline prompt fidelity vs docs/00_paper_notes.md ==
+  OK   prompts verbatim
+
+ALL SELFTESTS PASSED

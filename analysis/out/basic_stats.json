@@ -1,0 +1,947 @@
+{
+  "rar_science": {
+    "domain": "rar_science",
+    "n_questions": 22917,
+    "n_criteria": 172017,
+    "rows_per_split": {
+      "train": 18333,
+      "val": 2292,
+      "test": 2292
+    },
+    "question_sources": {
+      "Meta/natural_reasoning": 11548,
+      "INFLYTECH/SCP-116K": 8793,
+      "General/VNet": 2576
+    },
+    "items_per_question": {
+      "name": "rubric_count",
+      "n": 22917,
+      "mean": 7.506,
+      "std": 0.802,
+      "min": 5.0,
+      "p25": 7.0,
+      "median": 7.0,
+      "p75": 8.0,
+      "p95": 9.0,
+      "max": 12.0,
+      "histogram": {
+        "5": 3,
+        "6": 4,
+        "7": 14795,
+        "8": 5576,
+        "9": 1618,
+        "10": 897,
+        "11": 15,
+        "12": 9
+      }
+    },
+    "item_count_degeneracy": {
+      "pearson_count_vs_question_words": 0.1895,
+      "pearson_count_vs_reference_words": 0.2423,
+      "count_coefficient_of_variation": 0.1068,
+      "modal_count_share_pct": 64.56,
+      "top2_counts_share_pct": 88.89,
+      "share_of_prompt_allowed_range_used_pct": 57.14
+    },
+    "category_distribution": {
+      "Important": {
+        "n": 58345,
+        "pct": 33.92
+      },
+      "Essential": {
+        "n": 52605,
+        "pct": 30.58
+      },
+      "Optional": {
+        "n": 37882,
+        "pct": 22.02
+      },
+      "Pitfall": {
+        "n": 22348,
+        "pct": 12.99
+      },
+      "MISSING": {
+        "n": 837,
+        "pct": 0.49
+      }
+    },
+    "description_words": {
+      "name": "description_words",
+      "n": 172017,
+      "mean": 24.42,
+      "std": 4.427,
+      "min": 7.0,
+      "p25": 21.0,
+      "median": 24.0,
+      "p75": 27.0,
+      "p95": 32.0,
+      "max": 52.0,
+      "histogram": {
+        "6-8": 4,
+        "8-9": 4,
+        "9-10": 25,
+        "10-11": 54,
+        "11-12": 138,
+        "12-13": 404,
+        "13-14": 688,
+        "14-16": 3626,
+        "16-17": 3764,
+        "17-18": 5568,
+        "18-19": 7610,
+        "19-20": 10038,
+        "20-21": 12392,
+        "21-22": 14318,
+        "22-23": 15494,
+        "23-25": 31398,
+        "25-26": 14150,
+        "26-27": 12436,
+        "27-28": 10569,
+        "28-29": 8208,
+        "29-30": 6304,
+        "30-31": 4706,
+        "31-32": 3254,
+        "32-34": 3910,
+        "34-35": 990,
+        "35-36": 700,
+        "36-37": 455,
+        "37-38": 279,
+        "38-39": 192,
+        "39-40": 126,
+        "40-41": 76,
+        "41-43": 81,
+        "43-44": 15,
+        "44-45": 11,
+        "45-46": 11,
+        "46-47": 8,
+        "47-48": 6,
+        "48-49": 3,
+        "49-50": 1,
+        "50-52": 1
+      }
+    },
+    "body_words_excl_prefix": {
+      "name": "body_words",
+      "n": 172017,
+      "mean": 22.429,
+      "std": 4.426,
+      "min": 5.0,
+      "p25": 19.0,
+      "median": 22.0,
+      "p75": 25.0,
+      "p95": 30.0,
+      "max": 50.0,
+      "histogram": {
+        "4-6": 3,
+        "6-7": 5,
+        "7-8": 23,
+        "8-9": 53,
+        "9-10": 138,
+        "10-11": 405,
+        "11-12": 682,
+        "12-14": 3598,
+        "14-15": 3741,
+        "15-16": 5538,
+        "16-17": 7577,
+        "17-18": 10031,
+        "18-19": 12379,
+        "19-20": 14314,
+        "20-21": 15499,
+        "21-23": 31413,
+        "23-24": 14163,
+        "24-25": 12459,
+        "25-26": 10574,
+        "26-27": 8220,
+        "27-28": 6323,
+        "28-29": 4723,
+        "29-30": 3274,
+        "30-32": 3922,
+        "32-33": 990,
+        "33-34": 703,
+        "34-35": 453,
+        "35-36": 277,
+        "36-37": 195,
+        "37-38": 128,
+        "38-39": 77,
+        "39-41": 81,
+        "41-42": 15,
+        "42-43": 11,
+        "43-44": 11,
+        "44-45": 8,
+        "45-46": 6,
+        "46-47": 3,
+        "47-48": 1,
+        "48-50": 1
+      }
+    },
+    "title_words": {
+      "name": "title_words",
+      "n": 172017,
+      "mean": 2.371,
+      "std": 0.544,
+      "min": 1.0,
+      "p25": 2.0,
+      "median": 2.0,
+      "p75": 3.0,
+      "p95": 3.0,
+      "max": 5.0,
+      "histogram": {
+        "1": 2209,
+        "2": 106841,
+        "3": 59969,
+        "4": 2925,
+        "5": 73
+      }
+    },
+    "question_words": {
+      "name": "question_words",
+      "n": 22917,
+      "mean": 45.435,
+      "std": 37.191,
+      "min": 0.0,
+      "p25": 26.0,
+      "median": 42.0,
+      "p75": 57.0,
+      "p95": 89.0,
+      "max": 1390.0,
+      "histogram": {
+        "-1-34": 8829,
+        "34-69": 11187,
+        "69-104": 2217,
+        "104-139": 336,
+        "139-173": 154,
+        "173-208": 73,
+        "208-243": 41,
+        "243-278": 23,
+        "278-312": 7,
+        "312-347": 8,
+        "347-382": 12,
+        "382-417": 9,
+        "417-451": 5,
+        "451-486": 2,
+        "486-521": 6,
+        "521-556": 0,
+        "556-590": 0,
+        "590-625": 1,
+        "625-660": 0,
+        "660-695": 0,
+        "695-729": 0,
+        "729-764": 0,
+        "764-799": 1,
+        "799-834": 0,
+        "834-868": 2,
+        "868-903": 0,
+        "903-938": 0,
+        "938-973": 0,
+        "973-1007": 0,
+        "1007-1042": 0,
+        "1042-1077": 0,
+        "1077-1112": 0,
+        "1112-1146": 0,
+        "1146-1181": 2,
+        "1181-1216": 0,
+        "1216-1251": 0,
+        "1251-1285": 0,
+        "1285-1320": 0,
+        "1320-1355": 0,
+        "1355-1390": 2
+      }
+    },
+    "reference_answer_words": {
+      "name": "reference_answer_words",
+      "n": 22917,
+      "mean": 48.578,
+      "std": 95.289,
+      "min": 0.0,
+      "p25": 6.0,
+      "median": 23.0,
+      "p75": 49.0,
+      "p95": 187.0,
+      "max": 1450.0,
+      "histogram": {
+        "-1-36": 15256,
+        "36-72": 4049,
+        "72-108": 1433,
+        "108-145": 664,
+        "145-181": 342,
+        "181-217": 199,
+        "217-253": 177,
+        "253-290": 162,
+        "290-326": 103,
+        "326-362": 75,
+        "362-398": 88,
+        "398-435": 61,
+        "435-471": 52,
+        "471-507": 41,
+        "507-543": 29,
+        "543-580": 16,
+        "580-616": 25,
+        "616-652": 18,
+        "652-688": 14,
+        "688-725": 20,
+        "725-761": 21,
+        "761-797": 7,
+        "797-833": 12,
+        "833-870": 9,
+        "870-906": 3,
+        "906-942": 9,
+        "942-978": 7,
+        "978-1015": 10,
+        "1015-1051": 4,
+        "1051-1087": 3,
+        "1087-1123": 1,
+        "1123-1160": 0,
+        "1160-1196": 1,
+        "1196-1232": 0,
+        "1232-1268": 1,
+        "1268-1305": 3,
+        "1305-1341": 0,
+        "1341-1377": 1,
+        "1377-1413": 0,
+        "1413-1450": 1
+      }
+    },
+    "prompt_constraint_compliance": {
+      "items_per_question_in_7_20_pct": 99.97,
+      "title_2_to_4_words_pct": 98.67,
+      "title_gt_4_words_pct": 0.04,
+      "description_single_sentence_pct": 99.94,
+      "has_category_prefix_pct": 99.51,
+      "canonical_category_pct": 99.51,
+      "malformed_or_missing_category_n": 837,
+      "malformed_category_values": {
+        "None": 837
+      },
+      "weight_present_pct": 100.0,
+      "weight_in_prompt_range_pct": 100.0,
+      "weight_in_prompt_recommended_band_pct": 77.59,
+      "pitfall_opener_compliant_pct": 3.54
+    },
+    "verifiability": {
+      "subjective_term_rate_pct": 34.16,
+      "style_or_presentation_rate_pct": 14.57,
+      "subjective_or_style_rate_pct": 39.6,
+      "non_self_contained_correctness_rate_pct": 2.04,
+      "subjective_rate_by_category_pct": {
+        "Important": 24.47,
+        "Essential": 38.45,
+        "Optional": 59.14,
+        "Pitfall": 6.97,
+        "MISSING": 35.36
+      },
+      "modal_verb_rate_pct": {
+        "must": 28.61,
+        "should": 30.72,
+        "may": 7.44
+      },
+      "modal_vs_category_conflicts": {
+        "essential_but_hedged_may_might_could_pct": 0.39,
+        "essential_using_must_pct": 58.2,
+        "optional_using_must_pct": 0.23
+      },
+      "top_subjective_terms": {
+        "clearly": 26144,
+        "clear": 12103,
+        "concise": 8852,
+        "appropriate": 4842,
+        "enhance": 4060,
+        "succinct": 2818,
+        "properly": 2784,
+        "appropriately": 1536,
+        "effectively": 1497,
+        "enhancing": 1340,
+        "effective": 1279,
+        "accessible": 1267,
+        "well-organized": 1260,
+        "easy to follow": 1205,
+        "articulate": 1172
+      }
+    },
+    "weight_informativeness": {
+      "overall_weight_distribution": {
+        "-2": 4794,
+        "-1": 17661,
+        "1": 579,
+        "2": 12023,
+        "3": 28963,
+        "4": 44848,
+        "5": 63149
+      },
+      "overall_entropy_bits": 2.246,
+      "conditional_entropy_given_category_bits": 0.723,
+      "mutual_information_category_weight_bits": 1.523,
+      "per_category": {
+        "Essential": {
+          "n": 52605,
+          "share_of_all_criteria_pct": 30.58,
+          "weight_distribution": {
+            "3": 91,
+            "4": 967,
+            "5": 51547
+          },
+          "modal_weight": 5,
+          "modal_weight_share_pct": 97.99,
+          "entropy_bits": 0.151,
+          "prompt_recommended_band_compliance_pct": 97.99
+        },
+        "Important": {
+          "n": 58345,
+          "share_of_all_criteria_pct": 33.92,
+          "weight_distribution": {
+            "2": 8,
+            "3": 3442,
+            "4": 43600,
+            "5": 11295
+          },
+          "modal_weight": 4,
+          "modal_weight_share_pct": 74.73,
+          "entropy_bits": 1.015,
+          "prompt_recommended_band_compliance_pct": 80.63
+        },
+        "MISSING": {
+          "n": 837,
+          "share_of_all_criteria_pct": 0.49,
+          "weight_distribution": {
+            "-2": 24,
+            "-1": 82,
+            "1": 1,
+            "2": 61,
+            "3": 136,
+            "4": 226,
+            "5": 307
+          },
+          "modal_weight": 5,
+          "modal_weight_share_pct": 36.68,
+          "entropy_bits": 2.229,
+          "prompt_recommended_band_compliance_pct": 0.0
+        },
+        "Optional": {
+          "n": 37882,
+          "share_of_all_criteria_pct": 22.02,
+          "weight_distribution": {
+            "-1": 1,
+            "1": 578,
+            "2": 11954,
+            "3": 25294,
+            "4": 55
+          },
+          "modal_weight": 3,
+          "modal_weight_share_pct": 66.77,
+          "entropy_bits": 1.02,
+          "prompt_recommended_band_compliance_pct": 33.08
+        },
+        "Pitfall": {
+          "n": 22348,
+          "share_of_all_criteria_pct": 12.99,
+          "weight_distribution": {
+            "-2": 4770,
+            "-1": 17578
+          },
+          "modal_weight": -1,
+          "modal_weight_share_pct": 78.66,
+          "entropy_bits": 0.748,
+          "prompt_recommended_band_compliance_pct": 100.0
+        }
+      },
+      "simulation": {
+        "n_questions": 4000,
+        "n_draws": 32000,
+        "pearson_weighted_vs_uniform": 0.8556,
+        "spearman_weighted_vs_uniform": 0.8449,
+        "mean_abs_diff_weighted_vs_uniform": 0.0922,
+        "pearson_paperremap_vs_uniform": 0.9433
+      },
+      "negative_weight_pathology": {
+        "questions_with_any_negative_weight_pct": 91.8,
+        "criteria_with_negative_weight_pct": 13.05,
+        "mean_sum_of_weights": 25.283,
+        "mean_sum_of_abs_weights": 27.661,
+        "questions_with_nonpositive_weight_sum": 0
+      }
+    },
+    "duplication": {
+      "duplicate_question_rows": 2096,
+      "duplicate_question_rate_pct": 9.15,
+      "questions_appearing_in_multiple_splits": 509,
+      "train_test_overlap_questions": 261,
+      "test_rows_whose_question_also_in_train_pct": 12.3
+    }
+  },
+  "rar_medicine": {
+    "domain": "rar_medicine",
+    "n_questions": 22408,
+    "n_criteria": 214658,
+    "rows_per_split": {
+      "train": 17926,
+      "test": 2242,
+      "val": 2240
+    },
+    "question_sources": {
+      "FreedomIntelligence/medical-o1-reasoning-SFT": 19699,
+      "General/VNet": 2214,
+      "Meta/natural_reasoning": 284,
+      "INFLYTECH/SCP-116K": 211
+    },
+    "items_per_question": {
+      "name": "rubric_count",
+      "n": 22408,
+      "mean": 9.58,
+      "std": 1.337,
+      "min": 5.0,
+      "p25": 9.0,
+      "median": 10.0,
+      "p75": 10.0,
+      "p95": 12.0,
+      "max": 17.0,
+      "histogram": {
+        "5": 1,
+        "6": 49,
+        "7": 1162,
+        "8": 3313,
+        "9": 5704,
+        "10": 8107,
+        "11": 2331,
+        "12": 1195,
+        "13": 364,
+        "14": 140,
+        "15": 32,
+        "16": 8,
+        "17": 2
+      }
+    },
+    "item_count_degeneracy": {
+      "pearson_count_vs_question_words": 0.256,
+      "pearson_count_vs_reference_words": 0.3036,
+      "count_coefficient_of_variation": 0.1396,
+      "modal_count_share_pct": 36.18,
+      "top2_counts_share_pct": 61.63,
+      "share_of_prompt_allowed_range_used_pct": 92.86
+    },
+    "category_distribution": {
+      "Important": {
+        "n": 77245,
+        "pct": 35.99
+      },
+      "Optional": {
+        "n": 60633,
+        "pct": 28.25
+      },
+      "Essential": {
+        "n": 46368,
+        "pct": 21.6
+      },
+      "Pitfall": {
+        "n": 30397,
+        "pct": 14.16
+      },
+      "MISSING": {
+        "n": 10,
+        "pct": 0.0
+      },
+      "MALFORMED": {
+        "n": 5,
+        "pct": 0.0
+      }
+    },
+    "description_words": {
+      "name": "description_words",
+      "n": 214658,
+      "mean": 15.046,
+      "std": 3.161,
+      "min": 5.0,
+      "p25": 13.0,
+      "median": 15.0,
+      "p75": 17.0,
+      "p95": 21.0,
+      "max": 41.0,
+      "histogram": {
+        "5": 1,
+        "6": 17,
+        "7": 183,
+        "8": 2078,
+        "9": 3123,
+        "10": 6850,
+        "11": 12789,
+        "12": 20108,
+        "13": 25137,
+        "14": 28277,
+        "15": 27807,
+        "16": 24720,
+        "17": 20089,
+        "18": 14855,
+        "19": 10510,
+        "20": 7046,
+        "21": 4474,
+        "22": 2689,
+        "23": 1592,
+        "24": 938,
+        "25": 592,
+        "26": 357,
+        "27": 194,
+        "28": 106,
+        "29": 49,
+        "30": 37,
+        "31": 19,
+        "32": 11,
+        "33": 4,
+        "34": 1,
+        "35": 3,
+        "36": 1,
+        "41": 1
+      }
+    },
+    "body_words_excl_prefix": {
+      "name": "body_words",
+      "n": 214658,
+      "mean": 13.046,
+      "std": 3.161,
+      "min": 3.0,
+      "p25": 11.0,
+      "median": 13.0,
+      "p75": 15.0,
+      "p95": 19.0,
+      "max": 39.0,
+      "histogram": {
+        "3": 1,
+        "4": 17,
+        "5": 183,
+        "6": 2078,
+        "7": 3123,
+        "8": 6850,
+        "9": 12788,
+        "10": 20108,
+        "11": 25135,
+        "12": 28277,
+        "13": 27809,
+        "14": 24719,
+        "15": 20088,
+        "16": 14854,
+        "17": 10512,
+        "18": 7048,
+        "19": 4474,
+        "20": 2689,
+        "21": 1592,
+        "22": 938,
+        "23": 592,
+        "24": 357,
+        "25": 194,
+        "26": 106,
+        "27": 49,
+        "28": 37,
+        "29": 19,
+        "30": 11,
+        "31": 4,
+        "32": 1,
+        "33": 3,
+        "34": 1,
+        "39": 1
+      }
+    },
+    "title_words": {
+      "name": "title_words",
+      "n": 214658,
+      "mean": 2.831,
+      "std": 0.765,
+      "min": 1.0,
+      "p25": 2.0,
+      "median": 3.0,
+      "p75": 3.0,
+      "p95": 4.0,
+      "max": 8.0,
+      "histogram": {
+        "1": 5253,
+        "2": 62776,
+        "3": 114678,
+        "4": 27469,
+        "5": 4053,
+        "6": 384,
+        "7": 37,
+        "8": 8
+      }
+    },
+    "question_words": {
+      "name": "question_words",
+      "n": 22408,
+      "mean": 41.428,
+      "std": 30.611,
+      "min": 2.0,
+      "p25": 22.0,
+      "median": 34.0,
+      "p75": 50.0,
+      "p95": 101.0,
+      "max": 379.0,
+      "histogram": {
+        "1-11": 930,
+        "11-20": 3727,
+        "20-30": 5095,
+        "30-39": 3679,
+        "39-49": 3190,
+        "49-58": 2032,
+        "58-67": 1160,
+        "67-77": 714,
+        "77-86": 390,
+        "86-96": 272,
+        "96-105": 205,
+        "105-115": 179,
+        "115-124": 135,
+        "124-133": 107,
+        "133-143": 125,
+        "143-152": 110,
+        "152-162": 97,
+        "162-171": 58,
+        "171-181": 59,
+        "181-190": 41,
+        "190-199": 20,
+        "199-209": 26,
+        "209-218": 15,
+        "218-228": 13,
+        "228-237": 8,
+        "237-247": 5,
+        "247-256": 1,
+        "256-265": 4,
+        "265-275": 2,
+        "275-284": 6,
+        "284-294": 0,
+        "294-303": 0,
+        "303-313": 1,
+        "313-322": 1,
+        "322-331": 0,
+        "331-341": 0,
+        "341-350": 0,
+        "350-360": 0,
+        "360-369": 0,
+        "369-379": 1
+      }
+    },
+    "reference_answer_words": {
+      "name": "reference_answer_words",
+      "n": 22408,
+      "mean": 81.182,
+      "std": 50.284,
+      "min": 0.0,
+      "p25": 53.0,
+      "median": 76.0,
+      "p75": 103.0,
+      "p95": 175.0,
+      "max": 507.0,
+      "histogram": {
+        "0-12": 2373,
+        "12-25": 564,
+        "25-38": 608,
+        "38-50": 1528,
+        "50-63": 2690,
+        "63-76": 3452,
+        "76-88": 2971,
+        "88-101": 2467,
+        "101-114": 1590,
+        "114-126": 978,
+        "126-139": 758,
+        "139-152": 565,
+        "152-164": 428,
+        "164-177": 376,
+        "177-190": 241,
+        "190-202": 195,
+        "202-215": 175,
+        "215-228": 137,
+        "228-240": 87,
+        "240-253": 73,
+        "253-266": 42,
+        "266-278": 25,
+        "278-291": 25,
+        "291-304": 18,
+        "304-316": 11,
+        "316-329": 10,
+        "329-342": 5,
+        "342-354": 3,
+        "354-367": 3,
+        "367-380": 8,
+        "380-392": 0,
+        "392-405": 0,
+        "405-418": 0,
+        "418-430": 0,
+        "430-443": 1,
+        "443-456": 0,
+        "456-468": 0,
+        "468-481": 0,
+        "481-494": 0,
+        "494-507": 1
+      }
+    },
+    "prompt_constraint_compliance": {
+      "items_per_question_in_7_20_pct": 99.78,
+      "title_2_to_4_words_pct": 95.46,
+      "title_gt_4_words_pct": 2.09,
+      "description_single_sentence_pct": 99.65,
+      "has_category_prefix_pct": 100.0,
+      "canonical_category_pct": 99.99,
+      "malformed_or_missing_category_n": 15,
+      "malformed_category_values": {
+        "None": 10,
+        "Importance": 1,
+        "Esssential": 1,
+        "Option": 1,
+        "Universal": 1,
+        "Mandatory": 1
+      },
+      "weight_present_pct": 100.0,
+      "weight_in_prompt_range_pct": 100.0,
+      "weight_in_prompt_recommended_band_pct": 99.99,
+      "pitfall_opener_compliant_pct": 78.56
+    },
+    "verifiability": {
+      "subjective_term_rate_pct": 18.13,
+      "style_or_presentation_rate_pct": 13.3,
+      "subjective_or_style_rate_pct": 23.64,
+      "non_self_contained_correctness_rate_pct": 0.69,
+      "subjective_rate_by_category_pct": {
+        "Important": 7.75,
+        "Optional": 33.96,
+        "Essential": 22.94,
+        "Pitfall": 5.6,
+        "MISSING": 10.0,
+        "MALFORMED": 20.0
+      },
+      "modal_verb_rate_pct": {
+        "must": 0.1,
+        "should": 0.6,
+        "may": 2.13
+      },
+      "modal_vs_category_conflicts": {
+        "essential_but_hedged_may_might_could_pct": 0.45,
+        "essential_using_must_pct": 0.25,
+        "optional_using_must_pct": 0.01
+      },
+      "top_subjective_terms": {
+        "concise": 14908,
+        "clear": 9216,
+        "clearly": 6613,
+        "appropriate": 3729,
+        "effective": 1312,
+        "enhance": 779,
+        "comprehensive": 768,
+        "effectively": 599,
+        "professional": 540,
+        "adequate": 539,
+        "sufficient": 429,
+        "enhancing": 340,
+        "thorough": 332,
+        "concisely": 282,
+        "appropriately": 272
+      }
+    },
+    "weight_informativeness": {
+      "overall_weight_distribution": {
+        "-2": 15880,
+        "-1": 14519,
+        "1": 24157,
+        "2": 36481,
+        "3": 38217,
+        "4": 39031,
+        "5": 46372
+      },
+      "overall_entropy_bits": 2.698,
+      "conditional_entropy_given_category_bits": 0.775,
+      "mutual_information_category_weight_bits": 1.923,
+      "per_category": {
+        "Essential": {
+          "n": 46368,
+          "share_of_all_criteria_pct": 21.6,
+          "weight_distribution": {
+            "5": 46368
+          },
+          "modal_weight": 5,
+          "modal_weight_share_pct": 100.0,
+          "entropy_bits": -0.0,
+          "prompt_recommended_band_compliance_pct": 100.0
+        },
+        "Important": {
+          "n": 77244,
+          "share_of_all_criteria_pct": 35.98,
+          "weight_distribution": {
+            "2": 1,
+            "3": 38214,
+            "4": 39029
+          },
+          "modal_weight": 4,
+          "modal_weight_share_pct": 50.53,
+          "entropy_bits": 1.0,
+          "prompt_recommended_band_compliance_pct": 100.0
+        },
+        "MALFORMED": {
+          "n": 5,
+          "share_of_all_criteria_pct": 0.0,
+          "weight_distribution": {
+            "1": 1,
+            "4": 1,
+            "5": 3
+          },
+          "modal_weight": 5,
+          "modal_weight_share_pct": 60.0,
+          "entropy_bits": 1.371,
+          "prompt_recommended_band_compliance_pct": 0.0
+        },
+        "MISSING": {
+          "n": 10,
+          "share_of_all_criteria_pct": 0.0,
+          "weight_distribution": {
+            "-2": 1,
+            "-1": 1,
+            "2": 3,
+            "3": 3,
+            "4": 1,
+            "5": 1
+          },
+          "modal_weight": 3,
+          "modal_weight_share_pct": 30.0,
+          "entropy_bits": 2.371,
+          "prompt_recommended_band_compliance_pct": 0.0
+        },
+        "Optional": {
+          "n": 60633,
+          "share_of_all_criteria_pct": 28.25,
+          "weight_distribution": {
+            "1": 24156,
+            "2": 36477
+          },
+          "modal_weight": 2,
+          "modal_weight_share_pct": 60.16,
+          "entropy_bits": 0.97,
+          "prompt_recommended_band_compliance_pct": 100.0
+        },
+        "Pitfall": {
+          "n": 30397,
+          "share_of_all_criteria_pct": 14.16,
+          "weight_distribution": {
+            "-2": 15879,
+            "-1": 14518
+          },
+          "modal_weight": -2,
+          "modal_weight_share_pct": 52.24,
+          "entropy_bits": 0.999,
+          "prompt_recommended_band_compliance_pct": 100.0
+        }
+      },
+      "simulation": {
+        "n_questions": 4000,
+        "n_draws": 32000,
+        "pearson_weighted_vs_uniform": 0.7561,
+        "spearman_weighted_vs_uniform": 0.7463,
+        "mean_abs_diff_weighted_vs_uniform": 0.1115,
+        "pearson_paperremap_vs_uniform": 0.9315
+      },
+      "negative_weight_pathology": {
+        "questions_with_any_negative_weight_pct": 95.55,
+        "criteria_with_negative_weight_pct": 14.16,
+        "mean_sum_of_weights": 24.7,
+        "mean_sum_of_abs_weights": 28.83,
+        "questions_with_nonpositive_weight_sum": 0
+      }
+    },
+    "duplication": {
+      "duplicate_question_rows": 574,
+      "duplicate_question_rate_pct": 2.56,
+      "questions_appearing_in_multiple_splits": 119,
+      "train_test_overlap_questions": 69,
+      "test_rows_whose_question_also_in_train_pct": 3.57
+    }
+  }
+}

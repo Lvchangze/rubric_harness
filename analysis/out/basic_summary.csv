@@ -1,0 +1,3 @@
+domain,questions,criteria,items_mean,items_std,items_median,items_max,desc_words_mean,title_words_mean,pct_essential,pct_important,pct_optional,pct_pitfall,subjective_rate,style_rate,non_self_contained_rate
+rar_science,22917,172017,7.506,0.802,7.0,12.0,24.42,2.371,30.58,33.92,22.02,12.99,34.16,14.57,2.04
+rar_medicine,22408,214658,9.58,1.337,10.0,17.0,15.046,2.831,21.6,35.99,28.25,14.16,18.13,13.3,0.69

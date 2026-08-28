@@ -1,0 +1,242 @@
+[
+  {
+    "domain": "rar_medicine",
+    "metric": "generic_criterion_rate",
+    "sample": 0.19190871369294607,
+    "full_corpus": 0.21969999999999998,
+    "ratio": 0.8735034760716709,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "generic_rate_permuted",
+    "sample": 0.9896265560165975,
+    "full_corpus": 0.9854,
+    "ratio": 1.0042891780156256,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "weak_grounding_rate",
+    "sample": 0.42531120331950206,
+    "full_corpus": 0.4353,
+    "ratio": 0.977053074476228,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "mean_anchors_per_criterion",
+    "sample": 2.171161825726141,
+    "full_corpus": 2.066,
+    "ratio": 1.0509011741172027,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "subjective_rate",
+    "sample": 0.1908713692946058,
+    "full_corpus": 0.1813,
+    "ratio": 1.0527929911450955,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "style_rate",
+    "sample": 0.14522821576763487,
+    "full_corpus": 0.133,
+    "ratio": 1.0919414719371041,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "subjective_or_style_rate",
+    "sample": 0.25103734439834025,
+    "full_corpus": 0.2364,
+    "ratio": 1.0619177005005933,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "generic_and_subjective_rate",
+    "sample": 0.10580912863070539,
+    "full_corpus": 0.1038,
+    "ratio": 1.0193557671551579,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "recyclable_rate",
+    "sample": 0.024896265560165973,
+    "full_corpus": 0.11599999999999999,
+    "ratio": 0.21462297896694807,
+    "comparable": false
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "mass_produced_title_rate",
+    "sample": 0.038381742738589214,
+    "full_corpus": 0.2526,
+    "ratio": 0.15194672501420908,
+    "comparable": false
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "mean_trigram_overlap_with_reference",
+    "sample": 0.1201779577038913,
+    "full_corpus": 0.1092,
+    "ratio": 1.1005307482041327,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "criteria_with_ge50pct_trigram_overlap",
+    "sample": 0.08817427385892117,
+    "full_corpus": 0.0741,
+    "ratio": 1.1899362194186394,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "criteria_with_ge30pct_trigram_overlap",
+    "sample": 0.17116182572614108,
+    "full_corpus": 0.15109999999999998,
+    "ratio": 1.1327718446468638,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "weight_mass_on_generic_raw",
+    "sample": 0.1261666090563429,
+    "full_corpus": 0.152,
+    "ratio": 0.8300434806338348,
+    "comparable": true
+  },
+  {
+    "domain": "rar_medicine",
+    "metric": "weight_mass_on_subjective",
+    "sample": 0.22537158658831663,
+    "full_corpus": 0.2125,
+    "ratio": 1.0605721721803136,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "generic_criterion_rate",
+    "sample": 0.26366120218579236,
+    "full_corpus": 0.2887,
+    "ratio": 0.9132705306054463,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "generic_rate_permuted",
+    "sample": 0.9726775956284153,
+    "full_corpus": 0.9639,
+    "ratio": 1.0091063342965196,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "weak_grounding_rate",
+    "sample": 0.5109289617486339,
+    "full_corpus": 0.5261,
+    "ratio": 0.9711632042361412,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "mean_anchors_per_criterion",
+    "sample": 1.866120218579235,
+    "full_corpus": 1.777,
+    "ratio": 1.0501520644790292,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "subjective_rate",
+    "sample": 0.3333333333333333,
+    "full_corpus": 0.34159999999999996,
+    "ratio": 0.9758001561280251,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "style_rate",
+    "sample": 0.13524590163934427,
+    "full_corpus": 0.1457,
+    "ratio": 0.9282491533242572,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "subjective_or_style_rate",
+    "sample": 0.3866120218579235,
+    "full_corpus": 0.396,
+    "ratio": 0.9762929844897057,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "generic_and_subjective_rate",
+    "sample": 0.12704918032786885,
+    "full_corpus": 0.13699999999999998,
+    "ratio": 0.9273662797654663,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "recyclable_rate",
+    "sample": 0.0,
+    "full_corpus": 0.17670000000000002,
+    "ratio": 0.0,
+    "comparable": false
+  },
+  {
+    "domain": "rar_science",
+    "metric": "mass_produced_title_rate",
+    "sample": 0.0,
+    "full_corpus": 0.4227,
+    "ratio": 0.0,
+    "comparable": false
+  },
+  {
+    "domain": "rar_science",
+    "metric": "mean_trigram_overlap_with_reference",
+    "sample": 0.01939813922935148,
+    "full_corpus": 0.017,
+    "ratio": 1.1410670134912635,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "criteria_with_ge50pct_trigram_overlap",
+    "sample": 0.004098360655737705,
+    "full_corpus": 0.0043,
+    "ratio": 0.9531071292413268,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "criteria_with_ge30pct_trigram_overlap",
+    "sample": 0.01366120218579235,
+    "full_corpus": 0.013600000000000001,
+    "ratio": 1.0045001607200257,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "weight_mass_on_generic_raw",
+    "sample": 0.22193595877806405,
+    "full_corpus": 0.24559999999999998,
+    "ratio": 0.9036480406272966,
+    "comparable": true
+  },
+  {
+    "domain": "rar_science",
+    "metric": "weight_mass_on_subjective",
+    "sample": 0.39712918660287083,
+    "full_corpus": 0.4018,
+    "ratio": 0.9883752777572694,
+    "comparable": true
+  }
+]

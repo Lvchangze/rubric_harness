@@ -1,0 +1,36 @@
+============================================================================================================
+HEAD-TO-HEAD BLIND PREFERENCE — does the incumbent's preference survive a judge swap?
+============================================================================================================
+
+old judge : hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+new judge : api_azure_openai_gpt-5.1
+
+Rates are position-bias CORRECTED: a rubric wins a question only if it wins with
+the slots in both orders, otherwise the question is a tie. Both judges are scored
+on the same questions.
+
+  pair                            judge     n   win_A   win_B     tie     B-A   flip  posbias
+  ----------------------------------------------------------------------------------------------------
+  shipped_vs_baseline             old     114   0.026   0.912   0.061  +0.886  0.061    0.478
+  shipped_vs_baseline             new     114   0.061   0.825   0.114  +0.763  0.114    0.478
+                                  shift        toward `baseline`: -0.123 [-0.211,-0.035] p=0.0119*   per-question agreement=0.833   SIGN unchanged
+
+  shipped_vs_agentic              old     114   0.114   0.781   0.105  +0.667  0.105    0.518
+  shipped_vs_agentic              new     114   0.132   0.737   0.132  +0.605  0.132    0.461
+                                  shift        toward `agentic`: -0.061 [-0.193,+0.070] p=0.4416   per-question agreement=0.693   SIGN unchanged
+
+  shipped_vs_agentic-noval        old     114   0.026   0.904   0.070  +0.877  0.070    0.509
+  shipped_vs_agentic-noval        new     114   0.088   0.798   0.114  +0.711  0.114    0.487
+                                  shift        toward `agentic-noval`: -0.167 [-0.281,-0.053] p=0.0064**   per-question agreement=0.781   SIGN unchanged
+
+  baseline_vs_agentic             old     114   0.456   0.254   0.289  -0.202  0.289    0.574
+  baseline_vs_agentic             new     114   0.430   0.298   0.272  -0.132  0.272    0.390
+                                  shift        toward `agentic`: +0.070 [-0.088,+0.228] p=0.4595   per-question agreement=0.491   SIGN unchanged
+
+  baseline_vs_agentic-noval       old     114   0.254   0.456   0.289  +0.202  0.289    0.588
+  baseline_vs_agentic-noval       new     114   0.386   0.272   0.342  -0.114  0.342    0.390
+                                  shift        toward `agentic-noval`: -0.316 [-0.482,-0.149] p=0.0005***   per-question agreement=0.509   SIGN FLIPPED
+
+  agentic_vs_agentic-noval        old     114   0.211   0.544   0.246  +0.333  0.228    0.509
+  agentic_vs_agentic-noval        new     114   0.254   0.430   0.316  +0.175  0.316    0.377
+                                  shift        toward `agentic-noval`: -0.158 [-0.316,+0.000] p=0.0700   per-question agreement=0.535   SIGN unchanged

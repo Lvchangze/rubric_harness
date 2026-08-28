@@ -1,0 +1,15 @@
+{
+  "n_dropped": 2,
+  "failures_by_source": {
+    "baseline": 2
+  },
+  "uids": {
+    "sci-67a441205027": [
+      "baseline"
+    ],
+    "sci-79900a0d65f6": [
+      "baseline"
+    ]
+  },
+  "note": "Questions where some source emitted an empty rubric. They are excluded from the paired analysis; an intent-to-treat reading scores each such failure as 0 for the failing source."
+}

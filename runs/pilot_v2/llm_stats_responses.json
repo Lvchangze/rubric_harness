@@ -1,0 +1,31 @@
+{
+  "calls": 2161,
+  "cache_hits": 0,
+  "api_calls": 2297,
+  "retries": 136,
+  "empty_responses": 138,
+  "failures": 2,
+  "json_parse_failures": 2,
+  "prompt_chars": 0,
+  "response_chars": 1406272,
+  "reasoning_chars": 10421200,
+  "wall_seconds": 96399.57463550568,
+  "by_tag": {
+    "response:missing_step": 200,
+    "response:numeric_error": 200,
+    "response:right_method_wrong_answer": 200,
+    "response:verbose_empty": 200,
+    "response:terse_correct": 200,
+    "response_check:off_topic": 200,
+    "response_check:missing_step": 198,
+    "response_check:numeric_error": 200,
+    "response_check:right_method_wrong_answer": 200,
+    "response_check:verbose_empty": 200,
+    "response_check:terse_correct": 161,
+    "response_check:verbose_empty:json_repair": 1,
+    "response_check:right_method_wrong_answer:json_repair": 1
+  },
+  "cache_hit_rate": 0.0,
+  "model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
+  "concurrency": 48
+}

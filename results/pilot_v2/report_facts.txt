@@ -1,0 +1,65 @@
+==============================================================================
+HEAD-TO-HEAD (blind, position-bias corrected)
+==============================================================================
+  verdicts=2376 ties=28 failed=0 position_bias=0.535
+  shipped_vs_baseline                raw 0.058/0.942   corrected 0.020/0.904   flip=0.076
+  shipped_vs_agentic                 raw 0.232/0.768   corrected 0.177/0.712   flip=0.111
+  shipped_vs_agentic-noval           raw 0.058/0.942   corrected 0.025/0.909   flip=0.066
+  baseline_vs_agentic                raw 0.609/0.376   corrected 0.495/0.253   flip=0.253
+  baseline_vs_agentic-noval          raw 0.336/0.659   corrected 0.192/0.515   flip=0.293
+  agentic_vs_agentic-noval           raw 0.225/0.725   corrected 0.152/0.631   flip=0.197
+
+==============================================================================
+LLM COST AND RELIABILITY
+==============================================================================
+  llm_stats_gen.json         calls=  1755 api=   214 cache_hit=0.879 retries=  1 empty=  1 json_fail= 29 (1.65%) fail=0
+  llm_stats_responses.json   calls=  2161 api=  2297 cache_hit=0.000 retries=136 empty=138 json_fail=  2 (0.09%) fail=2
+  llm_stats_eval.json        calls=  7024 api=  4890 cache_hit=0.304 retries=  3 empty=  3 json_fail= 59 (0.84%) fail=0
+
+==============================================================================
+RUBRIC SIZE AND GENERATION FAILURES
+==============================================================================
+  shipped         n= 200 mean_items= 8.57 min=7 max=13 empty=0 with_error=0 mean_llm_calls=  0.0
+  baseline        n= 200 mean_items= 9.27 min=0 max=17 empty=2 with_error=2 mean_llm_calls=  1.0
+  agentic-noval   n= 200 mean_items=12.41 min=6 max=16 empty=0 with_error=0 mean_llm_calls=  8.6
+  agentic         n= 200 mean_items=10.05 min=6 max=16 empty=0 with_error=0 mean_llm_calls= 13.6
+
+==============================================================================
+SANITY GATE: shipped vs forensics n=45k (per domain)
+==============================================================================
+  metric                        domain             ours  forensics    diff
+  generic_criterion_rate        rar_science       26.28      28.87   -2.59
+  generic_criterion_rate        rar_medicine      19.08      21.97   -2.89
+  generic_rate_permuted         rar_science       97.28      96.39   +0.89
+  generic_rate_permuted         rar_medicine      98.93      98.54   +0.39
+  weight_mass_on_generic_paper  rar_science       21.29      24.56   -3.27
+  weight_mass_on_generic_paper  rar_medicine      14.80      15.20   -0.40
+  weak_grounding_rate           rar_science       50.93      52.61   -1.68
+  weak_grounding_rate           rar_medicine      42.05      43.53   -1.48
+  pitfall_mirror_rate           rar_science        1.02       0.95   +0.07
+  pitfall_mirror_rate           rar_medicine      14.00      16.21   -2.21
+  weight_order_violation_rate   rar_science       38.78      41.30   -2.52
+  weight_order_violation_rate   rar_medicine       0.00       0.00   +0.00
+
+==============================================================================
+PER-DOMAIN MAIN RESULT (mean margin)
+==============================================================================
+  source                 rar_science      rar_medicine
+  shipped                0.116±0.032       0.360±0.015
+  baseline               0.126±0.026       0.416±0.012
+  agentic-noval          0.149±0.025       0.396±0.012
+  agentic                0.279±0.027       0.489±0.011
+
+==============================================================================
+POLARITY SWING (max - min across conventions, per source)
+==============================================================================
+  shipped         gold       swing= 3.84pp  all_avoidance=0.641 all_failure=0.603 detected=0.639 favourable=0.639
+  shipped         off_topic  swing= 2.15pp  all_avoidance=0.105 all_failure=0.095 detected=0.083 favourable=0.083
+  baseline        gold       swing=15.55pp  all_avoidance=0.570 all_failure=0.726 detected=0.674 favourable=0.674
+  baseline        off_topic  swing= 7.98pp  all_avoidance=0.095 all_failure=0.175 detected=0.114 favourable=0.114
+  agentic-noval   gold       swing=15.63pp  all_avoidance=0.665 all_failure=0.509 detected=0.665 favourable=0.665
+  agentic-noval   off_topic  swing= 6.53pp  all_avoidance=0.133 all_failure=0.068 detected=0.133 favourable=0.133
+  agentic         gold       swing=15.62pp  all_avoidance=0.814 all_failure=0.658 detected=0.814 favourable=0.814
+  agentic         off_topic  swing= 5.18pp  all_avoidance=0.120 all_failure=0.068 detected=0.120 favourable=0.120
+
+  'gold > off_topic' sanity check fails in: NONE (passes everywhere)

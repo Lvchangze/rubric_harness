@@ -1,0 +1,2616 @@
+{
+  "rar_science": {
+    "title_boilerplate": {
+      "n_criteria": 172017,
+      "n_unique_titles": 73164,
+      "unique_title_ratio_pct": 42.53,
+      "titles_used_once_pct": 79.93,
+      "criteria_whose_title_reused_ge_2x_pct": 66.0,
+      "criteria_whose_title_reused_ge_10x_pct": 42.27,
+      "criteria_whose_title_reused_ge_50x_pct": 27.29,
+      "criteria_whose_title_reused_ge_100x_pct": 21.87,
+      "criteria_whose_title_reused_ge_500x_pct": 7.34,
+      "criteria_whose_title_reused_ge_1000x_pct": 4.53,
+      "top50_titles": [
+        {
+          "title": "unit consistency",
+          "count": 1942,
+          "pct_of_criteria": 1.13
+        },
+        {
+          "title": "conciseness",
+          "count": 1766,
+          "pct_of_criteria": 1.03
+        },
+        {
+          "title": "clarity and conciseness",
+          "count": 1611,
+          "pct_of_criteria": 0.94
+        },
+        {
+          "title": "concise explanation",
+          "count": 1441,
+          "pct_of_criteria": 0.84
+        },
+        {
+          "title": "final answer clarity",
+          "count": 1026,
+          "pct_of_criteria": 0.6
+        },
+        {
+          "title": "step by step reasoning",
+          "count": 956,
+          "pct_of_criteria": 0.56
+        },
+        {
+          "title": "conciseness and clarity",
+          "count": 852,
+          "pct_of_criteria": 0.5
+        },
+        {
+          "title": "clarity and organization",
+          "count": 691,
+          "pct_of_criteria": 0.4
+        },
+        {
+          "title": "avoid misinterpretation",
+          "count": 654,
+          "pct_of_criteria": 0.38
+        },
+        {
+          "title": "numerical accuracy",
+          "count": 572,
+          "pct_of_criteria": 0.33
+        },
+        {
+          "title": "assumption clarity",
+          "count": 563,
+          "pct_of_criteria": 0.33
+        },
+        {
+          "title": "mathematical rigor",
+          "count": 549,
+          "pct_of_criteria": 0.32
+        },
+        {
+          "title": "significant figures",
+          "count": 495,
+          "pct_of_criteria": 0.29
+        },
+        {
+          "title": "final answer",
+          "count": 491,
+          "pct_of_criteria": 0.29
+        },
+        {
+          "title": "avoid oversimplification",
+          "count": 453,
+          "pct_of_criteria": 0.26
+        },
+        {
+          "title": "clarity and precision",
+          "count": 442,
+          "pct_of_criteria": 0.26
+        },
+        {
+          "title": "avoid overgeneralization",
+          "count": 440,
+          "pct_of_criteria": 0.26
+        },
+        {
+          "title": "avoiding misconceptions",
+          "count": 401,
+          "pct_of_criteria": 0.23
+        },
+        {
+          "title": "units consistency",
+          "count": 392,
+          "pct_of_criteria": 0.23
+        },
+        {
+          "title": "clarity and structure",
+          "count": 385,
+          "pct_of_criteria": 0.22
+        },
+        {
+          "title": "concise presentation",
+          "count": 381,
+          "pct_of_criteria": 0.22
+        },
+        {
+          "title": "clarity and completeness",
+          "count": 377,
+          "pct_of_criteria": 0.22
+        },
+        {
+          "title": "mechanism explanation",
+          "count": 377,
+          "pct_of_criteria": 0.22
+        },
+        {
+          "title": "physical interpretation",
+          "count": 373,
+          "pct_of_criteria": 0.22
+        },
+        {
+          "title": "avoid misconceptions",
+          "count": 370,
+          "pct_of_criteria": 0.22
+        },
+        {
+          "title": "step by step clarity",
+          "count": 364,
+          "pct_of_criteria": 0.21
+        },
+        {
+          "title": "conceptual clarity",
+          "count": 360,
+          "pct_of_criteria": 0.21
+        },
+        {
+          "title": "concise clarity",
+          "count": 358,
+          "pct_of_criteria": 0.21
+        },
+        {
+          "title": "comparative analysis",
+          "count": 353,
+          "pct_of_criteria": 0.21
+        },
+        {
+          "title": "correct formula",
+          "count": 344,
+          "pct_of_criteria": 0.2
+        },
+        {
+          "title": "clarity and brevity",
+          "count": 341,
+          "pct_of_criteria": 0.2
+        },
+        {
+          "title": "clear conclusion",
+          "count": 339,
+          "pct_of_criteria": 0.2
+        },
+        {
+          "title": "logical reasoning",
+          "count": 334,
+          "pct_of_criteria": 0.19
+        },
+        {
+          "title": "unit conversion",
+          "count": 330,
+          "pct_of_criteria": 0.19
+        },
+        {
+          "title": "explanation clarity",
+          "count": 325,
+          "pct_of_criteria": 0.19
+        },
+        {
+          "title": "terminology accuracy",
+          "count": 323,
+          "pct_of_criteria": 0.19
+        },
+        {
+          "title": "avoiding misinterpretation",
+          "count": 305,
+          "pct_of_criteria": 0.18
+        },
+        {
+          "title": "clear explanation",
+          "count": 304,
+          "pct_of_criteria": 0.18
+        },
+        {
+          "title": "mathematical derivation",
+          "count": 302,
+          "pct_of_criteria": 0.18
+        },
+        {
+          "title": "logical flow",
+          "count": 292,
+          "pct_of_criteria": 0.17
+        },
+        {
+          "title": "clarity and detail",
+          "count": 283,
+          "pct_of_criteria": 0.16
+        },
+        {
+          "title": "clear final answer",
+          "count": 275,
+          "pct_of_criteria": 0.16
+        },
+        {
+          "title": "formula application",
+          "count": 269,
+          "pct_of_criteria": 0.16
+        },
+        {
+          "title": "arithmetic accuracy",
+          "count": 266,
+          "pct_of_criteria": 0.15
+        },
+        {
+          "title": "step by step explanation",
+          "count": 265,
+          "pct_of_criteria": 0.15
+        },
+        {
+          "title": "misinterpretation avoidance",
+          "count": 255,
+          "pct_of_criteria": 0.15
+        },
+        {
+          "title": "logical structure",
+          "count": 233,
+          "pct_of_criteria": 0.14
+        },
+        {
+          "title": "logical organization",
+          "count": 230,
+          "pct_of_criteria": 0.13
+        },
+        {
+          "title": "assumption clarification",
+          "count": 227,
+          "pct_of_criteria": 0.13
+        },
+        {
+          "title": "mathematical clarity",
+          "count": 217,
+          "pct_of_criteria": 0.13
+        }
+      ],
+      "top50_cumulative_pct_of_criteria": 14.82
+    },
+    "template_boilerplate": {
+      "exact_duplicate_description_pct": 0.02,
+      "exact_duplicate_across_different_questions_pct": 0.02,
+      "n_description_strings_reused_across_questions": 14,
+      "n_distinct_descriptions": 171998,
+      "masked_template_distinct": 171990,
+      "masked_template_compression_ratio": 0.9998,
+      "criteria_sharing_a_masked_template_pct": 0.03,
+      "criteria_in_template_reused_ge_10x_pct": 0.0,
+      "rare_token_cutoff_docfreq": 172,
+      "skeleton_top_n_tokens": 200,
+      "skeleton_distinct": 171787,
+      "skeleton_compression_ratio": 0.9987,
+      "criteria_sharing_a_skeleton_pct": 0.24,
+      "criteria_in_skeleton_reused_ge_10x_pct": 0.01,
+      "top15_skeletons": [
+        {
+          "skeleton": "the response must clearly state that the is",
+          "count": 10,
+          "pct": 0.01
+        },
+        {
+          "skeleton": "the response must clearly state that the correct answer is b",
+          "count": 9,
+          "pct": 0.01
+        },
+        {
+          "skeleton": "the answer should be and directly the without unnecessary",
+          "count": 7,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the response must correctly identify the as",
+          "count": 7,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the response must clearly state that the when the is",
+          "count": 6,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the answer should be concise and directly the without unnecessary",
+          "count": 4,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the response should not with other such as or",
+          "count": 4,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the response must clearly state that the number of is",
+          "count": 4,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the response must clearly state that the correct answer is d",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the answer should be in a clear and concise manner unnecessary while logical",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the answer should be in a clear and concise manner without unnecessary",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the response should be concise and to the the without unnecessary",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the answer should be clearly and without unnecessary",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the response should be and directly the without unnecessary",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "skeleton": "the answer should be in a clear and concise manner unnecessary while",
+          "count": 3,
+          "pct": 0.0
+        }
+      ],
+      "top20_masked_templates": [
+        {
+          "template": "the answer should be succinct and directly address the question without unnecessary elaboration",
+          "count": 5,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly state that the correct answer is b <X>",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly state that the induced current <X> when the <X> is <X> <X>",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "template": "the answer should be concise and directly address the question without unnecessary elaboration",
+          "count": 3,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly state that the induced charge on the inside surface of the <X> <X> is q",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must correctly identify the inheritance pattern as <X> recessive",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly state that the <X> allele is recessive",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response should avoid rounding intermediate values too <X> as doing so can lead to <X> in the final result",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response should be succinct and directly address the question without unnecessary elaboration",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly state that the correct answer is b",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the answer must clearly state that there are exactly <X> <X> isomers for c h",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly identify i as the <X> nucleophile in a <X> solvent",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response should be written clearly and concisely directly addressing the question without unnecessary details",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly identify a <X> as the correct answer",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "checks if the response correctly identifies the total bond order of carbon in co as",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "presents the explanation in a clear and succinct manner avoiding unnecessary details while covering all essential points",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response should be presented in a clear and concise manner effectively summarizing the key points without unnecessary elaboration",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly state that the terms <X> enzyme and gene product are not <X>",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the response must clearly state that the induced current <X> direction when the <X> is <X> <X>",
+          "count": 2,
+          "pct": 0.0
+        },
+        {
+          "template": "the answer must correctly identify the fraction for <X> <X> all chromosomes of <X> origin as",
+          "count": 2,
+          "pct": 0.0
+        }
+      ],
+      "top20_openers_6w": [
+        {
+          "opener": "the response must clearly state that",
+          "count": 2272,
+          "pct": 1.32
+        },
+        {
+          "opener": "the response should be concise and",
+          "count": 655,
+          "pct": 0.38
+        },
+        {
+          "opener": "the response must clearly state the",
+          "count": 577,
+          "pct": 0.34
+        },
+        {
+          "opener": "the response must correctly apply the",
+          "count": 551,
+          "pct": 0.32
+        },
+        {
+          "opener": "the response must state that the",
+          "count": 542,
+          "pct": 0.32
+        },
+        {
+          "opener": "the answer must clearly state that",
+          "count": 489,
+          "pct": 0.28
+        },
+        {
+          "opener": "the response must clearly explain that",
+          "count": 473,
+          "pct": 0.27
+        },
+        {
+          "opener": "the response must explicitly state that",
+          "count": 461,
+          "pct": 0.27
+        },
+        {
+          "opener": "the answer should be concise and",
+          "count": 443,
+          "pct": 0.26
+        },
+        {
+          "opener": "the answer should explain that the",
+          "count": 429,
+          "pct": 0.25
+        },
+        {
+          "opener": "the response may include a brief",
+          "count": 375,
+          "pct": 0.22
+        },
+        {
+          "opener": "the response should explain that the",
+          "count": 330,
+          "pct": 0.19
+        },
+        {
+          "opener": "the response must explain that the",
+          "count": 300,
+          "pct": 0.17
+        },
+        {
+          "opener": "the response should break down the",
+          "count": 288,
+          "pct": 0.17
+        },
+        {
+          "opener": "the response must correctly compute the",
+          "count": 268,
+          "pct": 0.16
+        },
+        {
+          "opener": "the answer may include a brief",
+          "count": 259,
+          "pct": 0.15
+        },
+        {
+          "opener": "the response may include a discussion",
+          "count": 256,
+          "pct": 0.15
+        },
+        {
+          "opener": "the answer should break down the",
+          "count": 255,
+          "pct": 0.15
+        },
+        {
+          "opener": "the response should be clear and",
+          "count": 255,
+          "pct": 0.15
+        },
+        {
+          "opener": "the response must correctly identify the",
+          "count": 248,
+          "pct": 0.14
+        }
+      ],
+      "top1_opener_share_pct": 1.32,
+      "top10_openers_share_pct": 4.01
+    },
+    "cross_question_near_duplicates": {
+      "sample_size": 60000,
+      "vocab": 10348,
+      "mean_max_cross_question_cosine": 0.4271,
+      "median_max_cross_question_cosine": 0.4045,
+      "pct_with_cross_question_cosine_ge_0.80": 0.86,
+      "pct_with_cross_question_cosine_ge_0.90": 0.13,
+      "pct_with_cross_question_cosine_ge_0.99": 0.02,
+      "pct_with_cross_question_cosine_ge_0.60": 9.48,
+      "examples_top40": [
+        {
+          "sim": 1.0,
+          "a_qid": "rar_science:2501",
+          "a_title": "Final Answer Accuracy",
+          "a": "Essential Criteria: The response must clearly state that the correct answer is (b) False.",
+          "b_qid": "rar_science:20372",
+          "b_title": "Final Answer",
+          "b": "Essential Criteria: The response must clearly state that the correct answer is (b) False."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_science:20552",
+          "a_title": "Intermediate Rounding",
+          "a": "Pitfall Criteria: The response should avoid rounding intermediate values too early, as doing so can lead to inaccuracies in the final result.",
+          "b_qid": "rar_science:5254",
+          "b_title": "Avoid Premature Rounding",
+          "b": "Pitfall Criteria: The response should avoid rounding intermediate values too early, as doing so can lead to inaccuracies in the final result."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_science:20372",
+          "a_title": "Final Answer",
+          "a": "Essential Criteria: The response must clearly state that the correct answer is (b) False.",
+          "b_qid": "rar_science:2501",
+          "b_title": "Final Answer Accuracy",
+          "b": "Essential Criteria: The response must clearly state that the correct answer is (b) False."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_science:11797",
+          "a_title": "Clear and Concise",
+          "a": "Optional Criteria: Presents the explanation in a clear and succinct manner, avoiding unnecessary details while covering all essential points.",
+          "b_qid": "rar_science:16882",
+          "b_title": "Conciseness and Clarity",
+          "b": "Optional Criteria: Presents the explanation in a clear and succinct manner, avoiding unnecessary details while covering all essential points."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_science:16882",
+          "a_title": "Conciseness and Clarity",
+          "a": "Optional Criteria: Presents the explanation in a clear and succinct manner, avoiding unnecessary details while covering all essential points.",
+          "b_qid": "rar_science:11797",
+          "b_title": "Clear and Concise",
+          "b": "Optional Criteria: Presents the explanation in a clear and succinct manner, avoiding unnecessary details while covering all essential points."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_science:5254",
+          "a_title": "Avoid Premature Rounding",
+          "a": "Pitfall Criteria: The response should avoid rounding intermediate values too early, as doing so can lead to inaccuracies in the final result.",
+          "b_qid": "rar_science:20552",
+          "b_title": "Intermediate Rounding",
+          "b": "Pitfall Criteria: The response should avoid rounding intermediate values too early, as doing so can lead to inaccuracies in the final result."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_science:6706",
+          "a_title": "Correct Count",
+          "a": "Essential Criteria: The answer must clearly state that there are exactly five constitutional isomers for C₆H₁₄.",
+          "b_qid": "rar_science:14843",
+          "b_title": "Correct Count",
+          "b": "Essential Criteria: The answer must clearly state that there are exactly eight constitutional isomers for C7H16."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_science:14843",
+          "a_title": "Correct Count",
+          "a": "Essential Criteria: The answer must clearly state that there are exactly eight constitutional isomers for C7H16.",
+          "b_qid": "rar_science:6706",
+          "b_title": "Correct Count",
+          "b": "Essential Criteria: The answer must clearly state that there are exactly five constitutional isomers for C₆H₁₄."
+        },
+        {
+          "sim": 0.99,
+          "a_qid": "rar_science:68",
+          "a_title": "Concise Explanation",
+          "a": "Optional Criteria: Presents the explanation in a clear and concise manner, making it easily understandable without unnecessary details.",
+          "b_qid": "rar_science:1353",
+          "b_title": "Clarity and Brevity",
+          "b": "Optional Criteria: Presents the explanation in a clear, concise manner without unnecessary details, making the answer easily understandable."
+        },
+        {
+          "sim": 0.99,
+          "a_qid": "rar_science:1353",
+          "a_title": "Clarity and Brevity",
+          "a": "Optional Criteria: Presents the explanation in a clear, concise manner without unnecessary details, making the answer easily understandable.",
+          "b_qid": "rar_science:68",
+          "b_title": "Concise Explanation",
+          "b": "Optional Criteria: Presents the explanation in a clear and concise manner, making it easily understandable without unnecessary details."
+        },
+        {
+          "sim": 0.987,
+          "a_qid": "rar_science:17955",
+          "a_title": "Final Answer Accuracy",
+          "a": "Essential Criteria: The response must state the estimated value of approximately 480 Ar37 atoms produced per day.",
+          "b_qid": "rar_science:18799",
+          "b_title": "Correct Numerical Answer",
+          "b": "Essential Criteria: The response must state the final estimated value of approximately 480 Ar37 atoms produced per day."
+        },
+        {
+          "sim": 0.987,
+          "a_qid": "rar_science:18799",
+          "a_title": "Correct Numerical Answer",
+          "a": "Essential Criteria: The response must state the final estimated value of approximately 480 Ar37 atoms produced per day.",
+          "b_qid": "rar_science:17955",
+          "b_title": "Final Answer Accuracy",
+          "b": "Essential Criteria: The response must state the estimated value of approximately 480 Ar37 atoms produced per day."
+        },
+        {
+          "sim": 0.985,
+          "a_qid": "rar_science:4724",
+          "a_title": "Correct Enzyme Identification",
+          "a": "Essential Criteria: The response must clearly identify DNA ligases as the enzyme responsible for catalyzing the formation of phosphodiester bonds during DNA repair.",
+          "b_qid": "rar_science:10339",
+          "b_title": "Correct Enzyme",
+          "b": "Essential Criteria: The response must correctly identify the enzyme as DNA ligases, which is responsible for catalyzing the formation of phosphodiester bonds in DNA repair."
+        },
+        {
+          "sim": 0.985,
+          "a_qid": "rar_science:10339",
+          "a_title": "Correct Enzyme",
+          "a": "Essential Criteria: The response must correctly identify the enzyme as DNA ligases, which is responsible for catalyzing the formation of phosphodiester bonds in DNA repair.",
+          "b_qid": "rar_science:4724",
+          "b_title": "Correct Enzyme Identification",
+          "b": "Essential Criteria: The response must clearly identify DNA ligases as the enzyme responsible for catalyzing the formation of phosphodiester bonds during DNA repair."
+        },
+        {
+          "sim": 0.978,
+          "a_qid": "rar_science:15242",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: The answer should be succinct and directly address the question without unnecessary elaboration.",
+          "b_qid": "rar_science:12147",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: The response should be succinct and directly address the question without unnecessary elaboration."
+        },
+        {
+          "sim": 0.978,
+          "a_qid": "rar_science:12147",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: The response should be succinct and directly address the question without unnecessary elaboration.",
+          "b_qid": "rar_science:15242",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: The answer should be succinct and directly address the question without unnecessary elaboration."
+        },
+        {
+          "sim": 0.975,
+          "a_qid": "rar_science:2255",
+          "a_title": "Clarity and Conciseness",
+          "a": "Optional Criteria: The response should be clear and concise, providing the necessary details without unnecessary elaboration.",
+          "b_qid": "rar_science:17924",
+          "b_title": "Clarity and Conciseness",
+          "b": "Optional Criteria: The answer should be clear and concise, providing necessary details without unnecessary elaboration."
+        },
+        {
+          "sim": 0.975,
+          "a_qid": "rar_science:17924",
+          "a_title": "Clarity and Conciseness",
+          "a": "Optional Criteria: The answer should be clear and concise, providing necessary details without unnecessary elaboration.",
+          "b_qid": "rar_science:2255",
+          "b_title": "Clarity and Conciseness",
+          "b": "Optional Criteria: The response should be clear and concise, providing the necessary details without unnecessary elaboration."
+        },
+        {
+          "sim": 0.964,
+          "a_qid": "rar_science:14820",
+          "a_title": "Correct Final Answer",
+          "a": "Essential Criteria: The response must clearly state the final computed value for P0 as 75.4 cm of Hg.",
+          "b_qid": "rar_science:11630",
+          "b_title": "Final Answer Clarity",
+          "b": "Essential Criteria: The response must clearly state the final pressure as 75.4 cm of Hg as the computed value for P0."
+        },
+        {
+          "sim": 0.964,
+          "a_qid": "rar_science:11630",
+          "a_title": "Final Answer Clarity",
+          "a": "Essential Criteria: The response must clearly state the final pressure as 75.4 cm of Hg as the computed value for P0.",
+          "b_qid": "rar_science:14820",
+          "b_title": "Correct Final Answer",
+          "b": "Essential Criteria: The response must clearly state the final computed value for P0 as 75.4 cm of Hg."
+        },
+        {
+          "sim": 0.961,
+          "a_qid": "rar_science:1753",
+          "a_title": "Indistinguishability Contrast",
+          "a": "Essential Criteria: Contrast the concept of distinguishability in Boltzmann statistics with the indistinguishability in Fermi and Bose statistics.",
+          "b_qid": "rar_science:5328",
+          "b_title": "Distinguishability Comparison",
+          "b": "Important Criteria: The response should compare and contrast the concept of distinguishability in Boltzmann statistics with the indistinguishability featured in both Fermi and Bose statistics."
+        },
+        {
+          "sim": 0.961,
+          "a_qid": "rar_science:5328",
+          "a_title": "Distinguishability Comparison",
+          "a": "Important Criteria: The response should compare and contrast the concept of distinguishability in Boltzmann statistics with the indistinguishability featured in both Fermi and Bose statistics.",
+          "b_qid": "rar_science:1753",
+          "b_title": "Indistinguishability Contrast",
+          "b": "Essential Criteria: Contrast the concept of distinguishability in Boltzmann statistics with the indistinguishability in Fermi and Bose statistics."
+        },
+        {
+          "sim": 0.959,
+          "a_qid": "rar_science:9846",
+          "a_title": "Clarity and Conciseness",
+          "a": "Optional Criteria: Presents the answer in a clear and concise manner, avoiding unnecessary details while covering all critical steps.",
+          "b_qid": "rar_science:22075",
+          "b_title": "Concise Explanation",
+          "b": "Optional Criteria: Presents the derivation in a clear and concise manner, avoiding unnecessary details while still covering all critical steps."
+        },
+        {
+          "sim": 0.959,
+          "a_qid": "rar_science:22075",
+          "a_title": "Concise Explanation",
+          "a": "Optional Criteria: Presents the derivation in a clear and concise manner, avoiding unnecessary details while still covering all critical steps.",
+          "b_qid": "rar_science:9846",
+          "b_title": "Clarity and Conciseness",
+          "b": "Optional Criteria: Presents the answer in a clear and concise manner, avoiding unnecessary details while covering all critical steps."
+        },
+        {
+          "sim": 0.958,
+          "a_qid": "rar_science:18523",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: The response should be concise and directly state each answer without unnecessary explanation or over-elaboration.",
+          "b_qid": "rar_science:13752",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: The response should be concise and directly state the answer without unnecessary elaboration."
+        },
+        {
+          "sim": 0.958,
+          "a_qid": "rar_science:13752",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: The response should be concise and directly state the answer without unnecessary elaboration.",
+          "b_qid": "rar_science:18523",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: The response should be concise and directly state each answer without unnecessary explanation or over-elaboration."
+        },
+        {
+          "sim": 0.957,
+          "a_qid": "rar_science:17031",
+          "a_title": "Clear Conclusion",
+          "a": "Essential Criteria: The response must clearly state that Car A has a lower peak velocity than Car B based on their horsepower ratings.",
+          "b_qid": "rar_science:15021",
+          "b_title": "Accurate Conclusion",
+          "b": "Essential Criteria: The response must clearly state that Car A will have a lower peak velocity than Car B based on the provided horsepower values."
+        },
+        {
+          "sim": 0.957,
+          "a_qid": "rar_science:15021",
+          "a_title": "Accurate Conclusion",
+          "a": "Essential Criteria: The response must clearly state that Car A will have a lower peak velocity than Car B based on the provided horsepower values.",
+          "b_qid": "rar_science:17031",
+          "b_title": "Clear Conclusion",
+          "b": "Essential Criteria: The response must clearly state that Car A has a lower peak velocity than Car B based on their horsepower ratings."
+        },
+        {
+          "sim": 0.954,
+          "a_qid": "rar_science:21242",
+          "a_title": "Final Answer Clarity",
+          "a": "Essential Criteria: The response must explicitly state that the average speed is 10 km/hr as the final answer.",
+          "b_qid": "rar_science:8683",
+          "b_title": "Accurate Final Answer",
+          "b": "Essential Criteria: The final answer must clearly state that the average speed is 10 km/hr."
+        },
+        {
+          "sim": 0.954,
+          "a_qid": "rar_science:8683",
+          "a_title": "Accurate Final Answer",
+          "a": "Essential Criteria: The final answer must clearly state that the average speed is 10 km/hr.",
+          "b_qid": "rar_science:21242",
+          "b_title": "Final Answer Clarity",
+          "b": "Essential Criteria: The response must explicitly state that the average speed is 10 km/hr as the final answer."
+        },
+        {
+          "sim": 0.95,
+          "a_qid": "rar_science:9205",
+          "a_title": "Correct Product Identification",
+          "a": "Essential Criteria: The response must clearly identify the final product as an α,β-unsaturated carbonyl compound resulting from aldol condensation after dehydration.",
+          "b_qid": "rar_science:6416",
+          "b_title": "Correct Product",
+          "b": "Essential Criteria: The answer must clearly state that the final product is an α,β-unsaturated carbonyl compound resulting from the aldol condensation dehydration."
+        },
+        {
+          "sim": 0.95,
+          "a_qid": "rar_science:6416",
+          "a_title": "Correct Product",
+          "a": "Essential Criteria: The answer must clearly state that the final product is an α,β-unsaturated carbonyl compound resulting from the aldol condensation dehydration.",
+          "b_qid": "rar_science:9205",
+          "b_title": "Correct Product Identification",
+          "b": "Essential Criteria: The response must clearly identify the final product as an α,β-unsaturated carbonyl compound resulting from aldol condensation after dehydration."
+        },
+        {
+          "sim": 0.944,
+          "a_qid": "rar_science:16028",
+          "a_title": "Answer Clarity",
+          "a": "Optional Criteria: Presents the reasoning in a concise and clear manner that is easy to follow without unnecessary detail.",
+          "b_qid": "rar_science:7693",
+          "b_title": "Clarity and Conciseness",
+          "b": "Optional Criteria: Presents the reasoning in a clear and concise manner that is easy to follow."
+        },
+        {
+          "sim": 0.944,
+          "a_qid": "rar_science:7693",
+          "a_title": "Clarity and Conciseness",
+          "a": "Optional Criteria: Presents the reasoning in a clear and concise manner that is easy to follow.",
+          "b_qid": "rar_science:16028",
+          "b_title": "Answer Clarity",
+          "b": "Optional Criteria: Presents the reasoning in a concise and clear manner that is easy to follow without unnecessary detail."
+        },
+        {
+          "sim": 0.94,
+          "a_qid": "rar_science:8172",
+          "a_title": "Clarity and Brevity",
+          "a": "Optional Criteria: Presents the answer in a clear and concise manner without including unnecessary information or extraneous details.",
+          "b_qid": "rar_science:7798",
+          "b_title": "Clarity and Brevity",
+          "b": "Optional Criteria: Presents the information in a clear and concise manner without unnecessary extraneous details."
+        },
+        {
+          "sim": 0.94,
+          "a_qid": "rar_science:7798",
+          "a_title": "Clarity and Brevity",
+          "a": "Optional Criteria: Presents the information in a clear and concise manner without unnecessary extraneous details.",
+          "b_qid": "rar_science:8172",
+          "b_title": "Clarity and Brevity",
+          "b": "Optional Criteria: Presents the answer in a clear and concise manner without including unnecessary information or extraneous details."
+        },
+        {
+          "sim": 0.939,
+          "a_qid": "rar_science:9211",
+          "a_title": "ΔU and ΔH Consistency",
+          "a": "Important Criteria: Explicitly indicates that both the change in internal energy (ΔU) and the change in enthalpy (ΔH) are zero during the isothermal process for an ideal gas.",
+          "b_qid": "rar_science:17000",
+          "b_title": "Zero ΔU & ΔH",
+          "b": "Essential Criteria: The response should explicitly state that for an isothermal process in an ideal gas, both the change in internal energy (ΔU) and the change in enthalpy (ΔH) are zero."
+        },
+        {
+          "sim": 0.939,
+          "a_qid": "rar_science:17000",
+          "a_title": "Zero ΔU & ΔH",
+          "a": "Essential Criteria: The response should explicitly state that for an isothermal process in an ideal gas, both the change in internal energy (ΔU) and the change in enthalpy (ΔH) are zero.",
+          "b_qid": "rar_science:9211",
+          "b_title": "ΔU and ΔH Consistency",
+          "b": "Important Criteria: Explicitly indicates that both the change in internal energy (ΔU) and the change in enthalpy (ΔH) are zero during the isothermal process for an ideal gas."
+        },
+        {
+          "sim": 0.938,
+          "a_qid": "rar_science:22098",
+          "a_title": "Unit Consistency",
+          "a": "Important Criteria: The answer must consistently use and convert units (e.g., from Joules to kilojoules) throughout the calculation to maintain dimensional accuracy.",
+          "b_qid": "rar_science:2271",
+          "b_title": "Unit Consistency",
+          "b": "Important Criteria: The response should consistently use and convert units (e.g., joules to kilojoules) throughout the calculation to maintain accuracy."
+        },
+        {
+          "sim": 0.938,
+          "a_qid": "rar_science:2271",
+          "a_title": "Unit Consistency",
+          "a": "Important Criteria: The response should consistently use and convert units (e.g., joules to kilojoules) throughout the calculation to maintain accuracy.",
+          "b_qid": "rar_science:22098",
+          "b_title": "Unit Consistency",
+          "b": "Important Criteria: The answer must consistently use and convert units (e.g., from Joules to kilojoules) throughout the calculation to maintain dimensional accuracy."
+        }
+      ]
+    },
+    "within_question_redundancy": {
+      "sample_questions": 8000,
+      "mean_max_pairwise_cosine": 0.4165,
+      "median_max_pairwise_cosine": 0.4066,
+      "mean_mean_pairwise_cosine": 0.1394,
+      "mean_max_pairwise_jaccard": 0.1954,
+      "mean_mean_pairwise_jaccard": 0.051,
+      "pct_questions_with_a_pair_ge_0.5": 22.05,
+      "pct_questions_with_a_pair_ge_0.7": 1.24,
+      "pct_of_all_pairs_ge_0.5": 1.22,
+      "pct_of_all_pairs_ge_0.7": 0.06,
+      "mean_redundant_pairs_per_question": 0.303,
+      "anchor_aware": {
+        "note": "pair counted only if the two items carry identical numbers/symbols",
+        "pct_questions_with_a_true_pair_ge_0.5": 0.82,
+        "pct_questions_with_a_true_pair_ge_0.7": 0.14,
+        "pct_of_all_pairs_true_ge_0.5": 0.03,
+        "mean_true_redundant_pairs_per_question": 0.009
+      },
+      "pitfall_mirrors_a_positive_criterion": {
+        "note": "Pitfall item whose polarity-stripped text matches a non-Pitfall item of the same rubric at cosine >= 0.8: the same fact is scored twice, once positively and once with a negative weight",
+        "pct_questions_with_a_mirror_ge_0.6": 0.95,
+        "pct_questions_with_a_mirror_ge_0.7": 0.16,
+        "pct_questions_with_a_mirror_ge_0.8": 0.01,
+        "pct_questions_with_a_mirror_ge_0.9": 0.0,
+        "pct_questions_with_a_mirror_ge_0.99": 0.0,
+        "mean_mirrors_per_question": 0.0,
+        "mean_max_mirror_similarity": 0.2417,
+        "examples_top10": [
+          {
+            "sim": 0.857,
+            "qid": "rar_science:3849",
+            "pitfall": "Pitfall Criteria: Avoid mentioning that all atoms in the molecule must be planar for aromaticity, as the planarity condition only applies to atoms involved in electron delocalization.",
+            "positive": "Important Criteria: The answer should explicitly state that the planarity required for aromaticity applies only to the atoms involved in electron delocalization, not to all atoms in the molecule."
+          }
+        ]
+      },
+      "examples_top25": [
+        {
+          "sim": 0.965,
+          "qid": "rar_science:22873",
+          "a": "Essential Criteria: The response must state the estimated branching ratio for D0 → K+K− (relative to D0 → K−π+) to be approximately 0.05.",
+          "b": "Essential Criteria: The response must state the estimated branching ratio for D0 → π+π− (relative to D0 → K−π+) to be approximately 0.05."
+        },
+        {
+          "sim": 0.901,
+          "qid": "rar_science:22477",
+          "a": "Essential Criteria: The response must correctly apply the limit as T → 0 (β → ∞) to demonstrate that tanh(γħB_zβ/2) approaches 1, leading to ⟨E⟩ = (γħB_z)/2.",
+          "b": "Essential Criteria: The response must correctly apply the limit as T → ∞ (β → 0) to show that tanh(γħB_zβ/2) approaches 0, yielding ⟨E⟩ = 0."
+        },
+        {
+          "sim": 0.869,
+          "qid": "rar_science:2128",
+          "a": "Essential Criteria: The response must explicitly state that in water, the solubility ranking is Ethanol > Diethyl ether > Heptane.",
+          "b": "Essential Criteria: The response must clearly indicate that in hexane, the solubility ranking is Heptane > Diethyl ether > Ethanol."
+        },
+        {
+          "sim": 0.868,
+          "qid": "rar_science:3372",
+          "a": "Essential Criteria: The answer clearly identifies that carcinomas are tumors derived from epithelial cells.",
+          "b": "Essential Criteria: The answer clearly identifies that sarcomas are tumors derived from connective tissue cells."
+        },
+        {
+          "sim": 0.854,
+          "qid": "rar_science:2780",
+          "a": "Essential Criteria: Verify that the calculation for the rate of change of concentration of A is correctly determined as -1.0 mol litre⁻¹ sec⁻¹ based on the relation -d[A]/dt = d[C]/dt.",
+          "b": "Essential Criteria: Confirm that the rate of change for D is determined correctly as 1.5 mol litre⁻¹ sec⁻¹ using the relation d[D]/dt = (3/2) × d[C]/dt."
+        },
+        {
+          "sim": 0.847,
+          "qid": "rar_science:13216",
+          "a": "Essential Criteria: The response must clearly identify Na₂HPO₄ as the acid-salt that can furnish H+ in its aqueous solution.",
+          "b": "Essential Criteria: The response must explicitly state that the correct answer is (c) Na₂HPO₄ as the salt that can furnish H+ in its aqueous solution."
+        },
+        {
+          "sim": 0.845,
+          "qid": "rar_science:9404",
+          "a": "Essential Criteria: The response must identify that the reaction goes farthest to completion when K = 10^10.",
+          "b": "Essential Criteria: The answer must conclude clearly that K = 10^10 is the condition where the reaction goes farthest to completion."
+        },
+        {
+          "sim": 0.824,
+          "qid": "rar_science:18057",
+          "a": "Essential Criteria: The response must clearly demonstrate the linearity of the commutator by showing that [Â + ˆB, ˆC] equals [Â, ˆC] plus [ˆB, ˆC].",
+          "b": "Essential Criteria: The answer must conclude by clearly restating the final equality, ensuring that the demonstration of [Â + ˆB, ˆC] = [Â, ˆC] + [ˆB, ˆC] is unambiguous."
+        },
+        {
+          "sim": 0.82,
+          "qid": "rar_science:19704",
+          "a": "Important Criteria: Explains that the resulting state is |ψ⟩|ψ⟩ + |ϕ⟩|ϕ⟩ and emphasizes that this state does not equal the product state (|ψ⟩ + |ϕ⟩)(|ψ⟩ + |ϕ⟩), highlighting the non-factorizability.",
+          "b": "Essential Criteria: Concludes with the correct mathematical expression, U(|ψ⟩ + |ϕ⟩)|0⟩ = |ψ⟩|ψ⟩ + |ϕ⟩|ϕ⟩, to explicitly show the outcome."
+        },
+        {
+          "sim": 0.81,
+          "qid": "rar_science:16024",
+          "a": "Important Criteria: Explains that in a positive control circuit, a mutation leading to a nonfunctional regulator gene results in the inability to turn on the expression of the target genes.",
+          "b": "Important Criteria: Describes that in a negative control circuit, a mutation that produces a nonfunctional regulator gene leads to the inability to turn off the expression of the target genes."
+        },
+        {
+          "sim": 0.809,
+          "qid": "rar_science:12326",
+          "a": "Essential Criteria: Ensures the response correctly identifies that at 1.0 atm the boiling (or dew) point of water is 100 °C.",
+          "b": "Important Criteria: Requires the answer to clarify that 100 °C is both the boiling point and the dew point for water at 1.0 atm."
+        },
+        {
+          "sim": 0.804,
+          "qid": "rar_science:3849",
+          "a": "Important Criteria: The answer should explicitly state that the planarity required for aromaticity applies only to the atoms involved in electron delocalization, not to all atoms in the molecule.",
+          "b": "Pitfall Criteria: Avoid mentioning that all atoms in the molecule must be planar for aromaticity, as the planarity condition only applies to atoms involved in electron delocalization."
+        },
+        {
+          "sim": 0.803,
+          "qid": "rar_science:2909",
+          "a": "Important Criteria: The solution must demonstrate the correct manipulation of exponential operators, showing that conjugation by e^(λ v∙σ) transforms w∙σ into w∙σ e^(–λ v∙σ).",
+          "b": "Optional Criteria: The response may conclude with a succinct summary confirming that e^(λ v∙σ) w∙σ equals w∙σ e^(–λ v∙σ) based on the derived properties."
+        },
+        {
+          "sim": 0.802,
+          "qid": "rar_science:6368",
+          "a": "Essential Criteria: The response must correctly identify that mutant cell line A is defective in GlcNac-P-transferase, B in mannose 6-phosphate receptor, and C in phosphoglycosidase.",
+          "b": "Essential Criteria: The response should match the reference answer by linking cell line A to GlcNac-P-transferase, cell line B to mannose 6-phosphate receptor, and cell line C to phosphoglycosidase."
+        },
+        {
+          "sim": 0.801,
+          "qid": "rar_science:4508",
+          "a": "Essential Criteria: The response must explicitly list the four bases in DNA as adenine, thymine, guanine, and cytosine.",
+          "b": "Essential Criteria: The response must explicitly list the four bases in RNA as adenine, uracil, guanine, and cytosine."
+        },
+        {
+          "sim": 0.794,
+          "qid": "rar_science:6428",
+          "a": "Important Criteria: The response should compute the alloy’s entropy change using the formula ΔS = (mass × specific heat) ln(T_final/T_initial), explicitly showing the calculation with 4 × 4 × ln(700/800).",
+          "b": "Important Criteria: The response should calculate the water’s entropy change correctly with ΔS = (mass × specific heat) ln(T_final/T_initial), using the appropriate values 4 × 1 × ln(700/300)."
+        },
+        {
+          "sim": 0.787,
+          "qid": "rar_science:10911",
+          "a": "Essential Criteria: The response must explicitly identify that abrupt changes in crystal field stabilization energy occur for d^3, d^4, d^5, and d^7 electron configurations.",
+          "b": "Pitfall Criteria: The response should not omit or incorrectly list key electron configurations (d^3, d^4, d^5, d^7) required for abrupt changes in stabilization energy."
+        },
+        {
+          "sim": 0.776,
+          "qid": "rar_science:1974",
+          "a": "Essential Criteria: The response must derive the time-evolution equation for |ψ̃(t)⟩ and arrive at the form iℏ(d/dt)|ψ̃(t)⟩ = δH(t)|ψ̃(t)⟩.",
+          "b": "Essential Criteria: The explanation must state the condition [H^(0), δH(t)] = 0 for all t ≥ 0 as the key requirement for the equation to simplify to iℏ(d/dt)|ψ̃(t)⟩ = δH(t)|ψ̃(t)⟩."
+        },
+        {
+          "sim": 0.773,
+          "qid": "rar_science:12508",
+          "a": "Important Criteria: Checks that the derivation of the singlet state uses proper bra/ket notation and shows the antisymmetric combination, for example, 2^(-1/2)(|↑↓⟩ - |↓↑⟩).",
+          "b": "Important Criteria: Ensures that the explanation includes the explicit derivation of all triplet states using bra/ket notation, with the states |T,1⟩ = |↑↑⟩, |T,0⟩ = 2^(-1/2)(|↑↓⟩ + |↓↑⟩), and |T,-1⟩ = |↓↓⟩."
+        },
+        {
+          "sim": 0.772,
+          "qid": "rar_science:5328",
+          "a": "Essential Criteria: The response clearly explains that Fermi statistics applies to indistinguishable particles and includes the Pauli exclusion principle.",
+          "b": "Essential Criteria: The response clearly explains that Bose statistics applies to indistinguishable particles without employing the Pauli exclusion principle."
+        },
+        {
+          "sim": 0.771,
+          "qid": "rar_science:7130",
+          "a": "Essential Criteria: The response must clearly indicate that 'Recombinant DNA' is the answer that does NOT belong to the methods used in single locus probe analysis of VNTR regions.",
+          "b": "Essential Criteria: The response must explain why 'Recombinant DNA' is not used in single locus probe analysis by detailing its disconnection from standard VNTR methods."
+        },
+        {
+          "sim": 0.77,
+          "qid": "rar_science:16105",
+          "a": "Essential Criteria: Accurately identifies the 3′ to 5′ exonuclease activity of DNA polymerase δ as the proofreading mechanism responsible for nuclear DNA replication accuracy.",
+          "b": "Important Criteria: Specifies that DNA polymerase δ, and not another polymerase, is responsible for the 3′ to 5′ exonuclease activity involved in proofreading."
+        },
+        {
+          "sim": 0.768,
+          "qid": "rar_science:13251",
+          "a": "Essential Criteria: The answer must clearly state that negative energy solutions are considered unphysical and eliminated by taking the positive square root of the Klein-Gordon equation.",
+          "b": "Important Criteria: The response must explain why and how taking the positive square root of the Klein-Gordon equation is used to remove unphysical negative energy solutions."
+        },
+        {
+          "sim": 0.768,
+          "qid": "rar_science:6181",
+          "a": "Essential Criteria: The response must correctly establish the energy balance equation as C1*(T_F - T1) = C2*(T2 - T_F) based on the conservation of energy.",
+          "b": "Essential Criteria: The response must accurately solve and present the final expression for T2 as T2 = (C1/C2)*(T_F - T1) + T_F."
+        },
+        {
+          "sim": 0.767,
+          "qid": "rar_science:1162",
+          "a": "Essential Criteria: The answer must correctly identify the two lowest energy levels as Eₐ+Eₐ and Eₐ+E_b.",
+          "b": "Essential Criteria: The response must state the degeneracies as 4 for Eₐ+Eₐ and 8 for Eₐ+E_b, matching the reference answer."
+        }
+      ],
+      "examples_anchor_aware_top25": [
+        {
+          "sim": 0.965,
+          "qid": "rar_science:22873",
+          "a": "Essential Criteria: The response must state the estimated branching ratio for D0 → K+K− (relative to D0 → K−π+) to be approximately 0.05.",
+          "b": "Essential Criteria: The response must state the estimated branching ratio for D0 → π+π− (relative to D0 → K−π+) to be approximately 0.05."
+        },
+        {
+          "sim": 0.764,
+          "qid": "rar_science:20748",
+          "a": "Essential Criteria: The response must correctly apply the conversion factor by cubing (1 m/1000 mm) to convert mm³ to m³.",
+          "b": "Pitfall Criteria: The response should not omit cubing the conversion factor (1/1000) to ensure proper conversion from mm³ to m³."
+        },
+        {
+          "sim": 0.761,
+          "qid": "rar_science:11212",
+          "a": "Essential Criteria: The answer must correctly define epigenetic changes as modifications that affect gene expression without altering the DNA sequence.",
+          "b": "Pitfall Criteria: Avoid omitting the fact that epigenetic modifications affect gene expression without altering the underlying DNA sequence."
+        },
+        {
+          "sim": 0.758,
+          "qid": "rar_science:16464",
+          "a": "Essential Criteria: Response must clearly identify dehydration as the reaction type that does not occur during the Gabriel synthesis.",
+          "b": "Optional Criteria: Response should align with the reference answer by clearly indicating that dehydration is the reaction that does not occur during the Gabriel synthesis."
+        },
+        {
+          "sim": 0.754,
+          "qid": "rar_science:13166",
+          "a": "Essential Criteria: The response must clearly state that the total angular momentum operator rotates both the spatial part and the internal spin state of the quantum system.",
+          "b": "Essential Criteria: The answer must indicate that the orbital angular momentum operator solely rotates the spatial part of the system without affecting the internal spin state."
+        },
+        {
+          "sim": 0.732,
+          "qid": "rar_science:174",
+          "a": "Essential Criteria: Ensures that the answer includes the correct formula U = δ * exp(-βδ) / (1 + exp(-βδ)) and a proper explanation for its derivation from the Boltzmann distribution.",
+          "b": "Important Criteria: Checks that the answer provides the entropy expression S = k * ln(1 + exp(-βδ)) + δ * exp(-βδ) / (1 + exp(-βδ)) and explains the role of each term in the context of statistical mechanics."
+        },
+        {
+          "sim": 0.731,
+          "qid": "rar_science:12542",
+          "a": "Important Criteria: Demonstrates that entropy S is calculated by taking the negative partial derivative of K with respect to temperature T at constant μ and V.",
+          "b": "Important Criteria: Explains that the number of particles N is determined by taking the negative partial derivative of K with respect to chemical potential μ at constant T and V."
+        },
+        {
+          "sim": 0.728,
+          "qid": "rar_science:15958",
+          "a": "Essential Criteria: Clearly states that the ground state determines the equilibrium properties of a system at low temperatures.",
+          "b": "Important Criteria: Connects the characteristics of the ground state to the equilibrium properties of the system at low temperatures."
+        },
+        {
+          "sim": 0.728,
+          "qid": "rar_science:3169",
+          "a": "Essential Criteria: The response must explicitly compute and state the probabilities in the fundamental state, matching the correct values of 1/4, 1/2, and 1/4 for the measurements of b1, b2, and b3 respectively.",
+          "b": "Essential Criteria: The response must clearly conclude by presenting a final summary that identifies the probabilities for measuring b1, b2, and b3 as 1/4, 1/2, and 1/4 respectively."
+        },
+        {
+          "sim": 0.724,
+          "qid": "rar_science:22050",
+          "a": "Important Criteria: The response should derive and state the partial derivative (∂P/∂T)₍ᵥ₎ = R/(𝑉̅ - b) by properly differentiating the equation of state.",
+          "b": "Essential Criteria: The response must substitute the derived expressions for (∂P/∂T)₍ᵥ₎ and (∂𝑉̅/∂T)₍ₚ₎ into the formula Cₚ - Cᵥ = T(∂P/∂T)₍ᵥ₎(∂𝑉̅/∂T)₍ₚ₎ correctly."
+        },
+        {
+          "sim": 0.704,
+          "qid": "rar_science:14931",
+          "a": "Essential Criteria: The response must accurately identify '21' as the term representing height in the rocket launch equation.",
+          "b": "Important Criteria: The answer should explain why the value '21' is used to represent the height in the context of the rocket launch equation."
+        },
+        {
+          "sim": 0.684,
+          "qid": "rar_science:2842",
+          "a": "Important Criteria: The answer should include reasoning that explains why hydrolysis of benzotrichloride leads to benzoic acid.",
+          "b": "Important Criteria: The response must demonstrate an understanding of the hydrolysis reaction mechanism that converts benzotrichloride to benzoic acid."
+        },
+        {
+          "sim": 0.684,
+          "qid": "rar_science:8754",
+          "a": "Essential Criteria: The response must correctly identify ionization, linkage, and solvate isomerism as the types present in the complexes.",
+          "b": "Important Criteria: The explanation must accurately define each type of isomerism and clarify why linkage, solvate, and ionization isomerism apply to these complexes."
+        },
+        {
+          "sim": 0.683,
+          "qid": "rar_science:19834",
+          "a": "Essential Criteria: The response must correctly state that the element with the symbol Pa is protactinium.",
+          "b": "Important Criteria: The response should be consistent with periodic table conventions by clearly linking the symbol Pa with its corresponding element protactinium."
+        },
+        {
+          "sim": 0.673,
+          "qid": "rar_science:3246",
+          "a": "Essential Criteria: Demonstrates correct conversion of mass to moles by dividing the given mass by the appropriate molar mass for both K4Mo2Cl8 and Mo2(O2CCH3)4.",
+          "b": "Important Criteria: Breaks down the theoretical yield computation by calculating the moles of Mo2(O2CCH3)4 and then using the molar mass of K4Mo2Cl8 to determine the expected product mass."
+        },
+        {
+          "sim": 0.669,
+          "qid": "rar_science:16901",
+          "a": "Essential Criteria: The answer must clearly state that the alcoholic residue remains unchanged during the ester formation process.",
+          "b": "Optional Criteria: The explanation should be concise and clearly articulate the unchanged state of the alcoholic residue during the reaction."
+        },
+        {
+          "sim": 0.663,
+          "qid": "rar_science:16552",
+          "a": "Important Criteria: Provides a clear, step-by-step derivation that leads to the photon energy expression Eγ = (mH² - mL²)/(2mH), ensuring that the algebraic manipulation is correct.",
+          "b": "Essential Criteria: Concludes with a clearly stated final answer that matches the expression Eγ = (mH² - mL²)/(2mH), ensuring mathematical precision and proper notation."
+        },
+        {
+          "sim": 0.649,
+          "qid": "rar_science:17278",
+          "a": "Essential Criteria: The response must clearly state that scandium has a lower ionization energy compared to selenium.",
+          "b": "Essential Criteria: The response must clearly state that scandium exhibits lower electronegativity than selenium."
+        },
+        {
+          "sim": 0.645,
+          "qid": "rar_science:20633",
+          "a": "Important Criteria: The response must demonstrate that the calculation is normalized per unit volume, yielding the ion generation rate in SI units of m⁻³·s⁻¹ as specified in the problem.",
+          "b": "Essential Criteria: The final answer should present the result with the correct SI units, explicitly indicating m⁻³·s⁻¹ for the ion generation rate."
+        },
+        {
+          "sim": 0.644,
+          "qid": "rar_science:9094",
+          "a": "Essential Criteria: The response must highlight that a strong magnetic field breaks time-reversal symmetry in the quantum Hall state.",
+          "b": "Important Criteria: The answer must explain that the breaking of time-reversal symmetry arises due to the necessary strong magnetic field applied in the quantum Hall effect."
+        },
+        {
+          "sim": 0.643,
+          "qid": "rar_science:11604",
+          "a": "Optional Criteria: The response should include a brief explanation of the sample space and why other traits do not affect the count for round peas and purple flowers.",
+          "b": "Pitfall Criteria: The response should not include unnecessary details about the traits that are not directly related to determining the probability of round peas and purple flowers."
+        },
+        {
+          "sim": 0.637,
+          "qid": "rar_science:22269",
+          "a": "Essential Criteria: The response must incorporate the balanced chemical equation and correctly identify the stoichiometric coefficients to relate HNO₃ to Ca(OH)₂.",
+          "b": "Essential Criteria: The response must correctly apply the mole ratio from the balanced equation to convert the moles of HNO₃ to the corresponding moles of Ca(OH)₂."
+        },
+        {
+          "sim": 0.635,
+          "qid": "rar_science:3609",
+          "a": "Essential Criteria: The answer must clearly state that the product is an α,β-unsaturated carbonyl compound.",
+          "b": "Important Criteria: The answer should include a brief explanation or reasoning that links the reactants to the formation of the α,β-unsaturated carbonyl product."
+        },
+        {
+          "sim": 0.631,
+          "qid": "rar_science:17065",
+          "a": "Essential Criteria: Requires the answer to state that increasing the number of events leads to a smaller difference between observed and expected probabilities and a reduction in standard deviation.",
+          "b": "Essential Criteria: Requires that the final answer clearly concludes that an increase in the number of events results in a reduction of both the observed versus expected difference and the standard deviation."
+        },
+        {
+          "sim": 0.622,
+          "qid": "rar_science:18638",
+          "a": "Important Criteria: The response should provide a detailed explanation of the molecular events involved both in the damage repair and in the resolution of the Holliday junction.",
+          "b": "Pitfall Criteria: The response must avoid using the same repair mechanism for different types of damage or omitting significant details about the resolution of the Holliday junction."
+        }
+      ]
+    }
+  },
+  "rar_medicine": {
+    "title_boilerplate": {
+      "n_criteria": 214658,
+      "n_unique_titles": 134023,
+      "unique_title_ratio_pct": 62.44,
+      "titles_used_once_pct": 88.36,
+      "criteria_whose_title_reused_ge_2x_pct": 44.83,
+      "criteria_whose_title_reused_ge_10x_pct": 25.26,
+      "criteria_whose_title_reused_ge_50x_pct": 16.65,
+      "criteria_whose_title_reused_ge_100x_pct": 13.11,
+      "criteria_whose_title_reused_ge_500x_pct": 6.78,
+      "criteria_whose_title_reused_ge_1000x_pct": 3.92,
+      "top50_titles": [
+        {
+          "title": "conciseness",
+          "count": 4140,
+          "pct_of_criteria": 1.93
+        },
+        {
+          "title": "avoids unnecessary detail",
+          "count": 1664,
+          "pct_of_criteria": 0.78
+        },
+        {
+          "title": "contextual relevance",
+          "count": 1451,
+          "pct_of_criteria": 0.68
+        },
+        {
+          "title": "avoids unnecessary details",
+          "count": 1169,
+          "pct_of_criteria": 0.54
+        },
+        {
+          "title": "concise explanation",
+          "count": 960,
+          "pct_of_criteria": 0.45
+        },
+        {
+          "title": "clear conclusion",
+          "count": 895,
+          "pct_of_criteria": 0.42
+        },
+        {
+          "title": "brevity and clarity",
+          "count": 746,
+          "pct_of_criteria": 0.35
+        },
+        {
+          "title": "identifies condition",
+          "count": 744,
+          "pct_of_criteria": 0.35
+        },
+        {
+          "title": "identifies correct answer",
+          "count": 620,
+          "pct_of_criteria": 0.29
+        },
+        {
+          "title": "avoids irrelevant details",
+          "count": 595,
+          "pct_of_criteria": 0.28
+        },
+        {
+          "title": "patient centered language",
+          "count": 534,
+          "pct_of_criteria": 0.25
+        },
+        {
+          "title": "correct diagnosis",
+          "count": 521,
+          "pct_of_criteria": 0.24
+        },
+        {
+          "title": "brevity",
+          "count": 514,
+          "pct_of_criteria": 0.24
+        },
+        {
+          "title": "identifies diagnosis",
+          "count": 492,
+          "pct_of_criteria": 0.23
+        },
+        {
+          "title": "avoids misdiagnosis",
+          "count": 430,
+          "pct_of_criteria": 0.2
+        },
+        {
+          "title": "empathetic tone",
+          "count": 382,
+          "pct_of_criteria": 0.18
+        },
+        {
+          "title": "avoids misleading information",
+          "count": 352,
+          "pct_of_criteria": 0.16
+        },
+        {
+          "title": "clarity and conciseness",
+          "count": 344,
+          "pct_of_criteria": 0.16
+        },
+        {
+          "title": "avoids unrelated details",
+          "count": 339,
+          "pct_of_criteria": 0.16
+        },
+        {
+          "title": "logical flow",
+          "count": 323,
+          "pct_of_criteria": 0.15
+        },
+        {
+          "title": "avoids incorrect options",
+          "count": 312,
+          "pct_of_criteria": 0.15
+        },
+        {
+          "title": "describes symptoms",
+          "count": 308,
+          "pct_of_criteria": 0.14
+        },
+        {
+          "title": "identify condition",
+          "count": 285,
+          "pct_of_criteria": 0.13
+        },
+        {
+          "title": "concise response",
+          "count": 282,
+          "pct_of_criteria": 0.13
+        },
+        {
+          "title": "avoids unrelated conditions",
+          "count": 258,
+          "pct_of_criteria": 0.12
+        },
+        {
+          "title": "clarity and precision",
+          "count": 256,
+          "pct_of_criteria": 0.12
+        },
+        {
+          "title": "explains symptoms",
+          "count": 247,
+          "pct_of_criteria": 0.12
+        },
+        {
+          "title": "concise conclusion",
+          "count": 236,
+          "pct_of_criteria": 0.11
+        },
+        {
+          "title": "clear conclusion statement",
+          "count": 222,
+          "pct_of_criteria": 0.1
+        },
+        {
+          "title": "correct answer identification",
+          "count": 221,
+          "pct_of_criteria": 0.1
+        },
+        {
+          "title": "explanation before answer",
+          "count": 219,
+          "pct_of_criteria": 0.1
+        },
+        {
+          "title": "clear and concise",
+          "count": 200,
+          "pct_of_criteria": 0.09
+        },
+        {
+          "title": "patient centered approach",
+          "count": 193,
+          "pct_of_criteria": 0.09
+        },
+        {
+          "title": "avoids incorrect diagnoses",
+          "count": 193,
+          "pct_of_criteria": 0.09
+        },
+        {
+          "title": "mechanism explanation",
+          "count": 193,
+          "pct_of_criteria": 0.09
+        },
+        {
+          "title": "explains mechanism",
+          "count": 184,
+          "pct_of_criteria": 0.09
+        },
+        {
+          "title": "avoids unnecessary tests",
+          "count": 182,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "clarity of explanation",
+          "count": 179,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "order of explanation",
+          "count": 177,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "avoids misidentification",
+          "count": 177,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "explanation before conclusion",
+          "count": 170,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "final answer statement",
+          "count": 169,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "clear final answer",
+          "count": 168,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "avoid unnecessary details",
+          "count": 166,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "common mistake",
+          "count": 165,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "conciseness and clarity",
+          "count": 163,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "symptom explanation",
+          "count": 162,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "mentions symptoms",
+          "count": 162,
+          "pct_of_criteria": 0.08
+        },
+        {
+          "title": "avoid unnecessary detail",
+          "count": 156,
+          "pct_of_criteria": 0.07
+        },
+        {
+          "title": "avoids overgeneralization",
+          "count": 155,
+          "pct_of_criteria": 0.07
+        }
+      ],
+      "top50_cumulative_pct_of_criteria": 10.89
+    },
+    "template_boilerplate": {
+      "exact_duplicate_description_pct": 3.5,
+      "exact_duplicate_across_different_questions_pct": 3.5,
+      "n_description_strings_reused_across_questions": 1240,
+      "n_distinct_descriptions": 208382,
+      "masked_template_distinct": 206742,
+      "masked_template_compression_ratio": 0.9631,
+      "criteria_sharing_a_masked_template_pct": 4.58,
+      "criteria_in_template_reused_ge_10x_pct": 2.29,
+      "rare_token_cutoff_docfreq": 214,
+      "skeleton_top_n_tokens": 200,
+      "skeleton_distinct": 190010,
+      "skeleton_compression_ratio": 0.8852,
+      "criteria_sharing_a_skeleton_pct": 15.12,
+      "criteria_in_skeleton_reused_ge_10x_pct": 5.53,
+      "top15_skeletons": [
+        {
+          "skeleton": "remains concise and avoids unnecessary detail",
+          "count": 847,
+          "pct": 0.39
+        },
+        {
+          "skeleton": "remains concise and avoids unnecessary detail in the explanation",
+          "count": 633,
+          "pct": 0.29
+        },
+        {
+          "skeleton": "remains concise and avoids unnecessary detail while",
+          "count": 281,
+          "pct": 0.13
+        },
+        {
+          "skeleton": "remains concise and avoids unnecessary detail while explaining the",
+          "count": 240,
+          "pct": 0.11
+        },
+        {
+          "skeleton": "includes a clear statement the final answer is a",
+          "count": 227,
+          "pct": 0.11
+        },
+        {
+          "skeleton": "includes a clear statement the final answer is d",
+          "count": 226,
+          "pct": 0.11
+        },
+        {
+          "skeleton": "includes a clear statement the final answer is b",
+          "count": 221,
+          "pct": 0.1
+        },
+        {
+          "skeleton": "presents the explanation before stating the final answer",
+          "count": 200,
+          "pct": 0.09
+        },
+        {
+          "skeleton": "includes a clear statement the final answer is c",
+          "count": 177,
+          "pct": 0.08
+        },
+        {
+          "skeleton": "identifies as the most likely diagnosis",
+          "count": 174,
+          "pct": 0.08
+        },
+        {
+          "skeleton": "remains concise and avoids unnecessary detail while explaining the diagnosis",
+          "count": 170,
+          "pct": 0.08
+        },
+        {
+          "skeleton": "remains concise and avoids unnecessary detail while the",
+          "count": 141,
+          "pct": 0.07
+        },
+        {
+          "skeleton": "remains concise and avoids unnecessary detail while information",
+          "count": 138,
+          "pct": 0.06
+        },
+        {
+          "skeleton": "provides a concise explanation without unnecessary details",
+          "count": 127,
+          "pct": 0.06
+        },
+        {
+          "skeleton": "provides a concise explanation without unnecessary detail",
+          "count": 115,
+          "pct": 0.05
+        }
+      ],
+      "top20_masked_templates": [
+        {
+          "template": "remains concise and avoids unnecessary detail",
+          "count": 837,
+          "pct": 0.39
+        },
+        {
+          "template": "remains concise and avoids unnecessary detail in the explanation",
+          "count": 630,
+          "pct": 0.29
+        },
+        {
+          "template": "presents the explanation before stating the final answer",
+          "count": 173,
+          "pct": 0.08
+        },
+        {
+          "template": "remains concise and avoids unnecessary detail while explaining the diagnosis",
+          "count": 166,
+          "pct": 0.08
+        },
+        {
+          "template": "includes a clear statement the final answer is a",
+          "count": 140,
+          "pct": 0.07
+        },
+        {
+          "template": "includes a clear statement the final answer is b",
+          "count": 135,
+          "pct": 0.06
+        },
+        {
+          "template": "provides a concise explanation without unnecessary details",
+          "count": 121,
+          "pct": 0.06
+        },
+        {
+          "template": "provides a concise explanation without unnecessary detail",
+          "count": 111,
+          "pct": 0.05
+        },
+        {
+          "template": "includes a clear statement the final answer is d",
+          "count": 109,
+          "pct": 0.05
+        },
+        {
+          "template": "includes a clear statement the final answer is c",
+          "count": 108,
+          "pct": 0.05
+        },
+        {
+          "template": "remains concise and avoids unnecessary detail while explaining the reasoning",
+          "count": 92,
+          "pct": 0.04
+        },
+        {
+          "template": "remains concise and avoids unnecessary detail beyond the scope of the question",
+          "count": 67,
+          "pct": 0.03
+        },
+        {
+          "template": "remains concise and avoids unnecessary detail while maintaining clarity",
+          "count": 53,
+          "pct": 0.02
+        },
+        {
+          "template": "remains concise and avoids unnecessary details in the explanation",
+          "count": 52,
+          "pct": 0.02
+        },
+        {
+          "template": "remains concise and avoids unnecessary detail while covering all essential points",
+          "count": 49,
+          "pct": 0.02
+        },
+        {
+          "template": "provides a clear and concise explanation without unnecessary detail",
+          "count": 48,
+          "pct": 0.02
+        },
+        {
+          "template": "remains concise and avoids unnecessary medical jargon",
+          "count": 44,
+          "pct": 0.02
+        },
+        {
+          "template": "identifies <X> <X> as the most likely diagnosis",
+          "count": 43,
+          "pct": 0.02
+        },
+        {
+          "template": "remains concise and avoids unnecessary detail while providing the answer",
+          "count": 43,
+          "pct": 0.02
+        },
+        {
+          "template": "remains concise and avoids unnecessary detail while explaining the <X>",
+          "count": 42,
+          "pct": 0.02
+        }
+      ],
+      "top20_openers_6w": [
+        {
+          "opener": "remains concise and avoids unnecessary detail",
+          "count": 6851,
+          "pct": 3.19
+        },
+        {
+          "opener": "remains concise and avoids unnecessary details",
+          "count": 1121,
+          "pct": 0.52
+        },
+        {
+          "opener": "includes a clear statement 'the final",
+          "count": 894,
+          "pct": 0.42
+        },
+        {
+          "opener": "remains concise and avoids unnecessary detail.",
+          "count": 837,
+          "pct": 0.39
+        },
+        {
+          "opener": "includes a clear statement that the",
+          "count": 786,
+          "pct": 0.37
+        },
+        {
+          "opener": "includes a clear statement such as",
+          "count": 388,
+          "pct": 0.18
+        },
+        {
+          "opener": "provides a concise explanation without unnecessary",
+          "count": 354,
+          "pct": 0.16
+        },
+        {
+          "opener": "remains concise and avoids unnecessary medical",
+          "count": 316,
+          "pct": 0.15
+        },
+        {
+          "opener": "provides a clear and concise explanation",
+          "count": 260,
+          "pct": 0.12
+        },
+        {
+          "opener": "presents the explanation before stating the",
+          "count": 247,
+          "pct": 0.12
+        },
+        {
+          "opener": "does not mention the importance of",
+          "count": 210,
+          "pct": 0.1
+        },
+        {
+          "opener": "does not mention or incorrectly identifies",
+          "count": 161,
+          "pct": 0.08
+        },
+        {
+          "opener": "remains concise and avoids unnecessary detail,",
+          "count": 154,
+          "pct": 0.07
+        },
+        {
+          "opener": "does not mention the significance of",
+          "count": 143,
+          "pct": 0.07
+        },
+        {
+          "opener": "provides a brief explanation of how",
+          "count": 138,
+          "pct": 0.06
+        },
+        {
+          "opener": "includes a clear statement that 'the",
+          "count": 124,
+          "pct": 0.06
+        },
+        {
+          "opener": "includes a clear statement of the",
+          "count": 119,
+          "pct": 0.06
+        },
+        {
+          "opener": "remains concise and avoids including unnecessary",
+          "count": 118,
+          "pct": 0.05
+        },
+        {
+          "opener": "provides a brief explanation of what",
+          "count": 114,
+          "pct": 0.05
+        },
+        {
+          "opener": "provides a brief explanation of the",
+          "count": 113,
+          "pct": 0.05
+        }
+      ],
+      "top1_opener_share_pct": 3.19,
+      "top10_openers_share_pct": 5.62
+    },
+    "cross_question_near_duplicates": {
+      "sample_size": 60000,
+      "vocab": 11556,
+      "mean_max_cross_question_cosine": 0.5173,
+      "median_max_cross_question_cosine": 0.479,
+      "pct_with_cross_question_cosine_ge_0.80": 7.86,
+      "pct_with_cross_question_cosine_ge_0.90": 4.71,
+      "pct_with_cross_question_cosine_ge_0.99": 3.5,
+      "pct_with_cross_question_cosine_ge_0.60": 24.89,
+      "examples_top40": [
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:1302",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:13452",
+          "a_title": "Concise and Clear",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity.",
+          "b_qid": "rar_medicine:603",
+          "b_title": "Brevity and Clarity",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:18489",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail beyond explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:1381",
+          "a_title": "Concise Recommendation",
+          "a": "Optional Criteria: Remains concise in recommendation and avoids unnecessary detail.",
+          "b_qid": "rar_medicine:11127",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail beyond the recommendation."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:13429",
+          "a_title": "Avoids Overcomplication",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail not pertinent to the question.",
+          "b_qid": "rar_medicine:1236",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail not pertinent to the question."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:8600",
+          "a_title": "Clear and Concise",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:3123",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:18381",
+          "a_title": "Avoids Unnecessary Detail",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary medical jargon or excessive detail.",
+          "b_qid": "rar_medicine:3276",
+          "b_title": "Avoids Unnecessary Details",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary medical jargon or excessive detail."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:5284",
+          "a_title": "Clarity and Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity.",
+          "b_qid": "rar_medicine:603",
+          "b_title": "Brevity and Clarity",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:5600",
+          "a_title": "Identifies Medial Meniscus",
+          "a": "Essential Criteria: Identifies the medial meniscus as the structure most likely injured due to its attachment to the medial collateral ligament.",
+          "b_qid": "rar_medicine:17274",
+          "b_title": "Identifies Medial Meniscus",
+          "b": "Essential Criteria: Identifies (A) Medial meniscus as the structure most likely also injured due to its attachment to the medial collateral ligament."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:13553",
+          "a_title": "Brevity and Clarity",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity.",
+          "b_qid": "rar_medicine:603",
+          "b_title": "Brevity and Clarity",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:15139",
+          "a_title": "Concise Explanation",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary details beyond the essential explanation.",
+          "b_qid": "rar_medicine:7883",
+          "b_title": "Concise Response",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary details beyond the essential explanation."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:1236",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail not pertinent to the question.",
+          "b_qid": "rar_medicine:10749",
+          "b_title": "Avoid Unnecessary Detail",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail not pertinent to the question."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:20817",
+          "a_title": "Brevity",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:8631",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:13401",
+          "a_title": "Succinctness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:16199",
+          "a_title": "Concise Response",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while addressing the key points.",
+          "b_qid": "rar_medicine:6010",
+          "b_title": "Brevity",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while addressing the key points."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:15649",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:2962",
+          "a_title": "Brevity and Clarity",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:3221",
+          "a_title": "Conciseness and Clarity",
+          "a": "Optional Criteria: Delivers the information in a concise and clear manner without unnecessary detail.",
+          "b_qid": "rar_medicine:5034",
+          "b_title": "Provides Clear and Concise Answer",
+          "b": "Optional Criteria: Delivers the information in a clear and concise manner without unnecessary detail."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:11204",
+          "a_title": "Concise Answer",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:6711",
+          "a_title": "Brevity and Clarity",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity.",
+          "b_qid": "rar_medicine:603",
+          "b_title": "Brevity and Clarity",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:11127",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail beyond the recommendation.",
+          "b_qid": "rar_medicine:1381",
+          "b_title": "Concise Recommendation",
+          "b": "Optional Criteria: Remains concise in recommendation and avoids unnecessary detail."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:13712",
+          "a_title": "Statement Clarity",
+          "a": "Optional Criteria: Includes a clear statement indicating 'The final answer is (C)'.",
+          "b_qid": "rar_medicine:17783",
+          "b_title": "Conclusion Statement",
+          "b": "Essential Criteria: Includes a clear statement indicating 'The final answer is (C)'."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:3255",
+          "a_title": "Brevity",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:6696",
+          "a_title": "Concise and Specific",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:3276",
+          "a_title": "Avoids Unnecessary Details",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary medical jargon or excessive detail.",
+          "b_qid": "rar_medicine:18381",
+          "b_title": "Avoids Unnecessary Detail",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary medical jargon or excessive detail."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:11073",
+          "a_title": "Avoids Overcomplication",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail or overly technical language.",
+          "b_qid": "rar_medicine:19429",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail or overly technical language."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:1528",
+          "a_title": "Concise Response",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:6681",
+          "a_title": "Brevity and Clarity",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity.",
+          "b_qid": "rar_medicine:603",
+          "b_title": "Brevity and Clarity",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:2890",
+          "a_title": "Conciseness and Clarity",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity.",
+          "b_qid": "rar_medicine:603",
+          "b_title": "Brevity and Clarity",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while maintaining clarity."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:18129",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:8810",
+          "a_title": "Patient-Centered Language",
+          "a": "Optional Criteria: Uses language that is sensitive and empathetic to the patient's condition.",
+          "b_qid": "rar_medicine:1715",
+          "b_title": "Patient-Centered Language",
+          "b": "Optional Criteria: Uses language that is empathetic and sensitive to the patient's condition."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:3323",
+          "a_title": "Mentions Menstrual Timing",
+          "a": "Important Criteria: Mentions that the pain occurs during menstruation.",
+          "b_qid": "rar_medicine:16004",
+          "b_title": "Mentions Menstruation",
+          "b": "Important Criteria: Mentions that the pain occurs during menstruation."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:18054",
+          "a_title": "Concise Answer",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while addressing key points.",
+          "b_qid": "rar_medicine:6010",
+          "b_title": "Brevity",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while addressing the key points."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:21076",
+          "a_title": "Conciseness and Clarity",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail in explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:21118",
+          "a_title": "Clear and Direct",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail in explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:13850",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:18036",
+          "a_title": "Clarity and Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail in explaining the diagnosis.",
+          "b_qid": "rar_medicine:691",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while explaining the diagnosis."
+        },
+        {
+          "sim": 1.0,
+          "a_qid": "rar_medicine:13877",
+          "a_title": "Conciseness",
+          "a": "Optional Criteria: Remains concise and avoids unnecessary detail while covering key information.",
+          "b_qid": "rar_medicine:14706",
+          "b_title": "Conciseness",
+          "b": "Optional Criteria: Remains concise and avoids unnecessary detail while covering key information."
+        }
+      ]
+    },
+    "within_question_redundancy": {
+      "sample_questions": 8000,
+      "mean_max_pairwise_cosine": 0.5358,
+      "median_max_pairwise_cosine": 0.528,
+      "mean_mean_pairwise_cosine": 0.137,
+      "mean_max_pairwise_jaccard": 0.2881,
+      "mean_mean_pairwise_jaccard": 0.0506,
+      "pct_questions_with_a_pair_ge_0.5": 57.81,
+      "pct_questions_with_a_pair_ge_0.7": 12.97,
+      "pct_of_all_pairs_ge_0.5": 2.97,
+      "pct_of_all_pairs_ge_0.7": 0.39,
+      "mean_redundant_pairs_per_question": 1.243,
+      "anchor_aware": {
+        "note": "pair counted only if the two items carry identical numbers/symbols",
+        "pct_questions_with_a_true_pair_ge_0.5": 7.9,
+        "pct_questions_with_a_true_pair_ge_0.7": 2.96,
+        "pct_of_all_pairs_true_ge_0.5": 0.23,
+        "mean_true_redundant_pairs_per_question": 0.097
+      },
+      "pitfall_mirrors_a_positive_criterion": {
+        "note": "Pitfall item whose polarity-stripped text matches a non-Pitfall item of the same rubric at cosine >= 0.8: the same fact is scored twice, once positively and once with a negative weight",
+        "pct_questions_with_a_mirror_ge_0.6": 16.21,
+        "pct_questions_with_a_mirror_ge_0.7": 8.18,
+        "pct_questions_with_a_mirror_ge_0.8": 3.12,
+        "pct_questions_with_a_mirror_ge_0.9": 0.78,
+        "pct_questions_with_a_mirror_ge_0.99": 0.12,
+        "mean_mirrors_per_question": 0.034,
+        "mean_max_mirror_similarity": 0.3724,
+        "examples_top10": [
+          {
+            "sim": 1.0,
+            "qid": "rar_medicine:4149",
+            "pitfall": "Pitfall Criteria: Does not mention non-suppurative destructive cholangitis as the expected histological finding.",
+            "positive": "Essential Criteria: Identifies non-suppurative destructive cholangitis as the expected histological finding."
+          },
+          {
+            "sim": 1.0,
+            "qid": "rar_medicine:6901",
+            "pitfall": "Pitfall Criteria: Does not mention lactose intolerance as the condition.",
+            "positive": "Essential Criteria: Correctly identifies lactose intolerance as the condition."
+          },
+          {
+            "sim": 1.0,
+            "qid": "rar_medicine:12816",
+            "pitfall": "Pitfall Criteria: Does not mention chromosome 9 as the location of the TSC1 gene.",
+            "positive": "Essential Criteria: Identifies chromosome 9 as the location of the TSC1 gene."
+          },
+          {
+            "sim": 1.0,
+            "qid": "rar_medicine:19313",
+            "pitfall": "Pitfall Criteria: Does not mention meningiomas as the most common benign neoplasm of meningothelial origin.",
+            "positive": "Essential Criteria: Correctly identifies meningiomas as the most common benign neoplasm of meningothelial origin."
+          },
+          {
+            "sim": 1.0,
+            "qid": "rar_medicine:6222",
+            "pitfall": "Pitfall Criteria: Does not mention PKD1 as the gene not associated with Autosomal Dominant Tubulointerstitial Kidney Disease.",
+            "positive": "Essential Criteria: Identifies PKD1 as the gene not associated with Autosomal Dominant Tubulointerstitial Kidney Disease."
+          },
+          {
+            "sim": 1.0,
+            "qid": "rar_medicine:17658",
+            "pitfall": "Pitfall Criteria: Does not mention Taenia solium as the causative agent of the disease.",
+            "positive": "Essential Criteria: Identifies Taenia solium as the causative agent of the disease."
+          },
+          {
+            "sim": 1.0,
+            "qid": "rar_medicine:19375",
+            "pitfall": "Pitfall Criteria: Does not mention Type 1 hyperlipoproteinemia as the most probable diagnosis.",
+            "positive": "Essential Criteria: Identifies Type 1 hyperlipoproteinemia as the most probable diagnosis."
+          },
+          {
+            "sim": 1.0,
+            "qid": "rar_medicine:19355",
+            "pitfall": "Pitfall Criteria: Does not mention E. coli as a microorganism that can grow in standard cell culture media.",
+            "positive": "Essential Criteria: Mentions E. coli as a microorganism that can grow in standard cell culture media."
+          },
+          {
+            "sim": 0.997,
+            "qid": "rar_medicine:11490",
+            "pitfall": "Pitfall Criteria: Does not mention oral ferrous sulfate as a cause of constipation.",
+            "positive": "Essential Criteria: Clearly identifies oral ferrous sulfate as the cause of constipation."
+          },
+          {
+            "sim": 0.994,
+            "qid": "rar_medicine:17553",
+            "pitfall": "Pitfall Criteria: Does not mention the classic triad of respiratory distress, neurological symptoms, and petechial rash.",
+            "positive": "Essential Criteria: Mentions the classic triad of symptoms: respiratory distress, neurological symptoms, and petechial rash."
+          }
+        ]
+      },
+      "examples_top25": [
+        {
+          "sim": 1.0,
+          "qid": "rar_medicine:14006",
+          "a": "Important Criteria: Provides a description of what low-volume, high-pressure cuff means.",
+          "b": "Important Criteria: Provides a description of what high-volume, low-pressure cuff means."
+        },
+        {
+          "sim": 1.0,
+          "qid": "rar_medicine:16095",
+          "a": "Pitfall Criteria: Does not mention tuboplasty as a recommended next step in this scenario.",
+          "b": "Pitfall Criteria: Does not mention hydrotubation as a recommended next step in this scenario."
+        },
+        {
+          "sim": 1.0,
+          "qid": "rar_medicine:14501",
+          "a": "Important Criteria: Correctly identifies Pimozide as not being an atypical antipsychotic.",
+          "b": "Important Criteria: Correctly identifies Penfluridol as not being an atypical antipsychotic."
+        },
+        {
+          "sim": 0.963,
+          "qid": "rar_medicine:6222",
+          "a": "Essential Criteria: Identifies PKD1 as the gene not associated with Autosomal Dominant Tubulointerstitial Kidney Disease.",
+          "b": "Pitfall Criteria: Does not mention PKD1 as the gene not associated with Autosomal Dominant Tubulointerstitial Kidney Disease."
+        },
+        {
+          "sim": 0.961,
+          "qid": "rar_medicine:19355",
+          "a": "Essential Criteria: Mentions E. coli as a microorganism that can grow in standard cell culture media.",
+          "b": "Pitfall Criteria: Does not mention E. coli as a microorganism that can grow in standard cell culture media."
+        },
+        {
+          "sim": 0.958,
+          "qid": "rar_medicine:14124",
+          "a": "Essential Criteria: Accurately calculates the incidence rate for Study 1 as 2 cases per 1000 person-years.",
+          "b": "Essential Criteria: Accurately calculates the incidence rate for Study 2 as 2 cases per 1000 person-years."
+        },
+        {
+          "sim": 0.953,
+          "qid": "rar_medicine:4149",
+          "a": "Essential Criteria: Identifies non-suppurative destructive cholangitis as the expected histological finding.",
+          "b": "Pitfall Criteria: Does not mention non-suppurative destructive cholangitis as the expected histological finding."
+        },
+        {
+          "sim": 0.949,
+          "qid": "rar_medicine:2549",
+          "a": "Essential Criteria: Identifies the Juxta oral organ of Chievitz as the cluster of nests of squamous epithelial cells.",
+          "b": "Pitfall Criteria: Does not mention that the Juxta oral organ of Chievitz is a cluster of nests of squamous epithelial cells."
+        },
+        {
+          "sim": 0.939,
+          "qid": "rar_medicine:17658",
+          "a": "Essential Criteria: Identifies Taenia solium as the causative agent of the disease.",
+          "b": "Pitfall Criteria: Does not mention Taenia solium as the causative agent of the disease."
+        },
+        {
+          "sim": 0.939,
+          "qid": "rar_medicine:18020",
+          "a": "Important Criteria: Explains that mitochondrial DNA is inherited maternally.",
+          "b": "Pitfall Criteria: Does not mention that mitochondrial DNA is inherited maternally."
+        },
+        {
+          "sim": 0.938,
+          "qid": "rar_medicine:12816",
+          "a": "Essential Criteria: Identifies chromosome 9 as the location of the TSC1 gene.",
+          "b": "Pitfall Criteria: Does not mention chromosome 9 as the location of the TSC1 gene."
+        },
+        {
+          "sim": 0.932,
+          "qid": "rar_medicine:11894",
+          "a": "Essential Criteria: Identifies diarrhea as a disease that can prove fatal in combination with malnutrition among children under the age of five.",
+          "b": "Essential Criteria: Identifies pneumonia as a disease that can prove fatal in combination with malnutrition among children under the age of five."
+        },
+        {
+          "sim": 0.93,
+          "qid": "rar_medicine:19313",
+          "a": "Essential Criteria: Correctly identifies meningiomas as the most common benign neoplasm of meningothelial origin.",
+          "b": "Pitfall Criteria: Does not mention meningiomas as the most common benign neoplasm of meningothelial origin."
+        },
+        {
+          "sim": 0.93,
+          "qid": "rar_medicine:3551",
+          "a": "Essential Criteria: Provides a detailed calculation for the Below Ground option, resulting in 0.4 excess cancer deaths.",
+          "b": "Essential Criteria: Provides a detailed calculation for the Above/Below Ground option, resulting in 0.4 excess cancer deaths."
+        },
+        {
+          "sim": 0.93,
+          "qid": "rar_medicine:20161",
+          "a": "Essential Criteria: Accurately identifies 'having multiple sexual partners' as not a risk factor for carcinoma endometrium.",
+          "b": "Pitfall Criteria: Does not mention 'having multiple sexual partners' as a risk factor for carcinoma endometrium."
+        },
+        {
+          "sim": 0.928,
+          "qid": "rar_medicine:11502",
+          "a": "Essential Criteria: Identifies Friedreich's Ataxia as the likely disorder given the symptoms of slurred speech, frequent falls, pes cavus, hammer toes, and kyphoscoliosis.",
+          "b": "Important Criteria: Explains how the symptoms of slurred speech, frequent falls, pes cavus, hammer toes, and kyphoscoliosis are characteristic of Friedreich's Ataxia."
+        },
+        {
+          "sim": 0.928,
+          "qid": "rar_medicine:18235",
+          "a": "Essential Criteria: Applies the formula \\( \\dot{X}_C = \\dot{X}(P/P_C)(T_C/T) \\) correctly to determine the corrected exposure rate.",
+          "b": "Pitfall Criteria: Recommends using a formula other than \\( \\dot{X}_C = \\dot{X}(P/P_C)(T_C/T) \\) to find the corrected exposure rate."
+        },
+        {
+          "sim": 0.927,
+          "qid": "rar_medicine:9527",
+          "a": "Essential Criteria: Identifies ubiquitin as the regulatory molecule responsible for marking TDP-43 for degradation.",
+          "b": "Essential Criteria: Includes a clear statement that 'The regulatory molecule responsible for marking TDP-43 for degradation is ubiquitin.'"
+        },
+        {
+          "sim": 0.926,
+          "qid": "rar_medicine:9716",
+          "a": "Important Criteria: Describes Councilman bodies as the result of apoptotic hepatocytes.",
+          "b": "Important Criteria: Mentions that Councilman bodies result from apoptotic hepatocytes."
+        },
+        {
+          "sim": 0.923,
+          "qid": "rar_medicine:20095",
+          "a": "Essential Criteria: Identifies Anti-glomerular basement membrane antibody (Anti-GBM) as the likely pathogenic antibody for this patient’s disease.",
+          "b": "Essential Criteria: Includes a clear statement such as 'The antibody that is likely pathogenic for this patient’s disease is Anti-glomerular basement membrane antibody (Anti-GBM)'."
+        },
+        {
+          "sim": 0.922,
+          "qid": "rar_medicine:14716",
+          "a": "Essential Criteria: States that proximal muscle involvement is a feature of polymyositis.",
+          "b": "Pitfall Criteria: Does not mention that proximal muscle involvement is a feature of polymyositis."
+        },
+        {
+          "sim": 0.92,
+          "qid": "rar_medicine:2873",
+          "a": "Essential Criteria: Correctly calculates the Maternal Mortality Ratio as approximately 1,388.9 maternal deaths per 100,000 live births.",
+          "b": "Essential Criteria: Includes a clear statement of the final Maternal Mortality Ratio as approximately 1,388.9 maternal deaths per 100,000 live births."
+        },
+        {
+          "sim": 0.919,
+          "qid": "rar_medicine:2676",
+          "a": "Essential Criteria: Mentions NRC guidelines limit fetal x-ray exposure to 500 mR or less during gestation.",
+          "b": "Essential Criteria: Mentions NCRP guidelines limit fetal x-ray exposure to 500 mR or less during gestation."
+        },
+        {
+          "sim": 0.917,
+          "qid": "rar_medicine:19375",
+          "a": "Essential Criteria: Identifies Type 1 hyperlipoproteinemia as the most probable diagnosis.",
+          "b": "Pitfall Criteria: Does not mention Type 1 hyperlipoproteinemia as the most probable diagnosis."
+        },
+        {
+          "sim": 0.916,
+          "qid": "rar_medicine:16901",
+          "a": "Essential Criteria: Describes that gonorrhea can be asymptomatic in females.",
+          "b": "Pitfall Criteria: Does not mention that gonorrhea can be asymptomatic in females."
+        }
+      ],
+      "examples_anchor_aware_top25": [
+        {
+          "sim": 0.963,
+          "qid": "rar_medicine:6222",
+          "a": "Essential Criteria: Identifies PKD1 as the gene not associated with Autosomal Dominant Tubulointerstitial Kidney Disease.",
+          "b": "Pitfall Criteria: Does not mention PKD1 as the gene not associated with Autosomal Dominant Tubulointerstitial Kidney Disease."
+        },
+        {
+          "sim": 0.961,
+          "qid": "rar_medicine:19355",
+          "a": "Essential Criteria: Mentions E. coli as a microorganism that can grow in standard cell culture media.",
+          "b": "Pitfall Criteria: Does not mention E. coli as a microorganism that can grow in standard cell culture media."
+        },
+        {
+          "sim": 0.953,
+          "qid": "rar_medicine:4149",
+          "a": "Essential Criteria: Identifies non-suppurative destructive cholangitis as the expected histological finding.",
+          "b": "Pitfall Criteria: Does not mention non-suppurative destructive cholangitis as the expected histological finding."
+        },
+        {
+          "sim": 0.949,
+          "qid": "rar_medicine:2549",
+          "a": "Essential Criteria: Identifies the Juxta oral organ of Chievitz as the cluster of nests of squamous epithelial cells.",
+          "b": "Pitfall Criteria: Does not mention that the Juxta oral organ of Chievitz is a cluster of nests of squamous epithelial cells."
+        },
+        {
+          "sim": 0.939,
+          "qid": "rar_medicine:17658",
+          "a": "Essential Criteria: Identifies Taenia solium as the causative agent of the disease.",
+          "b": "Pitfall Criteria: Does not mention Taenia solium as the causative agent of the disease."
+        },
+        {
+          "sim": 0.939,
+          "qid": "rar_medicine:18020",
+          "a": "Important Criteria: Explains that mitochondrial DNA is inherited maternally.",
+          "b": "Pitfall Criteria: Does not mention that mitochondrial DNA is inherited maternally."
+        },
+        {
+          "sim": 0.938,
+          "qid": "rar_medicine:12816",
+          "a": "Essential Criteria: Identifies chromosome 9 as the location of the TSC1 gene.",
+          "b": "Pitfall Criteria: Does not mention chromosome 9 as the location of the TSC1 gene."
+        },
+        {
+          "sim": 0.932,
+          "qid": "rar_medicine:11894",
+          "a": "Essential Criteria: Identifies diarrhea as a disease that can prove fatal in combination with malnutrition among children under the age of five.",
+          "b": "Essential Criteria: Identifies pneumonia as a disease that can prove fatal in combination with malnutrition among children under the age of five."
+        },
+        {
+          "sim": 0.93,
+          "qid": "rar_medicine:19313",
+          "a": "Essential Criteria: Correctly identifies meningiomas as the most common benign neoplasm of meningothelial origin.",
+          "b": "Pitfall Criteria: Does not mention meningiomas as the most common benign neoplasm of meningothelial origin."
+        },
+        {
+          "sim": 0.93,
+          "qid": "rar_medicine:20161",
+          "a": "Essential Criteria: Accurately identifies 'having multiple sexual partners' as not a risk factor for carcinoma endometrium.",
+          "b": "Pitfall Criteria: Does not mention 'having multiple sexual partners' as a risk factor for carcinoma endometrium."
+        },
+        {
+          "sim": 0.926,
+          "qid": "rar_medicine:9716",
+          "a": "Important Criteria: Describes Councilman bodies as the result of apoptotic hepatocytes.",
+          "b": "Important Criteria: Mentions that Councilman bodies result from apoptotic hepatocytes."
+        },
+        {
+          "sim": 0.922,
+          "qid": "rar_medicine:14716",
+          "a": "Essential Criteria: States that proximal muscle involvement is a feature of polymyositis.",
+          "b": "Pitfall Criteria: Does not mention that proximal muscle involvement is a feature of polymyositis."
+        },
+        {
+          "sim": 0.92,
+          "qid": "rar_medicine:2873",
+          "a": "Essential Criteria: Correctly calculates the Maternal Mortality Ratio as approximately 1,388.9 maternal deaths per 100,000 live births.",
+          "b": "Essential Criteria: Includes a clear statement of the final Maternal Mortality Ratio as approximately 1,388.9 maternal deaths per 100,000 live births."
+        },
+        {
+          "sim": 0.917,
+          "qid": "rar_medicine:19375",
+          "a": "Essential Criteria: Identifies Type 1 hyperlipoproteinemia as the most probable diagnosis.",
+          "b": "Pitfall Criteria: Does not mention Type 1 hyperlipoproteinemia as the most probable diagnosis."
+        },
+        {
+          "sim": 0.916,
+          "qid": "rar_medicine:16901",
+          "a": "Essential Criteria: Describes that gonorrhea can be asymptomatic in females.",
+          "b": "Pitfall Criteria: Does not mention that gonorrhea can be asymptomatic in females."
+        },
+        {
+          "sim": 0.915,
+          "qid": "rar_medicine:15811",
+          "a": "Essential Criteria: Clearly identifies Fanconi's anemia and Noonan's syndrome as the conditions not associated with diabetes mellitus.",
+          "b": "Pitfall Criteria: Does not mention Fanconi's anemia or Noonan's syndrome as associated with diabetes mellitus."
+        },
+        {
+          "sim": 0.915,
+          "qid": "rar_medicine:21459",
+          "a": "Essential Criteria: Identifies the Lingual Nerve (a branch of the Trigeminal Nerve - CN V3) as at risk during the procedure.",
+          "b": "Pitfall Criteria: Does not mention the Lingual Nerve (a branch of the Trigeminal Nerve - CN V3) as at risk."
+        },
+        {
+          "sim": 0.915,
+          "qid": "rar_medicine:19520",
+          "a": "Essential Criteria: Correctly identifies the disrupted reaction as the conversion of methylmalonyl-CoA to succinyl-CoA.",
+          "b": "Essential Criteria: Includes a clear statement that the disrupted reaction is the conversion of methylmalonyl-CoA to succinyl-CoA."
+        },
+        {
+          "sim": 0.915,
+          "qid": "rar_medicine:11250",
+          "a": "Important Criteria: Explains that the DAI evaluates tooth alignment and spacing.",
+          "b": "Pitfall Criteria: Does not mention that the DAI evaluates specifically tooth alignment and spacing."
+        },
+        {
+          "sim": 0.904,
+          "qid": "rar_medicine:11984",
+          "a": "Essential Criteria: Clearly identifies rapamycin as the treatment option that is not effective in controlling the symptoms of carcinoid syndrome.",
+          "b": "Pitfall Criteria: Recommends rapamycin as a treatment option effective in controlling symptoms of carcinoid syndrome."
+        },
+        {
+          "sim": 0.903,
+          "qid": "rar_medicine:16062",
+          "a": "Essential Criteria: Mentions that the exercise should total at least 150 minutes per week.",
+          "b": "Pitfall Criteria: Does not mention total of at least 150 minutes of exercise per week."
+        },
+        {
+          "sim": 0.901,
+          "qid": "rar_medicine:10721",
+          "a": "Essential Criteria: Identifies the left lateral pterygoid muscle as the one most likely affected.",
+          "b": "Pitfall Criteria: Recommends a muscle other than the left lateral pterygoid as the one most likely affected."
+        },
+        {
+          "sim": 0.901,
+          "qid": "rar_medicine:14950",
+          "a": "Essential Criteria: Identifies the enclosure as a Faraday cage.",
+          "b": "Pitfall Criteria: Does not mention identifying the enclosure as a Faraday cage."
+        },
+        {
+          "sim": 0.896,
+          "qid": "rar_medicine:21366",
+          "a": "Essential Criteria: Correctly identifies 'abutment teeth' as the term describing the tooth or teeth to which a bridge is attached.",
+          "b": "Pitfall Criteria: Does not mention or incorrectly identifies 'abutment teeth' as the term for the tooth or teeth to which a bridge is attached."
+        },
+        {
+          "sim": 0.895,
+          "qid": "rar_medicine:19780",
+          "a": "Essential Criteria: Clearly specifies that the percentage reduction in strength and toughness is approximately 14%.",
+          "b": "Pitfall Criteria: Does not mention the percentage reduction in strength and toughness as approximately 14%."
+        }
+      ]
+    }
+  }
+}

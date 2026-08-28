@@ -1,0 +1,83 @@
+# Judge-swap replication: identical to configs/pilot.yaml EXCEPT `eval.judge_model`.
+#
+# Purpose: the agentic rubrics and the pilot's judge are the same model
+# (hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2), so the agentic wording style could be
+# scoring well because it matches that judge's own preferences rather than
+# because the criteria are better. `baseline` controls for "same model + the
+# paper's prompt" but cannot control for judge/generator sharing a model.
+#
+# Everything that is not the judge model is held fixed on purpose:
+#   * rubrics are REUSED from runs/pilot_v2 (never regenerated),
+#   * the degraded response ladder is REUSED byte-for-byte,
+#   * judge prompt, aggregation, polarity handling, comparator handling and the
+#     criterion-shuffle seed are unchanged,
+# so any difference in the results is attributable to the judge alone.
+#
+# `run_name` differs so artefacts land beside, not on top of, the pilot's.
+run_name: judgeswap
+runs_dir: runs
+results_dir: results
+
+generators:
+  - shipped
+  - baseline
+  - agentic
+  - agentic-noval
+  - agentic-goldonly
+  - agentic-negonly
+
+llm:
+  # Unused for this run (no generation happens) but kept so the config is
+  # self-consistent if someone reruns a generator stage by mistake.
+  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  concurrency: 64
+  reasoning_effort: high
+  max_tokens: 16384
+  max_attempts: 4
+  # Separate cache from the pilot's: the cache key already includes the model,
+  # so sharing would be safe, but a distinct directory makes it impossible for
+  # this experiment to read or write the incumbent run's cache by accident.
+  cache_dir: runs/judgeswap_cache
+  request_timeout_s: 1200
+
+sample:
+  # Not used: runs/judgeswap/examples.jsonl already exists (written by
+  # scripts/judgeswap_setup.py) and resolve_examples reuses it verbatim, which
+  # is what pins the balanced 57+57 paired subset.
+  domains: [rar_science, rar_medicine]
+  split: val
+  n_per_domain: 100
+  seed: 1234
+  deduplicate_questions: true
+
+eval:
+  # THE ONLY INTENDED DIFFERENCE from configs/pilot.yaml.
+  # OpenAI family via Azure — a different vendor and a different model family
+  # from the GLM-5.2 deployment that wrote the agentic rubrics. Note that
+  # `api_ali_glm-5.2` would NOT do: it is the same GLM-5.2 family as the
+  # incumbent, just reached over a different serving path.
+  judge_model: api_azure_openai_gpt-5.1
+  judge_max_tokens: 12288
+  judge_reasoning_effort: high
+  shuffle_criteria: true
+  shuffle_seed: 7
+  response_variants:
+    - gold
+    - missing_step
+    - numeric_error
+    - right_method_wrong_answer
+    - verbose_empty
+    - terse_correct
+    - off_topic
+  aggregation: paper_explicit
+  report_all_aggregations: true
+  polarity_mode: detected
+  polarity_sensitivity_modes: [favourable, all_avoidance, all_failure]
+  comparator_sources: [shipped, baseline]
+  run_implicit_judge: true
+  count_controlled: false
+  metrics:
+    - discriminative
+    - headtohead
+  self_agreement_repeats: 2
+  bootstrap_iters: 10000

@@ -1,0 +1,176 @@
+#!/usr/bin/env bash
+# Cheap end-to-end health check: no LLM calls, a few seconds.
+# Verifies every module imports, every CLI parses its arguments, the numeric
+# helpers pass their own tests, and the baseline prompts still match the paper.
+set -uo pipefail
+cd "$(dirname "$0")/.." || exit 1
+
+fail=0
+
+echo "== byte-compile =="
+python -m compileall -q harness scripts || fail=1
+
+echo
+echo "== module imports =="
+python - <<'PY' || fail=1
+import importlib
+mods = [
+    "harness.schema", "harness.llm", "harness.data", "harness.config",
+    "harness.tracing", "harness.pipeline", "harness.generators",
+    "harness.generators.agentic", "harness.generators.single_pass",
+    "harness.generators.shipped", "harness.prompts.rar_original",
+    "harness.prompts.agentic", "harness.prompts.eval_prompts",
+    "harness.prompts.responses", "harness.eval.judge", "harness.eval.stats",
+    "harness.eval.responses", "harness.eval.discriminative",
+    "harness.eval.transfer", "harness.eval.coverage", "harness.eval.intrinsic",
+    "harness.eval.headtohead", "harness.eval.grounding", "harness.eval.lint",
+    "harness.eval.adaptivity",
+]
+bad = 0
+for m in mods:
+    try:
+        importlib.import_module(m)
+    except Exception as exc:
+        bad += 1
+        print(f"  FAIL {m}: {type(exc).__name__}: {exc}")
+print(f"  {len(mods) - bad}/{len(mods)} modules import")
+raise SystemExit(1 if bad else 0)
+PY
+
+echo
+echo "== CLI argument parsing =="
+for s in gen_rubrics build_responses eval_rubrics aggregate_results \
+         main_table report_facts case_study check_prompt_fidelity _repair_jsonl \
+         confound_audit; do
+  if python "scripts/$s.py" --help >/dev/null 2>&1; then
+    echo "  OK   $s"
+  else
+    echo "  FAIL $s"
+    fail=1
+  fi
+done
+
+echo
+echo "== metric dispatcher binds every signature =="
+python - <<'PY' || fail=1
+import importlib.util, inspect
+spec = importlib.util.spec_from_file_location("er", "scripts/eval_rubrics.py")
+er = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(er)
+available = {"engine": 1, "examples": 2, "rubrics_by_source": 3,
+             "response_sets": 4, "config": 5, "run_dir": 6, "rollout_sets": 7}
+bad = 0
+for metric in sorted(er.METRIC_MODULES):
+    fn = er._load(metric)
+    try:
+        inspect.signature(fn).bind(**er._call_kwargs(fn, available))
+    except TypeError as exc:
+        bad += 1
+        print(f"  FAIL {metric}: {exc}")
+print(f"  {len(er.METRIC_MODULES) - bad}/{len(er.METRIC_MODULES)} metrics bind")
+raise SystemExit(1 if bad else 0)
+PY
+
+echo
+echo "== numeric self-tests =="
+python -m harness.eval.stats >/dev/null 2>&1 \
+  && echo "  OK   harness.eval.stats" || { echo "  FAIL harness.eval.stats"; fail=1; }
+
+echo
+echo "== row-merge preserves and never duplicates =="
+python - <<'PY' || fail=1
+import json, sys, tempfile
+from pathlib import Path
+sys.path.insert(0, "scripts")
+import eval_rubrics as er
+
+ok = True
+with tempfile.TemporaryDirectory() as tmp:
+    # Source-keyed rows: re-running one source must leave the others alone.
+    path = Path(tmp) / "m_per_question_rows.jsonl"
+    er._write_rows_preserving_other_sources(
+        path, [{"uid": "a", "rubric_source": "x"}, {"uid": "a", "rubric_source": "y"}], ["x", "y"]
+    )
+    er._write_rows_preserving_other_sources(path, [{"uid": "a", "rubric_source": "y"}], ["y"])
+    rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+    if len(rows) != 2 or {r["rubric_source"] for r in rows} != {"x", "y"}:
+        print(f"  FAIL source-keyed merge: {rows}"); ok = False
+    else:
+        print("  OK   source-keyed rows preserved across a scoped re-run")
+
+    # Rows with no source (head-to-head) must be replaced, not accumulated.
+    pair = Path(tmp) / "h_per_pair_rows.jsonl"
+    batch = [{"uid": "a", "source_a": "x", "source_b": "y"}]
+    er._write_rows_preserving_other_sources(pair, batch, ["x", "y"])
+    er._write_rows_preserving_other_sources(pair, batch, ["x", "y"])
+    rows = [json.loads(l) for l in pair.read_text().splitlines() if l.strip()]
+    if len(rows) != 1:
+        print(f"  FAIL unattributed rows duplicated on re-run: {len(rows)} rows"); ok = False
+    else:
+        print("  OK   unattributed rows replaced rather than appended")
+raise SystemExit(0 if ok else 1)
+PY
+
+echo
+echo "== FDR families are declared, not inferred from the table =="
+python - <<'PY' || fail=1
+import sys
+sys.path.insert(0, "scripts")
+import aggregate_results as ag, rollout_report as rr
+
+ok = True
+# The rollout family is a fixed list; a metric may only join it deliberately.
+family = {m for m, _, _ in rr.FDR_FAMILY}
+expected = {"auc", "best_of_n_accuracy", "best_of_n_lift",
+            "spearman", "separation", "z_separation"}
+if family != expected:
+    print(f"  FAIL rollout FDR family changed: {sorted(family ^ expected)}"); ok = False
+else:
+    print(f"  OK   rollout FDR family pinned to {len(family)} metrics")
+if {m for m, _ in rr.DESCRIPTIVE} & family:
+    print("  FAIL descriptive metrics leaked into the corrected family"); ok = False
+else:
+    print("  OK   descriptive metrics excluded from correction")
+# The main table's family is METRIC_SPEC, so it cannot shrink with the run's scope.
+if len(ag.METRIC_SPEC) != len({(f, c) for f, c, _, _ in ag.METRIC_SPEC}):
+    print("  FAIL METRIC_SPEC has duplicate (family, column) entries"); ok = False
+else:
+    print(f"  OK   main-table FDR family pinned to {len(ag.METRIC_SPEC)} metrics")
+raise SystemExit(0 if ok else 1)
+PY
+
+echo
+echo "== polarity: FAVOURABLE is documented as an alias, not a concession =="
+python - <<'PY' || fail=1
+import sys
+sys.path.insert(0, ".")
+from harness.eval.judge import PolarityMode, effective_polarity
+from harness.schema import Category, Criterion
+
+ok = True
+probes = [
+    Criterion(title="t", description="Pitfall Criteria: Fails to state X", weight=3, category=Category.PITFALL),
+    Criterion(title="t", description="Pitfall Criteria: Avoids stating X", weight=3, category=Category.PITFALL),
+    Criterion(title="t", description="Pitfall Criteria: Something unparseable", weight=3, category=Category.PITFALL),
+    Criterion(title="t", description="Essential Criteria: States X", weight=5, category=Category.ESSENTIAL),
+]
+for c in probes:
+    if effective_polarity(c, PolarityMode.FAVOURABLE) is not effective_polarity(c, PolarityMode.DETECTED):
+        print(f"  FAIL FAVOURABLE now differs from DETECTED for {c.description!r}"); ok = False
+if ok:
+    print("  OK   FAVOURABLE == DETECTED on every branch (as documented)")
+raise SystemExit(0 if ok else 1)
+PY
+
+echo
+echo "== baseline prompt fidelity vs docs/00_paper_notes.md =="
+python scripts/check_prompt_fidelity.py >/dev/null 2>&1 \
+  && echo "  OK   prompts verbatim" || { echo "  FAIL prompt drift"; fail=1; }
+
+echo
+if [ "$fail" -eq 0 ]; then
+  echo "ALL SELFTESTS PASSED"
+else
+  echo "SELFTESTS FAILED"
+fi
+exit "$fail"

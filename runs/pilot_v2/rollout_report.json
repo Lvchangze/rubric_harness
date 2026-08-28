@@ -1,0 +1,22 @@
+{
+  "n_questions": 200,
+  "n_rollouts_total": 2148,
+  "n_rollouts_usable": 2125,
+  "rollout_correct_rate": 0.8352941176470589,
+  "oracle_self_agreement": 0.8571428571428571,
+  "n_oracle_agreement_probed": 35,
+  "low_confidence_rate": 0.04329411764705882,
+  "missing_final_answer_rate": 0.004705882352941176,
+  "n_informative_questions": 62,
+  "n_all_correct_questions": 123,
+  "n_all_incorrect_questions": 15,
+  "informative_fraction": 0.31,
+  "mean_per_question_correct_rate": 0.8028333333333333,
+  "leakage_check": {
+    "n_eval_rollouts": 2039,
+    "n_generator_rollouts_checked": 3000,
+    "n_collisions": 0,
+    "collisions": [],
+    "disjoint": true
+  }
+}

@@ -1,0 +1,35 @@
+# Fast end-to-end sanity run. Use this before committing to a pilot.
+run_name: smoke
+runs_dir: runs
+results_dir: results
+
+generators: [shipped, baseline, agentic]
+
+llm:
+  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  concurrency: 24
+  reasoning_effort: high
+  max_tokens: 16384
+  max_attempts: 4
+  cache_dir: runs/cache
+  request_timeout_s: 1200
+
+sample:
+  domains: [rar_science, rar_medicine]
+  split: val
+  n_per_domain: 4
+  seed: 1234
+
+agentic:
+  n_rollouts: 3
+  enable_critic: true
+  target_min_items: 6
+  target_max_items: 16
+
+eval:
+  judge_model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  judge_max_tokens: 12288
+  shuffle_seed: 7
+  metrics: [discriminative, transfer, coverage, intrinsic]
+  self_agreement_repeats: 2
+  bootstrap_iters: 2000
