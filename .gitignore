@@ -34,10 +34,12 @@ runs/*/traces/
 runs/*/metrics/*_per_criterion_rows.jsonl
 runs/*/metrics/*_per_response_rows.jsonl
 runs/*/metrics/*_per_rollout_rows.jsonl
-runs/*/*_per_criterion.jsonl
-runs/*/discriminative_verdicts.jsonl
-runs/*/discriminative_responses.jsonl
-runs/*/discriminative_questions.jsonl
+# Depth-independent: the judge-swap arms sit one level deeper
+# (runs/judgeswap_arms/<arm>/...) and a runs/*/ pattern silently misses them.
+**/*_per_criterion.jsonl
+**/discriminative_verdicts.jsonl
+**/discriminative_responses.jsonl
+**/discriminative_questions.jsonl
 runs/_selftest/
 nohup.out
 *.log
