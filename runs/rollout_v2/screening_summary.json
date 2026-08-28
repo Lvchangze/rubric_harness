@@ -1,0 +1,40 @@
+{
+  "pool_per_domain": 500,
+  "screen_k": 4,
+  "n_pool": 1000,
+  "n_pool_actually_screened": 780,
+  "n_screened": 780,
+  "n_selected": 128,
+  "selected_by_domain": {
+    "rar_medicine": 65,
+    "rar_science": 63
+  },
+  "n_selected_with_existing_rubrics": 62,
+  "screen_stats": {
+    "rar_medicine/screened": 329,
+    "rar_medicine/all_right": 228,
+    "rar_medicine/mixed": 65,
+    "rar_medicine/all_wrong": 36,
+    "rar_science/screened": 451,
+    "rar_science/all_right": 351,
+    "rar_science/mixed": 63,
+    "rar_science/all_wrong": 37,
+    "provenance/imported_k8": 62,
+    "provenance/screened_k4": 66
+  },
+  "oracle": {
+    "n_questions": 780,
+    "n_rollouts_total": 4468,
+    "n_rollouts_usable": 4436,
+    "rollout_correct_rate": 0.8451307484220018,
+    "oracle_self_agreement": 0.952054794520548,
+    "n_oracle_agreement_probed": 146,
+    "low_confidence_rate": 0.03719567177637511,
+    "missing_final_answer_rate": 0.004733994589720469,
+    "n_informative_questions": 128,
+    "n_all_correct_questions": 579,
+    "n_all_incorrect_questions": 73,
+    "informative_fraction": 0.1641025641025641,
+    "mean_per_question_correct_rate": 0.8407905982905983
+  }
+}

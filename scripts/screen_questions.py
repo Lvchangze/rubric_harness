@@ -102,17 +102,29 @@ def import_existing(
     so they are the same measurement, only wider. Re-screening them at k=4 would
     re-derive a label already on disk.
     """
-    seeded: dict[str, RolloutSet] = {}
+    # Merge into whatever the target already holds. Writing only the imported
+    # sets would truncate a checkpoint from an earlier screening pass, which is
+    # the same overwriting-write failure that once destroyed the zero-LLM metric
+    # rows; the cost here is not lost calls (they are cached) but lost hours.
+    seeded: dict[str, RolloutSet] = dict(load_rollout_sets(target))
+    n_existing = len(seeded)
     wanted = {ex.uid for ex in pool}
+    imported: set[str] = set()
     for source in sources:
         for uid, rollout_set in load_rollout_sets(source).items():
             if uid in wanted and uid not in seeded:
                 rollout_set.meta["imported_from"] = str(source)
                 seeded[uid] = rollout_set
+                imported.add(uid)
+    logger.info(
+        "checkpoint had %d sets; imported %d more from earlier runs (%d total)",
+        n_existing, len(imported), len(seeded),
+    )
     if seeded:
-        logger.info("imported %d already-labelled rollout sets", len(seeded))
         save_rollout_sets(seeded, target)
-    return seeded
+    # Questions carried over from an earlier run are the ones whose rubrics
+    # already exist, whether they arrived just now or in a previous pass.
+    return {uid: rs for uid, rs in seeded.items() if rs.meta.get("imported_from")}
 
 
 def select(
@@ -188,16 +200,27 @@ async def run(args: argparse.Namespace) -> None:
         imported = import_existing(pool, [Path(p) for p in args.import_from], target)
         prefer = set(imported)
 
-    sets = await build_all_rollout_sets(
-        engine,
-        pool,
-        k=args.k,
-        max_tokens=args.max_tokens,
-        concurrency=args.concurrency or config.llm.concurrency,
-        agreement_probe_fraction=args.agreement_probe_fraction,
-        run_dir=run_dir,
-        reuse=True,
-    )
+    if args.select_only:
+        # Select from whatever the screen has already labelled. The screen walks
+        # the pool in a fixed order but *completes* in order of latency, so a
+        # partial screen over-represents questions the policy answers quickly.
+        # That skew is rubric-blind and every source is scored on the same
+        # questions, so it cannot favour a source; it only narrows what the
+        # result generalises to, and the actual screened count is recorded below
+        # rather than the count that was planned.
+        sets = load_rollout_sets(target)
+        logger.info("select-only: %d rollout sets already on disk", len(sets))
+    else:
+        sets = await build_all_rollout_sets(
+            engine,
+            pool,
+            k=args.k,
+            max_tokens=args.max_tokens,
+            concurrency=args.concurrency or config.llm.concurrency,
+            agreement_probe_fraction=args.agreement_probe_fraction,
+            run_dir=run_dir,
+            reuse=True,
+        )
 
     report = oracle_report(sets)
     chosen, stats = select(
@@ -209,6 +232,7 @@ async def run(args: argparse.Namespace) -> None:
         "pool_per_domain": args.pool_per_domain,
         "screen_k": args.k,
         "n_pool": len(pool),
+        "n_pool_actually_screened": len(sets),
         "n_screened": len(sets),
         "n_selected": len(chosen),
         "selected_by_domain": dict(Counter(e.domain for e in chosen)),
@@ -239,6 +263,8 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--k", type=int, default=4, help="screening rollouts per question")
     ap.add_argument("--max-tokens", type=int, default=8192)
     ap.add_argument("--concurrency", type=int, default=0)
+    ap.add_argument("--select-only", action="store_true",
+                    help="select from the existing checkpoint without sampling more")
     ap.add_argument("--agreement-probe-fraction", type=float, default=0.05)
     ap.add_argument(
         "--import-from", nargs="*", default=["runs/pilot_v2/rollouts.jsonl"],

@@ -1,0 +1,80 @@
+# Powered rollout evaluation (protocol 2, second attempt).
+#
+# The first attempt (`pilot_v2`, §4.4 of the report) drew rubrics for 200
+# questions and could use 61: the policy answered 123 correctly on every sample
+# and all 15 remaining ones incorrectly. Its null is a power failure, not a
+# finding, and it is the experiment that most needs to be conclusive.
+#
+# This run inverts the order. `scripts/screen_questions.py` screens a large pool
+# with k=4 rubric-blind rollouts first and keeps only questions with mixed
+# outcomes; rubrics are generated only for those. Mixed-outcome questions are
+# not a convenience subset -- in GRPO an all-correct or all-incorrect group has
+# zero advantage for every member, so the rubric's quality on such a question
+# cannot affect training. They are the population where a reward signal acts.
+run_name: rollout_v2
+runs_dir: runs
+results_dir: results
+
+# Trimmed from seven. `agentic-realneg` failed clearly under both protocols and
+# `agentic-noval` has already served its purpose (it is the clean demonstration
+# that structural gains do not imply reward-signal gains, §3.2/§4.3). The budget
+# goes instead to the contrast the evidence cannot currently settle: the two
+# halves of Stage 6, on which protocol 1 and protocol 2 disagree.
+generators:
+  - shipped           # free: read from the dataset
+  - baseline          # the comparison of record
+  - agentic           # this study's method
+  - agentic-goldonly  # Stage 6 gold-side filtering only
+  - agentic-negonly   # Stage 6 negative-side filtering only
+
+llm:
+  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  concurrency: 64
+  reasoning_effort: high
+  max_tokens: 16384
+  max_attempts: 4
+  cache_dir: runs/cache
+  request_timeout_s: 1200
+
+sample:
+  domains: [rar_science, rar_medicine]
+  split: val
+  # Not used directly: examples.jsonl is written by the screener and reused.
+  # Kept so the screener can draw its pool with the pilot's seed, which makes
+  # the pool a strict superset of the pilot's sample and lets already-generated
+  # rubrics be reused rather than paid for twice.
+  n_per_domain: 600
+  seed: 1234
+  deduplicate_questions: true
+
+agentic:
+  n_rollouts: 3
+  enable_decompose: true
+  enable_rollouts: true
+  enable_reconcile: true
+  enable_pitfalls: true
+  enable_critic: true
+  enable_calibration: true
+  rollout_max_tokens: 12000
+  drop_gold_failures: true
+  demote_indiscriminate: true
+  target_min_items: 6
+  target_max_items: 16
+  max_pitfall_fraction: 0.25
+
+eval:
+  judge_model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  judge_max_tokens: 12288
+  judge_reasoning_effort: high
+  shuffle_criteria: true
+  shuffle_seed: 7
+  aggregation: paper_explicit
+  polarity_mode: detected
+  comparator_sources: [shipped, baseline]
+  # Only the rollout protocol. The synthetic ladder, the structural metrics and
+  # the preference family were all measured on `pilot_v2` and none of them
+  # depend on the question set being mixed-outcome, so re-running them here
+  # would buy nothing.
+  metrics:
+    - rollout
+  bootstrap_iters: 10000
