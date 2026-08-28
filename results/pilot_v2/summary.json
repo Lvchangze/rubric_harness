@@ -9273,15 +9273,5 @@
   "agentic"
  ],
  "reference": "baseline",
- "cohort_problems": [
-  "[main] claim_recall: n_paired=197, expected 198",
-  "[main] claim_recall_core: n_paired=197, expected 198",
-  "[main] kappa: n_paired=81, expected 198",
-  "[main] margin__right_method_wrong_answer: n_paired=197, expected 198",
-  "[main] margin__verbose_empty: n_paired=197, expected 198",
-  "[main] orphan_subpart_rate: n_paired=3, expected 198",
-  "[main] score__right_method_wrong_answer: n_paired=197, expected 198",
-  "[main] score__verbose_empty: n_paired=197, expected 198",
-  "[main] subquestion_coverage: n_paired=72, expected 198"
- ]
+ "cohort_problems": []
 }

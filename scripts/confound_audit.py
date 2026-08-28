@@ -717,7 +717,15 @@ def main() -> None:
     ap.add_argument("--reference", default="baseline")
     ap.add_argument("--prefix", default="", help="metric-file prefix, e.g. cc_ for count-controlled")
     ap.add_argument("--sources", nargs="*", default=None)
-    ap.add_argument("--by-domain", action="store_true")
+    # On by default. A pooled-only run once let a science-specific effect be
+    # written up as a general one, so the split has to be opt-out, not opt-in.
+    ap.add_argument(
+        "--no-by-domain",
+        dest="by_domain",
+        action="store_false",
+        help="suppress the per-domain breakdown (it is emitted by default)",
+    )
+    ap.set_defaults(by_domain=True)
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 

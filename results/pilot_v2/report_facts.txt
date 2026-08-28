@@ -12,9 +12,9 @@ HEAD-TO-HEAD (blind, position-bias corrected)
 ==============================================================================
 LLM COST AND RELIABILITY
 ==============================================================================
-  llm_stats_gen.json         calls=  1755 api=   214 cache_hit=0.879 retries=  1 empty=  1 json_fail= 29 (1.65%) fail=0
+  llm_stats_gen.json         calls=  1988 api=   119 cache_hit=0.941 retries=  2 empty=  2 json_fail= 28 (1.41%) fail=0
   llm_stats_responses.json   calls=  2161 api=  2297 cache_hit=0.000 retries=136 empty=138 json_fail=  2 (0.09%) fail=2
-  llm_stats_eval.json        calls=  7024 api=  4890 cache_hit=0.304 retries=  3 empty=  3 json_fail= 59 (0.84%) fail=0
+  llm_stats_eval.json        calls=  1386 api=   460 cache_hit=0.669 retries=  1 empty=  1 json_fail= 25 (1.80%) fail=0
 
 ==============================================================================
 RUBRIC SIZE AND GENERATION FAILURES
