@@ -58,7 +58,7 @@ from harness.eval.rollouts import (  # noqa: E402
     build_all_rollout_sets,
     load_rollout_sets,
     oracle_report,
-    save_rollout_sets,
+    merge_rollout_sets,
 )
 from harness.pipeline import build_engine  # noqa: E402
 from harness.schema import Example  # noqa: E402
@@ -121,7 +121,7 @@ def import_existing(
         n_existing, len(imported), len(seeded),
     )
     if seeded:
-        save_rollout_sets(seeded, target)
+        merge_rollout_sets(seeded, target)
     # Questions carried over from an earlier run are the ones whose rubrics
     # already exist, whether they arrived just now or in a previous pass.
     return {uid: rs for uid, rs in seeded.items() if rs.meta.get("imported_from")}

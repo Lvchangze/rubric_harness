@@ -463,7 +463,7 @@ async def build_all_rollout_sets(
             # deliberate restart at higher concurrency — is a real cost, and the
             # LLM cache only avoids re-paying for calls, not for the wait.
             if target is not None and done % CHECKPOINT_EVERY == 0:
-                save_rollout_sets(out, target)
+                merge_rollout_sets(out, target)
             if done % 10 == 0:
                 rate = done / max(time.monotonic() - started, 1e-9)
                 logger.info(
@@ -480,7 +480,7 @@ async def build_all_rollout_sets(
         )
 
     if target is not None:
-        save_rollout_sets(out, target)
+        merge_rollout_sets(out, target)
     return out
 
 
@@ -536,7 +536,7 @@ async def _top_up_uninformative(
     await asyncio.gather(*(one(uid) for uid in todo))
     logger.info("top-up recovered %d/%d questions into the informative set", gained, len(todo))
     if target is not None:
-        save_rollout_sets(sets, target)
+        merge_rollout_sets(sets, target)
     return sets
 
 
@@ -592,11 +592,38 @@ def assert_disjoint_from_generator_rollouts(
 
 
 def save_rollout_sets(sets: Mapping[str, RolloutSet], path: "str | Path") -> None:
+    """Write exactly ``sets``, replacing whatever the file held."""
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
     with target.open("w", encoding="utf-8") as fh:
         for uid in sorted(sets):
             fh.write(json.dumps(sets[uid].to_dict(), ensure_ascii=False) + "\n")
+
+
+def merge_rollout_sets(sets: Mapping[str, RolloutSet], path: "str | Path") -> int:
+    """Write ``sets`` while keeping every question the file already had.
+
+    A run works on the questions in its own ``examples.jsonl``, but the file it
+    writes to can hold many more — ``rollout_v2/rollouts.jsonl`` carries all 780
+    screened questions while the run itself only handles the 128 that were
+    selected. Saving just the run's own dictionary would silently drop the other
+    652, taking the evidence for the screening statistics with them.
+
+    This is the same overwriting-write that has now cost this project three
+    times: 8,000 judge verdicts, then the zero-LLM metric rows, then a screening
+    checkpoint. Anything that persists a partial view of a shared artefact
+    merges by default.
+    """
+    target = Path(path)
+    merged: dict[str, RolloutSet] = dict(load_rollout_sets(target))
+    n_before = len(merged)
+    merged.update(sets)
+    save_rollout_sets(merged, target)
+    if len(merged) < n_before:
+        raise AssertionError(
+            f"merge dropped rows: {n_before} -> {len(merged)} in {target}"
+        )
+    return len(merged)
 
 
 def load_rollout_sets(path: "str | Path | RunDir") -> dict[str, RolloutSet]:
