@@ -7,20 +7,45 @@ __pycache__/
 # LLM response cache: reproducible but large and machine-local.
 runs/cache/
 
-# Run artefacts. The per-question rows are kept: every table in the report is
-# computed from them, so without them no number can be re-derived or checked.
-# The per-criterion rows are not — they run to ~50 MB and exist to answer
-# after-the-fact questions on the machine that produced them, not to be shipped.
+# Run artefacts. The line is: track what a published number is computed from,
+# and what cannot be regenerated from something else that is tracked.
+#
+#   tracked      rubrics_*.jsonl (60 MB)  the objects under study; nothing else
+#                                         reconstructs them, and every claim in
+#                                         the report is a claim about them
+#                metrics/*_per_question_rows.jsonl (27 MB)
+#                                         every table is computed from these, so
+#                                         without them no figure can be checked
+#                rollouts.jsonl (10 MB)   oracle labels and the evidence for the
+#                                         16.4% mixed-outcome rate
+#                examples.jsonl, *_summary.json, config.json
+#
+#   not tracked  per-criterion and per-response dumps (~165 MB)
+#                                         intermediate: they aggregate into the
+#                                         per-question rows above, which are
+#                                         tracked. They stay on disk for
+#                                         after-the-fact questions on the
+#                                         machine that produced them
+#                runs/cache/ (249 MB)     machine-local
+#
+# This keeps the repository around 100 MB of artefacts rather than 360 MB, and
+# every number in results/REPORT.md is still re-derivable from what is tracked.
 runs/*/traces/
 runs/*/metrics/*_per_criterion_rows.jsonl
 runs/*/metrics/*_per_response_rows.jsonl
 runs/*/metrics/*_per_rollout_rows.jsonl
+runs/*/*_per_criterion.jsonl
+runs/*/discriminative_verdicts.jsonl
+runs/*/discriminative_responses.jsonl
+runs/*/discriminative_questions.jsonl
 runs/_selftest/
 nohup.out
 *.log
 logs/
 
-# The parquet corpora are inputs, not outputs.
+# The corpora are inputs, not outputs. analysis/out/*.parquet is derived from
+# data/ by code that predates this harness, so it follows the same rule.
 data/
+analysis/out/*.parquet
 *.pdf
 runs/*/screening_pool.jsonl

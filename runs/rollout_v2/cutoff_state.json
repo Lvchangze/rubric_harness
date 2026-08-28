@@ -1,0 +1,12 @@
+{
+  "description": "Rubric counts at the point the serving outage cut the run, as recorded in git at commit b181fd1. results/REPORT.md 4.6.5 describes this state; the run has since resumed, so the live counts move and are not what the report is asserting.",
+  "cutoff_commit": "b181fd1",
+  "n_selected": 128,
+  "rubrics_at_cutoff": {
+    "shipped": 128,
+    "baseline": 128,
+    "agentic": 62,
+    "agentic-goldonly": 62,
+    "agentic-negonly": 62
+  }
+}

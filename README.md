@@ -1,5 +1,9 @@
 # Rubric Harness — Agentic Rubric Generation for Rubrics-as-Rewards
 
+> **接手做真实 RL 验证？先读 [`HANDOFF.md`](HANDOFF.md)。**
+> 那份是决策摘要 + 操作手册（证据强度分级、没跑完的实验怎么续、踩过的坑）；
+> 本文件讲工程结构与 CLI 用法；[`results/REPORT.md`](results/REPORT.md) 是证据本体。
+
 本仓库是一个研究 harness，用来验证一个假设：
 
 > **RaR（Rubrics as Rewards）论文中"一次性合成 rubric"的做法质量不够；
@@ -270,6 +274,11 @@ rubric_harness/
 │   ├── check_prompt_fidelity.py  # baseline prompt 与论文附录逐字比对（pilot 前必跑）
 │   ├── _repair_jsonl.py          # 按 uid 去重 append-only 产物（并发写入后的修复）
 │   ├── selftest.sh               # 零 LLM 健康检查（几秒），改完代码先跑这个
+│   ├── dryrun_resume.py         # 不联网排练续跑路径：合并写、断点、配对队列
+│   ├── check_report_facts.py    # 核对报告里的关键数字与产物是否一致
+│   ├── screen_questions.py      # 先筛后生成：只保留结局混合的题
+│   ├── run_rollout_v2.sh        # 续跑没做完的 rollout 评测（六个阶段）
+│   ├── resume_when_up.sh        # 等端点恢复后自动续跑
 │   └── run_pilot_driver.sh       # 带原子锁的全流程驱动：generate / evaluate
 ├── configs/                  # smoke.yaml / pilot.yaml
 ├── runs/<run_name>/          # 运行产物

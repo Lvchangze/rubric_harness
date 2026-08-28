@@ -169,6 +169,25 @@ rollout 总体正确率 84.5%，oracle 二次判定自洽率 95.2%（146 次抽�
 > **补齐 66 题后请重跑（`run_rollout_v2.sh` 的第 2–3 步，0 次 API 调用），
 > 用 n=128 的结果替换本表。**
 
+### 4.2c 更新：端点已恢复，看门狗已经把它跑起来了
+
+本文定稿时（2026-08-28 23:44）端点恢复，`scripts/resume_when_up.sh` 自动启动了续跑，
+生成阶段正在推进（agentic 62 → 68 → …）。**接手时请先看它跑到哪了**：
+
+```bash
+tail -f logs/resume.log            # 看门狗与阶段进度
+python3 scripts/check_report_facts.py   # 会打印当前进度 vs 中断时刻的快照
+ls .lock_rollout_v2 2>/dev/null && echo "还在跑"
+```
+
+如果它已经跑完，`results/rollout_v2/rollout_report.md` 就是你要的主表——
+**在看它之前先读完 §5 的判读标准。**
+如果它中途又断了，重跑 §4.3 那条命令即可（全部断点续跑）。
+
+**注意**：本文件与 `results/REPORT.md` 里的数字都是**中断时刻的状态**
+（快照记在 `runs/rollout_v2/cutoff_state.json`），不是"现在"。
+续跑完成后 §4.2b 的 n=62 预览应当被 n=128 的结果替换。
+
 ### 4.3 续跑：一条命令
 
 ```bash
