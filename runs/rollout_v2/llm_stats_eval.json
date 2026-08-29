@@ -1,17 +1,20 @@
 {
-  "calls": 0,
-  "cache_hits": 0,
-  "api_calls": 0,
-  "retries": 0,
-  "empty_responses": 0,
+  "calls": 5539,
+  "cache_hits": 2456,
+  "api_calls": 3084,
+  "retries": 1,
+  "empty_responses": 1,
   "failures": 0,
-  "json_parse_failures": 0,
+  "json_parse_failures": 112,
   "prompt_chars": 0,
-  "response_chars": 0,
-  "reasoning_chars": 0,
-  "wall_seconds": 0.0,
-  "by_tag": {},
-  "cache_hit_rate": 0.0,
+  "response_chars": 3930891,
+  "reasoning_chars": 5899391,
+  "wall_seconds": 1034976.7681059837,
+  "by_tag": {
+    "judge": 5420,
+    "judge:json_repair": 119
+  },
+  "cache_hit_rate": 0.44340133598122405,
   "model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
-  "concurrency": 64
+  "concurrency": 48
 }

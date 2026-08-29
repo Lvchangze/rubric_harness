@@ -1,0 +1,158 @@
+{
+ "pooled": {
+  "n_questions": 128,
+  "reference": "baseline",
+  "by_source": {
+   "shipped": {
+    "r": 0.4694716255800363,
+    "n_incorrect_rollouts": 407,
+    "ci_low": 0.3458957411883329,
+    "ci_high": 0.5827961549152036,
+    "delta": 0.009429757511972281,
+    "delta_ci_low": -0.09296093180338788,
+    "delta_ci_high": 0.11634621243622792,
+    "p_value": 0.8455
+   },
+   "baseline": {
+    "r": 0.460041868068064,
+    "n_incorrect_rollouts": 407,
+    "ci_low": 0.35233695399151144,
+    "ci_high": 0.5549254560013649
+   },
+   "agentic": {
+    "r": 0.28804318863222295,
+    "n_incorrect_rollouts": 407,
+    "ci_low": 0.13977500544900043,
+    "ci_high": 0.4365324006158934,
+    "delta": -0.17199867943584107,
+    "delta_ci_low": -0.3147134848693328,
+    "delta_ci_high": -0.030896461304288844,
+    "p_value": 0.0175
+   },
+   "agentic-goldonly": {
+    "r": 0.22155811904724607,
+    "n_incorrect_rollouts": 407,
+    "ci_low": 0.055495799987143254,
+    "ci_high": 0.3853609070189573,
+    "delta": -0.23848374902081795,
+    "delta_ci_low": -0.410799696654148,
+    "delta_ci_high": -0.07022713379766848,
+    "p_value": 0.004
+   },
+   "agentic-negonly": {
+    "r": 0.4168611937836619,
+    "n_incorrect_rollouts": 406,
+    "ci_low": 0.2866453179280617,
+    "ci_high": 0.5364463765666407,
+    "delta": -0.04318067428440214,
+    "delta_ci_low": -0.1685302102153841,
+    "delta_ci_high": 0.07585017173137769,
+    "p_value": 0.506
+   }
+  }
+ },
+ "rar_medicine": {
+  "n_questions": 65,
+  "reference": "baseline",
+  "by_source": {
+   "shipped": {
+    "r": 0.5727621460089526,
+    "n_incorrect_rollouts": 231,
+    "ci_low": 0.4602252343451522,
+    "ci_high": 0.673365965504926,
+    "delta": 0.046717360306169575,
+    "delta_ci_low": -0.04534814422246749,
+    "delta_ci_high": 0.14102317816705284,
+    "p_value": 0.3355
+   },
+   "baseline": {
+    "r": 0.526044785702783,
+    "n_incorrect_rollouts": 231,
+    "ci_low": 0.3921245203584626,
+    "ci_high": 0.646777083940349
+   },
+   "agentic": {
+    "r": 0.5216392224449966,
+    "n_incorrect_rollouts": 231,
+    "ci_low": 0.39853112748379044,
+    "ci_high": 0.638502422709596,
+    "delta": -0.0044055632577864046,
+    "delta_ci_low": -0.16062987158909495,
+    "delta_ci_high": 0.14468573712911437,
+    "p_value": 0.9185
+   },
+   "agentic-goldonly": {
+    "r": 0.5409592861834873,
+    "n_incorrect_rollouts": 231,
+    "ci_low": 0.41259628075946275,
+    "ci_high": 0.6582161035591086,
+    "delta": 0.014914500480704307,
+    "delta_ci_low": -0.1373195900936537,
+    "delta_ci_high": 0.16290556126937894,
+    "p_value": 0.8755
+   },
+   "agentic-negonly": {
+    "r": 0.6127409810928556,
+    "n_incorrect_rollouts": 230,
+    "ci_low": 0.4973063480681147,
+    "ci_high": 0.7123011693250191,
+    "delta": 0.08669619539007256,
+    "delta_ci_low": -0.05962072781638888,
+    "delta_ci_high": 0.22321144666783418,
+    "p_value": 0.241
+   }
+  }
+ },
+ "rar_science": {
+  "n_questions": 63,
+  "reference": "baseline",
+  "by_source": {
+   "shipped": {
+    "r": 0.3075984966325502,
+    "n_incorrect_rollouts": 176,
+    "ci_low": 0.12211977064844431,
+    "ci_high": 0.49278927259702743,
+    "delta": -0.11806531720653107,
+    "delta_ci_low": -0.26227241165123866,
+    "delta_ci_high": 0.022794341449807496,
+    "p_value": 0.095
+   },
+   "baseline": {
+    "r": 0.42566381383908125,
+    "n_incorrect_rollouts": 176,
+    "ci_low": 0.2930565121870316,
+    "ci_high": 0.5552925242015465
+   },
+   "agentic": {
+    "r": 0.12928504299828855,
+    "n_incorrect_rollouts": 176,
+    "ci_low": -0.08441407961091928,
+    "ci_high": 0.4026863152720978,
+    "delta": -0.29637877084079267,
+    "delta_ci_low": -0.4685363410222644,
+    "delta_ci_high": -0.08141517820345745,
+    "p_value": 0.0055
+   },
+   "agentic-goldonly": {
+    "r": 0.03227494752301649,
+    "n_incorrect_rollouts": 176,
+    "ci_low": -0.19824953563036538,
+    "ci_high": 0.3149100127248909,
+    "delta": -0.39338886631606473,
+    "delta_ci_low": -0.5938019438642951,
+    "delta_ci_high": -0.1698137731660608,
+    "p_value": 0.0
+   },
+   "agentic-negonly": {
+    "r": 0.26447947299594854,
+    "n_incorrect_rollouts": 176,
+    "ci_low": 0.039829331375315004,
+    "ci_high": 0.5259246017195175,
+    "delta": -0.1611843408431327,
+    "delta_ci_low": -0.32926755853911366,
+    "delta_ci_high": 0.03343083448885594,
+    "p_value": 0.1135
+   }
+  }
+ }
+}
