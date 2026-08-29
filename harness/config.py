@@ -100,6 +100,31 @@ class AgenticConfig:
     # comparison is not confounded by structure. Set before any metric was run.
     max_pitfall_fraction: float = 0.25
 
+    # -- tool use ---------------------------------------------------------
+    # Off by default so `agentic` keeps meaning exactly what it meant in every
+    # result already reported; the `agentic-tools` generator switches it on.
+    # Keeping both registered is the point — "does letting the model call tools
+    # help?" is only answerable against a no-tools arm that is otherwise
+    # byte-identical in every other stage.
+    enable_tools: bool = False
+    #: Which tools to expose. Empty means ``harness.tools.DEFAULT_TOOLS``.
+    tool_names: list[str] = field(default_factory=list)
+    #: Tool-augmented investigation between reconcile and draft: the model
+    #: chooses what to verify and returns evidence the drafter must build on.
+    enable_tool_investigation: bool = True
+    #: Let the critic call tools while validating candidates.
+    enable_tool_critic: bool = True
+    #: Assistant turns per loop. Each round is one model call plus its tools, so
+    #: this is the main cost lever.
+    tool_max_rounds: int = 8
+    #: Tool calls executed per turn; extras are deferred with a message saying so.
+    tool_max_parallel: int = 4
+    #: Wall-clock caps for one tool call, and for the sandboxed interpreter.
+    tool_timeout_s: float = 90.0
+    sandbox_timeout_s: float = 20.0
+    #: Questions sampled for the portability probe and nearest-neighbour search.
+    tool_corpus_limit: int = 4000
+
 
 @dataclass
 class EvalConfig:

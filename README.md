@@ -321,6 +321,70 @@ rubric 从"生成物"变成"通过了可执行判别测试的筛选结果"。
 每个 stage 的输入输出都写进 `runs/<run>/traces/`；任一 stage 失败都会降级到上一阶段
 的结果继续，不会丢样本。
 
+### 5.1 工具调用（`agentic-tools`）
+
+上面那条流水线里，**每一步问什么都是编排器定的**——模型只负责回答。严格说它是
+multi-stage workflow，不是 tool-using agent。`agentic-tools` 补上了这一层：把可执行
+工具交给模型，由它自己决定要验证什么。
+
+新增两个阶段，其余 stage、prompt、阈值全部继承不变，所以
+**`agentic-tools` 减去 `agentic` 隔离出的就是"让模型自己取证"的效果**：
+
+| Stage | 名称 | 做什么 | 开关 |
+|---|---|---|---|
+| 4b | `investigate` | 在 draft 之前，模型自主调工具建立证据：重算参考答案的数值、把草稿判据拿去跑真实文本、测试判据是否只适用于本题 | `enable_tool_investigation` |
+| 8b | `critic_tools` | 在确定性 critic 之后，对幸存判据再做一轮**可执行**复核，只能改写措辞或删除 | `enable_tool_critic` |
+
+`critic_tools` 刻意做成**追加**而不是替换：原来的 critic 产出 calibrate 依赖的
+`validation` 记录，也是 `goldonly`/`negonly` 消融的定义所在，改写它会让
+`agentic-tools` 与 `agentic` 同时差两件事，哪件都归因不了。
+
+八个工具，分两类。**五个零 LLM 调用、可从仓库完全复现**：
+
+| 工具 | 作用 |
+|---|---|
+| `python_eval` | 沙箱 Python（子进程隔离、CPU/内存 rlimit、无网络、无进程派生；预装 numpy/sympy） |
+| `check_equivalence` | 两个表达式或数值是否等价（sympy 符号化 + 数值容差），避免判据把答案钉死在一种写法上 |
+| `check_units` | 量纲分析与单位匹配 |
+| `check_specificity` | 锚点、主观用词、风格规则、批内近重复，以及**这条判据还能套到多少道无关题上** |
+| `find_similar_questions` | 语料近邻检索 |
+
+**三个走模型**：`extract_reference_claims`（参考答案拆成原子 claim）、
+`execute_criterion`（把判据真的跑在文本上，报告是否成立）、
+`make_counterexample`（造错误答案，并**验证它确实是错的**才注册）。
+
+`execute_criterion` 复用评测侧的 `JUDGE_SYSTEM`，`extract_reference_claims` 复用
+`CLAIM_EXTRACTION_SYSTEM`——生成期用的量具和评测期是同一把。
+
+判据靠 `targets` 按名字指定要跑在哪个文本上：`reference`、本次的 `rollout_N`、
+critic 阶段的 `negative_*`，以及模型自己造出来的 `counterexample_*`。
+
+```bash
+python3 scripts/gen_rubrics.py --config configs/pilot.yaml --run-name tools_pilot \
+  --sources shipped baseline agentic agentic-tools --concurrency 48
+```
+
+配置项都在 `AgenticConfig`：`enable_tools`、`tool_names`、`tool_max_rounds`（默认 8）、
+`tool_max_parallel`、`tool_timeout_s`、`sandbox_timeout_s`、`tool_corpus_limit`。
+
+**每一次工具调用都进 trace**（参数、结果、耗时、错误），落在
+`runs/<run>/traces/` 和 rubric 的 `meta.tools`。这不是装饰：一条说"已验证"的判据，
+如果背后没有对应的工具调用，它和普通的模型断言没有区别。`investigate` 若一次工具
+都没调，trace 里会显式标 `unverified`。
+
+实测特性（单题，science 域，`n_rollouts=2`，`tool_max_rounds=8`）：
+
+- 约 1350 秒、31 次 LLM 调用、17 次工具调用，**远贵于无工具的 `agentic`**。成本几乎
+  全在 `execute_criterion` 和 `make_counterexample` 这两个走模型的工具上（各 45–85 秒）。
+- 两个循环都会**用满轮次预算**（`stop_reason=max_rounds_closed`）。轮次耗尽时会
+  撤掉工具、要求模型直接交付 JSON，所以预算超支只是截断调查，不会整段作废——
+  没有这个收尾机制时，`investigate` 会直接失败并丢掉已经付过钱的工作。
+- 该次运行里模型发现了 **2 处参考答案本身的问题**，并主动记录了 2 条
+  "考虑过但不具区分度、因而没写成判据"的检查。
+
+> ⚠️ **`agentic-tools` 目前只做过单题冒烟，没有跑过成规模的对比。**
+> 报告里所有已发表的数字都来自无工具的 `agentic`，不要把工具版当成已验证的结果。
+
 ---
 
 ## 6. 评测指标

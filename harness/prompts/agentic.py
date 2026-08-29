@@ -485,6 +485,7 @@ def build_draft_user(
     banned_words: Sequence[str] = (),
     target_items: int | None = None,
     max_pitfall_fraction: float = 0.25,
+    investigation: Mapping[str, Any] | None = None,
 ) -> str:
     parts = [
         _section("question", question),
@@ -496,6 +497,18 @@ def build_draft_user(
         parts.append(_section("agreement_analysis", _dump(reconciliation, limit=8000)))
     if pitfalls:
         parts.append(_section("mined_pitfalls", _dump(list(pitfalls), limit=6000)))
+    if investigation:
+        # Ranked above the other evidence on purpose: these findings were
+        # produced by running something, not by reading. Where they disagree
+        # with the reference answer they are usually right, and a criterion that
+        # enshrines a reference slip will mark correct responses wrong.
+        parts.append(
+            _section("verified_findings", _dump(investigation, limit=7000))
+            + "\n(These were established with tools — recomputation, executing draft criteria "
+            "against real texts, and portability checks. Prefer them over the sections above "
+            "where they conflict, including over the reference answer itself, and use "
+            "'checks_that_do_not_discriminate' as a list of criteria NOT to write.)"
+        )
     parts.append(
         _section("question_anchors", render_anchors(anchors))
         + "\n(Every criterion must contain at least one of these verbatim. Criteria that contain "

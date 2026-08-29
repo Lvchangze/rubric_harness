@@ -71,17 +71,19 @@ from .base import GenerationResult, RubricGenerator, register
 
 logger = logging.getLogger(__name__)
 
-__all__ = ["AgenticGenerator", "STAGE_ORDER"]
+__all__ = ["AgenticGenerator", "AgenticToolsGenerator", "STAGE_ORDER"]
 
 STAGE_ORDER: tuple[str, ...] = (
     "decompose",
     "rollouts",
     "reconcile",
     "pitfalls",
+    "investigate",
     "scope",
     "draft",
     "lint",
     "critic",
+    "critic_tools",
     "calibrate",
     "dedup",
 )
@@ -97,6 +99,8 @@ _MAX_TOKENS: dict[str, int] = {
     "negative": 8192,
     "critic": 14336,
     "calibrate": 16384,
+    "investigate": 14336,
+    "critic_tools": 14336,
 }
 
 #: High enough that k rollouts explore genuinely different solution paths;
@@ -545,6 +549,19 @@ def _as_dict(value: Any) -> dict[str, Any]:
     return dict(value) if isinstance(value, Mapping) else {}
 
 
+def _safe_json(text: str, *, expect: str | None = None) -> Any:
+    """``extract_json`` that returns ``None`` instead of raising.
+
+    Used for tool-loop output, where the model's final turn is free text that
+    should contain JSON but may not — a missing object is a stage failure, not
+    an exception worth propagating.
+    """
+    try:
+        return extract_json(text or "", expect=expect)
+    except JSONParseError:
+        return None
+
+
 def _as_text(value: Any, limit: int = 4000) -> str:
     if value is None:
         return ""
@@ -778,6 +795,13 @@ class _Run:
     #: Lint tallies, accumulated across the batched stage and the final pass.
     lint: dict[str, int] = field(default_factory=dict)
 
+    #: Tool-mode state. ``tool_texts`` is the pool of named responses a criterion
+    #: can be executed against; it starts as the reference plus this run's
+    #: rollouts and grows as the agent builds counterexamples.
+    investigation: dict[str, Any] | None = None
+    tool_texts: dict[str, str] = field(default_factory=dict)
+    tool_invocations: list[Any] = field(default_factory=list)
+
     @property
     def target_items(self) -> int | None:
         value = self.scope.get("target_items")
@@ -865,6 +889,33 @@ class AgenticGenerator(RubricGenerator):
         self.enable_lint: bool = bool(self.options.get("enable_lint", True))
         self.adaptive_items: bool = bool(self.options.get("adaptive_items", True))
         self.drop_ungrounded: bool = bool(self.options.get("drop_ungrounded", True))
+        self._registry = self._build_registry()
+
+    def _build_registry(self) -> Any:
+        """The toolbelt, or ``None`` when this arm runs without tools.
+
+        Construction failures degrade to the no-tools path rather than aborting:
+        an environment without the question corpus should still be able to
+        generate rubrics, just without the portability probe.
+        """
+        if not self.config.enable_tools:
+            return None
+        try:
+            from ..tools import build_registry  # noqa: PLC0415 - optional subsystem
+
+            return build_registry(
+                list(self.config.tool_names) or None,
+                default_timeout_s=float(self.config.tool_timeout_s),
+                sandbox_timeout_s=float(self.config.sandbox_timeout_s),
+                corpus_limit=int(self.config.tool_corpus_limit),
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.error("tools unavailable, falling back to the no-tools path: %s", exc)
+            return None
+
+    @property
+    def tools_active(self) -> bool:
+        return self._registry is not None and len(self._registry) > 0
 
     # -- LLM plumbing -----------------------------------------------------
 
@@ -885,6 +936,72 @@ class AgenticGenerator(RubricGenerator):
     def _skip(run: _Run, name: str, reason: str) -> None:
         run.stages.append({"stage": name, "ok": True, "skipped": reason, "output": None})
 
+    # -- tool plumbing ----------------------------------------------------
+
+    def _tool_context(self, run: _Run) -> Any:
+        """Bind the toolbelt to this example.
+
+        ``extras['texts']`` is the *live* dict on the run, not a copy, so a
+        counterexample the agent builds in one turn is targetable by name in the
+        next and survives into the critic stage.
+        """
+        from ..tools import ToolContext  # noqa: PLC0415
+
+        if not run.tool_texts:
+            run.tool_texts["reference"] = run.example.reference_answer
+            for rollout in run.rollouts:
+                if rollout.ok:
+                    run.tool_texts[f"rollout_{rollout.index}"] = rollout.text
+        return ToolContext(example=run.example, engine=self.engine, extras={"texts": run.tool_texts})
+
+    async def _run_tool_loop(
+        self,
+        run: _Run,
+        *,
+        system: str,
+        user: str,
+        tag: str,
+        max_tokens: int,
+        cache_salt: str | None = None,
+        closing_instruction: str | None = None,
+    ) -> Any:
+        """One tool-calling conversation, with every invocation recorded on the run."""
+        ctx = self._tool_context(run)
+        collected: list[Any] = []
+
+        async def dispatch(name: str, arguments: Any, call_id: str) -> Any:
+            invocation = await self._registry.dispatch(name, arguments, ctx, call_id=call_id)
+            collected.append(invocation)
+            return invocation
+
+        run.n_calls += 1
+        loop = await self.engine.chat_tools(
+            user,
+            tools=self._registry.schemas(),
+            dispatch=dispatch,
+            system=system,
+            max_rounds=int(self.config.tool_max_rounds),
+            max_tokens=max_tokens,
+            max_parallel_tools=int(self.config.tool_max_parallel),
+            tag=tag,
+            cache_salt=cache_salt,
+            closing_instruction=closing_instruction,
+        )
+        run.tool_invocations.extend(collected)
+        run.n_calls += max(0, loop.rounds - 1)
+        return loop
+
+    @staticmethod
+    def _tool_usage(invocations: Sequence[Any]) -> dict[str, Any]:
+        counts: dict[str, int] = {}
+        failures: dict[str, int] = {}
+        for inv in invocations:
+            name = getattr(inv, "name", "?")
+            counts[name] = counts.get(name, 0) + 1
+            if not (getattr(inv, "result", {}) or {}).get("ok", False):
+                failures[name] = failures.get(name, 0) + 1
+        return {"n_calls": len(invocations), "by_tool": counts, "failures": failures}
+
     # -- entry point ------------------------------------------------------
 
     async def generate(self, example: Example) -> GenerationResult:
@@ -896,11 +1013,13 @@ class AgenticGenerator(RubricGenerator):
             await self._stage_rollouts(run)
             await self._stage_reconcile(run)
             await self._stage_pitfalls(run)
+            await self._stage_investigate(run)
             self._stage_scope(run)
             await self._stage_draft(run)
             if run.candidates:
                 await self._stage_lint(run)
                 await self._stage_critic(run)
+                await self._stage_tool_critic(run)
                 await self._stage_calibrate(run)
             else:
                 error = "no candidate criteria were drafted"
@@ -925,6 +1044,14 @@ class AgenticGenerator(RubricGenerator):
                 "stages_failed": list(run.stages_failed),
                 "config": {f.name: getattr(self.config, f.name) for f in fields(AgenticConfig)},
                 "n_llm_calls": run.n_calls,
+                "tools": {
+                    "enabled": self.tools_active,
+                    "available": self._registry.names if self._registry else [],
+                    **self._tool_usage(run.tool_invocations),
+                    "invocations": [
+                        i.to_dict() for i in run.tool_invocations if hasattr(i, "to_dict")
+                    ],
+                },
             },
             error=error,
             n_llm_calls=run.n_calls,
@@ -1066,6 +1193,82 @@ class AgenticGenerator(RubricGenerator):
             if not run.pitfalls:
                 raise ValueError("pitfall mining returned no usable entries")
 
+    # -- stage 4b: tool-driven investigation ---------------------------------
+
+    async def _stage_investigate(self, run: _Run) -> None:
+        """Let the model gather its own evidence, with instruments.
+
+        Every stage before this one is a question the orchestrator decided to
+        ask. This is the one place the model chooses what to check — recompute a
+        suspect value, run a draft criterion against a wrong answer, test whether
+        a check is portable to unrelated questions — and it is the only stage
+        whose findings are backed by something other than the model's assurance.
+
+        The output is advisory: on failure the pipeline proceeds exactly as the
+        no-tools arm does, so a broken tool costs evidence, not a rubric.
+        """
+        if not self.tools_active or not self.config.enable_tool_investigation:
+            self._skip(
+                run,
+                "investigate",
+                "tools disabled" if not self.tools_active else "disabled by config",
+            )
+            return
+
+        from ..prompts import tools as TP  # noqa: PLC0415
+
+        async with _stage(run, "investigate") as rec:
+            self._tool_context(run)  # seeds run.tool_texts before we list them
+            user = TP.build_investigate_user(
+                run.example.question,
+                run.example.reference_answer,
+                spec=run.spec,
+                reconciliation=run.reconciliation,
+                rollouts=[r.to_prompt_dict() for r in run.rollouts],
+                available_targets=sorted(run.tool_texts),
+                domain=run.example.domain,
+            )
+            rec["input"] = {
+                "system": TP.INVESTIGATE_SYSTEM,
+                "user": user,
+                "tools": self._registry.names,
+            }
+            loop = await self._run_tool_loop(
+                run,
+                system=TP.INVESTIGATE_SYSTEM,
+                user=user,
+                tag="gen:agentic:investigate",
+                max_tokens=_MAX_TOKENS["investigate"],
+                closing_instruction=TP.INVESTIGATE_CLOSING,
+            )
+            rec["output"] = loop.to_trace(include_messages=False)
+            rec["tool_usage"] = self._tool_usage(loop.invocations)
+
+            findings = _as_dict(_safe_json(loop.content, expect="object"))
+            if not findings:
+                raise ValueError(
+                    f"investigation returned no usable JSON (stop_reason={loop.stop_reason})"
+                )
+            run.investigation = findings
+            verified = _as_list(findings.get("verified_facts"))
+            run.summary["investigation"] = {
+                "n_tool_calls": len(loop.invocations),
+                "tools_used": sorted({getattr(i, "name", "?") for i in loop.invocations}),
+                "rounds": loop.rounds,
+                "stop_reason": loop.stop_reason,
+                "n_verified_facts": len(verified),
+                "n_discriminative": sum(1 for f in verified if _as_dict(f).get("discriminative")),
+                "n_reference_issues": len(_as_list(findings.get("reference_issues"))),
+                "n_rejected_checks": len(
+                    _as_list(findings.get("checks_that_do_not_discriminate"))
+                ),
+            }
+            # A loop that answered without touching a tool produced an ordinary
+            # LLM opinion. Recording that keeps "the agent verified it" honest.
+            if not loop.invocations:
+                rec["warning"] = "the investigation used no tools; findings are unverified"
+                run.summary["investigation"]["unverified"] = True
+
     # -- stage 5: scope (deterministic) --------------------------------------
 
     def _stage_scope(self, run: _Run) -> None:
@@ -1127,6 +1330,7 @@ class AgenticGenerator(RubricGenerator):
                 banned_words=_subjective_words(),
                 target_items=target,
                 max_pitfall_fraction=float(self.config.max_pitfall_fraction),
+                investigation=run.investigation,
             )
             rec["input"] = {"system": P.DRAFT_SYSTEM, "user": user}
             candidates: list[_Candidate] = []
@@ -1372,6 +1576,153 @@ class AgenticGenerator(RubricGenerator):
             decisions = self._apply_critic_decisions(run, gold_map, negative_maps)
             rec["output"]["decisions"] = decisions
             run.summary["critic_ran"] = True
+
+    # -- stage 8b: tool-assisted critic --------------------------------------
+
+    async def _stage_tool_critic(self, run: _Run) -> None:
+        """A second look at the survivors, with the ability to test them.
+
+        Deliberately additive rather than a replacement. The deterministic
+        critic above produces the ``validation`` records that calibration reads
+        and that the ``goldonly``/``negonly`` ablations are defined in terms of;
+        rewriting it would mean ``agentic-tools`` differed from ``agentic`` in
+        two ways at once and neither could be attributed. This pass may only
+        sharpen wording or delete, and it records its own decisions, so the
+        contribution of tool use is separable.
+        """
+        if not self.tools_active or not self.config.enable_tool_critic:
+            self._skip(
+                run,
+                "critic_tools",
+                "tools disabled" if not self.tools_active else "disabled by config",
+            )
+            return
+        if not run.survivors:
+            self._skip(run, "critic_tools", "no survivors to test")
+            return
+
+        from ..prompts import tools as TP  # noqa: PLC0415
+
+        async with _stage(run, "critic_tools") as rec:
+            ctx_texts = self._tool_context(run)  # ensures rollouts are addressable
+            for negative in run.negatives:
+                run.tool_texts.setdefault(f"negative_{negative.nid}", negative.text)
+
+            user = TP.build_critic_tool_user(
+                run.example.question,
+                run.example.reference_answer,
+                [c.to_prompt_dict(with_validation=True) for c in run.survivors],
+                available_targets=sorted(run.tool_texts),
+                investigation=run.investigation,
+            )
+            rec["input"] = {"system": TP.CRITIC_TOOL_SYSTEM, "n_candidates": len(run.survivors)}
+            loop = await self._run_tool_loop(
+                run,
+                system=TP.CRITIC_TOOL_SYSTEM,
+                user=user,
+                tag="gen:agentic:critic_tools",
+                max_tokens=_MAX_TOKENS["critic_tools"],
+                closing_instruction=TP.CRITIC_TOOL_CLOSING,
+            )
+            rec["output"] = loop.to_trace(include_messages=False)
+            rec["tool_usage"] = self._tool_usage(loop.invocations)
+
+            parsed = _as_dict(_safe_json(loop.content, expect="object"))
+            decisions = {
+                cid: entry
+                for entry in (_as_dict(d) for d in _as_list(parsed.get("decisions")))
+                if (cid := _as_int(entry.get("id"))) is not None
+            }
+            if not decisions:
+                raise ValueError(
+                    f"tool critic returned no decisions (stop_reason={loop.stop_reason})"
+                )
+
+            kept, applied = self._apply_tool_critic(run, decisions)
+            rec["output"]["decisions"] = applied
+            run.survivors = kept
+            run.summary["critic_tools"] = {
+                "n_tool_calls": len(loop.invocations),
+                "tools_used": sorted({getattr(i, "name", "?") for i in loop.invocations}),
+                "rounds": loop.rounds,
+                "n_revised": sum(1 for d in applied if d["action"] == "revise"),
+                "n_dropped": sum(1 for d in applied if d["action"] == "drop"),
+                "n_kept": len(kept),
+                "unverified": not loop.invocations,
+            }
+
+    def _apply_tool_critic(
+        self, run: _Run, decisions: Mapping[int, dict[str, Any]]
+    ) -> tuple[list[_Candidate], list[dict[str, Any]]]:
+        """Apply keep/revise/drop, refusing to shrink the rubric past its floor.
+
+        A revision is re-run through the same enforcement the lint stage uses,
+        so the tool critic cannot reintroduce an ungrounded or negatively-phrased
+        criterion by rewriting one.
+        """
+        floor = max(1, min(int(self.config.target_min_items), len(run.survivors)))
+        n_droppable = max(0, len(run.survivors) - floor)
+
+        kept: list[_Candidate] = []
+        applied: list[dict[str, Any]] = []
+        for cand in run.survivors:
+            entry = decisions.get(cand.cid) or {}
+            wanted = str(entry.get("decision") or "keep").strip().lower()
+            record: dict[str, Any] = {
+                "id": cand.cid,
+                "requested": wanted,
+                "action": "keep",
+                "evidence": _as_text(entry.get("evidence"), limit=300),
+                "reason": _as_text(entry.get("reason"), limit=300),
+                "reference_passes": entry.get("reference_passes"),
+                "discriminates": entry.get("discriminates"),
+            }
+
+            if wanted == "drop":
+                if n_droppable > 0:
+                    n_droppable -= 1
+                    record["action"] = "drop"
+                    applied.append(record)
+                    continue
+                record["action"] = "keep"
+                record["note"] = "drop refused: the rubric is already at its minimum size"
+            elif wanted == "revise":
+                revised = strip_category_prefix(
+                    _as_text(entry.get("revised_description"), limit=2000)
+                )
+                if revised and revised != cand.description:
+                    before = cand.description
+                    cand.description = revised
+                    enforcement = _enforce_criterion(
+                        cand, run.anchors, drop_ungrounded=self.drop_ungrounded
+                    )
+                    if enforcement["action"] == "drop":
+                        # The rewrite lost the question-specific content; the
+                        # original was better, so keep it rather than the
+                        # ungrounded replacement.
+                        cand.description = before
+                        record["note"] = "revision rejected: it dropped the question anchor"
+                    else:
+                        record["action"] = "revise"
+                        record["before"] = before
+                        record["after"] = cand.description
+                else:
+                    record["note"] = "revision was empty or identical"
+
+            cand.provenance.setdefault("tool_critic", {})
+            cand.provenance["tool_critic"] = {
+                "decision": record["action"],
+                "evidence": record["evidence"][:200],
+            }
+            applied.append(record)
+            kept.append(cand)
+
+        for cid, entry in decisions.items():
+            if cid not in {c.cid for c in run.survivors}:
+                applied.append(
+                    {"id": cid, "action": "ignored", "reason": "no such candidate id"}
+                )
+        return kept, applied
 
     async def _mine_hard_negatives(
         self, run: _Run, *, want: int
@@ -1792,6 +2143,10 @@ class AgenticGenerator(RubricGenerator):
                     "adaptive_items": self.adaptive_items,
                     "drop_ungrounded": self.drop_ungrounded,
                 },
+                "tools": {
+                    "enabled": self.tools_active,
+                    **self._tool_usage(run.tool_invocations),
+                },
             },
         )
 
@@ -1874,11 +2229,11 @@ class AgenticGenerator(RubricGenerator):
             items = [c for c in items if id(c) in keep]
 
         if len(items) < low:
-            seen = {(c.title.lower(), c.description.lower()) for c in items}
+            seen = _identity_keys(items)
             extras = [
                 c
                 for c in pool
-                if (c.title.lower(), c.description.lower()) not in seen
+                if not (_identity_keys([c]) & seen)
                 and not polarity_offence(c.description, c.category)
                 and (
                     not (self.drop_ungrounded and anchors)
@@ -1889,7 +2244,38 @@ class AgenticGenerator(RubricGenerator):
                 if len(items) >= low:
                     break
                 items.append(cand.clone())
-        return _rebalance_pitfalls(items, pool, float(self.config.max_pitfall_fraction))
+                seen |= _identity_keys([cand])
+        items = _rebalance_pitfalls(items, pool, float(self.config.max_pitfall_fraction))
+        # Backfilled and swapped-in candidates come from the pre-calibration
+        # pool and have not been through the mirror merge, so run it once more
+        # over the finished set. Without this a pool copy of an item already
+        # kept re-enters under its old wording and the fact is scored twice.
+        merged, _ = _merge_mirrors(items)
+        return merged
+
+
+@register
+class AgenticToolsGenerator(AgenticGenerator):
+    """:class:`AgenticGenerator` with the toolbelt switched on.
+
+    A separate registered name rather than a flag on the existing one, because
+    the comparison only means something if both arms can be run over the same
+    questions in the same pass. Every other stage, prompt and threshold is
+    inherited unchanged, so ``agentic-tools`` minus ``agentic`` isolates the
+    effect of letting the model gather and check its own evidence.
+    """
+
+    name = "agentic-tools"
+
+    def __init__(self, engine: LLMEngine | None = None, **kwargs: Any) -> None:
+        kwargs.setdefault("enable_tools", True)
+        super().__init__(engine=engine, **kwargs)
+        if not self.tools_active:
+            logger.warning(
+                "%s was requested but no toolbelt could be built; this arm is now "
+                "identical to `agentic` and must not be reported as a tools result",
+                self.name,
+            )
 
 
 # ---------------------------------------------------------------------------
@@ -2209,6 +2595,34 @@ def _absorb(keeper: _Candidate, other: _Candidate) -> None:
         )
 
 
+_IDENTITY_STRIP_RE = re.compile(r"[^a-z0-9]+")
+
+
+def _identity_keys(items: Sequence[_Candidate]) -> set[tuple[str, str]]:
+    """Keys that recognise the same criterion under two different wordings.
+
+    Backfilling draws from the *pre-calibration* pool, so an item already in the
+    rubric reappears there in its earlier phrasing — calibration rewrites
+    descriptions (``kappa`` becomes ``κ``) while leaving titles alone. Comparing
+    exact text therefore misses the duplicate and the fact gets scored twice.
+    Matching on the normalised title as well catches it; matching on the
+    calibration lineage catches the case where the title was rewritten too.
+    """
+    keys: set[tuple[str, str]] = set()
+    for cand in items:
+        title = _IDENTITY_STRIP_RE.sub("", (cand.title or "").lower())
+        if title:
+            keys.add(("title", title))
+        body = _IDENTITY_STRIP_RE.sub("", (cand.description or "").lower())
+        if body:
+            keys.add(("text", body))
+        for source_id in _as_list((cand.provenance or {}).get("source_ids")):
+            if (sid := _as_int(source_id)) is not None:
+                keys.add(("lineage", str(sid)))
+        keys.add(("cid", str(cand.cid)))
+    return keys
+
+
 def _rebalance_pitfalls(
     items: list[_Candidate], pool: Sequence[_Candidate], max_fraction: float = 0.25
 ) -> list[_Candidate]:
@@ -2226,13 +2640,13 @@ def _rebalance_pitfalls(
     if len(pitfalls) <= max_pitfalls:
         return items
 
-    present = {(c.title.lower(), c.description.lower()) for c in items}
+    present = _identity_keys(items)
     spare = sorted(
         (
             c
             for c in pool
             if c.category is not Category.PITFALL
-            and (c.title.lower(), c.description.lower()) not in present
+            and not (_identity_keys([c]) & present)
             and not polarity_offence(c.description, c.category)
         ),
         key=_ascending_value,

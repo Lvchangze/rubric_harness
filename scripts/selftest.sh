@@ -25,6 +25,9 @@ mods = [
     "harness.eval.transfer", "harness.eval.coverage", "harness.eval.intrinsic",
     "harness.eval.headtohead", "harness.eval.grounding", "harness.eval.lint",
     "harness.eval.adaptivity",
+    "harness.prompts.tools", "harness.tools", "harness.tools.base",
+    "harness.tools.sandbox", "harness.tools.compute", "harness.tools.inspection",
+    "harness.tools.verification", "harness.tools.negatives",
 ]
 bad = 0
 for m in mods:
@@ -159,6 +162,63 @@ for c in probes:
         print(f"  FAIL FAVOURABLE now differs from DETECTED for {c.description!r}"); ok = False
 if ok:
     print("  OK   FAVOURABLE == DETECTED on every branch (as documented)")
+raise SystemExit(0 if ok else 1)
+PY
+
+echo
+echo "== tools: schemas, sandbox isolation, and the no-tools arm stays no-tools =="
+python - <<'PY' || fail=1
+import asyncio, sys
+sys.path.insert(0, ".")
+from harness.generators import REGISTRY
+from harness.schema import Example, Rubric
+from harness.tools import DEFAULT_TOOLS, ToolContext, build_registry
+
+ok = True
+reg = build_registry()
+if sorted(reg.names) != sorted(DEFAULT_TOOLS):
+    print(f"  FAIL registry {sorted(reg.names)} != {sorted(DEFAULT_TOOLS)}"); ok = False
+else:
+    print(f"  OK   {len(reg)} tools registered")
+
+for schema in reg.schemas():
+    fn = schema["function"]
+    if not fn.get("name") or not fn.get("description") or "properties" not in fn.get("parameters", {}):
+        print(f"  FAIL malformed schema: {fn.get('name')}"); ok = False
+else:
+    print("  OK   every tool exports a well-formed function schema")
+
+# The ablation only means something if `agentic` really has no toolbelt.
+if REGISTRY["agentic"](engine=None).tools_active:
+    print("  FAIL `agentic` has tools active; the no-tools arm is contaminated"); ok = False
+elif not REGISTRY["agentic-tools"](engine=None).tools_active:
+    print("  FAIL `agentic-tools` has no toolbelt"); ok = False
+else:
+    print("  OK   agentic=no tools, agentic-tools=tools")
+
+ex = Example(uid="t", domain="rar_science", split="val", row_index=0, question="q",
+             reference_answer="r", question_source="", shipped_rubric=Rubric())
+ctx = ToolContext(example=ex, engine=None)
+
+async def probe():
+    checks = [
+        ("arithmetic", {"code": "2+2"}, True),
+        ("network blocked", {"code": "import socket"}, False),
+        ("process blocked", {"code": "import os; os.system('ls')"}, False),
+        ("sympy available", {"code": "print(sympy is not None and np is not None)"}, True),
+    ]
+    good = True
+    for label, args, want in checks:
+        inv = await reg.dispatch("python_eval", args, ctx)
+        if inv.result["ok"] != want:
+            print(f"  FAIL sandbox {label}: ok={inv.result['ok']}, expected {want}")
+            good = False
+    return good
+
+if asyncio.run(probe()):
+    print("  OK   sandbox runs maths and refuses network/process access")
+else:
+    ok = False
 raise SystemExit(0 if ok else 1)
 PY
 

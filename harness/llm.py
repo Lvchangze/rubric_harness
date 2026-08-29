@@ -36,6 +36,8 @@ _HYCTX_PATH = "/apdcephfs_zwfy6/share_302970870/hunyuan/changzelv/dev/hyctx_data
 __all__ = [
     "LLMEngine",
     "LLMStats",
+    "ToolLoopResult",
+    "normalise_tool_calls",
     "extract_response_text",
     "extract_json",
     "JSONParseError",
@@ -170,6 +172,65 @@ def extract_json(text: str, *, expect: str | None = None) -> Any:
 # ---------------------------------------------------------------------------
 
 
+def normalise_tool_calls(raw: Any) -> list[dict[str, Any]]:
+    """Flatten tool calls to ``{"id", "name", "arguments"}`` dicts.
+
+    The providers disagree on shape: the Polaris path returns plain dicts, the
+    OpenAI SDK path returns ``ChatCompletionMessageToolCall`` objects. Callers
+    should not have to know which endpoint they are on.
+    """
+    if not raw:
+        return []
+    out: list[dict[str, Any]] = []
+    for index, call in enumerate(raw):
+        if isinstance(call, dict):
+            fn = call.get("function") or {}
+            call_id = call.get("id") or f"call_{index}"
+            name = fn.get("name") or ""
+            arguments = fn.get("arguments")
+        else:
+            fn = getattr(call, "function", None)
+            call_id = getattr(call, "id", None) or f"call_{index}"
+            name = getattr(fn, "name", "") or ""
+            arguments = getattr(fn, "arguments", None)
+        out.append({"id": str(call_id), "name": str(name), "arguments": arguments or "{}"})
+    return out
+
+
+@dataclass
+class ToolLoopResult:
+    """Outcome of one :meth:`LLMEngine.chat_tools` conversation."""
+
+    content: str = ""
+    messages: list[dict[str, Any]] = field(default_factory=list)
+    invocations: list[Any] = field(default_factory=list)   # tools.ToolInvocation
+    rounds: int = 0
+    stop_reason: str = "completed"     # completed | max_rounds | error
+    error: str | None = None
+
+    @property
+    def ok(self) -> bool:
+        return self.error is None
+
+    def tool_names(self) -> list[str]:
+        return [getattr(i, "name", "?") for i in self.invocations]
+
+    def to_trace(self, *, include_messages: bool = True) -> dict[str, Any]:
+        trace: dict[str, Any] = {
+            "rounds": self.rounds,
+            "stop_reason": self.stop_reason,
+            "error": self.error,
+            "n_tool_calls": len(self.invocations),
+            "tool_calls": [
+                i.to_dict() if hasattr(i, "to_dict") else str(i) for i in self.invocations
+            ],
+            "content": self.content,
+        }
+        if include_messages:
+            trace["messages"] = self.messages
+        return trace
+
+
 @dataclass
 class LLMStats:
     """Aggregate counters for one engine instance (thread/task safe enough)."""
@@ -181,6 +242,8 @@ class LLMStats:
     empty_responses: int = 0
     failures: int = 0
     json_parse_failures: int = 0
+    tool_calls: int = 0
+    tool_loop_rounds: int = 0
     prompt_chars: int = 0
     response_chars: int = 0
     reasoning_chars: int = 0
@@ -436,6 +499,238 @@ class LLMEngine:
                 continue
         raise JSONParseError(f"JSON repair exhausted (tag={tag}): {first_error}")
 
+    # -- tool-calling loop ------------------------------------------------
+
+    async def _tool_turn(
+        self,
+        messages: list[dict[str, Any]],
+        tools: list[dict[str, Any]],
+        *,
+        max_tokens: int,
+        reasoning_effort: str | None,
+        tag: str,
+        cache_salt: str | None,
+        use_cache: bool,
+    ) -> dict[str, Any]:
+        """One assistant turn that may request tools. Cached and retried.
+
+        The cache key is the whole conversation so far, so a resumed run replays
+        an identical trajectory for free — which is what makes a tool-using
+        generation reproducible at all, since the tool results are already in
+        the messages being hashed.
+        """
+        key = self._cache_key(
+            {
+                "kind": "tools",
+                "messages": messages,
+                "tools": tools,
+                "params": {
+                    "model": self.model,
+                    "reasoning_effort": reasoning_effort or self.reasoning_effort,
+                },
+                "salt": cache_salt,
+            }
+        )
+        self.stats.calls += 1
+        self.stats.by_tag[tag] = self.stats.by_tag.get(tag, 0) + 1
+
+        if use_cache and (cached := self._cache_read(key)) is not None:
+            if cached.get("content") or cached.get("tool_calls"):
+                self.stats.cache_hits += 1
+                return {
+                    "content": cached.get("content") or "",
+                    "tool_calls": cached.get("tool_calls") or [],
+                }
+
+        last_error: Exception | None = None
+        budget = max_tokens
+        for attempt in range(self.max_attempts):
+            if attempt:
+                self.stats.retries += 1
+                delay = min(30.0, 2.0 * (2 ** (attempt - 1))) * (0.6 + self._rng.random() * 0.8)
+                await asyncio.sleep(delay)
+            started = time.time()
+            try:
+                async with self._semaphore:
+                    out = await self._client.chat_with_tools(
+                        messages,
+                        tools=tools,
+                        max_tokens=int(budget),
+                        reasoning_effort=reasoning_effort or self.reasoning_effort,
+                    )
+                self.stats.api_calls += 1
+                self.stats.wall_seconds += time.time() - started
+                content = (out or {}).get("content") or ""
+                calls = normalise_tool_calls((out or {}).get("tool_calls"))
+                self.stats.reasoning_chars += len((out or {}).get("reasoning_content") or "")
+                if content or calls:
+                    self.stats.response_chars += len(content)
+                    self._cache_write(key, {"content": content, "tool_calls": calls, "tag": tag})
+                    return {"content": content, "tool_calls": calls}
+                self.stats.empty_responses += 1
+                budget = int(budget * self.escalate_max_tokens)
+                logger.warning(
+                    "empty tool turn (tag=%s attempt=%d) — escalating max_tokens to %d",
+                    tag, attempt + 1, budget,
+                )
+            except Exception as exc:  # noqa: BLE001 - transient endpoint errors
+                self.stats.wall_seconds += time.time() - started
+                last_error = exc
+                logger.warning(
+                    "tool turn failed (tag=%s attempt=%d): %s", tag, attempt + 1, str(exc)[:300]
+                )
+
+        self.stats.failures += 1
+        raise RuntimeError(
+            f"tool turn failed after {self.max_attempts} attempts (tag={tag}): {last_error}"
+        )
+
+    async def chat_tools(
+        self,
+        prompt: str | list[dict[str, Any]],
+        *,
+        tools: Sequence[dict[str, Any]],
+        dispatch: Any,
+        system: str | None = None,
+        max_rounds: int = 8,
+        max_tokens: int | None = None,
+        reasoning_effort: str | None = None,
+        tag: str = "toolloop",
+        cache_salt: str | None = None,
+        use_cache: bool = True,
+        max_parallel_tools: int = 4,
+        closing_instruction: str | None = None,
+    ) -> ToolLoopResult:
+        """Run a tool-calling conversation until the model answers or runs out of rounds.
+
+        ``dispatch`` is an awaitable ``(name, arguments, call_id) -> ToolInvocation``;
+        it is supplied by the caller so this module stays independent of
+        :mod:`harness.tools`. It must never raise — a tool failure is data the
+        model should see and react to, not an exception that ends the loop.
+
+        ``closing_instruction`` is what makes the round limit survivable. A model
+        that is still investigating when the budget runs out otherwise returns
+        nothing usable, and the caller sees an empty stage rather than the work
+        it just paid for. With it set, the last turn drops the tools and asks for
+        the answer, so the round limit truncates the investigation instead of
+        discarding it.
+
+        Returns whatever was produced, including on failure: a partial
+        trajectory with ``stop_reason='error'`` is more useful to a generator
+        that can fall back than an exception is.
+        """
+        messages: list[dict[str, Any]] = []
+        if system:
+            messages.append({"role": "system", "content": system})
+        if isinstance(prompt, str):
+            messages.append({"role": "user", "content": prompt})
+        else:
+            messages.extend(prompt)
+
+        schemas = list(tools)
+        budget = max_tokens or self.default_max_tokens
+        result = ToolLoopResult(messages=messages)
+
+        for round_index in range(max_rounds):
+            result.rounds = round_index + 1
+            self.stats.tool_loop_rounds += 1
+            try:
+                turn = await self._tool_turn(
+                    messages,
+                    schemas,
+                    max_tokens=budget,
+                    reasoning_effort=reasoning_effort,
+                    tag=tag,
+                    cache_salt=cache_salt,
+                    use_cache=use_cache,
+                )
+            except RuntimeError as exc:
+                result.error = str(exc)[:400]
+                result.stop_reason = "error"
+                return result
+
+            content = turn["content"]
+            calls = turn["tool_calls"]
+            assistant: dict[str, Any] = {"role": "assistant", "content": content}
+            if calls:
+                assistant["tool_calls"] = [
+                    {
+                        "id": c["id"],
+                        "type": "function",
+                        "function": {"name": c["name"], "arguments": c["arguments"]},
+                    }
+                    for c in calls
+                ]
+            messages.append(assistant)
+
+            if not calls:
+                result.content = content
+                result.stop_reason = "completed"
+                return result
+
+            # The model may request several tools at once; they are independent
+            # by construction, so running them concurrently costs nothing.
+            limited = calls[:max_parallel_tools]
+            invocations = await asyncio.gather(
+                *(dispatch(c["name"], c["arguments"], c["id"]) for c in limited)
+            )
+            self.stats.tool_calls += len(invocations)
+            result.invocations.extend(invocations)
+
+            for call, invocation in zip(limited, invocations):
+                messages.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": call["id"],
+                        "name": call["name"],
+                        "content": _invocation_payload(invocation),
+                    }
+                )
+            for call in calls[max_parallel_tools:]:
+                messages.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": call["id"],
+                        "name": call["name"],
+                        "content": json.dumps(
+                            {
+                                "ok": False,
+                                "error": f"only {max_parallel_tools} tool calls are run per turn; "
+                                         "request this one again",
+                            }
+                        ),
+                    }
+                )
+            # Keep the last content as a fallback answer in case the loop is cut
+            # short by the round limit on the next iteration.
+            if content:
+                result.content = content
+
+        result.stop_reason = "max_rounds"
+        if closing_instruction:
+            messages.append({"role": "user", "content": closing_instruction})
+            try:
+                closing = await self._tool_turn(
+                    messages,
+                    [],  # no tools: the only acceptable output now is the answer
+                    max_tokens=budget,
+                    reasoning_effort=reasoning_effort,
+                    tag=f"{tag}:closing",
+                    cache_salt=cache_salt,
+                    use_cache=use_cache,
+                )
+            except RuntimeError as exc:
+                result.error = str(exc)[:400]
+                result.stop_reason = "error"
+                return result
+            result.rounds += 1
+            self.stats.tool_loop_rounds += 1
+            messages.append({"role": "assistant", "content": closing["content"]})
+            if closing["content"]:
+                result.content = closing["content"]
+                result.stop_reason = "max_rounds_closed"
+        return result
+
     # -- convenience ------------------------------------------------------
 
     async def map_concurrent(
@@ -451,3 +746,20 @@ class LLMEngine:
         snap["model"] = self.model
         snap["concurrency"] = self.concurrency
         return snap
+
+
+def _invocation_payload(invocation: Any) -> str:
+    """Render a ``ToolInvocation`` into the ``tool`` message body."""
+    result = getattr(invocation, "result", None)
+    if isinstance(result, dict):
+        body = {"ok": result.get("ok", False)}
+        if result.get("error"):
+            body["error"] = result["error"]
+        if result.get("data") is not None:
+            body["result"] = result["data"]
+    else:
+        body = {"ok": False, "error": "the tool returned nothing"}
+    try:
+        return json.dumps(body, ensure_ascii=False, default=str)
+    except (TypeError, ValueError):
+        return json.dumps({"ok": False, "error": "tool result was not serialisable"})
