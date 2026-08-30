@@ -1,0 +1,128 @@
+{
+ "pooled": {
+  "n_questions": 128,
+  "reference": "baseline",
+  "by_source": {
+   "shipped": {
+    "r": 0.46947162558003647,
+    "n_incorrect_rollouts": 407,
+    "ci_low": 0.3458957411883325,
+    "ci_high": 0.5827961549152034,
+    "delta": 0.009429757511972336,
+    "delta_ci_low": -0.09296093180338752,
+    "delta_ci_high": 0.11634621243622856,
+    "p_value": 0.8455
+   },
+   "baseline": {
+    "r": 0.46004186806806413,
+    "n_incorrect_rollouts": 407,
+    "ci_low": 0.3523369539915117,
+    "ci_high": 0.5549254560013649
+   },
+   "agentic": {
+    "r": 0.2869610684719557,
+    "n_incorrect_rollouts": 407,
+    "ci_low": 0.13913795399830628,
+    "ci_high": 0.4344495603468696,
+    "delta": -0.17308079959610845,
+    "delta_ci_low": -0.31606274365401915,
+    "delta_ci_high": -0.031500489010284835,
+    "p_value": 0.018
+   },
+   "agentic-tools": {
+    "r": 0.36703715164742307,
+    "n_incorrect_rollouts": 407,
+    "ci_low": 0.23337506146310855,
+    "ci_high": 0.48910148036379536,
+    "delta": -0.09300471642064106,
+    "delta_ci_low": -0.23713831060402243,
+    "delta_ci_high": 0.04399226654058273,
+    "p_value": 0.1805
+   }
+  }
+ },
+ "rar_medicine": {
+  "n_questions": 65,
+  "reference": "baseline",
+  "by_source": {
+   "shipped": {
+    "r": 0.5727621460089526,
+    "n_incorrect_rollouts": 231,
+    "ci_low": 0.46022523434515233,
+    "ci_high": 0.6733659655049254,
+    "delta": 0.046717360306169575,
+    "delta_ci_low": -0.04534814422246743,
+    "delta_ci_high": 0.14102317816705295,
+    "p_value": 0.3355
+   },
+   "baseline": {
+    "r": 0.526044785702783,
+    "n_incorrect_rollouts": 231,
+    "ci_low": 0.3921245203584629,
+    "ci_high": 0.6467770839403488
+   },
+   "agentic": {
+    "r": 0.5218573469589294,
+    "n_incorrect_rollouts": 231,
+    "ci_low": 0.39911805755822793,
+    "ci_high": 0.6395887074619381,
+    "delta": -0.004187438743853633,
+    "delta_ci_low": -0.1601518660210289,
+    "delta_ci_high": 0.14490326419561605,
+    "p_value": 0.919
+   },
+   "agentic-tools": {
+    "r": 0.4205660671748181,
+    "n_incorrect_rollouts": 231,
+    "ci_low": 0.23926803436868804,
+    "ci_high": 0.5759795251479286,
+    "delta": -0.10547871852796492,
+    "delta_ci_low": -0.3001266638384232,
+    "delta_ci_high": 0.06559434598142082,
+    "p_value": 0.2195
+   }
+  }
+ },
+ "rar_science": {
+  "n_questions": 63,
+  "reference": "baseline",
+  "by_source": {
+   "shipped": {
+    "r": 0.3075984966325501,
+    "n_incorrect_rollouts": 176,
+    "ci_low": 0.12211977064844433,
+    "ci_high": 0.49278927259702743,
+    "delta": -0.1180653172065309,
+    "delta_ci_low": -0.2622724116512385,
+    "delta_ci_high": 0.022794341449807118,
+    "p_value": 0.095
+   },
+   "baseline": {
+    "r": 0.42566381383908103,
+    "n_incorrect_rollouts": 176,
+    "ci_low": 0.2930565121870318,
+    "ci_high": 0.5552925242015465
+   },
+   "agentic": {
+    "r": 0.12233474269533967,
+    "n_incorrect_rollouts": 176,
+    "ci_low": -0.09172403726660493,
+    "ci_high": 0.39735146705545976,
+    "delta": -0.30332907114374136,
+    "delta_ci_low": -0.4733045241820044,
+    "delta_ci_high": -0.08834530601868555,
+    "p_value": 0.0035
+   },
+   "agentic-tools": {
+    "r": 0.19480546212819042,
+    "n_incorrect_rollouts": 176,
+    "ci_low": -0.02882554465007495,
+    "ci_high": 0.4197248128007961,
+    "delta": -0.2308583517108906,
+    "delta_ci_low": -0.4203880150713371,
+    "delta_ci_high": -0.061025404686486255,
+    "p_value": 0.0085
+   }
+  }
+ }
+}

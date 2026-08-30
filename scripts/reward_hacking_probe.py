@@ -29,16 +29,26 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import Any, Callable, Mapping, Sequence
+from typing import Any, Callable, Iterable, Mapping, Sequence
 
 import numpy as np
 
 logger = logging.getLogger("reward_hacking_probe")
 
-SOURCES = [
-    "shipped", "baseline", "agentic-noval", "agentic",
+#: Preferred display order. Sources present in the data but absent here are
+#: appended rather than dropped: a hardcoded list silently omitted
+#: `agentic-tools` from this probe when that arm was added, and the table looked
+#: complete while missing the source the run existed to measure.
+SOURCE_ORDER = [
+    "shipped", "baseline", "agentic-noval", "agentic", "agentic-tools",
     "agentic-goldonly", "agentic-negonly", "agentic-realneg",
 ]
+
+
+def order_sources(present: Iterable[str]) -> list[str]:
+    seen = list(dict.fromkeys(present))
+    ranked = [s for s in SOURCE_ORDER if s in seen]
+    return ranked + sorted(s for s in seen if s not in SOURCE_ORDER)
 
 NAN = float("nan")
 
@@ -162,7 +172,7 @@ def main() -> int:
     if not path.exists():
         raise SystemExit(f"missing {path}")
     rows = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
-    sources = [s for s in SOURCES if any(r["rubric_source"] == s for r in rows)]
+    sources = order_sources(r["rubric_source"] for r in rows)
 
     payload: dict[str, Any] = {}
     parts = ["## Reward hacking 探针（真实失败 rollout）", ""]

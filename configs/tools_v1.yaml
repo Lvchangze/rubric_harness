@@ -1,0 +1,97 @@
+# Does letting the model call tools produce a better rubric?
+#
+# `agentic-tools` inherits every stage, prompt and threshold from `agentic` and
+# adds two: `investigate` (before drafting, the model chooses what to verify) and
+# `critic_tools` (after the deterministic critic, an executable re-check). So the
+# two arms differ in exactly one thing and the difference is attributable.
+#
+# The question set is the 128 mixed-outcome questions from `rollout_v2`, reused
+# verbatim along with their k=8 rollouts and rubric-blind oracle labels. Two
+# reasons. It is the population where a reward signal acts at all -- an
+# all-correct or all-incorrect group has zero advantage for every member under
+# GRPO -- and reusing it means `shipped`, `baseline` and `agentic` are already
+# generated, so the budget goes entirely to the new arm and the comparison is
+# paired on identical questions.
+#
+# A separate run directory, not a sixth source inside `rollout_v2`: that run is
+# cited in the report, and adding a source to it would widen the FDR family and
+# shift the paired cohort of numbers already published.
+run_name: tools_v1
+runs_dir: runs
+results_dir: results
+
+generators:
+  - shipped        # free: read from the dataset
+  - baseline       # RaR single-pass, the comparison of record
+  - agentic        # this study's method, no tools
+  - agentic-tools  # the same method, with executable tools
+
+llm:
+  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  # 64 is what the powered rollout run held without an error. The endpoint
+  # outage on 08-28 began under a 192-concurrency screening load, so this is
+  # deliberately not pushed further even though the model is free.
+  concurrency: 64
+  reasoning_effort: high
+  max_tokens: 16384
+  max_attempts: 4
+  cache_dir: runs/cache
+  request_timeout_s: 1200
+
+sample:
+  domains: [rar_science, rar_medicine]
+  split: val
+  # Unused: examples.jsonl is copied from rollout_v2 and reused as-is.
+  n_per_domain: 600
+  seed: 1234
+  deduplicate_questions: true
+
+agentic:
+  n_rollouts: 3
+  enable_decompose: true
+  enable_rollouts: true
+  enable_reconcile: true
+  enable_pitfalls: true
+  enable_critic: true
+  enable_calibration: true
+  rollout_max_tokens: 12000
+  drop_gold_failures: true
+  demote_indiscriminate: true
+  target_min_items: 6
+  target_max_items: 16
+  max_pitfall_fraction: 0.25
+
+  # Tool settings. Only `agentic-tools` reads these -- `enable_tools` is forced
+  # on by that generator and left off everywhere else, so the `agentic` arm in
+  # this same run is genuinely tool-free.
+  #
+  # 10 rounds rather than the default 8: at 8 both loops exhausted the budget on
+  # the smoke question and were closed out early. The closing turn means an
+  # overrun truncates the investigation instead of discarding it, but a
+  # truncated investigation is still a weaker test of the method than a
+  # finished one.
+  tool_max_rounds: 10
+  tool_max_parallel: 4
+  tool_timeout_s: 120.0
+  sandbox_timeout_s: 20.0
+  tool_corpus_limit: 4000
+
+eval:
+  judge_model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  judge_max_tokens: 12288
+  judge_reasoning_effort: high
+  shuffle_criteria: true
+  shuffle_seed: 7
+  aggregation: paper_explicit
+  polarity_mode: detected
+  comparator_sources: [shipped, baseline]
+  # Structural metrics cost no LLM call and are run first as a sanity gate.
+  # `rollout` is the RL-faithful protocol: the positive is a model rollout the
+  # generator never saw, so the gold-side leakage that confounds the synthetic
+  # ladder does not apply.
+  metrics:
+    - grounding
+    - lint
+    - adaptivity
+    - rollout
+  bootstrap_iters: 10000

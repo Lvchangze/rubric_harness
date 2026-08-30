@@ -1,0 +1,4317 @@
+{
+  "grounding": {
+    "shipped": {
+      "n_questions": 128,
+      "n_criteria_total": 1095,
+      "n_errors": 0,
+      "generic_criterion_rate": 0.19921150897713397,
+      "generic_criterion_rate_ci_low": 0.17343623390498392,
+      "generic_criterion_rate_ci_high": 0.22631693610209233,
+      "generic_criterion_rate_n": 128,
+      "generic_rate_permuted": 0.9756945528429903,
+      "generic_rate_permuted_ci_low": 0.9621695692545303,
+      "generic_rate_permuted_ci_high": 0.9874843651357323,
+      "generic_rate_permuted_n": 128,
+      "specificity_lift": 0.7764830438658564,
+      "specificity_lift_ci_low": 0.74804953184836,
+      "specificity_lift_ci_high": 0.8043691806240634,
+      "specificity_lift_n": 128,
+      "weight_mass_on_generic_raw": 0.14410247114996333,
+      "weight_mass_on_generic_raw_ci_low": 0.1203089203530787,
+      "weight_mass_on_generic_raw_ci_high": 0.16951238174885694,
+      "weight_mass_on_generic_raw_n": 128,
+      "weight_mass_on_generic_paper": 0.14979150290979315,
+      "weight_mass_on_generic_paper_ci_low": 0.12693712024357895,
+      "weight_mass_on_generic_paper_ci_high": 0.17393262506727733,
+      "weight_mass_on_generic_paper_n": 128,
+      "mean_anchors_per_criterion": 2.179238036269286,
+      "mean_anchors_per_criterion_ci_low": 2.0150914997545857,
+      "mean_anchors_per_criterion_ci_high": 2.3538430726174866,
+      "mean_anchors_per_criterion_n": 128,
+      "weak_grounding_rate": 0.40756671713702963,
+      "weak_grounding_rate_ci_low": 0.36692701992018395,
+      "weak_grounding_rate_ci_high": 0.4494307542500902,
+      "weak_grounding_rate_n": 128,
+      "recyclable_rate": 0.011514136904761905,
+      "recyclable_rate_ci_low": 0.005704365079365079,
+      "recyclable_rate_ci_high": 0.018193281870039674,
+      "recyclable_rate_n": 128,
+      "mass_produced_title_rate": 0.013076636904761905,
+      "mass_produced_title_rate_ci_low": 0.007127201140873017,
+      "mass_produced_title_rate_ci_high": 0.01989730592757936,
+      "mass_produced_title_rate_n": 128,
+      "max_title_reuse": 4.1875,
+      "max_title_reuse_ci_low": 3.4763671875,
+      "max_title_reuse_ci_high": 4.9765625,
+      "max_title_reuse_n": 128,
+      "title_reuse_ge2_rate": 0.10923295454545454,
+      "title_reuse_ge2_rate_ci_low": 0.09137794659767315,
+      "title_reuse_ge2_rate_ci_high": 0.12705750304383112,
+      "title_reuse_ge2_rate_n": 128,
+      "subjective_rate": 0.25668465648934397,
+      "subjective_rate_ci_low": 0.23013812955707486,
+      "subjective_rate_ci_high": 0.2836379278273809,
+      "subjective_rate_n": 128,
+      "style_rate": 0.17227603126040625,
+      "style_rate_ci_low": 0.14398514300369766,
+      "style_rate_ci_high": 0.20335198330315513,
+      "style_rate_n": 128,
+      "subjective_or_style_rate": 0.3386086136086136,
+      "subjective_or_style_rate_ci_low": 0.3060100695745227,
+      "subjective_or_style_rate_ci_high": 0.3734053392354173,
+      "subjective_or_style_rate_n": 128,
+      "generic_and_subjective_rate": 0.11317677548146299,
+      "generic_and_subjective_rate_ci_low": 0.09592009119352869,
+      "generic_and_subjective_rate_ci_high": 0.13092282337887806,
+      "generic_and_subjective_rate_n": 128,
+      "weight_mass_on_subjective": 0.32944357540121993,
+      "weight_mass_on_subjective_ci_low": 0.2917917315908644,
+      "weight_mass_on_subjective_ci_high": 0.36986433055718376,
+      "weight_mass_on_subjective_n": 128,
+      "weight_mass_on_subjective_paper": 0.30435689985752057,
+      "weight_mass_on_subjective_paper_ci_low": 0.26915015864634007,
+      "weight_mass_on_subjective_paper_ci_high": 0.3419843324511804,
+      "weight_mass_on_subjective_paper_n": 128,
+      "mean_trigram_overlap_with_reference": 0.07039720726249203,
+      "mean_trigram_overlap_with_reference_ci_low": 0.05720658141595141,
+      "mean_trigram_overlap_with_reference_ci_high": 0.08446925339613649,
+      "mean_trigram_overlap_with_reference_n": 128,
+      "criteria_with_ge50pct_trigram_overlap": 0.0425228851010101,
+      "criteria_with_ge50pct_trigram_overlap_ci_low": 0.027438348327020204,
+      "criteria_with_ge50pct_trigram_overlap_ci_high": 0.05838852391098485,
+      "criteria_with_ge50pct_trigram_overlap_n": 128,
+      "criteria_with_ge30pct_trigram_overlap": 0.0884593704906205,
+      "criteria_with_ge30pct_trigram_overlap_ci_low": 0.06510562516910173,
+      "criteria_with_ge30pct_trigram_overlap_ci_high": 0.11252292033053753,
+      "criteria_with_ge30pct_trigram_overlap_n": 128,
+      "mean_4gram_overlap_with_question": 0.018599777952805298,
+      "mean_4gram_overlap_with_question_ci_low": 0.013609452416886497,
+      "mean_4gram_overlap_with_question_ci_high": 0.024256949591117065,
+      "mean_4gram_overlap_with_question_n": 128,
+      "n_criteria": 8.5546875,
+      "n_criteria_ci_low": 8.3046875,
+      "n_criteria_ci_high": 8.8359375,
+      "n_criteria_n": 128,
+      "pooled": {
+        "n_criteria": 1095,
+        "generic_criterion_rate": 0.19817351598173516,
+        "generic_rate_permuted": 0.9744292237442922,
+        "weak_grounding_rate": 0.40273972602739727,
+        "mean_anchors_per_criterion": 2.193607305936073,
+        "subjective_rate": 0.24748858447488584,
+        "style_rate": 0.17168949771689498,
+        "subjective_or_style_rate": 0.33059360730593607,
+        "generic_and_subjective_rate": 0.1132420091324201,
+        "recyclable_rate": 0.011872146118721462,
+        "mass_produced_title_rate": 0.0136986301369863,
+        "mean_trigram_overlap_with_reference": 0.07496164141717389,
+        "criteria_with_ge50pct_trigram_overlap": 0.045662100456621,
+        "criteria_with_ge30pct_trigram_overlap": 0.09497716894977169,
+        "weight_mass_on_generic_raw": 0.14368290668868702,
+        "weight_mass_on_generic_paper": 0.148916850434557,
+        "weight_mass_on_subjective": 0.32865400495458297,
+        "weight_mass_on_subjective_paper": 0.29731482682578797
+      },
+      "title_reuse_histogram": {
+        "1": 978,
+        "2": 34,
+        "3": 39,
+        "4": 4,
+        "5": 10,
+        "6": 6,
+        "9": 9,
+        "15": 15
+      }
+    },
+    "baseline": {
+      "n_questions": 128,
+      "n_criteria_total": 1219,
+      "n_errors": 0,
+      "generic_criterion_rate": 0.18849156677166787,
+      "generic_criterion_rate_ci_low": 0.15504157705932753,
+      "generic_criterion_rate_ci_high": 0.2241474581095732,
+      "generic_criterion_rate_n": 128,
+      "generic_rate_permuted": 0.965079104922855,
+      "generic_rate_permuted_ci_low": 0.9478490807152916,
+      "generic_rate_permuted_ci_high": 0.9802484212835775,
+      "generic_rate_permuted_n": 128,
+      "specificity_lift": 0.7765875381511871,
+      "specificity_lift_ci_low": 0.7408679439050534,
+      "specificity_lift_ci_high": 0.8119599103823311,
+      "specificity_lift_n": 128,
+      "weight_mass_on_generic_raw": 0.14153807346536137,
+      "weight_mass_on_generic_raw_ci_low": 0.11086267157669584,
+      "weight_mass_on_generic_raw_ci_high": 0.1752092819109363,
+      "weight_mass_on_generic_raw_n": 128,
+      "weight_mass_on_generic_paper": 0.15976006133047563,
+      "weight_mass_on_generic_paper_ci_low": 0.1260618646180183,
+      "weight_mass_on_generic_paper_ci_high": 0.19553895219908055,
+      "weight_mass_on_generic_paper_n": 128,
+      "mean_anchors_per_criterion": 2.3107041434362205,
+      "mean_anchors_per_criterion_ci_low": 2.1048386066802887,
+      "mean_anchors_per_criterion_ci_high": 2.5321354097164064,
+      "mean_anchors_per_criterion_n": 128,
+      "weak_grounding_rate": 0.4025880752213473,
+      "weak_grounding_rate_ci_low": 0.3538318501160298,
+      "weak_grounding_rate_ci_high": 0.4478469346791382,
+      "weak_grounding_rate_n": 128,
+      "recyclable_rate": 0.0137403612012987,
+      "recyclable_rate_ci_low": 0.00675197849025974,
+      "recyclable_rate_ci_high": 0.021277922923430732,
+      "recyclable_rate_n": 128,
+      "mass_produced_title_rate": 0.0137403612012987,
+      "mass_produced_title_rate_ci_low": 0.00675197849025974,
+      "mass_produced_title_rate_ci_high": 0.021277922923430732,
+      "mass_produced_title_rate_n": 128,
+      "max_title_reuse": 2.96875,
+      "max_title_reuse_ci_low": 2.3671875,
+      "max_title_reuse_ci_high": 3.617382812499999,
+      "max_title_reuse_n": 128,
+      "title_reuse_ge2_rate": 0.06087600869310428,
+      "title_reuse_ge2_rate_ci_low": 0.04664671875178539,
+      "title_reuse_ge2_rate_ci_high": 0.07699787963517282,
+      "title_reuse_ge2_rate_n": 128,
+      "subjective_rate": 0.12647928562450622,
+      "subjective_rate_ci_low": 0.10281270047354606,
+      "subjective_rate_ci_high": 0.15077588535596342,
+      "subjective_rate_n": 128,
+      "style_rate": 0.12192351472567466,
+      "style_rate_ci_low": 0.09193455985204031,
+      "style_rate_ci_high": 0.15557631492919866,
+      "style_rate_n": 128,
+      "subjective_or_style_rate": 0.1966410931541906,
+      "subjective_or_style_rate_ci_low": 0.16189244454610952,
+      "subjective_or_style_rate_ci_high": 0.23204469055887944,
+      "subjective_or_style_rate_n": 128,
+      "generic_and_subjective_rate": 0.06387543216587334,
+      "generic_and_subjective_rate_ci_low": 0.05055034891834064,
+      "generic_and_subjective_rate_ci_high": 0.07836848918162105,
+      "generic_and_subjective_rate_n": 128,
+      "weight_mass_on_subjective": 0.17998772261237428,
+      "weight_mass_on_subjective_ci_low": 0.1426894022580132,
+      "weight_mass_on_subjective_ci_high": 0.2189492662876562,
+      "weight_mass_on_subjective_n": 128,
+      "weight_mass_on_subjective_paper": 0.1729084391647256,
+      "weight_mass_on_subjective_paper_ci_low": 0.13758187407205405,
+      "weight_mass_on_subjective_paper_ci_high": 0.2092028093597184,
+      "weight_mass_on_subjective_paper_n": 128,
+      "mean_trigram_overlap_with_reference": 0.08410176031129532,
+      "mean_trigram_overlap_with_reference_ci_low": 0.07098693597636349,
+      "mean_trigram_overlap_with_reference_ci_high": 0.09852219785585567,
+      "mean_trigram_overlap_with_reference_n": 128,
+      "criteria_with_ge50pct_trigram_overlap": 0.04813996767121767,
+      "criteria_with_ge50pct_trigram_overlap_ci_low": 0.03546884376474221,
+      "criteria_with_ge50pct_trigram_overlap_ci_high": 0.06258796541999666,
+      "criteria_with_ge50pct_trigram_overlap_n": 128,
+      "criteria_with_ge30pct_trigram_overlap": 0.1043933497058497,
+      "criteria_with_ge30pct_trigram_overlap_ci_low": 0.08429822293591825,
+      "criteria_with_ge30pct_trigram_overlap_ci_high": 0.12798247975982352,
+      "criteria_with_ge30pct_trigram_overlap_n": 128,
+      "mean_4gram_overlap_with_question": 0.01135063561649562,
+      "mean_4gram_overlap_with_question_ci_low": 0.008045142412300537,
+      "mean_4gram_overlap_with_question_ci_high": 0.014893497645489676,
+      "mean_4gram_overlap_with_question_n": 128,
+      "n_criteria": 9.5234375,
+      "n_criteria_ci_low": 9.125,
+      "n_criteria_ci_high": 9.9375,
+      "n_criteria_n": 128,
+      "pooled": {
+        "n_criteria": 1219,
+        "generic_criterion_rate": 0.19770303527481542,
+        "generic_rate_permuted": 0.9614438063986874,
+        "weak_grounding_rate": 0.41509433962264153,
+        "mean_anchors_per_criterion": 2.2715340442986056,
+        "subjective_rate": 0.11894995898277276,
+        "style_rate": 0.12223133716160788,
+        "subjective_or_style_rate": 0.19278096800656275,
+        "generic_and_subjective_rate": 0.062346185397867106,
+        "recyclable_rate": 0.01066447908121411,
+        "mass_produced_title_rate": 0.01066447908121411,
+        "mean_trigram_overlap_with_reference": 0.07554436487798097,
+        "criteria_with_ge50pct_trigram_overlap": 0.043478260869565216,
+        "criteria_with_ge30pct_trigram_overlap": 0.09351927809680066,
+        "weight_mass_on_generic_raw": 0.151612109278858,
+        "weight_mass_on_generic_paper": 0.16870518768452128,
+        "weight_mass_on_subjective": 0.1752399704651735,
+        "weight_mass_on_subjective_paper": 0.1692323913960354
+      },
+      "title_reuse_histogram": {
+        "1": 1154,
+        "2": 24,
+        "3": 9,
+        "4": 8,
+        "5": 5,
+        "6": 6,
+        "13": 13
+      }
+    },
+    "agentic": {
+      "n_questions": 128,
+      "n_criteria_total": 1295,
+      "n_errors": 0,
+      "generic_criterion_rate": 0.07917315973956598,
+      "generic_criterion_rate_ci_low": 0.052738323959027084,
+      "generic_criterion_rate_ci_high": 0.10656830609711464,
+      "generic_criterion_rate_n": 128,
+      "generic_rate_permuted": 0.9671688012508326,
+      "generic_rate_permuted_ci_low": 0.9509526638725858,
+      "generic_rate_permuted_ci_high": 0.9811532632406657,
+      "generic_rate_permuted_n": 128,
+      "specificity_lift": 0.8879956415112665,
+      "specificity_lift_ci_low": 0.8580400182499792,
+      "specificity_lift_ci_high": 0.91751666194049,
+      "specificity_lift_n": 128,
+      "weight_mass_on_generic_raw": 0.06983291153406385,
+      "weight_mass_on_generic_raw_ci_low": 0.04507672044872456,
+      "weight_mass_on_generic_raw_ci_high": 0.09591707711287208,
+      "weight_mass_on_generic_raw_n": 128,
+      "weight_mass_on_generic_paper": 0.07320627499608795,
+      "weight_mass_on_generic_paper_ci_low": 0.047625330200577146,
+      "weight_mass_on_generic_paper_ci_high": 0.09975665642976915,
+      "weight_mass_on_generic_paper_n": 128,
+      "mean_anchors_per_criterion": 3.033813918286574,
+      "mean_anchors_per_criterion_ci_low": 2.7957105321436377,
+      "mean_anchors_per_criterion_ci_high": 3.288732337269935,
+      "mean_anchors_per_criterion_n": 128,
+      "weak_grounding_rate": 0.2642997735771173,
+      "weak_grounding_rate_ci_low": 0.2154005906203172,
+      "weak_grounding_rate_ci_high": 0.31348144612548906,
+      "weak_grounding_rate_n": 128,
+      "recyclable_rate": 0.0,
+      "recyclable_rate_ci_low": 0.0,
+      "recyclable_rate_ci_high": 0.0,
+      "recyclable_rate_n": 128,
+      "mass_produced_title_rate": 0.0,
+      "mass_produced_title_rate_ci_low": 0.0,
+      "mass_produced_title_rate_ci_high": 0.0,
+      "mass_produced_title_rate_n": 128,
+      "max_title_reuse": 1.1484375,
+      "max_title_reuse_ci_low": 1.0859375,
+      "max_title_reuse_ci_high": 1.2109375,
+      "max_title_reuse_n": 128,
+      "title_reuse_ge2_rate": 0.043533549783549785,
+      "title_reuse_ge2_rate_ci_low": 0.025117272050865797,
+      "title_reuse_ge2_rate_ci_high": 0.06508805972673158,
+      "title_reuse_ge2_rate_n": 128,
+      "subjective_rate": 0.008727058531746032,
+      "subjective_rate_ci_low": 0.0023856026785714283,
+      "subjective_rate_ci_high": 0.016819738963293644,
+      "subjective_rate_n": 128,
+      "style_rate": 0.06636805035242535,
+      "style_rate_ci_low": 0.04283013373345405,
+      "style_rate_ci_high": 0.09502897167936229,
+      "style_rate_n": 128,
+      "subjective_or_style_rate": 0.07332799578893329,
+      "subjective_or_style_rate_ci_low": 0.04982072560685842,
+      "subjective_or_style_rate_ci_high": 0.10170454166059635,
+      "subjective_or_style_rate_n": 128,
+      "generic_and_subjective_rate": 0.0026041666666666665,
+      "generic_and_subjective_rate_ci_low": 0.0,
+      "generic_and_subjective_rate_ci_high": 0.0078125,
+      "generic_and_subjective_rate_n": 128,
+      "weight_mass_on_subjective": 0.07395829032021561,
+      "weight_mass_on_subjective_ci_low": 0.05034192288605948,
+      "weight_mass_on_subjective_ci_high": 0.10305482897535091,
+      "weight_mass_on_subjective_n": 128,
+      "weight_mass_on_subjective_paper": 0.0736969510254508,
+      "weight_mass_on_subjective_paper_ci_low": 0.04994326264845308,
+      "weight_mass_on_subjective_paper_ci_high": 0.10217971750175132,
+      "weight_mass_on_subjective_paper_n": 128,
+      "mean_trigram_overlap_with_reference": 0.1488510468297495,
+      "mean_trigram_overlap_with_reference_ci_low": 0.12809894889258067,
+      "mean_trigram_overlap_with_reference_ci_high": 0.17166909468327826,
+      "mean_trigram_overlap_with_reference_n": 128,
+      "criteria_with_ge50pct_trigram_overlap": 0.11789616633366634,
+      "criteria_with_ge50pct_trigram_overlap_ci_low": 0.09463192731747419,
+      "criteria_with_ge50pct_trigram_overlap_ci_high": 0.1438459795954913,
+      "criteria_with_ge50pct_trigram_overlap_n": 128,
+      "criteria_with_ge30pct_trigram_overlap": 0.20659505425130426,
+      "criteria_with_ge30pct_trigram_overlap_ci_low": 0.17352823500284437,
+      "criteria_with_ge30pct_trigram_overlap_ci_high": 0.2437208334742514,
+      "criteria_with_ge30pct_trigram_overlap_n": 128,
+      "mean_4gram_overlap_with_question": 0.025871307749498685,
+      "mean_4gram_overlap_with_question_ci_low": 0.0195309227818889,
+      "mean_4gram_overlap_with_question_ci_high": 0.032865082121030266,
+      "mean_4gram_overlap_with_question_n": 128,
+      "n_criteria": 10.1171875,
+      "n_criteria_ci_low": 9.515625,
+      "n_criteria_ci_high": 10.703125,
+      "n_criteria_n": 128,
+      "pooled": {
+        "n_criteria": 1295,
+        "generic_criterion_rate": 0.077992277992278,
+        "generic_rate_permuted": 0.9606177606177606,
+        "weak_grounding_rate": 0.25637065637065637,
+        "mean_anchors_per_criterion": 3.0702702702702704,
+        "subjective_rate": 0.008494208494208495,
+        "style_rate": 0.06332046332046332,
+        "subjective_or_style_rate": 0.07027027027027027,
+        "generic_and_subjective_rate": 0.0023166023166023165,
+        "recyclable_rate": 0.0,
+        "mass_produced_title_rate": 0.0,
+        "mean_trigram_overlap_with_reference": 0.14284112437694924,
+        "criteria_with_ge50pct_trigram_overlap": 0.11042471042471043,
+        "criteria_with_ge30pct_trigram_overlap": 0.19613899613899613,
+        "weight_mass_on_generic_raw": 0.06591521685861308,
+        "weight_mass_on_generic_paper": 0.07312153303076149,
+        "weight_mass_on_subjective": 0.0713060524381279,
+        "weight_mass_on_subjective_paper": 0.07221381744831064
+      },
+      "title_reuse_histogram": {
+        "1": 1251,
+        "2": 44
+      }
+    },
+    "agentic-tools": {
+      "n_questions": 128,
+      "n_criteria_total": 1229,
+      "n_errors": 0,
+      "generic_criterion_rate": 0.07833109815531691,
+      "generic_criterion_rate_ci_low": 0.05529545758061383,
+      "generic_criterion_rate_ci_high": 0.10586544423458485,
+      "generic_criterion_rate_n": 128,
+      "generic_rate_permuted": 0.9660675912629038,
+      "generic_rate_permuted_ci_low": 0.951809570095703,
+      "generic_rate_permuted_ci_high": 0.97923871809614,
+      "generic_rate_permuted_n": 128,
+      "specificity_lift": 0.8877364931075868,
+      "specificity_lift_ci_low": 0.858213920411186,
+      "specificity_lift_ci_high": 0.9149350272665703,
+      "specificity_lift_n": 128,
+      "weight_mass_on_generic_raw": 0.06402511229471936,
+      "weight_mass_on_generic_raw_ci_low": 0.0429393892770812,
+      "weight_mass_on_generic_raw_ci_high": 0.08922323050050736,
+      "weight_mass_on_generic_raw_n": 128,
+      "weight_mass_on_generic_paper": 0.07811209110658215,
+      "weight_mass_on_generic_paper_ci_low": 0.05359289406058194,
+      "weight_mass_on_generic_paper_ci_high": 0.10755084544695526,
+      "weight_mass_on_generic_paper_n": 128,
+      "mean_anchors_per_criterion": 2.9457979520479523,
+      "mean_anchors_per_criterion_ci_low": 2.7087913795189182,
+      "mean_anchors_per_criterion_ci_high": 3.198790451085373,
+      "mean_anchors_per_criterion_n": 128,
+      "weak_grounding_rate": 0.25458081415112666,
+      "weak_grounding_rate_ci_low": 0.2080478199643239,
+      "weak_grounding_rate_ci_high": 0.3016389266657821,
+      "weak_grounding_rate_n": 128,
+      "recyclable_rate": 0.0,
+      "recyclable_rate_ci_low": 0.0,
+      "recyclable_rate_ci_high": 0.0,
+      "recyclable_rate_n": 128,
+      "mass_produced_title_rate": 0.0,
+      "mass_produced_title_rate_ci_low": 0.0,
+      "mass_produced_title_rate_ci_high": 0.0,
+      "mass_produced_title_rate_n": 128,
+      "max_title_reuse": 1.0078125,
+      "max_title_reuse_ci_low": 1.0,
+      "max_title_reuse_ci_high": 1.0234375,
+      "max_title_reuse_n": 128,
+      "title_reuse_ge2_rate": 0.001201923076923077,
+      "title_reuse_ge2_rate_ci_low": 0.0,
+      "title_reuse_ge2_rate_ci_high": 0.003605769230769231,
+      "title_reuse_ge2_rate_n": 128,
+      "subjective_rate": 0.005177331349206348,
+      "subjective_rate_ci_low": 0.0008680555555555555,
+      "subjective_rate_ci_high": 0.010912698412698412,
+      "subjective_rate_n": 128,
+      "style_rate": 0.0557091454552392,
+      "style_rate_ci_low": 0.03532657609317766,
+      "style_rate_ci_high": 0.08007672123883061,
+      "style_rate_n": 128,
+      "subjective_or_style_rate": 0.060018421248889994,
+      "subjective_or_style_rate_ci_low": 0.03958864269411144,
+      "subjective_or_style_rate_ci_high": 0.08452711893141578,
+      "subjective_or_style_rate_n": 128,
+      "generic_and_subjective_rate": 0.005139652014652014,
+      "generic_and_subjective_rate_ci_low": 0.0006009615384615385,
+      "generic_and_subjective_rate_ci_high": 0.010975632440476184,
+      "generic_and_subjective_rate_n": 128,
+      "weight_mass_on_subjective": 0.05828762083225565,
+      "weight_mass_on_subjective_ci_low": 0.0372032935735937,
+      "weight_mass_on_subjective_ci_high": 0.08294572356869258,
+      "weight_mass_on_subjective_n": 128,
+      "weight_mass_on_subjective_paper": 0.05984703241109065,
+      "weight_mass_on_subjective_paper_ci_low": 0.0381148158985738,
+      "weight_mass_on_subjective_paper_ci_high": 0.08632694969407137,
+      "weight_mass_on_subjective_paper_n": 128,
+      "mean_trigram_overlap_with_reference": 0.12326968884686733,
+      "mean_trigram_overlap_with_reference_ci_low": 0.10520529011580339,
+      "mean_trigram_overlap_with_reference_ci_high": 0.1421708817555522,
+      "mean_trigram_overlap_with_reference_n": 128,
+      "criteria_with_ge50pct_trigram_overlap": 0.08732380900349651,
+      "criteria_with_ge50pct_trigram_overlap_ci_low": 0.06729383680555555,
+      "criteria_with_ge50pct_trigram_overlap_ci_high": 0.10934219372207654,
+      "criteria_with_ge50pct_trigram_overlap_n": 128,
+      "criteria_with_ge30pct_trigram_overlap": 0.1696419574349262,
+      "criteria_with_ge30pct_trigram_overlap_ci_low": 0.14133331729034854,
+      "criteria_with_ge30pct_trigram_overlap_ci_high": 0.20049386377511375,
+      "criteria_with_ge30pct_trigram_overlap_n": 128,
+      "mean_4gram_overlap_with_question": 0.019496146122217804,
+      "mean_4gram_overlap_with_question_ci_low": 0.014680982396063944,
+      "mean_4gram_overlap_with_question_ci_high": 0.024858772383360036,
+      "mean_4gram_overlap_with_question_n": 128,
+      "n_criteria": 9.6015625,
+      "n_criteria_ci_low": 8.9529296875,
+      "n_criteria_ci_high": 10.289257812499999,
+      "n_criteria_n": 128,
+      "pooled": {
+        "n_criteria": 1229,
+        "generic_criterion_rate": 0.07648494711147275,
+        "generic_rate_permuted": 0.9633848657445078,
+        "weak_grounding_rate": 0.25386493083807976,
+        "mean_anchors_per_criterion": 2.947111472742067,
+        "subjective_rate": 0.004882017900732303,
+        "style_rate": 0.05451586655817738,
+        "subjective_or_style_rate": 0.05858421480878763,
+        "generic_and_subjective_rate": 0.004882017900732303,
+        "recyclable_rate": 0.0,
+        "mass_produced_title_rate": 0.0,
+        "mean_trigram_overlap_with_reference": 0.12140258341542076,
+        "criteria_with_ge50pct_trigram_overlap": 0.08787632221318145,
+        "criteria_with_ge30pct_trigram_overlap": 0.16924328722538648,
+        "weight_mass_on_generic_raw": 0.06271409749670619,
+        "weight_mass_on_generic_paper": 0.07390350877192983,
+        "weight_mass_on_subjective": 0.05559947299077734,
+        "weight_mass_on_subjective_paper": 0.05789473684210526
+      },
+      "title_reuse_histogram": {
+        "1": 1227,
+        "2": 2
+      }
+    },
+    "_metric_family": "grounding",
+    "_params": {
+      "sources": [
+        "shipped",
+        "baseline",
+        "agentic",
+        "agentic-tools"
+      ],
+      "rare_token_docfreq_fraction": 0.01,
+      "weak_grounding_min_anchors": 2,
+      "mass_produced_title_min_reuse": 10,
+      "trigram_copy_threshold": 0.5,
+      "permutation_seed": 0,
+      "detector_source": "imported from analysis/ (not reimplemented)",
+      "title_reuse_scope": "within (rubric_source, domain) across the evaluated sample",
+      "corpus": {
+        "rar_medicine": {
+          "domain": "rar_medicine",
+          "n_rare_tokens": 49573,
+          "docfreq_cutoff": 224,
+          "n_corpus_questions": 22408,
+          "loaded": true
+        },
+        "rar_science": {
+          "domain": "rar_science",
+          "n_rare_tokens": 47997,
+          "docfreq_cutoff": 229,
+          "n_corpus_questions": 22917,
+          "loaded": true
+        }
+      }
+    },
+    "_by_domain": {
+      "rar_medicine": {
+        "shipped": {
+          "n_criteria": 626,
+          "generic_criterion_rate": 0.18849840255591055,
+          "generic_rate_permuted": 0.9776357827476039,
+          "weak_grounding_rate": 0.36900958466453676,
+          "mean_anchors_per_criterion": 2.2731629392971247,
+          "subjective_rate": 0.18849840255591055,
+          "style_rate": 0.1645367412140575,
+          "subjective_or_style_rate": 0.2715654952076677,
+          "generic_and_subjective_rate": 0.10862619808306709,
+          "recyclable_rate": 0.020766773162939296,
+          "mass_produced_title_rate": 0.023961661341853034,
+          "mean_trigram_overlap_with_reference": 0.11461174608139466,
+          "criteria_with_ge50pct_trigram_overlap": 0.07827476038338659,
+          "criteria_with_ge30pct_trigram_overlap": 0.15335463258785942,
+          "weight_mass_on_generic_raw": 0.11721224920802534,
+          "weight_mass_on_generic_paper": 0.1387134502923976,
+          "weight_mass_on_subjective": 0.23600844772967264,
+          "weight_mass_on_subjective_paper": 0.2311111111111111
+        },
+        "baseline": {
+          "n_criteria": 535,
+          "generic_criterion_rate": 0.14766355140186915,
+          "generic_rate_permuted": 0.9813084112149533,
+          "weak_grounding_rate": 0.32149532710280376,
+          "mean_anchors_per_criterion": 2.57196261682243,
+          "subjective_rate": 0.14953271028037382,
+          "style_rate": 0.16261682242990655,
+          "subjective_or_style_rate": 0.2411214953271028,
+          "generic_and_subjective_rate": 0.08411214953271028,
+          "recyclable_rate": 0.024299065420560748,
+          "mass_produced_title_rate": 0.024299065420560748,
+          "mean_trigram_overlap_with_reference": 0.13034780598971452,
+          "criteria_with_ge50pct_trigram_overlap": 0.07663551401869159,
+          "criteria_with_ge30pct_trigram_overlap": 0.16635514018691588,
+          "weight_mass_on_generic_raw": 0.08775981524249422,
+          "weight_mass_on_generic_paper": 0.11300535801266436,
+          "weight_mass_on_subjective": 0.21939953810623555,
+          "weight_mass_on_subjective_paper": 0.21091086215294688
+        },
+        "agentic": {
+          "n_criteria": 671,
+          "generic_criterion_rate": 0.041728763040238454,
+          "generic_rate_permuted": 0.970193740685544,
+          "weak_grounding_rate": 0.18330849478390462,
+          "mean_anchors_per_criterion": 3.339791356184799,
+          "subjective_rate": 0.007451564828614009,
+          "style_rate": 0.07451564828614009,
+          "subjective_or_style_rate": 0.08047690014903129,
+          "generic_and_subjective_rate": 0.0014903129657228018,
+          "recyclable_rate": 0.0,
+          "mass_produced_title_rate": 0.0,
+          "mean_trigram_overlap_with_reference": 0.1946714009668774,
+          "criteria_with_ge50pct_trigram_overlap": 0.14456035767511177,
+          "criteria_with_ge30pct_trigram_overlap": 0.26527570789865873,
+          "weight_mass_on_generic_raw": 0.02953995157384988,
+          "weight_mass_on_generic_paper": 0.03842325303603424,
+          "weight_mass_on_subjective": 0.08716707021791767,
+          "weight_mass_on_subjective_paper": 0.08381445351383636
+        },
+        "agentic-tools": {
+          "n_criteria": 615,
+          "generic_criterion_rate": 0.03414634146341464,
+          "generic_rate_permuted": 0.9772357723577236,
+          "weak_grounding_rate": 0.16585365853658537,
+          "mean_anchors_per_criterion": 3.2666666666666666,
+          "subjective_rate": 0.0065040650406504065,
+          "style_rate": 0.07154471544715447,
+          "subjective_or_style_rate": 0.07642276422764227,
+          "generic_and_subjective_rate": 0.0016260162601626016,
+          "recyclable_rate": 0.0,
+          "mass_produced_title_rate": 0.0,
+          "mean_trigram_overlap_with_reference": 0.1767374322897996,
+          "criteria_with_ge50pct_trigram_overlap": 0.13008130081300814,
+          "criteria_with_ge30pct_trigram_overlap": 0.24878048780487805,
+          "weight_mass_on_generic_raw": 0.023230686115613183,
+          "weight_mass_on_generic_paper": 0.03970223325062035,
+          "weight_mass_on_subjective": 0.075634792004322,
+          "weight_mass_on_subjective_paper": 0.07399052560342881
+        }
+      },
+      "rar_science": {
+        "shipped": {
+          "n_criteria": 469,
+          "generic_criterion_rate": 0.21108742004264391,
+          "generic_rate_permuted": 0.9701492537313433,
+          "weak_grounding_rate": 0.44776119402985076,
+          "mean_anchors_per_criterion": 2.0874200426439233,
+          "subjective_rate": 0.326226012793177,
+          "style_rate": 0.1812366737739872,
+          "subjective_or_style_rate": 0.4093816631130064,
+          "generic_and_subjective_rate": 0.11940298507462686,
+          "recyclable_rate": 0.0,
+          "mass_produced_title_rate": 0.0,
+          "mean_trigram_overlap_with_reference": 0.022038473997552994,
+          "criteria_with_ge50pct_trigram_overlap": 0.0021321961620469083,
+          "criteria_with_ge30pct_trigram_overlap": 0.017057569296375266,
+          "weight_mass_on_generic_raw": 0.1725129384703853,
+          "weight_mass_on_generic_paper": 0.16161910308677926,
+          "weight_mass_on_subjective": 0.42955721679125936,
+          "weight_mass_on_subjective_paper": 0.37973209085614446
+        },
+        "baseline": {
+          "n_criteria": 684,
+          "generic_criterion_rate": 0.23684210526315788,
+          "generic_rate_permuted": 0.945906432748538,
+          "weak_grounding_rate": 0.48830409356725146,
+          "mean_anchors_per_criterion": 2.0365497076023393,
+          "subjective_rate": 0.09502923976608187,
+          "style_rate": 0.09064327485380116,
+          "subjective_or_style_rate": 0.15497076023391812,
+          "generic_and_subjective_rate": 0.04532163742690058,
+          "recyclable_rate": 0.0,
+          "mass_produced_title_rate": 0.0,
+          "mean_trigram_overlap_with_reference": 0.03267910026573326,
+          "criteria_with_ge50pct_trigram_overlap": 0.017543859649122806,
+          "criteria_with_ge30pct_trigram_overlap": 0.03654970760233918,
+          "weight_mass_on_generic_raw": 0.19905619905619906,
+          "weight_mass_on_generic_paper": 0.211230940870212,
+          "weight_mass_on_subjective": 0.14242814242814242,
+          "weight_mass_on_subjective_paper": 0.13741167720342137
+        },
+        "agentic": {
+          "n_criteria": 624,
+          "generic_criterion_rate": 0.11698717948717949,
+          "generic_rate_permuted": 0.9503205128205128,
+          "weak_grounding_rate": 0.3349358974358974,
+          "mean_anchors_per_criterion": 2.780448717948718,
+          "subjective_rate": 0.009615384615384616,
+          "style_rate": 0.05128205128205128,
+          "subjective_or_style_rate": 0.05929487179487179,
+          "generic_and_subjective_rate": 0.003205128205128205,
+          "recyclable_rate": 0.0,
+          "mass_produced_title_rate": 0.0,
+          "mean_trigram_overlap_with_reference": 0.08710696477463863,
+          "criteria_with_ge50pct_trigram_overlap": 0.07371794871794872,
+          "criteria_with_ge30pct_trigram_overlap": 0.12179487179487179,
+          "weight_mass_on_generic_raw": 0.10317460317460317,
+          "weight_mass_on_generic_paper": 0.1087489779231398,
+          "weight_mass_on_subjective": 0.05505952380952381,
+          "weight_mass_on_subjective_paper": 0.060302534750613236
+        },
+        "agentic-tools": {
+          "n_criteria": 614,
+          "generic_criterion_rate": 0.11889250814332247,
+          "generic_rate_permuted": 0.9495114006514658,
+          "weak_grounding_rate": 0.34201954397394135,
+          "mean_anchors_per_criterion": 2.6270358306188926,
+          "subjective_rate": 0.003257328990228013,
+          "style_rate": 0.03745928338762215,
+          "subjective_or_style_rate": 0.04071661237785016,
+          "generic_and_subjective_rate": 0.008143322475570033,
+          "recyclable_rate": 0.0,
+          "mass_produced_title_rate": 0.0,
+          "mean_trigram_overlap_with_reference": 0.06597761263733773,
+          "criteria_with_ge50pct_trigram_overlap": 0.04560260586319218,
+          "criteria_with_ge30pct_trigram_overlap": 0.08957654723127036,
+          "weight_mass_on_generic_raw": 0.10030864197530864,
+          "weight_mass_on_generic_paper": 0.10625133347557071,
+          "weight_mass_on_subjective": 0.03652263374485597,
+          "weight_mass_on_subjective_paper": 0.042671218263281414
+        }
+      }
+    },
+    "_shipped_full_corpus_reference": {
+      "rar_medicine": {
+        "n_questions": 22408.0,
+        "n_criteria": 214658.0,
+        "generic_criterion_rate": 0.21969999999999998,
+        "generic_rate_permuted": 0.9854,
+        "weak_grounding_rate": 0.4353,
+        "mean_anchors_per_criterion": 2.066,
+        "weight_mass_on_generic_raw": 0.152,
+        "weight_mass_on_subjective": 0.2125,
+        "subjective_rate": 0.1813,
+        "style_rate": 0.133,
+        "subjective_or_style_rate": 0.2364,
+        "generic_and_subjective_rate": 0.1038,
+        "recyclable_rate": 0.11599999999999999,
+        "mass_produced_title_rate": 0.2526,
+        "mean_trigram_overlap_with_reference": 0.1092,
+        "criteria_with_ge50pct_trigram_overlap": 0.0741,
+        "criteria_with_ge30pct_trigram_overlap": 0.15109999999999998,
+        "mean_4gram_overlap_with_question": 0.0164,
+        "non_self_contained_rate": 0.0069,
+        "weight_order_violation_rate": 0.0,
+        "pitfall_mirror_rate": 0.16210000000000002,
+        "negative_weight_rate": 0.1416,
+        "item_count_in_range_rate": 0.9978,
+        "title_2_to_4_words_rate": 0.9545999999999999,
+        "description_single_sentence_rate": 0.9965,
+        "weight_band_rate": 0.9998999999999999,
+        "pitfall_opener_rate": 0.7856000000000001,
+        "n_items": 9.58,
+        "items_cv": 0.1396,
+        "modal_count_share": 0.3618,
+        "r_items_vs_question_len": 0.256,
+        "r_items_vs_reference_len": 0.3036,
+        "weight_corr_with_uniform": 0.9315,
+        "orphan_subpart_rate": NaN,
+        "subpart_question_rate": 0.0,
+        "mcq_rate": 0.0042
+      },
+      "rar_science": {
+        "n_questions": 22917.0,
+        "n_criteria": 172017.0,
+        "generic_criterion_rate": 0.2887,
+        "generic_rate_permuted": 0.9639,
+        "weak_grounding_rate": 0.5261,
+        "mean_anchors_per_criterion": 1.777,
+        "weight_mass_on_generic_raw": 0.24559999999999998,
+        "weight_mass_on_subjective": 0.4018,
+        "subjective_rate": 0.34159999999999996,
+        "style_rate": 0.1457,
+        "subjective_or_style_rate": 0.396,
+        "generic_and_subjective_rate": 0.13699999999999998,
+        "recyclable_rate": 0.17670000000000002,
+        "mass_produced_title_rate": 0.4227,
+        "mean_trigram_overlap_with_reference": 0.017,
+        "criteria_with_ge50pct_trigram_overlap": 0.0043,
+        "criteria_with_ge30pct_trigram_overlap": 0.013600000000000001,
+        "mean_4gram_overlap_with_question": 0.0097,
+        "non_self_contained_rate": 0.0204,
+        "weight_order_violation_rate": 0.413,
+        "pitfall_mirror_rate": 0.0095,
+        "negative_weight_rate": 0.1305,
+        "item_count_in_range_rate": 0.9997,
+        "title_2_to_4_words_rate": 0.9867,
+        "description_single_sentence_rate": 0.9994,
+        "weight_band_rate": 0.7759,
+        "pitfall_opener_rate": 0.0354,
+        "n_items": 7.506,
+        "items_cv": 0.1068,
+        "modal_count_share": 0.6456000000000001,
+        "r_items_vs_question_len": 0.1895,
+        "r_items_vs_reference_len": 0.2423,
+        "weight_corr_with_uniform": 0.9433,
+        "orphan_subpart_rate": 0.044500000000000005,
+        "subpart_question_rate": 0.029500000000000002,
+        "mcq_rate": 0.09359999999999999
+      }
+    },
+    "_n_errors": 0
+  },
+  "lint": {
+    "shipped": {
+      "n_questions": 128,
+      "n_criteria": 1095,
+      "n_errors": 0,
+      "compliance_rate": 0.8958049762737263,
+      "compliance_rate_ci_low": 0.8724400631920165,
+      "compliance_rate_ci_high": 0.9176407067325036,
+      "compliance_rate_n": 128,
+      "fully_compliant_rubric": 0.4609375,
+      "fully_compliant_rubric_ci_low": 0.375,
+      "fully_compliant_rubric_ci_high": 0.546875,
+      "fully_compliant_rubric_n": 128,
+      "item_count_ok": 1.0,
+      "item_count_ok_ci_low": 1.0,
+      "item_count_ok_ci_high": 1.0,
+      "item_count_ok_n": 128,
+      "n_items": 8.5546875,
+      "n_items_ci_low": 8.3046875,
+      "n_items_ci_high": 8.8359375,
+      "n_items_n": 128,
+      "polarity_single_rate": 0.5,
+      "polarity_single_rate_ci_low": 0.4140625,
+      "polarity_single_rate_ci_high": 0.5859375,
+      "polarity_single_rate_n": 128,
+      "negative_weight_rate": 0.13836335105866354,
+      "negative_weight_rate_ci_low": 0.12914282061254717,
+      "negative_weight_rate_ci_high": 0.1474418804936383,
+      "negative_weight_rate_n": 128,
+      "weight_order_violation_rate": 0.1875,
+      "weight_order_violation_rate_ci_low": 0.1171875,
+      "weight_order_violation_rate_ci_high": 0.2578125,
+      "weight_order_violation_rate_n": 128,
+      "weight_order_violation_pair_rate": 0.03712254713488266,
+      "weight_order_violation_pair_rate_ci_low": 0.02201456511039673,
+      "weight_order_violation_pair_rate_ci_high": 0.0533508631753389,
+      "weight_order_violation_pair_rate_n": 128,
+      "pitfall_mirror_rate": 0.078125,
+      "pitfall_mirror_rate_ci_low": 0.0390625,
+      "pitfall_mirror_rate_ci_high": 0.125,
+      "pitfall_mirror_rate_n": 128,
+      "n_pitfall_mirrors": 0.09375,
+      "n_pitfall_mirrors_ci_low": 0.046875,
+      "n_pitfall_mirrors_ci_high": 0.15625,
+      "n_pitfall_mirrors_n": 128,
+      "max_pitfall_mirror_similarity": 0.3415194222179707,
+      "max_pitfall_mirror_similarity_ci_low": 0.3102515088241489,
+      "max_pitfall_mirror_similarity_ci_high": 0.3743667047740018,
+      "max_pitfall_mirror_similarity_n": 128,
+      "pitfall_fraction": 0.13836335105866354,
+      "pitfall_fraction_ci_low": 0.12914282061254717,
+      "pitfall_fraction_ci_high": 0.1474418804936383,
+      "pitfall_fraction_n": 128,
+      "weight_band_rate": 0.8917410714285714,
+      "weight_band_rate_ci_low": 0.8659466455853174,
+      "weight_band_rate_ci_high": 0.9169464595734127,
+      "weight_band_rate_n": 128,
+      "unclassified_polarity_rate": 0.02335979992229992,
+      "unclassified_polarity_rate_ci_low": 0.015122622061098623,
+      "unclassified_polarity_rate_ci_high": 0.03224889802038239,
+      "unclassified_polarity_rate_n": 128,
+      "check_item_count_7_20_rate": 1.0,
+      "check_item_count_7_20_rate_ci_low": 1.0,
+      "check_item_count_7_20_rate_ci_high": 1.0,
+      "check_item_count_7_20_rate_n": 128,
+      "check_title_2_to_4_words_rate": 0.9734162755647131,
+      "check_title_2_to_4_words_rate_ci_low": 0.9641460622710624,
+      "check_title_2_to_4_words_rate_ci_high": 0.9817771112351191,
+      "check_title_2_to_4_words_rate_n": 128,
+      "check_description_single_sentence_rate": 1.0,
+      "check_description_single_sentence_rate_ci_low": 1.0,
+      "check_description_single_sentence_rate_ci_high": 1.0,
+      "check_description_single_sentence_rate_n": 128,
+      "check_category_legal_rate": 1.0,
+      "check_category_legal_rate_ci_low": 1.0,
+      "check_category_legal_rate_ci_high": 1.0,
+      "check_category_legal_rate_n": 128,
+      "check_weight_in_range_rate": 1.0,
+      "check_weight_in_range_rate_ci_low": 1.0,
+      "check_weight_in_range_rate_ci_high": 1.0,
+      "check_weight_in_range_rate_n": 128,
+      "check_weight_matches_band_rate": 1.0,
+      "check_weight_matches_band_rate_ci_low": 1.0,
+      "check_weight_matches_band_rate_ci_high": 1.0,
+      "check_weight_matches_band_rate_n": 65,
+      "check_pitfall_opener_rate": 0.7786458333333333,
+      "check_pitfall_opener_rate_ci_low": 0.6875,
+      "check_pitfall_opener_rate_ci_high": 0.859375,
+      "check_pitfall_opener_rate_n": 64,
+      "check_rar_keys_only_rate": 1.0,
+      "check_rar_keys_only_rate_ci_low": 1.0,
+      "check_rar_keys_only_rate_ci_high": 1.0,
+      "check_rar_keys_only_rate_n": 128,
+      "check_no_verbatim_copy_rate": 0.9471720553751805,
+      "check_no_verbatim_copy_rate_ci_low": 0.9291212558058262,
+      "check_no_verbatim_copy_rate_ci_high": 0.9632491840841451,
+      "check_no_verbatim_copy_rate_n": 128,
+      "check_self_contained_rate": 0.9924665178571428,
+      "check_self_contained_rate_ci_low": 0.9864641462053572,
+      "check_self_contained_rate_ci_high": 0.9977678571428572,
+      "check_self_contained_rate_n": 128,
+      "check_breakdown": {
+        "item_count_7_20": {
+          "unit": "rubric",
+          "n_applicable": 128,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "title_2_to_4_words": {
+          "unit": "criterion",
+          "n_applicable": 1095,
+          "n_failed": 30,
+          "rate": 0.9726027397260274,
+          "top_reasons": [
+            {
+              "reason": "title has 1 words",
+              "n": 21
+            },
+            {
+              "reason": "title has 5 words",
+              "n": 8
+            },
+            {
+              "reason": "title has 6 words",
+              "n": 1
+            }
+          ]
+        },
+        "description_single_sentence": {
+          "unit": "criterion",
+          "n_applicable": 1095,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "category_legal": {
+          "unit": "criterion",
+          "n_applicable": 1095,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "weight_in_range": {
+          "unit": "criterion",
+          "n_applicable": 1095,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "weight_matches_band": {
+          "unit": "criterion",
+          "n_applicable": 626,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "pitfall_opener": {
+          "unit": "criterion",
+          "n_applicable": 91,
+          "n_failed": 23,
+          "rate": 0.7472527472527473,
+          "top_reasons": [
+            {
+              "reason": "opens with 'Does not misinterpret the'",
+              "n": 2
+            },
+            {
+              "reason": "opens with 'Does not omit clear'",
+              "n": 1
+            },
+            {
+              "reason": "opens with 'Does not suggest alternative'",
+              "n": 1
+            },
+            {
+              "reason": "opens with 'Fails to mention the'",
+              "n": 1
+            },
+            {
+              "reason": "opens with 'Includes unnecessary details that'",
+              "n": 1
+            }
+          ]
+        },
+        "rar_keys_only": {
+          "unit": "criterion",
+          "n_applicable": 1095,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "no_verbatim_copy": {
+          "unit": "criterion",
+          "n_applicable": 1094,
+          "n_failed": 61,
+          "rate": 0.9442413162705667,
+          "top_reasons": [
+            {
+              "reason": "50% of trigrams shared with reference",
+              "n": 12
+            },
+            {
+              "reason": "60% of trigrams shared with reference",
+              "n": 6
+            },
+            {
+              "reason": "67% of trigrams shared with reference",
+              "n": 5
+            },
+            {
+              "reason": "75% of trigrams shared with reference",
+              "n": 5
+            },
+            {
+              "reason": "50% of trigrams shared with question",
+              "n": 4
+            }
+          ]
+        },
+        "self_contained": {
+          "unit": "criterion",
+          "n_applicable": 1095,
+          "n_failed": 7,
+          "rate": 0.993607305936073,
+          "top_reasons": [
+            {
+              "reason": "asserts correctness via 'the correct answer'",
+              "n": 3
+            },
+            {
+              "reason": "asserts correctness via 'the reference'",
+              "n": 2
+            },
+            {
+              "reason": "asserts correctness via 'correct conclusion'",
+              "n": 1
+            },
+            {
+              "reason": "asserts correctness via 'expected value'",
+              "n": 1
+            }
+          ]
+        }
+      },
+      "hygiene": {
+        "polarity_single_rate": 0.5,
+        "negative_weight_rate": 0.13836335105866354,
+        "weight_order_violation_rate": 0.1875,
+        "weight_order_violation_pair_rate": 0.03712254713488266,
+        "pitfall_mirror_rate": 0.078125,
+        "pitfall_fraction": 0.13836335105866354,
+        "unclassified_polarity_rate": 0.02335979992229992
+      }
+    },
+    "baseline": {
+      "n_questions": 128,
+      "n_criteria": 1219,
+      "n_errors": 0,
+      "compliance_rate": 0.8979223250707626,
+      "compliance_rate_ci_low": 0.8783000468498516,
+      "compliance_rate_ci_high": 0.9171446847423411,
+      "compliance_rate_n": 128,
+      "fully_compliant_rubric": 0.3984375,
+      "fully_compliant_rubric_ci_low": 0.3125,
+      "fully_compliant_rubric_ci_high": 0.48457031249999893,
+      "fully_compliant_rubric_n": 128,
+      "item_count_ok": 0.9375,
+      "item_count_ok_ci_low": 0.890625,
+      "item_count_ok_ci_high": 0.9765625,
+      "item_count_ok_n": 128,
+      "n_items": 9.5234375,
+      "n_items_ci_low": 9.125,
+      "n_items_ci_high": 9.9375,
+      "n_items_n": 128,
+      "polarity_single_rate": 0.1484375,
+      "polarity_single_rate_ci_low": 0.09375,
+      "polarity_single_rate_ci_high": 0.2109375,
+      "polarity_single_rate_n": 128,
+      "negative_weight_rate": 0.21372956661904272,
+      "negative_weight_rate_ci_low": 0.20454268601471037,
+      "negative_weight_rate_ci_high": 0.22396169343320077,
+      "negative_weight_rate_n": 128,
+      "weight_order_violation_rate": 0.2421875,
+      "weight_order_violation_rate_ci_low": 0.171875,
+      "weight_order_violation_rate_ci_high": 0.3203125,
+      "weight_order_violation_rate_n": 128,
+      "weight_order_violation_pair_rate": 0.02761579491092843,
+      "weight_order_violation_pair_rate_ci_low": 0.018511581959089456,
+      "weight_order_violation_pair_rate_ci_high": 0.038527658596093556,
+      "weight_order_violation_pair_rate_n": 128,
+      "pitfall_mirror_rate": 0.2265625,
+      "pitfall_mirror_rate_ci_low": 0.15625,
+      "pitfall_mirror_rate_ci_high": 0.296875,
+      "pitfall_mirror_rate_n": 128,
+      "n_pitfall_mirrors": 0.3203125,
+      "n_pitfall_mirrors_ci_low": 0.2109375,
+      "n_pitfall_mirrors_ci_high": 0.4375,
+      "n_pitfall_mirrors_n": 128,
+      "max_pitfall_mirror_similarity": 0.4975807814626023,
+      "max_pitfall_mirror_similarity_ci_low": 0.4732051618193509,
+      "max_pitfall_mirror_similarity_ci_high": 0.5242880816425896,
+      "max_pitfall_mirror_similarity_n": 128,
+      "pitfall_fraction": 0.21372956661904272,
+      "pitfall_fraction_ci_low": 0.20454268601471037,
+      "pitfall_fraction_ci_high": 0.22396169343320077,
+      "pitfall_fraction_n": 128,
+      "weight_band_rate": 0.9587956575950602,
+      "weight_band_rate_ci_low": 0.9444071545157253,
+      "weight_band_rate_ci_high": 0.9720514863825411,
+      "weight_band_rate_n": 128,
+      "unclassified_polarity_rate": 0.05816252528109146,
+      "unclassified_polarity_rate_ci_low": 0.045609501590372456,
+      "unclassified_polarity_rate_ci_high": 0.07089915022043929,
+      "unclassified_polarity_rate_n": 128,
+      "check_item_count_7_20_rate": 0.9375,
+      "check_item_count_7_20_rate_ci_low": 0.890625,
+      "check_item_count_7_20_rate_ci_high": 0.9765625,
+      "check_item_count_7_20_rate_n": 128,
+      "check_title_2_to_4_words_rate": 0.9802428257506383,
+      "check_title_2_to_4_words_rate_ci_low": 0.9710760935028513,
+      "check_title_2_to_4_words_rate_ci_high": 0.9879907901343449,
+      "check_title_2_to_4_words_rate_n": 128,
+      "check_description_single_sentence_rate": 1.0,
+      "check_description_single_sentence_rate_ci_low": 1.0,
+      "check_description_single_sentence_rate_ci_high": 1.0,
+      "check_description_single_sentence_rate_n": 128,
+      "check_category_legal_rate": 1.0,
+      "check_category_legal_rate_ci_low": 1.0,
+      "check_category_legal_rate_ci_high": 1.0,
+      "check_category_legal_rate_n": 128,
+      "check_weight_in_range_rate": 1.0,
+      "check_weight_in_range_rate_ci_low": 1.0,
+      "check_weight_in_range_rate_ci_high": 1.0,
+      "check_weight_in_range_rate_n": 128,
+      "check_weight_matches_band_rate": 0.9718934911242603,
+      "check_weight_matches_band_rate_ci_low": 0.9519896449704143,
+      "check_weight_matches_band_rate_ci_high": 0.9888486193293886,
+      "check_weight_matches_band_rate_n": 65,
+      "check_pitfall_opener_rate": 0.8692307692307693,
+      "check_pitfall_opener_rate_ci_low": 0.7923076923076923,
+      "check_pitfall_opener_rate_ci_high": 0.9307692307692308,
+      "check_pitfall_opener_rate_n": 65,
+      "check_rar_keys_only_rate": 1.0,
+      "check_rar_keys_only_rate_ci_low": 1.0,
+      "check_rar_keys_only_rate_ci_high": 1.0,
+      "check_rar_keys_only_rate_n": 128,
+      "check_no_verbatim_copy_rate": 0.9471415303446553,
+      "check_no_verbatim_copy_rate_ci_low": 0.9316902731599997,
+      "check_no_verbatim_copy_rate_ci_high": 0.9604182216438075,
+      "check_no_verbatim_copy_rate_n": 128,
+      "check_self_contained_rate": 0.9964962121212122,
+      "check_self_contained_rate_ci_low": 0.9924715909090909,
+      "check_self_contained_rate_ci_high": 0.9992897727272727,
+      "check_self_contained_rate_n": 128,
+      "check_breakdown": {
+        "item_count_7_20": {
+          "unit": "rubric",
+          "n_applicable": 128,
+          "n_failed": 8,
+          "rate": 0.9375,
+          "top_reasons": [
+            {
+              "reason": "6 items",
+              "n": 5
+            },
+            {
+              "reason": "5 items",
+              "n": 3
+            }
+          ]
+        },
+        "title_2_to_4_words": {
+          "unit": "criterion",
+          "n_applicable": 1219,
+          "n_failed": 25,
+          "rate": 0.9794913863822805,
+          "top_reasons": [
+            {
+              "reason": "title has 5 words",
+              "n": 12
+            },
+            {
+              "reason": "title has 1 words",
+              "n": 11
+            },
+            {
+              "reason": "title has 7 words",
+              "n": 1
+            },
+            {
+              "reason": "title has 6 words",
+              "n": 1
+            }
+          ]
+        },
+        "description_single_sentence": {
+          "unit": "criterion",
+          "n_applicable": 1219,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "category_legal": {
+          "unit": "criterion",
+          "n_applicable": 1219,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "weight_in_range": {
+          "unit": "criterion",
+          "n_applicable": 1219,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "weight_matches_band": {
+          "unit": "criterion",
+          "n_applicable": 535,
+          "n_failed": 17,
+          "rate": 0.9682242990654205,
+          "top_reasons": [
+            {
+              "reason": "Essential weight=4 not in [5]",
+              "n": 13
+            },
+            {
+              "reason": "Important weight=2 not in [3, 4]",
+              "n": 3
+            },
+            {
+              "reason": "Important weight=5 not in [3, 4]",
+              "n": 1
+            }
+          ]
+        },
+        "pitfall_opener": {
+          "unit": "criterion",
+          "n_applicable": 115,
+          "n_failed": 14,
+          "rate": 0.8782608695652174,
+          "top_reasons": [
+            {
+              "reason": "opens with 'Does not recommend the'",
+              "n": 2
+            },
+            {
+              "reason": "opens with 'Does not recommend a'",
+              "n": 2
+            },
+            {
+              "reason": "opens with 'Does not incorrectly attribute'",
+              "n": 1
+            },
+            {
+              "reason": "opens with 'Does not recommend shrinkage'",
+              "n": 1
+            },
+            {
+              "reason": "opens with 'Does not identify sodium'",
+              "n": 1
+            }
+          ]
+        },
+        "rar_keys_only": {
+          "unit": "criterion",
+          "n_applicable": 1219,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "no_verbatim_copy": {
+          "unit": "criterion",
+          "n_applicable": 1215,
+          "n_failed": 57,
+          "rate": 0.9530864197530864,
+          "top_reasons": [
+            {
+              "reason": "50% of trigrams shared with reference",
+              "n": 14
+            },
+            {
+              "reason": "60% of trigrams shared with reference",
+              "n": 10
+            },
+            {
+              "reason": "67% of trigrams shared with reference",
+              "n": 3
+            },
+            {
+              "reason": "56% of trigrams shared with reference",
+              "n": 3
+            },
+            {
+              "reason": "75% of trigrams shared with reference",
+              "n": 3
+            }
+          ]
+        },
+        "self_contained": {
+          "unit": "criterion",
+          "n_applicable": 1219,
+          "n_failed": 4,
+          "rate": 0.9967186218211649,
+          "top_reasons": [
+            {
+              "reason": "asserts correctness via 'the correct answer'",
+              "n": 2
+            },
+            {
+              "reason": "asserts correctness via 'expected answer'",
+              "n": 1
+            },
+            {
+              "reason": "asserts correctness via 'expected value'",
+              "n": 1
+            }
+          ]
+        }
+      },
+      "hygiene": {
+        "polarity_single_rate": 0.1484375,
+        "negative_weight_rate": 0.21372956661904272,
+        "weight_order_violation_rate": 0.2421875,
+        "weight_order_violation_pair_rate": 0.02761579491092843,
+        "pitfall_mirror_rate": 0.2265625,
+        "pitfall_fraction": 0.21372956661904272,
+        "unclassified_polarity_rate": 0.05816252528109146
+      }
+    },
+    "agentic": {
+      "n_questions": 128,
+      "n_criteria": 1295,
+      "n_errors": 0,
+      "compliance_rate": 0.6749116009858197,
+      "compliance_rate_ci_low": 0.6310578085651328,
+      "compliance_rate_ci_high": 0.7141533125078048,
+      "compliance_rate_n": 128,
+      "fully_compliant_rubric": 0.109375,
+      "fully_compliant_rubric_ci_low": 0.0546875,
+      "fully_compliant_rubric_ci_high": 0.171875,
+      "fully_compliant_rubric_n": 128,
+      "item_count_ok": 0.78125,
+      "item_count_ok_ci_low": 0.703125,
+      "item_count_ok_ci_high": 0.8515625,
+      "item_count_ok_n": 128,
+      "n_items": 10.1171875,
+      "n_items_ci_low": 9.515625,
+      "n_items_ci_high": 10.703125,
+      "n_items_n": 128,
+      "polarity_single_rate": 1.0,
+      "polarity_single_rate_ci_low": 1.0,
+      "polarity_single_rate_ci_high": 1.0,
+      "polarity_single_rate_n": 128,
+      "negative_weight_rate": 0.17514717270576646,
+      "negative_weight_rate_ci_low": 0.15600585368407632,
+      "negative_weight_rate_ci_high": 0.19624747350089147,
+      "negative_weight_rate_n": 128,
+      "weight_order_violation_rate": 0.390625,
+      "weight_order_violation_rate_ci_low": 0.3123046875,
+      "weight_order_violation_rate_ci_high": 0.4765625,
+      "weight_order_violation_rate_n": 128,
+      "weight_order_violation_pair_rate": 0.0667410425085418,
+      "weight_order_violation_pair_rate_ci_low": 0.048129210641417036,
+      "weight_order_violation_pair_rate_ci_high": 0.08830225025745175,
+      "weight_order_violation_pair_rate_n": 123,
+      "pitfall_mirror_rate": 0.1875,
+      "pitfall_mirror_rate_ci_low": 0.125,
+      "pitfall_mirror_rate_ci_high": 0.2578125,
+      "pitfall_mirror_rate_n": 128,
+      "n_pitfall_mirrors": 0.2578125,
+      "n_pitfall_mirrors_ci_low": 0.1640625,
+      "n_pitfall_mirrors_ci_high": 0.35957031249999893,
+      "n_pitfall_mirrors_n": 128,
+      "max_pitfall_mirror_similarity": 0.4194549764506519,
+      "max_pitfall_mirror_similarity_ci_low": 0.38095523284282534,
+      "max_pitfall_mirror_similarity_ci_high": 0.4546758297365159,
+      "max_pitfall_mirror_similarity_n": 128,
+      "pitfall_fraction": 0.17514717270576646,
+      "pitfall_fraction_ci_low": 0.15600585368407632,
+      "pitfall_fraction_ci_high": 0.19624747350089147,
+      "pitfall_fraction_n": 128,
+      "weight_band_rate": 0.8412889736131923,
+      "weight_band_rate_ci_low": 0.8117034286785263,
+      "weight_band_rate_ci_high": 0.8708688178683296,
+      "weight_band_rate_n": 128,
+      "unclassified_polarity_rate": 0.0,
+      "unclassified_polarity_rate_ci_low": 0.0,
+      "unclassified_polarity_rate_ci_high": 0.0,
+      "unclassified_polarity_rate_n": 128,
+      "check_item_count_7_20_rate": 0.78125,
+      "check_item_count_7_20_rate_ci_low": 0.703125,
+      "check_item_count_7_20_rate_ci_high": 0.8515625,
+      "check_item_count_7_20_rate_n": 128,
+      "check_title_2_to_4_words_rate": 0.9446365375076313,
+      "check_title_2_to_4_words_rate_ci_low": 0.9241118007426601,
+      "check_title_2_to_4_words_rate_ci_high": 0.9640334318459318,
+      "check_title_2_to_4_words_rate_n": 128,
+      "check_description_single_sentence_rate": 0.9975911458333333,
+      "check_description_single_sentence_rate_ci_low": 0.9944661458333333,
+      "check_description_single_sentence_rate_ci_high": 1.0,
+      "check_description_single_sentence_rate_n": 128,
+      "check_category_legal_rate": 1.0,
+      "check_category_legal_rate_ci_low": 1.0,
+      "check_category_legal_rate_ci_high": 1.0,
+      "check_category_legal_rate_n": 128,
+      "check_weight_in_range_rate": 1.0,
+      "check_weight_in_range_rate_ci_low": 1.0,
+      "check_weight_in_range_rate_ci_high": 1.0,
+      "check_weight_in_range_rate_n": 128,
+      "check_weight_matches_band_rate": 0.8704214588829974,
+      "check_weight_matches_band_rate_ci_low": 0.831334750719366,
+      "check_weight_matches_band_rate_ci_high": 0.9059314200756509,
+      "check_weight_matches_band_rate_n": 65,
+      "check_pitfall_opener_rate": 0.0,
+      "check_pitfall_opener_rate_ci_low": 0.0,
+      "check_pitfall_opener_rate_ci_high": 0.0,
+      "check_pitfall_opener_rate_n": 62,
+      "check_rar_keys_only_rate": 1.0,
+      "check_rar_keys_only_rate_ci_low": 1.0,
+      "check_rar_keys_only_rate_ci_high": 1.0,
+      "check_rar_keys_only_rate_n": 128,
+      "check_no_verbatim_copy_rate": 0.8667583284770786,
+      "check_no_verbatim_copy_rate_ci_low": 0.8391901528376138,
+      "check_no_verbatim_copy_rate_ci_high": 0.8909503205670198,
+      "check_no_verbatim_copy_rate_n": 128,
+      "check_self_contained_rate": 0.9930633060515872,
+      "check_self_contained_rate_ci_low": 0.9875153072296627,
+      "check_self_contained_rate_ci_high": 0.9974283854166666,
+      "check_self_contained_rate_n": 128,
+      "check_breakdown": {
+        "item_count_7_20": {
+          "unit": "rubric",
+          "n_applicable": 128,
+          "n_failed": 28,
+          "rate": 0.78125,
+          "top_reasons": [
+            {
+              "reason": "6 items",
+              "n": 28
+            }
+          ]
+        },
+        "title_2_to_4_words": {
+          "unit": "criterion",
+          "n_applicable": 1295,
+          "n_failed": 69,
+          "rate": 0.9467181467181467,
+          "top_reasons": [
+            {
+              "reason": "title has 5 words",
+              "n": 51
+            },
+            {
+              "reason": "title has 1 words",
+              "n": 10
+            },
+            {
+              "reason": "title has 6 words",
+              "n": 6
+            },
+            {
+              "reason": "title has 7 words",
+              "n": 2
+            }
+          ]
+        },
+        "description_single_sentence": {
+          "unit": "criterion",
+          "n_applicable": 1295,
+          "n_failed": 3,
+          "rate": 0.9976833976833976,
+          "top_reasons": [
+            {
+              "reason": "2 sentences",
+              "n": 3
+            }
+          ]
+        },
+        "category_legal": {
+          "unit": "criterion",
+          "n_applicable": 1295,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "weight_in_range": {
+          "unit": "criterion",
+          "n_applicable": 1295,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "weight_matches_band": {
+          "unit": "criterion",
+          "n_applicable": 671,
+          "n_failed": 91,
+          "rate": 0.8643815201192251,
+          "top_reasons": [
+            {
+              "reason": "Important weight=2 not in [3, 4]",
+              "n": 41
+            },
+            {
+              "reason": "Essential weight=4 not in [5]",
+              "n": 29
+            },
+            {
+              "reason": "Essential weight=3 not in [5]",
+              "n": 14
+            },
+            {
+              "reason": "Important weight=5 not in [3, 4]",
+              "n": 5
+            },
+            {
+              "reason": "Optional weight=3 not in [1, 2]",
+              "n": 2
+            }
+          ]
+        },
+        "pitfall_opener": {
+          "unit": "criterion",
+          "n_applicable": 124,
+          "n_failed": 124,
+          "rate": 0.0,
+          "top_reasons": [
+            {
+              "reason": "opens with 'Avoids stating that the'",
+              "n": 3
+            },
+            {
+              "reason": "opens with 'The response avoids selecting'",
+              "n": 3
+            },
+            {
+              "reason": "opens with 'Avoids citing persistence of'",
+              "n": 1
+            },
+            {
+              "reason": "opens with 'Avoids diagnosing the cystic'",
+              "n": 1
+            },
+            {
+              "reason": "opens with 'Avoids diagnosing neurofibromatosis type'",
+              "n": 1
+            }
+          ]
+        },
+        "rar_keys_only": {
+          "unit": "criterion",
+          "n_applicable": 1295,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "no_verbatim_copy": {
+          "unit": "criterion",
+          "n_applicable": 1293,
+          "n_failed": 161,
+          "rate": 0.8754833720030936,
+          "top_reasons": [
+            {
+              "reason": "50% of trigrams shared with reference",
+              "n": 39
+            },
+            {
+              "reason": "100% of trigrams shared with reference",
+              "n": 20
+            },
+            {
+              "reason": "60% of trigrams shared with reference",
+              "n": 13
+            },
+            {
+              "reason": "67% of trigrams shared with reference",
+              "n": 12
+            },
+            {
+              "reason": "62% of trigrams shared with reference",
+              "n": 8
+            }
+          ]
+        },
+        "self_contained": {
+          "unit": "criterion",
+          "n_applicable": 1295,
+          "n_failed": 9,
+          "rate": 0.993050193050193,
+          "top_reasons": [
+            {
+              "reason": "asserts correctness via 'the reference'",
+              "n": 9
+            }
+          ]
+        }
+      },
+      "hygiene": {
+        "polarity_single_rate": 1.0,
+        "negative_weight_rate": 0.17514717270576646,
+        "weight_order_violation_rate": 0.390625,
+        "weight_order_violation_pair_rate": 0.0667410425085418,
+        "pitfall_mirror_rate": 0.1875,
+        "pitfall_fraction": 0.17514717270576646,
+        "unclassified_polarity_rate": 0.0
+      }
+    },
+    "agentic-tools": {
+      "n_questions": 128,
+      "n_criteria": 1229,
+      "n_errors": 0,
+      "compliance_rate": 0.7354241786858975,
+      "compliance_rate_ci_low": 0.6988895354862152,
+      "compliance_rate_ci_high": 0.771281603867053,
+      "compliance_rate_n": 128,
+      "fully_compliant_rubric": 0.109375,
+      "fully_compliant_rubric_ci_low": 0.0546875,
+      "fully_compliant_rubric_ci_high": 0.1640625,
+      "fully_compliant_rubric_n": 128,
+      "item_count_ok": 0.671875,
+      "item_count_ok_ci_low": 0.5859375,
+      "item_count_ok_ci_high": 0.7501953124999989,
+      "item_count_ok_n": 128,
+      "n_items": 9.6015625,
+      "n_items_ci_low": 8.9529296875,
+      "n_items_ci_high": 10.289257812499999,
+      "n_items_n": 128,
+      "polarity_single_rate": 1.0,
+      "polarity_single_rate_ci_low": 1.0,
+      "polarity_single_rate_ci_high": 1.0,
+      "polarity_single_rate_n": 128,
+      "negative_weight_rate": 0.20458852128774005,
+      "negative_weight_rate_ci_low": 0.17974431872381091,
+      "negative_weight_rate_ci_high": 0.23112386365804333,
+      "negative_weight_rate_n": 128,
+      "weight_order_violation_rate": 0.2578125,
+      "weight_order_violation_rate_ci_low": 0.1796875,
+      "weight_order_violation_rate_ci_high": 0.3359375,
+      "weight_order_violation_rate_n": 128,
+      "weight_order_violation_pair_rate": 0.039443694223625786,
+      "weight_order_violation_pair_rate_ci_low": 0.02368077200681083,
+      "weight_order_violation_pair_rate_ci_high": 0.05727071155031468,
+      "weight_order_violation_pair_rate_n": 123,
+      "pitfall_mirror_rate": 0.2265625,
+      "pitfall_mirror_rate_ci_low": 0.15625,
+      "pitfall_mirror_rate_ci_high": 0.296875,
+      "pitfall_mirror_rate_n": 128,
+      "n_pitfall_mirrors": 0.265625,
+      "n_pitfall_mirrors_ci_low": 0.1796875,
+      "n_pitfall_mirrors_ci_high": 0.359375,
+      "n_pitfall_mirrors_n": 128,
+      "max_pitfall_mirror_similarity": 0.429642551462166,
+      "max_pitfall_mirror_similarity_ci_low": 0.391818022885127,
+      "max_pitfall_mirror_similarity_ci_high": 0.46783022098243227,
+      "max_pitfall_mirror_similarity_n": 128,
+      "pitfall_fraction": 0.20458852128774005,
+      "pitfall_fraction_ci_low": 0.17974431872381091,
+      "pitfall_fraction_ci_high": 0.23112386365804333,
+      "pitfall_fraction_n": 128,
+      "weight_band_rate": 0.9140923312798312,
+      "weight_band_rate_ci_low": 0.8918092560109161,
+      "weight_band_rate_ci_high": 0.9351229337069181,
+      "weight_band_rate_n": 128,
+      "unclassified_polarity_rate": 0.0,
+      "unclassified_polarity_rate_ci_low": 0.0,
+      "unclassified_polarity_rate_ci_high": 0.0,
+      "unclassified_polarity_rate_n": 128,
+      "check_item_count_7_20_rate": 0.671875,
+      "check_item_count_7_20_rate_ci_low": 0.5859375,
+      "check_item_count_7_20_rate_ci_high": 0.7501953124999989,
+      "check_item_count_7_20_rate_n": 128,
+      "check_title_2_to_4_words_rate": 0.9555376806353368,
+      "check_title_2_to_4_words_rate_ci_low": 0.9380886694143531,
+      "check_title_2_to_4_words_rate_ci_high": 0.9703378582138348,
+      "check_title_2_to_4_words_rate_n": 128,
+      "check_description_single_sentence_rate": 0.9973648313492063,
+      "check_description_single_sentence_rate_ci_low": 0.993891834077381,
+      "check_description_single_sentence_rate_ci_high": 1.0,
+      "check_description_single_sentence_rate_n": 128,
+      "check_category_legal_rate": 1.0,
+      "check_category_legal_rate_ci_low": 1.0,
+      "check_category_legal_rate_ci_high": 1.0,
+      "check_category_legal_rate_n": 128,
+      "check_weight_in_range_rate": 1.0,
+      "check_weight_in_range_rate_ci_low": 1.0,
+      "check_weight_in_range_rate_ci_high": 1.0,
+      "check_weight_in_range_rate_n": 128,
+      "check_weight_matches_band_rate": 0.9327254369562061,
+      "check_weight_matches_band_rate_ci_low": 0.9086660241467935,
+      "check_weight_matches_band_rate_ci_high": 0.954097578703348,
+      "check_weight_matches_band_rate_n": 65,
+      "check_pitfall_opener_rate": 0.0,
+      "check_pitfall_opener_rate_ci_low": 0.0,
+      "check_pitfall_opener_rate_ci_high": 0.0,
+      "check_pitfall_opener_rate_n": 60,
+      "check_rar_keys_only_rate": 1.0,
+      "check_rar_keys_only_rate_ci_low": 1.0,
+      "check_rar_keys_only_rate_ci_high": 1.0,
+      "check_rar_keys_only_rate_n": 128,
+      "check_no_verbatim_copy_rate": 0.9049039068570319,
+      "check_no_verbatim_copy_rate_ci_low": 0.8815939176925506,
+      "check_no_verbatim_copy_rate_ci_high": 0.9251845173598103,
+      "check_no_verbatim_copy_rate_n": 128,
+      "check_self_contained_rate": 0.9961170014880953,
+      "check_self_contained_rate_ci_low": 0.9920247395833333,
+      "check_self_contained_rate_ci_high": 0.9990234375,
+      "check_self_contained_rate_n": 128,
+      "check_breakdown": {
+        "item_count_7_20": {
+          "unit": "rubric",
+          "n_applicable": 128,
+          "n_failed": 42,
+          "rate": 0.671875,
+          "top_reasons": [
+            {
+              "reason": "6 items",
+              "n": 22
+            },
+            {
+              "reason": "5 items",
+              "n": 17
+            },
+            {
+              "reason": "4 items",
+              "n": 3
+            }
+          ]
+        },
+        "title_2_to_4_words": {
+          "unit": "criterion",
+          "n_applicable": 1229,
+          "n_failed": 57,
+          "rate": 0.9536208299430431,
+          "top_reasons": [
+            {
+              "reason": "title has 5 words",
+              "n": 43
+            },
+            {
+              "reason": "title has 6 words",
+              "n": 8
+            },
+            {
+              "reason": "title has 1 words",
+              "n": 6
+            }
+          ]
+        },
+        "description_single_sentence": {
+          "unit": "criterion",
+          "n_applicable": 1229,
+          "n_failed": 4,
+          "rate": 0.9967453213995118,
+          "top_reasons": [
+            {
+              "reason": "2 sentences",
+              "n": 4
+            }
+          ]
+        },
+        "category_legal": {
+          "unit": "criterion",
+          "n_applicable": 1229,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "weight_in_range": {
+          "unit": "criterion",
+          "n_applicable": 1229,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "weight_matches_band": {
+          "unit": "criterion",
+          "n_applicable": 615,
+          "n_failed": 43,
+          "rate": 0.9300813008130081,
+          "top_reasons": [
+            {
+              "reason": "Important weight=2 not in [3, 4]",
+              "n": 16
+            },
+            {
+              "reason": "Essential weight=4 not in [5]",
+              "n": 13
+            },
+            {
+              "reason": "Essential weight=3 not in [5]",
+              "n": 6
+            },
+            {
+              "reason": "Important weight=5 not in [3, 4]",
+              "n": 4
+            },
+            {
+              "reason": "Optional weight=3 not in [1, 2]",
+              "n": 3
+            }
+          ]
+        },
+        "pitfall_opener": {
+          "unit": "criterion",
+          "n_applicable": 118,
+          "n_failed": 118,
+          "rate": 0.0,
+          "top_reasons": [
+            {
+              "reason": "opens with 'The response avoids naming'",
+              "n": 4
+            },
+            {
+              "reason": "opens with 'The response avoids selecting'",
+              "n": 4
+            },
+            {
+              "reason": "opens with 'Avoids interpreting the faint'",
+              "n": 2
+            },
+            {
+              "reason": "opens with 'Avoids claiming that a'",
+              "n": 2
+            },
+            {
+              "reason": "opens with 'Avoids attributing the defect'",
+              "n": 2
+            }
+          ]
+        },
+        "rar_keys_only": {
+          "unit": "criterion",
+          "n_applicable": 1229,
+          "n_failed": 0,
+          "rate": 1.0,
+          "top_reasons": []
+        },
+        "no_verbatim_copy": {
+          "unit": "criterion",
+          "n_applicable": 1229,
+          "n_failed": 118,
+          "rate": 0.9039869812855981,
+          "top_reasons": [
+            {
+              "reason": "50% of trigrams shared with reference",
+              "n": 29
+            },
+            {
+              "reason": "60% of trigrams shared with reference",
+              "n": 14
+            },
+            {
+              "reason": "100% of trigrams shared with reference",
+              "n": 9
+            },
+            {
+              "reason": "56% of trigrams shared with reference",
+              "n": 7
+            },
+            {
+              "reason": "67% of trigrams shared with reference",
+              "n": 6
+            }
+          ]
+        },
+        "self_contained": {
+          "unit": "criterion",
+          "n_applicable": 1229,
+          "n_failed": 6,
+          "rate": 0.9951179820992677,
+          "top_reasons": [
+            {
+              "reason": "asserts correctness via 'the reference'",
+              "n": 5
+            },
+            {
+              "reason": "asserts correctness via 'correct value'",
+              "n": 1
+            }
+          ]
+        }
+      },
+      "hygiene": {
+        "polarity_single_rate": 1.0,
+        "negative_weight_rate": 0.20458852128774005,
+        "weight_order_violation_rate": 0.2578125,
+        "weight_order_violation_pair_rate": 0.039443694223625786,
+        "pitfall_mirror_rate": 0.2265625,
+        "pitfall_fraction": 0.20458852128774005,
+        "unclassified_polarity_rate": 0.0
+      }
+    },
+    "_metric_family": "lint",
+    "_params": {
+      "sources": [
+        "shipped",
+        "baseline",
+        "agentic",
+        "agentic-tools"
+      ],
+      "copy_trigram_threshold": 0.5,
+      "pitfall_mirror_threshold": 0.6,
+      "mirror_min_df": 2,
+      "mirror_idf_scope": "all criteria of one (rubric_source, domain) group",
+      "checks": [
+        "item_count_7_20",
+        "title_2_to_4_words",
+        "description_single_sentence",
+        "category_legal",
+        "weight_in_range",
+        "weight_matches_band",
+        "pitfall_opener",
+        "rar_keys_only",
+        "no_verbatim_copy",
+        "self_contained"
+      ],
+      "medicine_only_checks": [
+        "weight_matches_band",
+        "pitfall_opener"
+      ],
+      "vacuous_after_schema_normalisation": [
+        "category_legal",
+        "weight_in_range",
+        "rar_keys_only"
+      ]
+    },
+    "_by_domain": {
+      "rar_medicine": {
+        "shipped": {
+          "n_questions": 65,
+          "n_criteria": 626,
+          "compliance_rate": 0.8279050863666249,
+          "fully_compliant_rubric": 0.16923076923076924,
+          "item_count_ok": 1.0,
+          "n_items": 9.63076923076923,
+          "polarity_single_rate": 0.09230769230769231,
+          "negative_weight_rate": 0.14682834259757338,
+          "weight_order_violation_rate": 0.0,
+          "weight_order_violation_pair_rate": 0.0,
+          "pitfall_mirror_rate": 0.15384615384615385,
+          "n_pitfall_mirrors": 0.18461538461538463,
+          "max_pitfall_mirror_similarity": 0.3925962073298601,
+          "pitfall_fraction": 0.14682834259757338,
+          "weight_band_rate": 1.0,
+          "unclassified_polarity_rate": 0.01971878548801626,
+          "check_item_count_7_20_rate": 1.0,
+          "check_title_2_to_4_words_rate": 0.9583647975955669,
+          "check_description_single_sentence_rate": 1.0,
+          "check_category_legal_rate": 1.0,
+          "check_weight_in_range_rate": 1.0,
+          "check_weight_matches_band_rate": 1.0,
+          "check_pitfall_opener_rate": 0.7786458333333333,
+          "check_rar_keys_only_rate": 1.0,
+          "check_no_verbatim_copy_rate": 0.9073554223554223,
+          "check_self_contained_rate": 0.9961538461538462,
+          "check_breakdown": {
+            "item_count_7_20": {
+              "unit": "rubric",
+              "n_applicable": 65,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "title_2_to_4_words": {
+              "unit": "criterion",
+              "n_applicable": 626,
+              "n_failed": 25,
+              "rate": 0.9600638977635783,
+              "top_reasons": [
+                {
+                  "reason": "title has 1 words",
+                  "n": 17
+                },
+                {
+                  "reason": "title has 5 words",
+                  "n": 7
+                },
+                {
+                  "reason": "title has 6 words",
+                  "n": 1
+                }
+              ]
+            },
+            "description_single_sentence": {
+              "unit": "criterion",
+              "n_applicable": 626,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "category_legal": {
+              "unit": "criterion",
+              "n_applicable": 626,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_in_range": {
+              "unit": "criterion",
+              "n_applicable": 626,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_matches_band": {
+              "unit": "criterion",
+              "n_applicable": 626,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "pitfall_opener": {
+              "unit": "criterion",
+              "n_applicable": 91,
+              "n_failed": 23,
+              "rate": 0.7472527472527473,
+              "top_reasons": [
+                {
+                  "reason": "opens with 'Does not misinterpret the'",
+                  "n": 2
+                },
+                {
+                  "reason": "opens with 'Does not omit clear'",
+                  "n": 1
+                },
+                {
+                  "reason": "opens with 'Does not suggest alternative'",
+                  "n": 1
+                },
+                {
+                  "reason": "opens with 'Fails to mention the'",
+                  "n": 1
+                },
+                {
+                  "reason": "opens with 'Includes unnecessary details that'",
+                  "n": 1
+                }
+              ]
+            },
+            "rar_keys_only": {
+              "unit": "criterion",
+              "n_applicable": 626,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "no_verbatim_copy": {
+              "unit": "criterion",
+              "n_applicable": 626,
+              "n_failed": 55,
+              "rate": 0.9121405750798722,
+              "top_reasons": [
+                {
+                  "reason": "50% of trigrams shared with reference",
+                  "n": 11
+                },
+                {
+                  "reason": "60% of trigrams shared with reference",
+                  "n": 6
+                },
+                {
+                  "reason": "67% of trigrams shared with reference",
+                  "n": 5
+                },
+                {
+                  "reason": "75% of trigrams shared with reference",
+                  "n": 5
+                },
+                {
+                  "reason": "88% of trigrams shared with reference",
+                  "n": 4
+                }
+              ]
+            },
+            "self_contained": {
+              "unit": "criterion",
+              "n_applicable": 626,
+              "n_failed": 2,
+              "rate": 0.9968051118210862,
+              "top_reasons": [
+                {
+                  "reason": "asserts correctness via 'the correct answer'",
+                  "n": 2
+                }
+              ]
+            }
+          }
+        },
+        "baseline": {
+          "n_questions": 65,
+          "n_criteria": 535,
+          "compliance_rate": 0.8432958067573452,
+          "fully_compliant_rubric": 0.2,
+          "item_count_ok": 0.8769230769230769,
+          "n_items": 8.23076923076923,
+          "polarity_single_rate": 0.03076923076923077,
+          "negative_weight_rate": 0.2162463177847793,
+          "weight_order_violation_rate": 0.1076923076923077,
+          "weight_order_violation_pair_rate": 0.011730064806987883,
+          "pitfall_mirror_rate": 0.3384615384615385,
+          "n_pitfall_mirrors": 0.5230769230769231,
+          "max_pitfall_mirror_similarity": 0.5371402646486576,
+          "pitfall_fraction": 0.2162463177847793,
+          "weight_band_rate": 0.9718934911242603,
+          "unclassified_polarity_rate": 0.0036324786324786326,
+          "check_item_count_7_20_rate": 0.8769230769230769,
+          "check_title_2_to_4_words_rate": 0.979468693699463,
+          "check_description_single_sentence_rate": 1.0,
+          "check_category_legal_rate": 1.0,
+          "check_weight_in_range_rate": 1.0,
+          "check_weight_matches_band_rate": 0.9718934911242603,
+          "check_pitfall_opener_rate": 0.8692307692307693,
+          "check_rar_keys_only_rate": 1.0,
+          "check_no_verbatim_copy_rate": 0.9189075881383574,
+          "check_self_contained_rate": 0.9960372960372962,
+          "check_breakdown": {
+            "item_count_7_20": {
+              "unit": "rubric",
+              "n_applicable": 65,
+              "n_failed": 8,
+              "rate": 0.8769230769230769,
+              "top_reasons": [
+                {
+                  "reason": "6 items",
+                  "n": 5
+                },
+                {
+                  "reason": "5 items",
+                  "n": 3
+                }
+              ]
+            },
+            "title_2_to_4_words": {
+              "unit": "criterion",
+              "n_applicable": 535,
+              "n_failed": 12,
+              "rate": 0.9775700934579439,
+              "top_reasons": [
+                {
+                  "reason": "title has 5 words",
+                  "n": 6
+                },
+                {
+                  "reason": "title has 1 words",
+                  "n": 5
+                },
+                {
+                  "reason": "title has 7 words",
+                  "n": 1
+                }
+              ]
+            },
+            "description_single_sentence": {
+              "unit": "criterion",
+              "n_applicable": 535,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "category_legal": {
+              "unit": "criterion",
+              "n_applicable": 535,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_in_range": {
+              "unit": "criterion",
+              "n_applicable": 535,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_matches_band": {
+              "unit": "criterion",
+              "n_applicable": 535,
+              "n_failed": 17,
+              "rate": 0.9682242990654205,
+              "top_reasons": [
+                {
+                  "reason": "Essential weight=4 not in [5]",
+                  "n": 13
+                },
+                {
+                  "reason": "Important weight=2 not in [3, 4]",
+                  "n": 3
+                },
+                {
+                  "reason": "Important weight=5 not in [3, 4]",
+                  "n": 1
+                }
+              ]
+            },
+            "pitfall_opener": {
+              "unit": "criterion",
+              "n_applicable": 115,
+              "n_failed": 14,
+              "rate": 0.8782608695652174,
+              "top_reasons": [
+                {
+                  "reason": "opens with 'Does not recommend the'",
+                  "n": 2
+                },
+                {
+                  "reason": "opens with 'Does not recommend a'",
+                  "n": 2
+                },
+                {
+                  "reason": "opens with 'Does not incorrectly attribute'",
+                  "n": 1
+                },
+                {
+                  "reason": "opens with 'Does not recommend shrinkage'",
+                  "n": 1
+                },
+                {
+                  "reason": "opens with 'Does not identify sodium'",
+                  "n": 1
+                }
+              ]
+            },
+            "rar_keys_only": {
+              "unit": "criterion",
+              "n_applicable": 535,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "no_verbatim_copy": {
+              "unit": "criterion",
+              "n_applicable": 531,
+              "n_failed": 43,
+              "rate": 0.9190207156308852,
+              "top_reasons": [
+                {
+                  "reason": "50% of trigrams shared with reference",
+                  "n": 12
+                },
+                {
+                  "reason": "60% of trigrams shared with reference",
+                  "n": 9
+                },
+                {
+                  "reason": "57% of trigrams shared with reference",
+                  "n": 2
+                },
+                {
+                  "reason": "86% of trigrams shared with reference",
+                  "n": 2
+                },
+                {
+                  "reason": "67% of trigrams shared with reference",
+                  "n": 2
+                }
+              ]
+            },
+            "self_contained": {
+              "unit": "criterion",
+              "n_applicable": 535,
+              "n_failed": 2,
+              "rate": 0.9962616822429906,
+              "top_reasons": [
+                {
+                  "reason": "asserts correctness via 'the correct answer'",
+                  "n": 2
+                }
+              ]
+            }
+          }
+        },
+        "agentic": {
+          "n_questions": 65,
+          "n_criteria": 671,
+          "compliance_rate": 0.528724523339908,
+          "fully_compliant_rubric": 0.0,
+          "item_count_ok": 0.8769230769230769,
+          "n_items": 10.323076923076924,
+          "polarity_single_rate": 1.0,
+          "negative_weight_rate": 0.18352436025512947,
+          "weight_order_violation_rate": 0.38461538461538464,
+          "weight_order_violation_pair_rate": 0.057299618292174885,
+          "pitfall_mirror_rate": 0.26153846153846155,
+          "n_pitfall_mirrors": 0.38461538461538464,
+          "max_pitfall_mirror_similarity": 0.5055201349350122,
+          "pitfall_fraction": 0.18352436025512947,
+          "weight_band_rate": 0.8704214588829974,
+          "unclassified_polarity_rate": 0.0,
+          "check_item_count_7_20_rate": 0.8769230769230769,
+          "check_title_2_to_4_words_rate": 0.9555711382634461,
+          "check_description_single_sentence_rate": 0.9967948717948717,
+          "check_category_legal_rate": 1.0,
+          "check_weight_in_range_rate": 1.0,
+          "check_weight_matches_band_rate": 0.8704214588829974,
+          "check_pitfall_opener_rate": 0.0,
+          "check_rar_keys_only_rate": 1.0,
+          "check_no_verbatim_copy_rate": 0.8397867303636535,
+          "check_self_contained_rate": 0.9946275946275945,
+          "check_breakdown": {
+            "item_count_7_20": {
+              "unit": "rubric",
+              "n_applicable": 65,
+              "n_failed": 8,
+              "rate": 0.8769230769230769,
+              "top_reasons": [
+                {
+                  "reason": "6 items",
+                  "n": 8
+                }
+              ]
+            },
+            "title_2_to_4_words": {
+              "unit": "criterion",
+              "n_applicable": 671,
+              "n_failed": 26,
+              "rate": 0.9612518628912071,
+              "top_reasons": [
+                {
+                  "reason": "title has 5 words",
+                  "n": 18
+                },
+                {
+                  "reason": "title has 1 words",
+                  "n": 5
+                },
+                {
+                  "reason": "title has 6 words",
+                  "n": 3
+                }
+              ]
+            },
+            "description_single_sentence": {
+              "unit": "criterion",
+              "n_applicable": 671,
+              "n_failed": 2,
+              "rate": 0.9970193740685543,
+              "top_reasons": [
+                {
+                  "reason": "2 sentences",
+                  "n": 2
+                }
+              ]
+            },
+            "category_legal": {
+              "unit": "criterion",
+              "n_applicable": 671,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_in_range": {
+              "unit": "criterion",
+              "n_applicable": 671,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_matches_band": {
+              "unit": "criterion",
+              "n_applicable": 671,
+              "n_failed": 91,
+              "rate": 0.8643815201192251,
+              "top_reasons": [
+                {
+                  "reason": "Important weight=2 not in [3, 4]",
+                  "n": 41
+                },
+                {
+                  "reason": "Essential weight=4 not in [5]",
+                  "n": 29
+                },
+                {
+                  "reason": "Essential weight=3 not in [5]",
+                  "n": 14
+                },
+                {
+                  "reason": "Important weight=5 not in [3, 4]",
+                  "n": 5
+                },
+                {
+                  "reason": "Optional weight=3 not in [1, 2]",
+                  "n": 2
+                }
+              ]
+            },
+            "pitfall_opener": {
+              "unit": "criterion",
+              "n_applicable": 124,
+              "n_failed": 124,
+              "rate": 0.0,
+              "top_reasons": [
+                {
+                  "reason": "opens with 'Avoids stating that the'",
+                  "n": 3
+                },
+                {
+                  "reason": "opens with 'The response avoids selecting'",
+                  "n": 3
+                },
+                {
+                  "reason": "opens with 'Avoids citing persistence of'",
+                  "n": 1
+                },
+                {
+                  "reason": "opens with 'Avoids diagnosing the cystic'",
+                  "n": 1
+                },
+                {
+                  "reason": "opens with 'Avoids diagnosing neurofibromatosis type'",
+                  "n": 1
+                }
+              ]
+            },
+            "rar_keys_only": {
+              "unit": "criterion",
+              "n_applicable": 671,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "no_verbatim_copy": {
+              "unit": "criterion",
+              "n_applicable": 671,
+              "n_failed": 104,
+              "rate": 0.8450074515648286,
+              "top_reasons": [
+                {
+                  "reason": "50% of trigrams shared with reference",
+                  "n": 26
+                },
+                {
+                  "reason": "60% of trigrams shared with reference",
+                  "n": 9
+                },
+                {
+                  "reason": "67% of trigrams shared with reference",
+                  "n": 8
+                },
+                {
+                  "reason": "100% of trigrams shared with reference",
+                  "n": 7
+                },
+                {
+                  "reason": "75% of trigrams shared with reference",
+                  "n": 6
+                }
+              ]
+            },
+            "self_contained": {
+              "unit": "criterion",
+              "n_applicable": 671,
+              "n_failed": 4,
+              "rate": 0.9940387481371088,
+              "top_reasons": [
+                {
+                  "reason": "asserts correctness via 'the reference'",
+                  "n": 4
+                }
+              ]
+            }
+          }
+        },
+        "agentic-tools": {
+          "n_questions": 65,
+          "n_criteria": 615,
+          "compliance_rate": 0.5775649137187598,
+          "fully_compliant_rubric": 0.0,
+          "item_count_ok": 0.7538461538461538,
+          "n_items": 9.461538461538462,
+          "polarity_single_rate": 1.0,
+          "negative_weight_rate": 0.19780928473236165,
+          "weight_order_violation_rate": 0.35384615384615387,
+          "weight_order_violation_pair_rate": 0.05456661381892175,
+          "pitfall_mirror_rate": 0.27692307692307694,
+          "n_pitfall_mirrors": 0.3384615384615385,
+          "max_pitfall_mirror_similarity": 0.4853985554896868,
+          "pitfall_fraction": 0.19780928473236165,
+          "weight_band_rate": 0.9327254369562061,
+          "unclassified_polarity_rate": 0.0,
+          "check_item_count_7_20_rate": 0.7538461538461538,
+          "check_title_2_to_4_words_rate": 0.9549811726734804,
+          "check_description_single_sentence_rate": 0.997008547008547,
+          "check_category_legal_rate": 1.0,
+          "check_weight_in_range_rate": 1.0,
+          "check_weight_matches_band_rate": 0.9327254369562061,
+          "check_pitfall_opener_rate": 0.0,
+          "check_rar_keys_only_rate": 1.0,
+          "check_no_verbatim_copy_rate": 0.8675356054202207,
+          "check_self_contained_rate": 0.9958791208791209,
+          "check_breakdown": {
+            "item_count_7_20": {
+              "unit": "rubric",
+              "n_applicable": 65,
+              "n_failed": 16,
+              "rate": 0.7538461538461538,
+              "top_reasons": [
+                {
+                  "reason": "6 items",
+                  "n": 12
+                },
+                {
+                  "reason": "5 items",
+                  "n": 3
+                },
+                {
+                  "reason": "4 items",
+                  "n": 1
+                }
+              ]
+            },
+            "title_2_to_4_words": {
+              "unit": "criterion",
+              "n_applicable": 615,
+              "n_failed": 30,
+              "rate": 0.9512195121951219,
+              "top_reasons": [
+                {
+                  "reason": "title has 5 words",
+                  "n": 22
+                },
+                {
+                  "reason": "title has 6 words",
+                  "n": 5
+                },
+                {
+                  "reason": "title has 1 words",
+                  "n": 3
+                }
+              ]
+            },
+            "description_single_sentence": {
+              "unit": "criterion",
+              "n_applicable": 615,
+              "n_failed": 2,
+              "rate": 0.9967479674796748,
+              "top_reasons": [
+                {
+                  "reason": "2 sentences",
+                  "n": 2
+                }
+              ]
+            },
+            "category_legal": {
+              "unit": "criterion",
+              "n_applicable": 615,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_in_range": {
+              "unit": "criterion",
+              "n_applicable": 615,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_matches_band": {
+              "unit": "criterion",
+              "n_applicable": 615,
+              "n_failed": 43,
+              "rate": 0.9300813008130081,
+              "top_reasons": [
+                {
+                  "reason": "Important weight=2 not in [3, 4]",
+                  "n": 16
+                },
+                {
+                  "reason": "Essential weight=4 not in [5]",
+                  "n": 13
+                },
+                {
+                  "reason": "Essential weight=3 not in [5]",
+                  "n": 6
+                },
+                {
+                  "reason": "Important weight=5 not in [3, 4]",
+                  "n": 4
+                },
+                {
+                  "reason": "Optional weight=3 not in [1, 2]",
+                  "n": 3
+                }
+              ]
+            },
+            "pitfall_opener": {
+              "unit": "criterion",
+              "n_applicable": 118,
+              "n_failed": 118,
+              "rate": 0.0,
+              "top_reasons": [
+                {
+                  "reason": "opens with 'The response avoids naming'",
+                  "n": 4
+                },
+                {
+                  "reason": "opens with 'The response avoids selecting'",
+                  "n": 4
+                },
+                {
+                  "reason": "opens with 'Avoids interpreting the faint'",
+                  "n": 2
+                },
+                {
+                  "reason": "opens with 'Avoids claiming that a'",
+                  "n": 2
+                },
+                {
+                  "reason": "opens with 'Avoids attributing the defect'",
+                  "n": 2
+                }
+              ]
+            },
+            "rar_keys_only": {
+              "unit": "criterion",
+              "n_applicable": 615,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "no_verbatim_copy": {
+              "unit": "criterion",
+              "n_applicable": 615,
+              "n_failed": 82,
+              "rate": 0.8666666666666667,
+              "top_reasons": [
+                {
+                  "reason": "50% of trigrams shared with reference",
+                  "n": 24
+                },
+                {
+                  "reason": "60% of trigrams shared with reference",
+                  "n": 10
+                },
+                {
+                  "reason": "100% of trigrams shared with reference",
+                  "n": 6
+                },
+                {
+                  "reason": "67% of trigrams shared with reference",
+                  "n": 5
+                },
+                {
+                  "reason": "75% of trigrams shared with reference",
+                  "n": 5
+                }
+              ]
+            },
+            "self_contained": {
+              "unit": "criterion",
+              "n_applicable": 615,
+              "n_failed": 4,
+              "rate": 0.9934959349593496,
+              "top_reasons": [
+                {
+                  "reason": "asserts correctness via 'the reference'",
+                  "n": 4
+                }
+              ]
+            }
+          }
+        }
+      },
+      "rar_science": {
+        "shipped": {
+          "n_questions": 63,
+          "n_criteria": 469,
+          "compliance_rate": 0.9658604182413707,
+          "fully_compliant_rubric": 0.7619047619047619,
+          "item_count_ok": 1.0,
+          "n_items": 7.444444444444445,
+          "polarity_single_rate": 0.9206349206349206,
+          "negative_weight_rate": 0.12962962962962962,
+          "weight_order_violation_rate": 0.38095238095238093,
+          "weight_order_violation_pair_rate": 0.07542358782960286,
+          "pitfall_mirror_rate": 0.0,
+          "n_pitfall_mirrors": 0.0,
+          "max_pitfall_mirror_similarity": 0.288821151864434,
+          "pitfall_fraction": 0.12962962962962962,
+          "weight_band_rate": 0.7800453514739228,
+          "unclassified_polarity_rate": 0.027116402116402115,
+          "check_item_count_7_20_rate": 1.0,
+          "check_title_2_to_4_words_rate": 0.9889455782312926,
+          "check_description_single_sentence_rate": 1.0,
+          "check_category_legal_rate": 1.0,
+          "check_weight_in_range_rate": 1.0,
+          "check_weight_matches_band_rate": NaN,
+          "check_pitfall_opener_rate": NaN,
+          "check_rar_keys_only_rate": 1.0,
+          "check_no_verbatim_copy_rate": 0.9882527084908037,
+          "check_self_contained_rate": 0.9886621315192745,
+          "check_breakdown": {
+            "item_count_7_20": {
+              "unit": "rubric",
+              "n_applicable": 63,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "title_2_to_4_words": {
+              "unit": "criterion",
+              "n_applicable": 469,
+              "n_failed": 5,
+              "rate": 0.9893390191897654,
+              "top_reasons": [
+                {
+                  "reason": "title has 1 words",
+                  "n": 4
+                },
+                {
+                  "reason": "title has 5 words",
+                  "n": 1
+                }
+              ]
+            },
+            "description_single_sentence": {
+              "unit": "criterion",
+              "n_applicable": 469,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "category_legal": {
+              "unit": "criterion",
+              "n_applicable": 469,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_in_range": {
+              "unit": "criterion",
+              "n_applicable": 469,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_matches_band": {
+              "unit": "criterion",
+              "n_applicable": 0,
+              "n_failed": 0,
+              "rate": NaN,
+              "top_reasons": []
+            },
+            "pitfall_opener": {
+              "unit": "criterion",
+              "n_applicable": 0,
+              "n_failed": 0,
+              "rate": NaN,
+              "top_reasons": []
+            },
+            "rar_keys_only": {
+              "unit": "criterion",
+              "n_applicable": 469,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "no_verbatim_copy": {
+              "unit": "criterion",
+              "n_applicable": 468,
+              "n_failed": 6,
+              "rate": 0.9871794871794872,
+              "top_reasons": [
+                {
+                  "reason": "64% of trigrams shared with question",
+                  "n": 1
+                },
+                {
+                  "reason": "50% of trigrams shared with question",
+                  "n": 1
+                },
+                {
+                  "reason": "70% of trigrams shared with question",
+                  "n": 1
+                },
+                {
+                  "reason": "55% of trigrams shared with question",
+                  "n": 1
+                },
+                {
+                  "reason": "53% of trigrams shared with question",
+                  "n": 1
+                }
+              ]
+            },
+            "self_contained": {
+              "unit": "criterion",
+              "n_applicable": 469,
+              "n_failed": 5,
+              "rate": 0.9893390191897654,
+              "top_reasons": [
+                {
+                  "reason": "asserts correctness via 'the reference'",
+                  "n": 2
+                },
+                {
+                  "reason": "asserts correctness via 'correct conclusion'",
+                  "n": 1
+                },
+                {
+                  "reason": "asserts correctness via 'the correct answer'",
+                  "n": 1
+                },
+                {
+                  "reason": "asserts correctness via 'expected value'",
+                  "n": 1
+                }
+              ]
+            }
+          }
+        },
+        "baseline": {
+          "n_questions": 63,
+          "n_criteria": 684,
+          "compliance_rate": 0.9542830185687328,
+          "fully_compliant_rubric": 0.6031746031746031,
+          "item_count_ok": 1.0,
+          "n_items": 10.857142857142858,
+          "polarity_single_rate": 0.2698412698412698,
+          "negative_weight_rate": 0.21113291859090177,
+          "weight_order_violation_rate": 0.38095238095238093,
+          "weight_order_violation_pair_rate": 0.04400583390705755,
+          "pitfall_mirror_rate": 0.1111111111111111,
+          "n_pitfall_mirrors": 0.1111111111111111,
+          "max_pitfall_mirror_similarity": 0.4567654416674659,
+          "pitfall_fraction": 0.21113291859090177,
+          "weight_band_rate": 0.9452820198268376,
+          "unclassified_polarity_rate": 0.11442368452172372,
+          "check_item_count_7_20_rate": 1.0,
+          "check_title_2_to_4_words_rate": 0.9810415334224857,
+          "check_description_single_sentence_rate": 1.0,
+          "check_category_legal_rate": 1.0,
+          "check_weight_in_range_rate": 1.0,
+          "check_weight_matches_band_rate": NaN,
+          "check_pitfall_opener_rate": NaN,
+          "check_rar_keys_only_rate": 1.0,
+          "check_no_verbatim_copy_rate": 0.9762717881765499,
+          "check_self_contained_rate": 0.996969696969697,
+          "check_breakdown": {
+            "item_count_7_20": {
+              "unit": "rubric",
+              "n_applicable": 63,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "title_2_to_4_words": {
+              "unit": "criterion",
+              "n_applicable": 684,
+              "n_failed": 13,
+              "rate": 0.9809941520467836,
+              "top_reasons": [
+                {
+                  "reason": "title has 1 words",
+                  "n": 6
+                },
+                {
+                  "reason": "title has 5 words",
+                  "n": 6
+                },
+                {
+                  "reason": "title has 6 words",
+                  "n": 1
+                }
+              ]
+            },
+            "description_single_sentence": {
+              "unit": "criterion",
+              "n_applicable": 684,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "category_legal": {
+              "unit": "criterion",
+              "n_applicable": 684,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_in_range": {
+              "unit": "criterion",
+              "n_applicable": 684,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_matches_band": {
+              "unit": "criterion",
+              "n_applicable": 0,
+              "n_failed": 0,
+              "rate": NaN,
+              "top_reasons": []
+            },
+            "pitfall_opener": {
+              "unit": "criterion",
+              "n_applicable": 0,
+              "n_failed": 0,
+              "rate": NaN,
+              "top_reasons": []
+            },
+            "rar_keys_only": {
+              "unit": "criterion",
+              "n_applicable": 684,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "no_verbatim_copy": {
+              "unit": "criterion",
+              "n_applicable": 684,
+              "n_failed": 14,
+              "rate": 0.97953216374269,
+              "top_reasons": [
+                {
+                  "reason": "50% of trigrams shared with reference",
+                  "n": 2
+                },
+                {
+                  "reason": "75% of trigrams shared with reference",
+                  "n": 2
+                },
+                {
+                  "reason": "50% of trigrams shared with question",
+                  "n": 1
+                },
+                {
+                  "reason": "60% of trigrams shared with reference",
+                  "n": 1
+                },
+                {
+                  "reason": "56% of trigrams shared with question",
+                  "n": 1
+                }
+              ]
+            },
+            "self_contained": {
+              "unit": "criterion",
+              "n_applicable": 684,
+              "n_failed": 2,
+              "rate": 0.9970760233918129,
+              "top_reasons": [
+                {
+                  "reason": "asserts correctness via 'expected answer'",
+                  "n": 1
+                },
+                {
+                  "reason": "asserts correctness via 'expected value'",
+                  "n": 1
+                }
+              ]
+            }
+          }
+        },
+        "agentic": {
+          "n_questions": 63,
+          "n_criteria": 624,
+          "compliance_rate": 0.8257395382395383,
+          "fully_compliant_rubric": 0.2222222222222222,
+          "item_count_ok": 0.6825396825396826,
+          "n_items": 9.904761904761905,
+          "polarity_single_rate": 1.0,
+          "negative_weight_rate": 0.16650404269451888,
+          "weight_order_violation_rate": 0.3968253968253968,
+          "weight_order_violation_pair_rate": 0.07732194895791855,
+          "pitfall_mirror_rate": 0.1111111111111111,
+          "n_pitfall_mirrors": 0.12698412698412698,
+          "max_pitfall_mirror_similarity": 0.3306575907128198,
+          "pitfall_fraction": 0.16650404269451888,
+          "weight_band_rate": 0.8112316475411713,
+          "unclassified_polarity_rate": 0.0,
+          "check_item_count_7_20_rate": 0.6825396825396826,
+          "check_title_2_to_4_words_rate": 0.9333548065690923,
+          "check_description_single_sentence_rate": 0.9984126984126984,
+          "check_category_legal_rate": 1.0,
+          "check_weight_in_range_rate": 1.0,
+          "check_weight_matches_band_rate": NaN,
+          "check_pitfall_opener_rate": NaN,
+          "check_rar_keys_only_rate": 1.0,
+          "check_no_verbatim_copy_rate": 0.8945861678004535,
+          "check_self_contained_rate": 0.991449357520786,
+          "check_breakdown": {
+            "item_count_7_20": {
+              "unit": "rubric",
+              "n_applicable": 63,
+              "n_failed": 20,
+              "rate": 0.6825396825396826,
+              "top_reasons": [
+                {
+                  "reason": "6 items",
+                  "n": 20
+                }
+              ]
+            },
+            "title_2_to_4_words": {
+              "unit": "criterion",
+              "n_applicable": 624,
+              "n_failed": 43,
+              "rate": 0.9310897435897436,
+              "top_reasons": [
+                {
+                  "reason": "title has 5 words",
+                  "n": 33
+                },
+                {
+                  "reason": "title has 1 words",
+                  "n": 5
+                },
+                {
+                  "reason": "title has 6 words",
+                  "n": 3
+                },
+                {
+                  "reason": "title has 7 words",
+                  "n": 2
+                }
+              ]
+            },
+            "description_single_sentence": {
+              "unit": "criterion",
+              "n_applicable": 624,
+              "n_failed": 1,
+              "rate": 0.9983974358974359,
+              "top_reasons": [
+                {
+                  "reason": "2 sentences",
+                  "n": 1
+                }
+              ]
+            },
+            "category_legal": {
+              "unit": "criterion",
+              "n_applicable": 624,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_in_range": {
+              "unit": "criterion",
+              "n_applicable": 624,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_matches_band": {
+              "unit": "criterion",
+              "n_applicable": 0,
+              "n_failed": 0,
+              "rate": NaN,
+              "top_reasons": []
+            },
+            "pitfall_opener": {
+              "unit": "criterion",
+              "n_applicable": 0,
+              "n_failed": 0,
+              "rate": NaN,
+              "top_reasons": []
+            },
+            "rar_keys_only": {
+              "unit": "criterion",
+              "n_applicable": 624,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "no_verbatim_copy": {
+              "unit": "criterion",
+              "n_applicable": 622,
+              "n_failed": 57,
+              "rate": 0.9083601286173634,
+              "top_reasons": [
+                {
+                  "reason": "100% of trigrams shared with reference",
+                  "n": 13
+                },
+                {
+                  "reason": "50% of trigrams shared with reference",
+                  "n": 13
+                },
+                {
+                  "reason": "60% of trigrams shared with reference",
+                  "n": 4
+                },
+                {
+                  "reason": "67% of trigrams shared with reference",
+                  "n": 4
+                },
+                {
+                  "reason": "80% of trigrams shared with reference",
+                  "n": 2
+                }
+              ]
+            },
+            "self_contained": {
+              "unit": "criterion",
+              "n_applicable": 624,
+              "n_failed": 5,
+              "rate": 0.9919871794871795,
+              "top_reasons": [
+                {
+                  "reason": "asserts correctness via 'the reference'",
+                  "n": 5
+                }
+              ]
+            }
+          }
+        },
+        "agentic-tools": {
+          "n_questions": 63,
+          "n_criteria": 614,
+          "compliance_rate": 0.8982948488900869,
+          "fully_compliant_rubric": 0.2222222222222222,
+          "item_count_ok": 0.5873015873015873,
+          "n_items": 9.746031746031745,
+          "polarity_single_rate": 1.0,
+          "negative_weight_rate": 0.2115829717020193,
+          "weight_order_violation_rate": 0.15873015873015872,
+          "weight_order_violation_pair_rate": 0.02303917127279627,
+          "pitfall_mirror_rate": 0.1746031746031746,
+          "n_pitfall_mirrors": 0.19047619047619047,
+          "max_pitfall_mirror_similarity": 0.37211651556075565,
+          "pitfall_fraction": 0.2115829717020193,
+          "weight_band_rate": 0.8948676984391271,
+          "unclassified_polarity_rate": 0.0,
+          "check_item_count_7_20_rate": 0.5873015873015873,
+          "check_title_2_to_4_words_rate": 0.9561118555166174,
+          "check_description_single_sentence_rate": 0.997732426303855,
+          "check_category_legal_rate": 1.0,
+          "check_weight_in_range_rate": 1.0,
+          "check_weight_matches_band_rate": NaN,
+          "check_pitfall_opener_rate": NaN,
+          "check_rar_keys_only_rate": 1.0,
+          "check_no_verbatim_copy_rate": 0.9434585035775511,
+          "check_self_contained_rate": 0.996362433862434,
+          "check_breakdown": {
+            "item_count_7_20": {
+              "unit": "rubric",
+              "n_applicable": 63,
+              "n_failed": 26,
+              "rate": 0.5873015873015873,
+              "top_reasons": [
+                {
+                  "reason": "5 items",
+                  "n": 14
+                },
+                {
+                  "reason": "6 items",
+                  "n": 10
+                },
+                {
+                  "reason": "4 items",
+                  "n": 2
+                }
+              ]
+            },
+            "title_2_to_4_words": {
+              "unit": "criterion",
+              "n_applicable": 614,
+              "n_failed": 27,
+              "rate": 0.9560260586319218,
+              "top_reasons": [
+                {
+                  "reason": "title has 5 words",
+                  "n": 21
+                },
+                {
+                  "reason": "title has 1 words",
+                  "n": 3
+                },
+                {
+                  "reason": "title has 6 words",
+                  "n": 3
+                }
+              ]
+            },
+            "description_single_sentence": {
+              "unit": "criterion",
+              "n_applicable": 614,
+              "n_failed": 2,
+              "rate": 0.996742671009772,
+              "top_reasons": [
+                {
+                  "reason": "2 sentences",
+                  "n": 2
+                }
+              ]
+            },
+            "category_legal": {
+              "unit": "criterion",
+              "n_applicable": 614,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_in_range": {
+              "unit": "criterion",
+              "n_applicable": 614,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "weight_matches_band": {
+              "unit": "criterion",
+              "n_applicable": 0,
+              "n_failed": 0,
+              "rate": NaN,
+              "top_reasons": []
+            },
+            "pitfall_opener": {
+              "unit": "criterion",
+              "n_applicable": 0,
+              "n_failed": 0,
+              "rate": NaN,
+              "top_reasons": []
+            },
+            "rar_keys_only": {
+              "unit": "criterion",
+              "n_applicable": 614,
+              "n_failed": 0,
+              "rate": 1.0,
+              "top_reasons": []
+            },
+            "no_verbatim_copy": {
+              "unit": "criterion",
+              "n_applicable": 614,
+              "n_failed": 36,
+              "rate": 0.9413680781758957,
+              "top_reasons": [
+                {
+                  "reason": "50% of trigrams shared with reference",
+                  "n": 5
+                },
+                {
+                  "reason": "56% of trigrams shared with reference",
+                  "n": 4
+                },
+                {
+                  "reason": "60% of trigrams shared with reference",
+                  "n": 4
+                },
+                {
+                  "reason": "100% of trigrams shared with reference",
+                  "n": 3
+                },
+                {
+                  "reason": "56% of trigrams shared with question",
+                  "n": 2
+                }
+              ]
+            },
+            "self_contained": {
+              "unit": "criterion",
+              "n_applicable": 614,
+              "n_failed": 2,
+              "rate": 0.996742671009772,
+              "top_reasons": [
+                {
+                  "reason": "asserts correctness via 'correct value'",
+                  "n": 1
+                },
+                {
+                  "reason": "asserts correctness via 'the reference'",
+                  "n": 1
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "_shipped_full_corpus_reference": {
+      "rar_medicine": {
+        "n_questions": 22408.0,
+        "n_criteria": 214658.0,
+        "generic_criterion_rate": 0.21969999999999998,
+        "generic_rate_permuted": 0.9854,
+        "weak_grounding_rate": 0.4353,
+        "mean_anchors_per_criterion": 2.066,
+        "weight_mass_on_generic_raw": 0.152,
+        "weight_mass_on_subjective": 0.2125,
+        "subjective_rate": 0.1813,
+        "style_rate": 0.133,
+        "subjective_or_style_rate": 0.2364,
+        "generic_and_subjective_rate": 0.1038,
+        "recyclable_rate": 0.11599999999999999,
+        "mass_produced_title_rate": 0.2526,
+        "mean_trigram_overlap_with_reference": 0.1092,
+        "criteria_with_ge50pct_trigram_overlap": 0.0741,
+        "criteria_with_ge30pct_trigram_overlap": 0.15109999999999998,
+        "mean_4gram_overlap_with_question": 0.0164,
+        "non_self_contained_rate": 0.0069,
+        "weight_order_violation_rate": 0.0,
+        "pitfall_mirror_rate": 0.16210000000000002,
+        "negative_weight_rate": 0.1416,
+        "item_count_in_range_rate": 0.9978,
+        "title_2_to_4_words_rate": 0.9545999999999999,
+        "description_single_sentence_rate": 0.9965,
+        "weight_band_rate": 0.9998999999999999,
+        "pitfall_opener_rate": 0.7856000000000001,
+        "n_items": 9.58,
+        "items_cv": 0.1396,
+        "modal_count_share": 0.3618,
+        "r_items_vs_question_len": 0.256,
+        "r_items_vs_reference_len": 0.3036,
+        "weight_corr_with_uniform": 0.9315,
+        "orphan_subpart_rate": NaN,
+        "subpart_question_rate": 0.0,
+        "mcq_rate": 0.0042
+      },
+      "rar_science": {
+        "n_questions": 22917.0,
+        "n_criteria": 172017.0,
+        "generic_criterion_rate": 0.2887,
+        "generic_rate_permuted": 0.9639,
+        "weak_grounding_rate": 0.5261,
+        "mean_anchors_per_criterion": 1.777,
+        "weight_mass_on_generic_raw": 0.24559999999999998,
+        "weight_mass_on_subjective": 0.4018,
+        "subjective_rate": 0.34159999999999996,
+        "style_rate": 0.1457,
+        "subjective_or_style_rate": 0.396,
+        "generic_and_subjective_rate": 0.13699999999999998,
+        "recyclable_rate": 0.17670000000000002,
+        "mass_produced_title_rate": 0.4227,
+        "mean_trigram_overlap_with_reference": 0.017,
+        "criteria_with_ge50pct_trigram_overlap": 0.0043,
+        "criteria_with_ge30pct_trigram_overlap": 0.013600000000000001,
+        "mean_4gram_overlap_with_question": 0.0097,
+        "non_self_contained_rate": 0.0204,
+        "weight_order_violation_rate": 0.413,
+        "pitfall_mirror_rate": 0.0095,
+        "negative_weight_rate": 0.1305,
+        "item_count_in_range_rate": 0.9997,
+        "title_2_to_4_words_rate": 0.9867,
+        "description_single_sentence_rate": 0.9994,
+        "weight_band_rate": 0.7759,
+        "pitfall_opener_rate": 0.0354,
+        "n_items": 7.506,
+        "items_cv": 0.1068,
+        "modal_count_share": 0.6456000000000001,
+        "r_items_vs_question_len": 0.1895,
+        "r_items_vs_reference_len": 0.2423,
+        "weight_corr_with_uniform": 0.9433,
+        "orphan_subpart_rate": 0.044500000000000005,
+        "subpart_question_rate": 0.029500000000000002,
+        "mcq_rate": 0.09359999999999999
+      }
+    },
+    "_n_errors": 0
+  },
+  "adaptivity": {
+    "shipped": {
+      "n_questions": 128,
+      "n_errors": 0,
+      "n_items": 8.5546875,
+      "n_items_ci_low": 8.3046875,
+      "n_items_ci_high": 8.8359375,
+      "n_items_n": 128,
+      "items_per_subpart": 8.48046875,
+      "items_per_subpart_ci_low": 8.1953125,
+      "items_per_subpart_ci_high": 8.78515625,
+      "items_per_subpart_n": 128,
+      "orphan_subpart_rate": 0.0,
+      "orphan_subpart_rate_ci_low": 0.0,
+      "orphan_subpart_rate_ci_high": 0.0,
+      "orphan_subpart_rate_n": 2,
+      "mean_best_subpart_overlap": 0.3309292368724818,
+      "mean_best_subpart_overlap_ci_low": 0.19849740504453728,
+      "mean_best_subpart_overlap_ci_high": 0.46336106870042637,
+      "mean_best_subpart_overlap_n": 2,
+      "weight_mass": 28.3828125,
+      "weight_mass_ci_low": 27.601171875,
+      "weight_mass_ci_high": 29.28125,
+      "weight_mass_n": 128,
+      "weight_mass_per_criterion": 3.355864426372239,
+      "weight_mass_per_criterion_ci_low": 3.277618306172994,
+      "weight_mass_per_criterion_ci_high": 3.433691426845724,
+      "weight_mass_per_criterion_n": 128,
+      "paper_weight_mass": 6.02265625,
+      "paper_weight_mass_ci_low": 5.84060546875,
+      "paper_weight_mass_ci_high": 6.221874999999999,
+      "paper_weight_mass_n": 128,
+      "paper_weight_mass_per_criterion": 0.7062484390609389,
+      "paper_weight_mass_per_criterion_ci_low": 0.6964310802045176,
+      "paper_weight_mass_per_criterion_ci_high": 0.7160896690115439,
+      "paper_weight_mass_per_criterion_n": 128,
+      "n_subparts": 0.046875,
+      "n_subparts_ci_low": 0.0,
+      "n_subparts_ci_high": 0.125,
+      "n_subparts_n": 128,
+      "question_words": 42.921875,
+      "question_words_ci_low": 38.3431640625,
+      "question_words_ci_high": 47.7345703125,
+      "question_words_n": 128,
+      "reference_words": 76.1640625,
+      "reference_words_ci_low": 63.795703125,
+      "reference_words_ci_high": 90.3134765625,
+      "reference_words_n": 128,
+      "is_mcq": 0.0390625,
+      "is_mcq_ci_low": 0.0078125,
+      "is_mcq_ci_high": 0.078125,
+      "is_mcq_n": 128,
+      "items_mean": 8.5546875,
+      "items_std": 1.520508585397569,
+      "items_cv": 0.17773981637524094,
+      "items_min": 7.0,
+      "items_max": 14.0,
+      "items_modal": 7.0,
+      "modal_count_share": 0.3359375,
+      "top2_count_share": 0.5703125,
+      "prompt_range_used": 0.5714285714285714,
+      "weight_corr_with_uniform": 0.9395978703976903,
+      "items_histogram": {
+        "7": 43,
+        "8": 29,
+        "9": 16,
+        "10": 30,
+        "11": 5,
+        "12": 3,
+        "13": 1,
+        "14": 1
+      },
+      "r_items_vs_question_len": -0.09454699616765586,
+      "rho_items_vs_question_len": -0.09794426884092051,
+      "r_items_vs_reference_len": 0.33057908187122753,
+      "rho_items_vs_reference_len": 0.5839867970582612,
+      "r_items_vs_subparts": -0.07002352627705608,
+      "rho_items_vs_subparts": -0.08586730750485234,
+      "n_multi_part_questions": 2,
+      "items_per_subpart_multi_part": 2.75
+    },
+    "baseline": {
+      "n_questions": 128,
+      "n_errors": 0,
+      "n_items": 9.5234375,
+      "n_items_ci_low": 9.125,
+      "n_items_ci_high": 9.9375,
+      "n_items_n": 128,
+      "items_per_subpart": 9.4140625,
+      "items_per_subpart_ci_low": 9.00380859375,
+      "items_per_subpart_ci_high": 9.824316406249999,
+      "items_per_subpart_n": 128,
+      "orphan_subpart_rate": 0.0,
+      "orphan_subpart_rate_ci_low": 0.0,
+      "orphan_subpart_rate_ci_high": 0.0,
+      "orphan_subpart_rate_n": 2,
+      "mean_best_subpart_overlap": 0.405500864631908,
+      "mean_best_subpart_overlap_ci_low": 0.3407055579667494,
+      "mean_best_subpart_overlap_ci_high": 0.4702961712970666,
+      "mean_best_subpart_overlap_n": 2,
+      "weight_mass": 31.7421875,
+      "weight_mass_ci_low": 30.1875,
+      "weight_mass_ci_high": 33.3828125,
+      "weight_mass_n": 128,
+      "weight_mass_per_criterion": 3.3130369955565273,
+      "weight_mass_per_criterion_ci_low": 3.2552952020310415,
+      "weight_mass_per_criterion_ci_high": 3.370602703232098,
+      "weight_mass_per_criterion_n": 128,
+      "paper_weight_mass": 7.409375000000001,
+      "paper_weight_mass_ci_low": 7.06794921875,
+      "paper_weight_mass_ci_high": 7.76490234375,
+      "paper_weight_mass_n": 128,
+      "paper_weight_mass_per_criterion": 0.7748335717591233,
+      "paper_weight_mass_per_criterion_ci_low": 0.7654167562676295,
+      "paper_weight_mass_per_criterion_ci_high": 0.7844670512800108,
+      "paper_weight_mass_per_criterion_n": 128,
+      "n_subparts": 0.046875,
+      "n_subparts_ci_low": 0.0,
+      "n_subparts_ci_high": 0.125,
+      "n_subparts_n": 128,
+      "question_words": 42.921875,
+      "question_words_ci_low": 38.3431640625,
+      "question_words_ci_high": 47.7345703125,
+      "question_words_n": 128,
+      "reference_words": 76.1640625,
+      "reference_words_ci_low": 63.795703125,
+      "reference_words_ci_high": 90.3134765625,
+      "reference_words_n": 128,
+      "is_mcq": 0.0390625,
+      "is_mcq_ci_low": 0.0078125,
+      "is_mcq_ci_high": 0.078125,
+      "is_mcq_n": 128,
+      "items_mean": 9.5234375,
+      "items_std": 2.3509584031594066,
+      "items_cv": 0.24686027531124205,
+      "items_min": 5.0,
+      "items_max": 17.0,
+      "items_modal": 8.0,
+      "modal_count_share": 0.21875,
+      "top2_count_share": 0.3828125,
+      "prompt_range_used": 0.9285714285714286,
+      "weight_corr_with_uniform": 0.9559774697988418,
+      "items_histogram": {
+        "5": 3,
+        "6": 5,
+        "7": 14,
+        "8": 28,
+        "9": 21,
+        "10": 20,
+        "11": 11,
+        "12": 11,
+        "13": 7,
+        "14": 4,
+        "15": 2,
+        "16": 1,
+        "17": 1
+      },
+      "r_items_vs_question_len": 0.4098633618667124,
+      "rho_items_vs_question_len": 0.40385650247796995,
+      "r_items_vs_reference_len": 0.0107412184798084,
+      "rho_items_vs_reference_len": -0.1667104765534205,
+      "r_items_vs_subparts": 0.07530374742011753,
+      "rho_items_vs_subparts": 0.11930132457371673,
+      "n_multi_part_questions": 2,
+      "items_per_subpart_multi_part": 4.5
+    },
+    "agentic": {
+      "n_questions": 128,
+      "n_errors": 0,
+      "n_items": 10.1171875,
+      "n_items_ci_low": 9.515625,
+      "n_items_ci_high": 10.703125,
+      "n_items_n": 128,
+      "items_per_subpart": 10.00390625,
+      "items_per_subpart_ci_low": 9.37890625,
+      "items_per_subpart_ci_high": 10.6015625,
+      "items_per_subpart_n": 128,
+      "orphan_subpart_rate": 0.0,
+      "orphan_subpart_rate_ci_low": 0.0,
+      "orphan_subpart_rate_ci_high": 0.0,
+      "orphan_subpart_rate_n": 2,
+      "mean_best_subpart_overlap": 0.4526661152908538,
+      "mean_best_subpart_overlap_ci_low": 0.4369816554210486,
+      "mean_best_subpart_overlap_ci_high": 0.46835057516065903,
+      "mean_best_subpart_overlap_n": 2,
+      "weight_mass": 31.8828125,
+      "weight_mass_ci_low": 29.9603515625,
+      "weight_mass_ci_high": 33.9140625,
+      "weight_mass_n": 128,
+      "weight_mass_per_criterion": 3.164611516955267,
+      "weight_mass_per_criterion_ci_low": 3.0893410712551335,
+      "weight_mass_per_criterion_ci_high": 3.2358140717247164,
+      "weight_mass_per_criterion_n": 128,
+      "paper_weight_mass": 7.74609375,
+      "paper_weight_mass_ci_low": 7.297656250000001,
+      "paper_weight_mass_ci_high": 8.20314453125,
+      "paper_weight_mass_n": 128,
+      "paper_weight_mass_per_criterion": 0.7723020122238872,
+      "paper_weight_mass_per_criterion_ci_low": 0.7574333049220745,
+      "paper_weight_mass_per_criterion_ci_high": 0.7880494570533633,
+      "paper_weight_mass_per_criterion_n": 128,
+      "n_subparts": 0.046875,
+      "n_subparts_ci_low": 0.0,
+      "n_subparts_ci_high": 0.125,
+      "n_subparts_n": 128,
+      "question_words": 42.921875,
+      "question_words_ci_low": 38.3431640625,
+      "question_words_ci_high": 47.7345703125,
+      "question_words_n": 128,
+      "reference_words": 76.1640625,
+      "reference_words_ci_low": 63.795703125,
+      "reference_words_ci_high": 90.3134765625,
+      "reference_words_n": 128,
+      "is_mcq": 0.0390625,
+      "is_mcq_ci_low": 0.0078125,
+      "is_mcq_ci_high": 0.078125,
+      "is_mcq_n": 128,
+      "items_mean": 10.1171875,
+      "items_std": 3.3640552341051473,
+      "items_cv": 0.33250893433626166,
+      "items_min": 6.0,
+      "items_max": 16.0,
+      "items_modal": 6.0,
+      "modal_count_share": 0.21875,
+      "top2_count_share": 0.3515625,
+      "prompt_range_used": 0.7857142857142857,
+      "weight_corr_with_uniform": 0.964596246641812,
+      "items_histogram": {
+        "6": 28,
+        "7": 11,
+        "8": 12,
+        "9": 11,
+        "10": 9,
+        "11": 11,
+        "12": 11,
+        "13": 5,
+        "14": 8,
+        "15": 17,
+        "16": 5
+      },
+      "r_items_vs_question_len": 0.13940703915056554,
+      "rho_items_vs_question_len": 0.10256168558094082,
+      "r_items_vs_reference_len": 0.3433887557705662,
+      "rho_items_vs_reference_len": 0.372198862282266,
+      "r_items_vs_subparts": 0.04334432437460006,
+      "rho_items_vs_subparts": 0.06915685765871757,
+      "n_multi_part_questions": 2,
+      "items_per_subpart_multi_part": 4.75
+    },
+    "agentic-tools": {
+      "n_questions": 128,
+      "n_errors": 0,
+      "n_items": 9.6015625,
+      "n_items_ci_low": 8.9529296875,
+      "n_items_ci_high": 10.289257812499999,
+      "n_items_n": 128,
+      "items_per_subpart": 9.458984375,
+      "items_per_subpart_ci_low": 8.81640625,
+      "items_per_subpart_ci_high": 10.132910156249999,
+      "items_per_subpart_n": 128,
+      "orphan_subpart_rate": 0.0,
+      "orphan_subpart_rate_ci_low": 0.0,
+      "orphan_subpart_rate_ci_high": 0.0,
+      "orphan_subpart_rate_n": 2,
+      "mean_best_subpart_overlap": 0.45490675431330674,
+      "mean_best_subpart_overlap_ci_low": 0.3349804902335808,
+      "mean_best_subpart_overlap_ci_high": 0.5748330183930327,
+      "mean_best_subpart_overlap_n": 2,
+      "weight_mass": 29.6484375,
+      "weight_mass_ci_low": 27.4216796875,
+      "weight_mass_ci_high": 31.876367187499994,
+      "weight_mass_n": 128,
+      "weight_mass_per_criterion": 3.0675397844343157,
+      "weight_mass_per_criterion_ci_low": 2.994542769513473,
+      "weight_mass_per_criterion_ci_high": 3.1370945653196625,
+      "weight_mass_per_criterion_n": 128,
+      "paper_weight_mass": 7.125000000000001,
+      "paper_weight_mass_ci_low": 6.663261718749999,
+      "paper_weight_mass_ci_high": 7.6312890625,
+      "paper_weight_mass_n": 128,
+      "paper_weight_mass_per_criterion": 0.7501162932119962,
+      "paper_weight_mass_per_criterion_ci_low": 0.7352439777832844,
+      "paper_weight_mass_per_criterion_ci_high": 0.7646956641177832,
+      "paper_weight_mass_per_criterion_n": 128,
+      "n_subparts": 0.046875,
+      "n_subparts_ci_low": 0.0,
+      "n_subparts_ci_high": 0.125,
+      "n_subparts_n": 128,
+      "question_words": 42.921875,
+      "question_words_ci_low": 38.3431640625,
+      "question_words_ci_high": 47.7345703125,
+      "question_words_n": 128,
+      "reference_words": 76.1640625,
+      "reference_words_ci_low": 63.795703125,
+      "reference_words_ci_high": 90.3134765625,
+      "reference_words_n": 128,
+      "is_mcq": 0.0390625,
+      "is_mcq_ci_low": 0.0078125,
+      "is_mcq_ci_high": 0.078125,
+      "is_mcq_n": 128,
+      "items_mean": 9.6015625,
+      "items_std": 3.7883780913462326,
+      "items_cv": 0.3945584993428135,
+      "items_min": 4.0,
+      "items_max": 16.0,
+      "items_modal": 6.0,
+      "modal_count_share": 0.171875,
+      "top2_count_share": 0.3046875,
+      "prompt_range_used": 0.9285714285714286,
+      "weight_corr_with_uniform": 0.9588462061887211,
+      "items_histogram": {
+        "4": 3,
+        "5": 17,
+        "6": 22,
+        "7": 10,
+        "8": 6,
+        "9": 8,
+        "10": 8,
+        "11": 11,
+        "12": 7,
+        "13": 8,
+        "14": 7,
+        "15": 13,
+        "16": 8
+      },
+      "r_items_vs_question_len": 0.22988793639000565,
+      "rho_items_vs_question_len": 0.159999877081409,
+      "r_items_vs_reference_len": 0.19662823806480978,
+      "rho_items_vs_reference_len": 0.2905404646721116,
+      "r_items_vs_subparts": 0.1603041495306503,
+      "rho_items_vs_subparts": 0.15270018418154202,
+      "n_multi_part_questions": 2,
+      "items_per_subpart_multi_part": 5.375
+    },
+    "_metric_family": "adaptivity",
+    "_params": {
+      "sources": [
+        "shipped",
+        "baseline",
+        "agentic",
+        "agentic-tools"
+      ],
+      "orphan_overlap_threshold": 0.1,
+      "orphan_overlap_measure": "binary content-token cosine |A n B| / sqrt(|A||B|)",
+      "weight_simulation_draws": 8,
+      "subpart_detector": "analysis.rubric_grounding.detect_subparts",
+      "n_multi_part_questions": 2,
+      "n_mcq_questions": 5
+    },
+    "_by_domain": {
+      "rar_medicine": {
+        "shipped": {
+          "n_questions": 65,
+          "n_errors": 0,
+          "n_items": 9.63076923076923,
+          "items_per_subpart": 9.63076923076923,
+          "orphan_subpart_rate": NaN,
+          "mean_best_subpart_overlap": NaN,
+          "weight_mass": 29.138461538461538,
+          "weight_mass_per_criterion": 3.0118597641674563,
+          "paper_weight_mass": 6.576923076923077,
+          "paper_weight_mass_per_criterion": 0.6807905769444231,
+          "n_subparts": 0.0,
+          "question_words": 35.04615384615385,
+          "reference_words": 95.26153846153846,
+          "is_mcq": 0.0,
+          "items_mean": 9.63076923076923,
+          "items_std": 1.3412823944041246,
+          "items_cv": 0.13927053616017268,
+          "items_min": 7.0,
+          "items_max": 14.0,
+          "items_modal": 10.0,
+          "modal_count_share": 0.46153846153846156,
+          "top2_count_share": 0.6307692307692307,
+          "prompt_range_used": 0.5714285714285714,
+          "weight_corr_with_uniform": 0.9319396060263935,
+          "items_histogram": {
+            "7": 3,
+            "8": 11,
+            "9": 11,
+            "10": 30,
+            "11": 5,
+            "12": 3,
+            "13": 1,
+            "14": 1
+          },
+          "r_items_vs_question_len": 0.07331317719715168,
+          "rho_items_vs_question_len": 0.2205819800031912,
+          "r_items_vs_reference_len": 0.4186950734694058,
+          "rho_items_vs_reference_len": 0.47356365587062443,
+          "r_items_vs_subparts": NaN,
+          "rho_items_vs_subparts": NaN,
+          "n_multi_part_questions": 0,
+          "items_per_subpart_multi_part": NaN
+        },
+        "baseline": {
+          "n_questions": 65,
+          "n_errors": 0,
+          "n_items": 8.23076923076923,
+          "items_per_subpart": 8.23076923076923,
+          "orphan_subpart_rate": NaN,
+          "mean_best_subpart_overlap": NaN,
+          "weight_mass": 26.646153846153847,
+          "weight_mass_per_criterion": 3.2194409009793628,
+          "paper_weight_mass": 6.316923076923077,
+          "paper_weight_mass_per_criterion": 0.7636353304814844,
+          "n_subparts": 0.0,
+          "question_words": 35.04615384615385,
+          "reference_words": 95.26153846153846,
+          "is_mcq": 0.0,
+          "items_mean": 8.23076923076923,
+          "items_std": 1.627586698624212,
+          "items_cv": 0.19774417833752111,
+          "items_min": 5.0,
+          "items_max": 13.0,
+          "items_modal": 8.0,
+          "modal_count_share": 0.3384615384615385,
+          "top2_count_share": 0.5230769230769231,
+          "prompt_range_used": 0.6428571428571429,
+          "weight_corr_with_uniform": 0.95103366229351,
+          "items_histogram": {
+            "5": 3,
+            "6": 5,
+            "7": 11,
+            "8": 22,
+            "9": 12,
+            "10": 7,
+            "11": 2,
+            "12": 2,
+            "13": 1
+          },
+          "r_items_vs_question_len": 0.16167530604308686,
+          "rho_items_vs_question_len": -0.009197292655910037,
+          "r_items_vs_reference_len": 0.403086043399354,
+          "rho_items_vs_reference_len": 0.3226091461352061,
+          "r_items_vs_subparts": NaN,
+          "rho_items_vs_subparts": NaN,
+          "n_multi_part_questions": 0,
+          "items_per_subpart_multi_part": NaN
+        },
+        "agentic": {
+          "n_questions": 65,
+          "n_errors": 0,
+          "n_items": 10.323076923076924,
+          "items_per_subpart": 10.323076923076924,
+          "orphan_subpart_rate": NaN,
+          "mean_best_subpart_overlap": NaN,
+          "weight_mass": 31.76923076923077,
+          "weight_mass_per_criterion": 3.1017413142413144,
+          "paper_weight_mass": 7.727692307692308,
+          "paper_weight_mass_per_criterion": 0.7515074967767277,
+          "n_subparts": 0.0,
+          "question_words": 35.04615384615385,
+          "reference_words": 95.26153846153846,
+          "is_mcq": 0.0,
+          "items_mean": 10.323076923076924,
+          "items_std": 2.840046722259228,
+          "items_cv": 0.2751162994736957,
+          "items_min": 6.0,
+          "items_max": 16.0,
+          "items_modal": 11.0,
+          "modal_count_share": 0.15384615384615385,
+          "top2_count_share": 0.27692307692307694,
+          "prompt_range_used": 0.7857142857142857,
+          "weight_corr_with_uniform": 0.9570177621639928,
+          "items_histogram": {
+            "6": 8,
+            "7": 6,
+            "8": 4,
+            "9": 8,
+            "10": 7,
+            "11": 10,
+            "12": 7,
+            "13": 5,
+            "14": 3,
+            "15": 6,
+            "16": 1
+          },
+          "r_items_vs_question_len": 0.14937641220454365,
+          "rho_items_vs_question_len": 0.1823166885468951,
+          "r_items_vs_reference_len": 0.5954703610138338,
+          "rho_items_vs_reference_len": 0.5740661252234303,
+          "r_items_vs_subparts": NaN,
+          "rho_items_vs_subparts": NaN,
+          "n_multi_part_questions": 0,
+          "items_per_subpart_multi_part": NaN
+        },
+        "agentic-tools": {
+          "n_questions": 65,
+          "n_errors": 0,
+          "n_items": 9.461538461538462,
+          "items_per_subpart": 9.461538461538462,
+          "orphan_subpart_rate": NaN,
+          "mean_best_subpart_overlap": NaN,
+          "weight_mass": 28.476923076923075,
+          "weight_mass_per_criterion": 3.0460146477454173,
+          "paper_weight_mass": 6.819999999999999,
+          "paper_weight_mass_per_criterion": 0.7284946335715565,
+          "n_subparts": 0.0,
+          "question_words": 35.04615384615385,
+          "reference_words": 95.26153846153846,
+          "is_mcq": 0.0,
+          "items_mean": 9.461538461538462,
+          "items_std": 3.0417764293507576,
+          "items_cv": 0.3214885657037386,
+          "items_min": 4.0,
+          "items_max": 16.0,
+          "items_modal": 6.0,
+          "modal_count_share": 0.18461538461538463,
+          "top2_count_share": 0.3076923076923077,
+          "prompt_range_used": 0.9285714285714286,
+          "weight_corr_with_uniform": 0.9560812694696463,
+          "items_histogram": {
+            "4": 1,
+            "5": 3,
+            "6": 12,
+            "7": 5,
+            "8": 5,
+            "9": 7,
+            "10": 7,
+            "11": 8,
+            "12": 6,
+            "13": 4,
+            "14": 2,
+            "15": 4,
+            "16": 1
+          },
+          "r_items_vs_question_len": 0.15408103422106156,
+          "rho_items_vs_question_len": 0.18197600955002732,
+          "r_items_vs_reference_len": 0.5208815047740907,
+          "rho_items_vs_reference_len": 0.5943696256315569,
+          "r_items_vs_subparts": NaN,
+          "rho_items_vs_subparts": NaN,
+          "n_multi_part_questions": 0,
+          "items_per_subpart_multi_part": NaN
+        }
+      },
+      "rar_science": {
+        "shipped": {
+          "n_questions": 63,
+          "n_errors": 0,
+          "n_items": 7.444444444444445,
+          "items_per_subpart": 7.2936507936507935,
+          "orphan_subpart_rate": 0.0,
+          "mean_best_subpart_overlap": 0.3309292368724818,
+          "weight_mass": 27.603174603174605,
+          "weight_mass_per_criterion": 3.7107898715041565,
+          "paper_weight_mass": 5.450793650793649,
+          "paper_weight_mass_per_criterion": 0.7325144872763919,
+          "n_subparts": 0.09523809523809523,
+          "question_words": 51.04761904761905,
+          "reference_words": 56.46031746031746,
+          "is_mcq": 0.07936507936507936,
+          "items_mean": 7.444444444444445,
+          "items_std": 0.6420174296141152,
+          "items_cv": 0.08624114726159757,
+          "items_min": 7.0,
+          "items_max": 9.0,
+          "items_modal": 7.0,
+          "modal_count_share": 0.6349206349206349,
+          "top2_count_share": 0.9206349206349206,
+          "prompt_range_used": 0.21428571428571427,
+          "weight_corr_with_uniform": 0.9443602419387626,
+          "items_histogram": {
+            "7": 40,
+            "8": 18,
+            "9": 5
+          },
+          "r_items_vs_question_len": 0.4379833256665029,
+          "rho_items_vs_question_len": 0.3627571468076749,
+          "r_items_vs_reference_len": 0.07910578160358725,
+          "rho_items_vs_reference_len": 0.22155238738087585,
+          "r_items_vs_subparts": 0.059837802932983304,
+          "rho_items_vs_subparts": 0.03789078003074741,
+          "n_multi_part_questions": 2,
+          "items_per_subpart_multi_part": 2.75
+        },
+        "baseline": {
+          "n_questions": 63,
+          "n_errors": 0,
+          "n_items": 10.857142857142858,
+          "items_per_subpart": 10.634920634920634,
+          "orphan_subpart_rate": 0.0,
+          "mean_best_subpart_overlap": 0.405500864631908,
+          "weight_mass": 37.0,
+          "weight_mass_per_criterion": 3.409604394723442,
+          "paper_weight_mass": 8.536507936507938,
+          "paper_weight_mass_per_criterion": 0.7863873127598617,
+          "n_subparts": 0.09523809523809523,
+          "question_words": 51.04761904761905,
+          "reference_words": 56.46031746031746,
+          "is_mcq": 0.07936507936507936,
+          "items_mean": 10.857142857142858,
+          "items_std": 2.242242130008545,
+          "items_cv": 0.20652230144815545,
+          "items_min": 7.0,
+          "items_max": 17.0,
+          "items_modal": 10.0,
+          "modal_count_share": 0.20634920634920634,
+          "top2_count_share": 0.3492063492063492,
+          "prompt_range_used": 0.7857142857142857,
+          "weight_corr_with_uniform": 0.9600853530764012,
+          "items_histogram": {
+            "7": 3,
+            "8": 6,
+            "9": 9,
+            "10": 13,
+            "11": 9,
+            "12": 9,
+            "13": 6,
+            "14": 4,
+            "15": 2,
+            "16": 1,
+            "17": 1
+          },
+          "r_items_vs_question_len": 0.3954002709652676,
+          "rho_items_vs_question_len": 0.3874469557462126,
+          "r_items_vs_reference_len": 0.09197323394822664,
+          "rho_items_vs_reference_len": -0.0050448970388666725,
+          "r_items_vs_subparts": 0.01101423714835038,
+          "rho_items_vs_subparts": 0.06567280078683946,
+          "n_multi_part_questions": 2,
+          "items_per_subpart_multi_part": 4.5
+        },
+        "agentic": {
+          "n_questions": 63,
+          "n_errors": 0,
+          "n_items": 9.904761904761905,
+          "items_per_subpart": 9.674603174603174,
+          "orphan_subpart_rate": 0.0,
+          "mean_best_subpart_overlap": 0.4526661152908538,
+          "weight_mass": 32.0,
+          "weight_mass_per_criterion": 3.2294775991204565,
+          "paper_weight_mass": 7.765079365079364,
+          "paper_weight_mass_per_criterion": 0.7937566710185757,
+          "n_subparts": 0.09523809523809523,
+          "question_words": 51.04761904761905,
+          "reference_words": 56.46031746031746,
+          "is_mcq": 0.07936507936507936,
+          "items_mean": 9.904761904761905,
+          "items_std": 3.8425222131466388,
+          "items_cv": 0.38794695421192027,
+          "items_min": 6.0,
+          "items_max": 16.0,
+          "items_modal": 6.0,
+          "modal_count_share": 0.31746031746031744,
+          "top2_count_share": 0.49206349206349204,
+          "prompt_range_used": 0.7857142857142857,
+          "weight_corr_with_uniform": 0.9707052815339828,
+          "items_histogram": {
+            "6": 20,
+            "7": 5,
+            "8": 8,
+            "9": 3,
+            "10": 2,
+            "11": 1,
+            "12": 4,
+            "14": 5,
+            "15": 11,
+            "16": 4
+          },
+          "r_items_vs_question_len": 0.17717686783390565,
+          "rho_items_vs_question_len": 0.09013783136924382,
+          "r_items_vs_reference_len": 0.22486722669478795,
+          "rho_items_vs_reference_len": 0.09538178524439354,
+          "r_items_vs_subparts": 0.06427181209113261,
+          "rho_items_vs_subparts": 0.09843016939750329,
+          "n_multi_part_questions": 2,
+          "items_per_subpart_multi_part": 4.75
+        },
+        "agentic-tools": {
+          "n_questions": 63,
+          "n_errors": 0,
+          "n_items": 9.746031746031745,
+          "items_per_subpart": 9.456349206349206,
+          "orphan_subpart_rate": 0.0,
+          "mean_best_subpart_overlap": 0.45490675431330674,
+          "weight_mass": 30.857142857142858,
+          "weight_mass_per_criterion": 3.0897482587958778,
+          "paper_weight_mass": 7.439682539682541,
+          "paper_weight_mass_per_criterion": 0.7724243547457832,
+          "n_subparts": 0.09523809523809523,
+          "question_words": 51.04761904761905,
+          "reference_words": 56.46031746031746,
+          "is_mcq": 0.07936507936507936,
+          "items_mean": 9.746031746031745,
+          "items_std": 4.450328925749538,
+          "items_cv": 0.45662984091566927,
+          "items_min": 4.0,
+          "items_max": 16.0,
+          "items_modal": 5.0,
+          "modal_count_share": 0.2222222222222222,
+          "top2_count_share": 0.38095238095238093,
+          "prompt_range_used": 0.9285714285714286,
+          "weight_corr_with_uniform": 0.9656430500529544,
+          "items_histogram": {
+            "4": 2,
+            "5": 14,
+            "6": 10,
+            "7": 5,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 3,
+            "12": 1,
+            "13": 4,
+            "14": 5,
+            "15": 9,
+            "16": 7
+          },
+          "r_items_vs_question_len": 0.2746929266911998,
+          "rho_items_vs_question_len": 0.16927074548127252,
+          "r_items_vs_reference_len": 0.08369670048574969,
+          "rho_items_vs_reference_len": 0.07144142781339814,
+          "r_items_vs_subparts": 0.1911454676859978,
+          "rho_items_vs_subparts": 0.1665418386357222,
+          "n_multi_part_questions": 2,
+          "items_per_subpart_multi_part": 5.375
+        }
+      }
+    },
+    "_shipped_full_corpus_reference": {
+      "rar_medicine": {
+        "n_questions": 22408.0,
+        "n_criteria": 214658.0,
+        "generic_criterion_rate": 0.21969999999999998,
+        "generic_rate_permuted": 0.9854,
+        "weak_grounding_rate": 0.4353,
+        "mean_anchors_per_criterion": 2.066,
+        "weight_mass_on_generic_raw": 0.152,
+        "weight_mass_on_subjective": 0.2125,
+        "subjective_rate": 0.1813,
+        "style_rate": 0.133,
+        "subjective_or_style_rate": 0.2364,
+        "generic_and_subjective_rate": 0.1038,
+        "recyclable_rate": 0.11599999999999999,
+        "mass_produced_title_rate": 0.2526,
+        "mean_trigram_overlap_with_reference": 0.1092,
+        "criteria_with_ge50pct_trigram_overlap": 0.0741,
+        "criteria_with_ge30pct_trigram_overlap": 0.15109999999999998,
+        "mean_4gram_overlap_with_question": 0.0164,
+        "non_self_contained_rate": 0.0069,
+        "weight_order_violation_rate": 0.0,
+        "pitfall_mirror_rate": 0.16210000000000002,
+        "negative_weight_rate": 0.1416,
+        "item_count_in_range_rate": 0.9978,
+        "title_2_to_4_words_rate": 0.9545999999999999,
+        "description_single_sentence_rate": 0.9965,
+        "weight_band_rate": 0.9998999999999999,
+        "pitfall_opener_rate": 0.7856000000000001,
+        "n_items": 9.58,
+        "items_cv": 0.1396,
+        "modal_count_share": 0.3618,
+        "r_items_vs_question_len": 0.256,
+        "r_items_vs_reference_len": 0.3036,
+        "weight_corr_with_uniform": 0.9315,
+        "orphan_subpart_rate": NaN,
+        "subpart_question_rate": 0.0,
+        "mcq_rate": 0.0042
+      },
+      "rar_science": {
+        "n_questions": 22917.0,
+        "n_criteria": 172017.0,
+        "generic_criterion_rate": 0.2887,
+        "generic_rate_permuted": 0.9639,
+        "weak_grounding_rate": 0.5261,
+        "mean_anchors_per_criterion": 1.777,
+        "weight_mass_on_generic_raw": 0.24559999999999998,
+        "weight_mass_on_subjective": 0.4018,
+        "subjective_rate": 0.34159999999999996,
+        "style_rate": 0.1457,
+        "subjective_or_style_rate": 0.396,
+        "generic_and_subjective_rate": 0.13699999999999998,
+        "recyclable_rate": 0.17670000000000002,
+        "mass_produced_title_rate": 0.4227,
+        "mean_trigram_overlap_with_reference": 0.017,
+        "criteria_with_ge50pct_trigram_overlap": 0.0043,
+        "criteria_with_ge30pct_trigram_overlap": 0.013600000000000001,
+        "mean_4gram_overlap_with_question": 0.0097,
+        "non_self_contained_rate": 0.0204,
+        "weight_order_violation_rate": 0.413,
+        "pitfall_mirror_rate": 0.0095,
+        "negative_weight_rate": 0.1305,
+        "item_count_in_range_rate": 0.9997,
+        "title_2_to_4_words_rate": 0.9867,
+        "description_single_sentence_rate": 0.9994,
+        "weight_band_rate": 0.7759,
+        "pitfall_opener_rate": 0.0354,
+        "n_items": 7.506,
+        "items_cv": 0.1068,
+        "modal_count_share": 0.6456000000000001,
+        "r_items_vs_question_len": 0.1895,
+        "r_items_vs_reference_len": 0.2423,
+        "weight_corr_with_uniform": 0.9433,
+        "orphan_subpart_rate": 0.044500000000000005,
+        "subpart_question_rate": 0.029500000000000002,
+        "mcq_rate": 0.09359999999999999
+      }
+    },
+    "_n_errors": 0
+  },
+  "rollout": {
+    "metric_family": "rollout_eval",
+    "by_source": {
+      "agentic": {
+        "n_questions": 128,
+        "auc": 0.7677288369182901,
+        "auc_ci_low": 0.7244363310842803,
+        "auc_ci_high": 0.8077260837307224,
+        "auc_n": 128,
+        "best_of_n_accuracy": 0.8235212053571428,
+        "best_of_n_accuracy_ci_low": 0.7610646856398808,
+        "best_of_n_accuracy_ci_high": 0.8807291666666666,
+        "best_of_n_accuracy_n": 128,
+        "best_of_n_lift": 0.20921688988095236,
+        "best_of_n_lift_ci_low": 0.1603092447916667,
+        "best_of_n_lift_ci_high": 0.25956217447916663,
+        "best_of_n_lift_n": 128,
+        "spearman": 0.3967434602562581,
+        "spearman_ci_low": 0.3308660845047406,
+        "spearman_ci_high": 0.46054056967455376,
+        "spearman_n": 125,
+        "separation": 0.23643119069891205,
+        "separation_ci_low": 0.19229852288773588,
+        "separation_ci_high": 0.28049897484490915,
+        "separation_n": 128,
+        "z_separation": 1.0617213277996804,
+        "z_separation_ci_low": 0.8916735203943863,
+        "z_separation_ci_high": 1.228471419039607,
+        "z_separation_n": 125,
+        "mean_correct": 0.5849040785732906,
+        "mean_correct_ci_low": 0.5417807823691622,
+        "mean_correct_ci_high": 0.6255690033770274,
+        "mean_correct_n": 128,
+        "mean_incorrect": 0.3484728878743785,
+        "mean_incorrect_ci_low": 0.3107359347570512,
+        "mean_incorrect_ci_high": 0.38694514612171066,
+        "mean_incorrect_n": 128,
+        "random_baseline": 0.6143043154761905,
+        "random_baseline_ci_low": 0.5664980933779762,
+        "random_baseline_ci_high": 0.6599237351190476,
+        "random_baseline_n": 128,
+        "length_hack_r": 0.35385047612747755,
+        "length_hack_r_ci_low": 0.21259133271226227,
+        "length_hack_r_ci_high": 0.487921843417486,
+        "length_hack_r_n": 52,
+        "score_std": 0.1794230918955042,
+        "score_std_ci_low": 0.1623829305946933,
+        "score_std_ci_high": 0.1964744513979186,
+        "score_std_n": 128,
+        "length_hack_r_pooled": 0.2869610684719557,
+        "n_incorrect_rollouts": 407
+      },
+      "agentic-tools": {
+        "n_questions": 128,
+        "auc": 0.7768125591856061,
+        "auc_ci_low": 0.7340033672382306,
+        "auc_ci_high": 0.8182218688700622,
+        "auc_n": 128,
+        "best_of_n_accuracy": 0.7961461715367966,
+        "best_of_n_accuracy_ci_low": 0.7302883395900973,
+        "best_of_n_accuracy_ci_high": 0.8584305034158549,
+        "best_of_n_accuracy_n": 128,
+        "best_of_n_lift": 0.1819813649891775,
+        "best_of_n_lift_ci_low": 0.13031256341314937,
+        "best_of_n_lift_ci_high": 0.23462865259740262,
+        "best_of_n_lift_n": 128,
+        "spearman": 0.4108204203764457,
+        "spearman_ci_low": 0.34187356739175534,
+        "spearman_ci_high": 0.47751040935027633,
+        "spearman_n": 124,
+        "separation": 0.22067155108234227,
+        "separation_ci_low": 0.1780009978425098,
+        "separation_ci_high": 0.263559448868999,
+        "separation_n": 128,
+        "z_separation": 1.0324987696389412,
+        "z_separation_ci_low": 0.8513344086393343,
+        "z_separation_ci_high": 1.207756602765809,
+        "z_separation_n": 125,
+        "mean_correct": 0.5936079093396127,
+        "mean_correct_ci_low": 0.5484975996291945,
+        "mean_correct_ci_high": 0.6373830291237617,
+        "mean_correct_n": 128,
+        "mean_incorrect": 0.3729363582572705,
+        "mean_incorrect_ci_low": 0.3305641384473086,
+        "mean_incorrect_ci_high": 0.4147664023287477,
+        "mean_incorrect_n": 128,
+        "random_baseline": 0.6141648065476191,
+        "random_baseline_ci_low": 0.5667782738095238,
+        "random_baseline_ci_high": 0.6596447172619047,
+        "random_baseline_n": 128,
+        "length_hack_r": 0.34286981912013864,
+        "length_hack_r_ci_low": 0.18756969071832635,
+        "length_hack_r_ci_high": 0.488669619621467,
+        "length_hack_r_n": 51,
+        "score_std": 0.17742890534908645,
+        "score_std_ci_low": 0.16049306024136548,
+        "score_std_ci_high": 0.19454753409863315,
+        "score_std_n": 128,
+        "length_hack_r_pooled": 0.3670371516474231,
+        "n_incorrect_rollouts": 407
+      },
+      "baseline": {
+        "n_questions": 128,
+        "auc": 0.7752557663690476,
+        "auc_ci_low": 0.7315058826264881,
+        "auc_ci_high": 0.8175492191727542,
+        "auc_n": 128,
+        "best_of_n_accuracy": 0.8398065476190476,
+        "best_of_n_accuracy_ci_low": 0.778608630952381,
+        "best_of_n_accuracy_ci_high": 0.8938802083333333,
+        "best_of_n_accuracy_n": 128,
+        "best_of_n_lift": 0.22633928571428572,
+        "best_of_n_lift_ci_low": 0.17184547061011907,
+        "best_of_n_lift_ci_high": 0.2807486979166666,
+        "best_of_n_lift_n": 128,
+        "spearman": 0.4116218011501621,
+        "spearman_ci_low": 0.34630185068671016,
+        "spearman_ci_high": 0.47345075111916124,
+        "spearman_n": 127,
+        "separation": 0.20853963153794308,
+        "separation_ci_low": 0.16871977364713367,
+        "separation_ci_high": 0.24778743482171126,
+        "separation_n": 128,
+        "z_separation": 1.126998477715842,
+        "z_separation_ci_low": 0.9463111217003581,
+        "z_separation_ci_high": 1.296216683467467,
+        "z_separation_n": 127,
+        "mean_correct": 0.6420059383813776,
+        "mean_correct_ci_low": 0.6089348027758762,
+        "mean_correct_ci_high": 0.6738637723528635,
+        "mean_correct_n": 128,
+        "mean_incorrect": 0.43346630684343446,
+        "mean_incorrect_ci_low": 0.39228608055681446,
+        "mean_incorrect_ci_high": 0.4750159294812272,
+        "mean_incorrect_n": 128,
+        "random_baseline": 0.6134672619047619,
+        "random_baseline_ci_low": 0.5655226934523809,
+        "random_baseline_ci_high": 0.6589948381696429,
+        "random_baseline_n": 128,
+        "length_hack_r": 0.5180832608703062,
+        "length_hack_r_ci_low": 0.4068511753793787,
+        "length_hack_r_ci_high": 0.6222756447419805,
+        "length_hack_r_n": 57,
+        "score_std": 0.16648748708222494,
+        "score_std_ci_low": 0.15140337080446883,
+        "score_std_ci_high": 0.18169567852212737,
+        "score_std_n": 128,
+        "length_hack_r_pooled": 0.4600418680680643,
+        "n_incorrect_rollouts": 407
+      },
+      "shipped": {
+        "n_questions": 128,
+        "auc": 0.7467948880546538,
+        "auc_ci_low": 0.7051953653442912,
+        "auc_ci_high": 0.7862280590503248,
+        "auc_n": 128,
+        "best_of_n_accuracy": 0.8121744791666666,
+        "best_of_n_accuracy_ci_low": 0.7473291015625,
+        "best_of_n_accuracy_ci_high": 0.8689469401041667,
+        "best_of_n_accuracy_n": 128,
+        "best_of_n_lift": 0.19842819940476192,
+        "best_of_n_lift_ci_low": 0.1489488002232143,
+        "best_of_n_lift_ci_high": 0.2469868396577381,
+        "best_of_n_lift_n": 128,
+        "spearman": 0.35545887966512185,
+        "spearman_ci_low": 0.29417702519431954,
+        "spearman_ci_high": 0.41579785993126434,
+        "spearman_n": 126,
+        "separation": 0.19035361130839645,
+        "separation_ci_low": 0.1548534250165758,
+        "separation_ci_high": 0.22691944230845787,
+        "separation_n": 128,
+        "z_separation": 0.962564697101657,
+        "z_separation_ci_low": 0.798205716099633,
+        "z_separation_ci_high": 1.127258599798951,
+        "z_separation_n": 126,
+        "mean_correct": 0.6084681850665297,
+        "mean_correct_ci_low": 0.5765957536856168,
+        "mean_correct_ci_high": 0.639733068133646,
+        "mean_correct_n": 128,
+        "mean_incorrect": 0.4181145737581333,
+        "mean_incorrect_ci_low": 0.3793365293718665,
+        "mean_incorrect_ci_high": 0.45784150857241435,
+        "mean_incorrect_n": 128,
+        "random_baseline": 0.6137462797619048,
+        "random_baseline_ci_low": 0.5659377325148809,
+        "random_baseline_ci_high": 0.6595052083333333,
+        "random_baseline_n": 128,
+        "length_hack_r": 0.47985941058647374,
+        "length_hack_r_ci_low": 0.36285551877185995,
+        "length_hack_r_ci_high": 0.5911300796399194,
+        "length_hack_r_n": 55,
+        "score_std": 0.17747375263793402,
+        "score_std_ci_low": 0.1634708004102513,
+        "score_std_ci_high": 0.19146629366344226,
+        "score_std_n": 128,
+        "length_hack_r_pooled": 0.46947162558003647,
+        "n_incorrect_rollouts": 407
+      }
+    },
+    "n_errors": 5,
+    "n_informative_questions": 128,
+    "n_skipped_uninformative": 0,
+    "n_skipped_all_correct": 0,
+    "n_skipped_all_incorrect": 0,
+    "aggregation": "paper_explicit"
+  }
+}

@@ -1,0 +1,2549 @@
+{
+  "shipped": {
+    "n_questions": 128,
+    "n_criteria": 1095,
+    "n_errors": 0,
+    "compliance_rate": 0.8958049762737263,
+    "compliance_rate_ci_low": 0.8724400631920165,
+    "compliance_rate_ci_high": 0.9176407067325036,
+    "compliance_rate_n": 128,
+    "fully_compliant_rubric": 0.4609375,
+    "fully_compliant_rubric_ci_low": 0.375,
+    "fully_compliant_rubric_ci_high": 0.546875,
+    "fully_compliant_rubric_n": 128,
+    "item_count_ok": 1.0,
+    "item_count_ok_ci_low": 1.0,
+    "item_count_ok_ci_high": 1.0,
+    "item_count_ok_n": 128,
+    "n_items": 8.5546875,
+    "n_items_ci_low": 8.3046875,
+    "n_items_ci_high": 8.8359375,
+    "n_items_n": 128,
+    "polarity_single_rate": 0.5,
+    "polarity_single_rate_ci_low": 0.4140625,
+    "polarity_single_rate_ci_high": 0.5859375,
+    "polarity_single_rate_n": 128,
+    "negative_weight_rate": 0.13836335105866354,
+    "negative_weight_rate_ci_low": 0.12914282061254717,
+    "negative_weight_rate_ci_high": 0.1474418804936383,
+    "negative_weight_rate_n": 128,
+    "weight_order_violation_rate": 0.1875,
+    "weight_order_violation_rate_ci_low": 0.1171875,
+    "weight_order_violation_rate_ci_high": 0.2578125,
+    "weight_order_violation_rate_n": 128,
+    "weight_order_violation_pair_rate": 0.03712254713488266,
+    "weight_order_violation_pair_rate_ci_low": 0.02201456511039673,
+    "weight_order_violation_pair_rate_ci_high": 0.0533508631753389,
+    "weight_order_violation_pair_rate_n": 128,
+    "pitfall_mirror_rate": 0.078125,
+    "pitfall_mirror_rate_ci_low": 0.0390625,
+    "pitfall_mirror_rate_ci_high": 0.125,
+    "pitfall_mirror_rate_n": 128,
+    "n_pitfall_mirrors": 0.09375,
+    "n_pitfall_mirrors_ci_low": 0.046875,
+    "n_pitfall_mirrors_ci_high": 0.15625,
+    "n_pitfall_mirrors_n": 128,
+    "max_pitfall_mirror_similarity": 0.3415194222179707,
+    "max_pitfall_mirror_similarity_ci_low": 0.3102515088241489,
+    "max_pitfall_mirror_similarity_ci_high": 0.3743667047740018,
+    "max_pitfall_mirror_similarity_n": 128,
+    "pitfall_fraction": 0.13836335105866354,
+    "pitfall_fraction_ci_low": 0.12914282061254717,
+    "pitfall_fraction_ci_high": 0.1474418804936383,
+    "pitfall_fraction_n": 128,
+    "weight_band_rate": 0.8917410714285714,
+    "weight_band_rate_ci_low": 0.8659466455853174,
+    "weight_band_rate_ci_high": 0.9169464595734127,
+    "weight_band_rate_n": 128,
+    "unclassified_polarity_rate": 0.02335979992229992,
+    "unclassified_polarity_rate_ci_low": 0.015122622061098623,
+    "unclassified_polarity_rate_ci_high": 0.03224889802038239,
+    "unclassified_polarity_rate_n": 128,
+    "check_item_count_7_20_rate": 1.0,
+    "check_item_count_7_20_rate_ci_low": 1.0,
+    "check_item_count_7_20_rate_ci_high": 1.0,
+    "check_item_count_7_20_rate_n": 128,
+    "check_title_2_to_4_words_rate": 0.9734162755647131,
+    "check_title_2_to_4_words_rate_ci_low": 0.9641460622710624,
+    "check_title_2_to_4_words_rate_ci_high": 0.9817771112351191,
+    "check_title_2_to_4_words_rate_n": 128,
+    "check_description_single_sentence_rate": 1.0,
+    "check_description_single_sentence_rate_ci_low": 1.0,
+    "check_description_single_sentence_rate_ci_high": 1.0,
+    "check_description_single_sentence_rate_n": 128,
+    "check_category_legal_rate": 1.0,
+    "check_category_legal_rate_ci_low": 1.0,
+    "check_category_legal_rate_ci_high": 1.0,
+    "check_category_legal_rate_n": 128,
+    "check_weight_in_range_rate": 1.0,
+    "check_weight_in_range_rate_ci_low": 1.0,
+    "check_weight_in_range_rate_ci_high": 1.0,
+    "check_weight_in_range_rate_n": 128,
+    "check_weight_matches_band_rate": 1.0,
+    "check_weight_matches_band_rate_ci_low": 1.0,
+    "check_weight_matches_band_rate_ci_high": 1.0,
+    "check_weight_matches_band_rate_n": 65,
+    "check_pitfall_opener_rate": 0.7786458333333333,
+    "check_pitfall_opener_rate_ci_low": 0.6875,
+    "check_pitfall_opener_rate_ci_high": 0.859375,
+    "check_pitfall_opener_rate_n": 64,
+    "check_rar_keys_only_rate": 1.0,
+    "check_rar_keys_only_rate_ci_low": 1.0,
+    "check_rar_keys_only_rate_ci_high": 1.0,
+    "check_rar_keys_only_rate_n": 128,
+    "check_no_verbatim_copy_rate": 0.9471720553751805,
+    "check_no_verbatim_copy_rate_ci_low": 0.9291212558058262,
+    "check_no_verbatim_copy_rate_ci_high": 0.9632491840841451,
+    "check_no_verbatim_copy_rate_n": 128,
+    "check_self_contained_rate": 0.9924665178571428,
+    "check_self_contained_rate_ci_low": 0.9864641462053572,
+    "check_self_contained_rate_ci_high": 0.9977678571428572,
+    "check_self_contained_rate_n": 128,
+    "check_breakdown": {
+      "item_count_7_20": {
+        "unit": "rubric",
+        "n_applicable": 128,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "title_2_to_4_words": {
+        "unit": "criterion",
+        "n_applicable": 1095,
+        "n_failed": 30,
+        "rate": 0.9726027397260274,
+        "top_reasons": [
+          {
+            "reason": "title has 1 words",
+            "n": 21
+          },
+          {
+            "reason": "title has 5 words",
+            "n": 8
+          },
+          {
+            "reason": "title has 6 words",
+            "n": 1
+          }
+        ]
+      },
+      "description_single_sentence": {
+        "unit": "criterion",
+        "n_applicable": 1095,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "category_legal": {
+        "unit": "criterion",
+        "n_applicable": 1095,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "weight_in_range": {
+        "unit": "criterion",
+        "n_applicable": 1095,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "weight_matches_band": {
+        "unit": "criterion",
+        "n_applicable": 626,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "pitfall_opener": {
+        "unit": "criterion",
+        "n_applicable": 91,
+        "n_failed": 23,
+        "rate": 0.7472527472527473,
+        "top_reasons": [
+          {
+            "reason": "opens with 'Does not misinterpret the'",
+            "n": 2
+          },
+          {
+            "reason": "opens with 'Does not omit clear'",
+            "n": 1
+          },
+          {
+            "reason": "opens with 'Does not suggest alternative'",
+            "n": 1
+          },
+          {
+            "reason": "opens with 'Fails to mention the'",
+            "n": 1
+          },
+          {
+            "reason": "opens with 'Includes unnecessary details that'",
+            "n": 1
+          }
+        ]
+      },
+      "rar_keys_only": {
+        "unit": "criterion",
+        "n_applicable": 1095,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "no_verbatim_copy": {
+        "unit": "criterion",
+        "n_applicable": 1094,
+        "n_failed": 61,
+        "rate": 0.9442413162705667,
+        "top_reasons": [
+          {
+            "reason": "50% of trigrams shared with reference",
+            "n": 12
+          },
+          {
+            "reason": "60% of trigrams shared with reference",
+            "n": 6
+          },
+          {
+            "reason": "67% of trigrams shared with reference",
+            "n": 5
+          },
+          {
+            "reason": "75% of trigrams shared with reference",
+            "n": 5
+          },
+          {
+            "reason": "50% of trigrams shared with question",
+            "n": 4
+          }
+        ]
+      },
+      "self_contained": {
+        "unit": "criterion",
+        "n_applicable": 1095,
+        "n_failed": 7,
+        "rate": 0.993607305936073,
+        "top_reasons": [
+          {
+            "reason": "asserts correctness via 'the correct answer'",
+            "n": 3
+          },
+          {
+            "reason": "asserts correctness via 'the reference'",
+            "n": 2
+          },
+          {
+            "reason": "asserts correctness via 'correct conclusion'",
+            "n": 1
+          },
+          {
+            "reason": "asserts correctness via 'expected value'",
+            "n": 1
+          }
+        ]
+      }
+    },
+    "hygiene": {
+      "polarity_single_rate": 0.5,
+      "negative_weight_rate": 0.13836335105866354,
+      "weight_order_violation_rate": 0.1875,
+      "weight_order_violation_pair_rate": 0.03712254713488266,
+      "pitfall_mirror_rate": 0.078125,
+      "pitfall_fraction": 0.13836335105866354,
+      "unclassified_polarity_rate": 0.02335979992229992
+    }
+  },
+  "baseline": {
+    "n_questions": 128,
+    "n_criteria": 1219,
+    "n_errors": 0,
+    "compliance_rate": 0.8979223250707626,
+    "compliance_rate_ci_low": 0.8783000468498516,
+    "compliance_rate_ci_high": 0.9171446847423411,
+    "compliance_rate_n": 128,
+    "fully_compliant_rubric": 0.3984375,
+    "fully_compliant_rubric_ci_low": 0.3125,
+    "fully_compliant_rubric_ci_high": 0.48457031249999893,
+    "fully_compliant_rubric_n": 128,
+    "item_count_ok": 0.9375,
+    "item_count_ok_ci_low": 0.890625,
+    "item_count_ok_ci_high": 0.9765625,
+    "item_count_ok_n": 128,
+    "n_items": 9.5234375,
+    "n_items_ci_low": 9.125,
+    "n_items_ci_high": 9.9375,
+    "n_items_n": 128,
+    "polarity_single_rate": 0.1484375,
+    "polarity_single_rate_ci_low": 0.09375,
+    "polarity_single_rate_ci_high": 0.2109375,
+    "polarity_single_rate_n": 128,
+    "negative_weight_rate": 0.21372956661904272,
+    "negative_weight_rate_ci_low": 0.20454268601471037,
+    "negative_weight_rate_ci_high": 0.22396169343320077,
+    "negative_weight_rate_n": 128,
+    "weight_order_violation_rate": 0.2421875,
+    "weight_order_violation_rate_ci_low": 0.171875,
+    "weight_order_violation_rate_ci_high": 0.3203125,
+    "weight_order_violation_rate_n": 128,
+    "weight_order_violation_pair_rate": 0.02761579491092843,
+    "weight_order_violation_pair_rate_ci_low": 0.018511581959089456,
+    "weight_order_violation_pair_rate_ci_high": 0.038527658596093556,
+    "weight_order_violation_pair_rate_n": 128,
+    "pitfall_mirror_rate": 0.2265625,
+    "pitfall_mirror_rate_ci_low": 0.15625,
+    "pitfall_mirror_rate_ci_high": 0.296875,
+    "pitfall_mirror_rate_n": 128,
+    "n_pitfall_mirrors": 0.3203125,
+    "n_pitfall_mirrors_ci_low": 0.2109375,
+    "n_pitfall_mirrors_ci_high": 0.4375,
+    "n_pitfall_mirrors_n": 128,
+    "max_pitfall_mirror_similarity": 0.4975807814626023,
+    "max_pitfall_mirror_similarity_ci_low": 0.4732051618193509,
+    "max_pitfall_mirror_similarity_ci_high": 0.5242880816425896,
+    "max_pitfall_mirror_similarity_n": 128,
+    "pitfall_fraction": 0.21372956661904272,
+    "pitfall_fraction_ci_low": 0.20454268601471037,
+    "pitfall_fraction_ci_high": 0.22396169343320077,
+    "pitfall_fraction_n": 128,
+    "weight_band_rate": 0.9587956575950602,
+    "weight_band_rate_ci_low": 0.9444071545157253,
+    "weight_band_rate_ci_high": 0.9720514863825411,
+    "weight_band_rate_n": 128,
+    "unclassified_polarity_rate": 0.05816252528109146,
+    "unclassified_polarity_rate_ci_low": 0.045609501590372456,
+    "unclassified_polarity_rate_ci_high": 0.07089915022043929,
+    "unclassified_polarity_rate_n": 128,
+    "check_item_count_7_20_rate": 0.9375,
+    "check_item_count_7_20_rate_ci_low": 0.890625,
+    "check_item_count_7_20_rate_ci_high": 0.9765625,
+    "check_item_count_7_20_rate_n": 128,
+    "check_title_2_to_4_words_rate": 0.9802428257506383,
+    "check_title_2_to_4_words_rate_ci_low": 0.9710760935028513,
+    "check_title_2_to_4_words_rate_ci_high": 0.9879907901343449,
+    "check_title_2_to_4_words_rate_n": 128,
+    "check_description_single_sentence_rate": 1.0,
+    "check_description_single_sentence_rate_ci_low": 1.0,
+    "check_description_single_sentence_rate_ci_high": 1.0,
+    "check_description_single_sentence_rate_n": 128,
+    "check_category_legal_rate": 1.0,
+    "check_category_legal_rate_ci_low": 1.0,
+    "check_category_legal_rate_ci_high": 1.0,
+    "check_category_legal_rate_n": 128,
+    "check_weight_in_range_rate": 1.0,
+    "check_weight_in_range_rate_ci_low": 1.0,
+    "check_weight_in_range_rate_ci_high": 1.0,
+    "check_weight_in_range_rate_n": 128,
+    "check_weight_matches_band_rate": 0.9718934911242603,
+    "check_weight_matches_band_rate_ci_low": 0.9519896449704143,
+    "check_weight_matches_band_rate_ci_high": 0.9888486193293886,
+    "check_weight_matches_band_rate_n": 65,
+    "check_pitfall_opener_rate": 0.8692307692307693,
+    "check_pitfall_opener_rate_ci_low": 0.7923076923076923,
+    "check_pitfall_opener_rate_ci_high": 0.9307692307692308,
+    "check_pitfall_opener_rate_n": 65,
+    "check_rar_keys_only_rate": 1.0,
+    "check_rar_keys_only_rate_ci_low": 1.0,
+    "check_rar_keys_only_rate_ci_high": 1.0,
+    "check_rar_keys_only_rate_n": 128,
+    "check_no_verbatim_copy_rate": 0.9471415303446553,
+    "check_no_verbatim_copy_rate_ci_low": 0.9316902731599997,
+    "check_no_verbatim_copy_rate_ci_high": 0.9604182216438075,
+    "check_no_verbatim_copy_rate_n": 128,
+    "check_self_contained_rate": 0.9964962121212122,
+    "check_self_contained_rate_ci_low": 0.9924715909090909,
+    "check_self_contained_rate_ci_high": 0.9992897727272727,
+    "check_self_contained_rate_n": 128,
+    "check_breakdown": {
+      "item_count_7_20": {
+        "unit": "rubric",
+        "n_applicable": 128,
+        "n_failed": 8,
+        "rate": 0.9375,
+        "top_reasons": [
+          {
+            "reason": "6 items",
+            "n": 5
+          },
+          {
+            "reason": "5 items",
+            "n": 3
+          }
+        ]
+      },
+      "title_2_to_4_words": {
+        "unit": "criterion",
+        "n_applicable": 1219,
+        "n_failed": 25,
+        "rate": 0.9794913863822805,
+        "top_reasons": [
+          {
+            "reason": "title has 5 words",
+            "n": 12
+          },
+          {
+            "reason": "title has 1 words",
+            "n": 11
+          },
+          {
+            "reason": "title has 7 words",
+            "n": 1
+          },
+          {
+            "reason": "title has 6 words",
+            "n": 1
+          }
+        ]
+      },
+      "description_single_sentence": {
+        "unit": "criterion",
+        "n_applicable": 1219,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "category_legal": {
+        "unit": "criterion",
+        "n_applicable": 1219,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "weight_in_range": {
+        "unit": "criterion",
+        "n_applicable": 1219,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "weight_matches_band": {
+        "unit": "criterion",
+        "n_applicable": 535,
+        "n_failed": 17,
+        "rate": 0.9682242990654205,
+        "top_reasons": [
+          {
+            "reason": "Essential weight=4 not in [5]",
+            "n": 13
+          },
+          {
+            "reason": "Important weight=2 not in [3, 4]",
+            "n": 3
+          },
+          {
+            "reason": "Important weight=5 not in [3, 4]",
+            "n": 1
+          }
+        ]
+      },
+      "pitfall_opener": {
+        "unit": "criterion",
+        "n_applicable": 115,
+        "n_failed": 14,
+        "rate": 0.8782608695652174,
+        "top_reasons": [
+          {
+            "reason": "opens with 'Does not recommend the'",
+            "n": 2
+          },
+          {
+            "reason": "opens with 'Does not recommend a'",
+            "n": 2
+          },
+          {
+            "reason": "opens with 'Does not incorrectly attribute'",
+            "n": 1
+          },
+          {
+            "reason": "opens with 'Does not recommend shrinkage'",
+            "n": 1
+          },
+          {
+            "reason": "opens with 'Does not identify sodium'",
+            "n": 1
+          }
+        ]
+      },
+      "rar_keys_only": {
+        "unit": "criterion",
+        "n_applicable": 1219,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "no_verbatim_copy": {
+        "unit": "criterion",
+        "n_applicable": 1215,
+        "n_failed": 57,
+        "rate": 0.9530864197530864,
+        "top_reasons": [
+          {
+            "reason": "50% of trigrams shared with reference",
+            "n": 14
+          },
+          {
+            "reason": "60% of trigrams shared with reference",
+            "n": 10
+          },
+          {
+            "reason": "67% of trigrams shared with reference",
+            "n": 3
+          },
+          {
+            "reason": "56% of trigrams shared with reference",
+            "n": 3
+          },
+          {
+            "reason": "75% of trigrams shared with reference",
+            "n": 3
+          }
+        ]
+      },
+      "self_contained": {
+        "unit": "criterion",
+        "n_applicable": 1219,
+        "n_failed": 4,
+        "rate": 0.9967186218211649,
+        "top_reasons": [
+          {
+            "reason": "asserts correctness via 'the correct answer'",
+            "n": 2
+          },
+          {
+            "reason": "asserts correctness via 'expected answer'",
+            "n": 1
+          },
+          {
+            "reason": "asserts correctness via 'expected value'",
+            "n": 1
+          }
+        ]
+      }
+    },
+    "hygiene": {
+      "polarity_single_rate": 0.1484375,
+      "negative_weight_rate": 0.21372956661904272,
+      "weight_order_violation_rate": 0.2421875,
+      "weight_order_violation_pair_rate": 0.02761579491092843,
+      "pitfall_mirror_rate": 0.2265625,
+      "pitfall_fraction": 0.21372956661904272,
+      "unclassified_polarity_rate": 0.05816252528109146
+    }
+  },
+  "agentic": {
+    "n_questions": 128,
+    "n_criteria": 1295,
+    "n_errors": 0,
+    "compliance_rate": 0.6749116009858197,
+    "compliance_rate_ci_low": 0.6310578085651328,
+    "compliance_rate_ci_high": 0.7141533125078048,
+    "compliance_rate_n": 128,
+    "fully_compliant_rubric": 0.109375,
+    "fully_compliant_rubric_ci_low": 0.0546875,
+    "fully_compliant_rubric_ci_high": 0.171875,
+    "fully_compliant_rubric_n": 128,
+    "item_count_ok": 0.78125,
+    "item_count_ok_ci_low": 0.703125,
+    "item_count_ok_ci_high": 0.8515625,
+    "item_count_ok_n": 128,
+    "n_items": 10.1171875,
+    "n_items_ci_low": 9.515625,
+    "n_items_ci_high": 10.703125,
+    "n_items_n": 128,
+    "polarity_single_rate": 1.0,
+    "polarity_single_rate_ci_low": 1.0,
+    "polarity_single_rate_ci_high": 1.0,
+    "polarity_single_rate_n": 128,
+    "negative_weight_rate": 0.17514717270576646,
+    "negative_weight_rate_ci_low": 0.15600585368407632,
+    "negative_weight_rate_ci_high": 0.19624747350089147,
+    "negative_weight_rate_n": 128,
+    "weight_order_violation_rate": 0.390625,
+    "weight_order_violation_rate_ci_low": 0.3123046875,
+    "weight_order_violation_rate_ci_high": 0.4765625,
+    "weight_order_violation_rate_n": 128,
+    "weight_order_violation_pair_rate": 0.0667410425085418,
+    "weight_order_violation_pair_rate_ci_low": 0.048129210641417036,
+    "weight_order_violation_pair_rate_ci_high": 0.08830225025745175,
+    "weight_order_violation_pair_rate_n": 123,
+    "pitfall_mirror_rate": 0.1875,
+    "pitfall_mirror_rate_ci_low": 0.125,
+    "pitfall_mirror_rate_ci_high": 0.2578125,
+    "pitfall_mirror_rate_n": 128,
+    "n_pitfall_mirrors": 0.2578125,
+    "n_pitfall_mirrors_ci_low": 0.1640625,
+    "n_pitfall_mirrors_ci_high": 0.35957031249999893,
+    "n_pitfall_mirrors_n": 128,
+    "max_pitfall_mirror_similarity": 0.4194549764506519,
+    "max_pitfall_mirror_similarity_ci_low": 0.38095523284282534,
+    "max_pitfall_mirror_similarity_ci_high": 0.4546758297365159,
+    "max_pitfall_mirror_similarity_n": 128,
+    "pitfall_fraction": 0.17514717270576646,
+    "pitfall_fraction_ci_low": 0.15600585368407632,
+    "pitfall_fraction_ci_high": 0.19624747350089147,
+    "pitfall_fraction_n": 128,
+    "weight_band_rate": 0.8412889736131923,
+    "weight_band_rate_ci_low": 0.8117034286785263,
+    "weight_band_rate_ci_high": 0.8708688178683296,
+    "weight_band_rate_n": 128,
+    "unclassified_polarity_rate": 0.0,
+    "unclassified_polarity_rate_ci_low": 0.0,
+    "unclassified_polarity_rate_ci_high": 0.0,
+    "unclassified_polarity_rate_n": 128,
+    "check_item_count_7_20_rate": 0.78125,
+    "check_item_count_7_20_rate_ci_low": 0.703125,
+    "check_item_count_7_20_rate_ci_high": 0.8515625,
+    "check_item_count_7_20_rate_n": 128,
+    "check_title_2_to_4_words_rate": 0.9446365375076313,
+    "check_title_2_to_4_words_rate_ci_low": 0.9241118007426601,
+    "check_title_2_to_4_words_rate_ci_high": 0.9640334318459318,
+    "check_title_2_to_4_words_rate_n": 128,
+    "check_description_single_sentence_rate": 0.9975911458333333,
+    "check_description_single_sentence_rate_ci_low": 0.9944661458333333,
+    "check_description_single_sentence_rate_ci_high": 1.0,
+    "check_description_single_sentence_rate_n": 128,
+    "check_category_legal_rate": 1.0,
+    "check_category_legal_rate_ci_low": 1.0,
+    "check_category_legal_rate_ci_high": 1.0,
+    "check_category_legal_rate_n": 128,
+    "check_weight_in_range_rate": 1.0,
+    "check_weight_in_range_rate_ci_low": 1.0,
+    "check_weight_in_range_rate_ci_high": 1.0,
+    "check_weight_in_range_rate_n": 128,
+    "check_weight_matches_band_rate": 0.8704214588829974,
+    "check_weight_matches_band_rate_ci_low": 0.831334750719366,
+    "check_weight_matches_band_rate_ci_high": 0.9059314200756509,
+    "check_weight_matches_band_rate_n": 65,
+    "check_pitfall_opener_rate": 0.0,
+    "check_pitfall_opener_rate_ci_low": 0.0,
+    "check_pitfall_opener_rate_ci_high": 0.0,
+    "check_pitfall_opener_rate_n": 62,
+    "check_rar_keys_only_rate": 1.0,
+    "check_rar_keys_only_rate_ci_low": 1.0,
+    "check_rar_keys_only_rate_ci_high": 1.0,
+    "check_rar_keys_only_rate_n": 128,
+    "check_no_verbatim_copy_rate": 0.8667583284770786,
+    "check_no_verbatim_copy_rate_ci_low": 0.8391901528376138,
+    "check_no_verbatim_copy_rate_ci_high": 0.8909503205670198,
+    "check_no_verbatim_copy_rate_n": 128,
+    "check_self_contained_rate": 0.9930633060515872,
+    "check_self_contained_rate_ci_low": 0.9875153072296627,
+    "check_self_contained_rate_ci_high": 0.9974283854166666,
+    "check_self_contained_rate_n": 128,
+    "check_breakdown": {
+      "item_count_7_20": {
+        "unit": "rubric",
+        "n_applicable": 128,
+        "n_failed": 28,
+        "rate": 0.78125,
+        "top_reasons": [
+          {
+            "reason": "6 items",
+            "n": 28
+          }
+        ]
+      },
+      "title_2_to_4_words": {
+        "unit": "criterion",
+        "n_applicable": 1295,
+        "n_failed": 69,
+        "rate": 0.9467181467181467,
+        "top_reasons": [
+          {
+            "reason": "title has 5 words",
+            "n": 51
+          },
+          {
+            "reason": "title has 1 words",
+            "n": 10
+          },
+          {
+            "reason": "title has 6 words",
+            "n": 6
+          },
+          {
+            "reason": "title has 7 words",
+            "n": 2
+          }
+        ]
+      },
+      "description_single_sentence": {
+        "unit": "criterion",
+        "n_applicable": 1295,
+        "n_failed": 3,
+        "rate": 0.9976833976833976,
+        "top_reasons": [
+          {
+            "reason": "2 sentences",
+            "n": 3
+          }
+        ]
+      },
+      "category_legal": {
+        "unit": "criterion",
+        "n_applicable": 1295,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "weight_in_range": {
+        "unit": "criterion",
+        "n_applicable": 1295,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "weight_matches_band": {
+        "unit": "criterion",
+        "n_applicable": 671,
+        "n_failed": 91,
+        "rate": 0.8643815201192251,
+        "top_reasons": [
+          {
+            "reason": "Important weight=2 not in [3, 4]",
+            "n": 41
+          },
+          {
+            "reason": "Essential weight=4 not in [5]",
+            "n": 29
+          },
+          {
+            "reason": "Essential weight=3 not in [5]",
+            "n": 14
+          },
+          {
+            "reason": "Important weight=5 not in [3, 4]",
+            "n": 5
+          },
+          {
+            "reason": "Optional weight=3 not in [1, 2]",
+            "n": 2
+          }
+        ]
+      },
+      "pitfall_opener": {
+        "unit": "criterion",
+        "n_applicable": 124,
+        "n_failed": 124,
+        "rate": 0.0,
+        "top_reasons": [
+          {
+            "reason": "opens with 'Avoids stating that the'",
+            "n": 3
+          },
+          {
+            "reason": "opens with 'The response avoids selecting'",
+            "n": 3
+          },
+          {
+            "reason": "opens with 'Avoids citing persistence of'",
+            "n": 1
+          },
+          {
+            "reason": "opens with 'Avoids diagnosing the cystic'",
+            "n": 1
+          },
+          {
+            "reason": "opens with 'Avoids diagnosing neurofibromatosis type'",
+            "n": 1
+          }
+        ]
+      },
+      "rar_keys_only": {
+        "unit": "criterion",
+        "n_applicable": 1295,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "no_verbatim_copy": {
+        "unit": "criterion",
+        "n_applicable": 1293,
+        "n_failed": 161,
+        "rate": 0.8754833720030936,
+        "top_reasons": [
+          {
+            "reason": "50% of trigrams shared with reference",
+            "n": 39
+          },
+          {
+            "reason": "100% of trigrams shared with reference",
+            "n": 20
+          },
+          {
+            "reason": "60% of trigrams shared with reference",
+            "n": 13
+          },
+          {
+            "reason": "67% of trigrams shared with reference",
+            "n": 12
+          },
+          {
+            "reason": "62% of trigrams shared with reference",
+            "n": 8
+          }
+        ]
+      },
+      "self_contained": {
+        "unit": "criterion",
+        "n_applicable": 1295,
+        "n_failed": 9,
+        "rate": 0.993050193050193,
+        "top_reasons": [
+          {
+            "reason": "asserts correctness via 'the reference'",
+            "n": 9
+          }
+        ]
+      }
+    },
+    "hygiene": {
+      "polarity_single_rate": 1.0,
+      "negative_weight_rate": 0.17514717270576646,
+      "weight_order_violation_rate": 0.390625,
+      "weight_order_violation_pair_rate": 0.0667410425085418,
+      "pitfall_mirror_rate": 0.1875,
+      "pitfall_fraction": 0.17514717270576646,
+      "unclassified_polarity_rate": 0.0
+    }
+  },
+  "agentic-tools": {
+    "n_questions": 128,
+    "n_criteria": 1229,
+    "n_errors": 0,
+    "compliance_rate": 0.7354241786858975,
+    "compliance_rate_ci_low": 0.6988895354862152,
+    "compliance_rate_ci_high": 0.771281603867053,
+    "compliance_rate_n": 128,
+    "fully_compliant_rubric": 0.109375,
+    "fully_compliant_rubric_ci_low": 0.0546875,
+    "fully_compliant_rubric_ci_high": 0.1640625,
+    "fully_compliant_rubric_n": 128,
+    "item_count_ok": 0.671875,
+    "item_count_ok_ci_low": 0.5859375,
+    "item_count_ok_ci_high": 0.7501953124999989,
+    "item_count_ok_n": 128,
+    "n_items": 9.6015625,
+    "n_items_ci_low": 8.9529296875,
+    "n_items_ci_high": 10.289257812499999,
+    "n_items_n": 128,
+    "polarity_single_rate": 1.0,
+    "polarity_single_rate_ci_low": 1.0,
+    "polarity_single_rate_ci_high": 1.0,
+    "polarity_single_rate_n": 128,
+    "negative_weight_rate": 0.20458852128774005,
+    "negative_weight_rate_ci_low": 0.17974431872381091,
+    "negative_weight_rate_ci_high": 0.23112386365804333,
+    "negative_weight_rate_n": 128,
+    "weight_order_violation_rate": 0.2578125,
+    "weight_order_violation_rate_ci_low": 0.1796875,
+    "weight_order_violation_rate_ci_high": 0.3359375,
+    "weight_order_violation_rate_n": 128,
+    "weight_order_violation_pair_rate": 0.039443694223625786,
+    "weight_order_violation_pair_rate_ci_low": 0.02368077200681083,
+    "weight_order_violation_pair_rate_ci_high": 0.05727071155031468,
+    "weight_order_violation_pair_rate_n": 123,
+    "pitfall_mirror_rate": 0.2265625,
+    "pitfall_mirror_rate_ci_low": 0.15625,
+    "pitfall_mirror_rate_ci_high": 0.296875,
+    "pitfall_mirror_rate_n": 128,
+    "n_pitfall_mirrors": 0.265625,
+    "n_pitfall_mirrors_ci_low": 0.1796875,
+    "n_pitfall_mirrors_ci_high": 0.359375,
+    "n_pitfall_mirrors_n": 128,
+    "max_pitfall_mirror_similarity": 0.429642551462166,
+    "max_pitfall_mirror_similarity_ci_low": 0.391818022885127,
+    "max_pitfall_mirror_similarity_ci_high": 0.46783022098243227,
+    "max_pitfall_mirror_similarity_n": 128,
+    "pitfall_fraction": 0.20458852128774005,
+    "pitfall_fraction_ci_low": 0.17974431872381091,
+    "pitfall_fraction_ci_high": 0.23112386365804333,
+    "pitfall_fraction_n": 128,
+    "weight_band_rate": 0.9140923312798312,
+    "weight_band_rate_ci_low": 0.8918092560109161,
+    "weight_band_rate_ci_high": 0.9351229337069181,
+    "weight_band_rate_n": 128,
+    "unclassified_polarity_rate": 0.0,
+    "unclassified_polarity_rate_ci_low": 0.0,
+    "unclassified_polarity_rate_ci_high": 0.0,
+    "unclassified_polarity_rate_n": 128,
+    "check_item_count_7_20_rate": 0.671875,
+    "check_item_count_7_20_rate_ci_low": 0.5859375,
+    "check_item_count_7_20_rate_ci_high": 0.7501953124999989,
+    "check_item_count_7_20_rate_n": 128,
+    "check_title_2_to_4_words_rate": 0.9555376806353368,
+    "check_title_2_to_4_words_rate_ci_low": 0.9380886694143531,
+    "check_title_2_to_4_words_rate_ci_high": 0.9703378582138348,
+    "check_title_2_to_4_words_rate_n": 128,
+    "check_description_single_sentence_rate": 0.9973648313492063,
+    "check_description_single_sentence_rate_ci_low": 0.993891834077381,
+    "check_description_single_sentence_rate_ci_high": 1.0,
+    "check_description_single_sentence_rate_n": 128,
+    "check_category_legal_rate": 1.0,
+    "check_category_legal_rate_ci_low": 1.0,
+    "check_category_legal_rate_ci_high": 1.0,
+    "check_category_legal_rate_n": 128,
+    "check_weight_in_range_rate": 1.0,
+    "check_weight_in_range_rate_ci_low": 1.0,
+    "check_weight_in_range_rate_ci_high": 1.0,
+    "check_weight_in_range_rate_n": 128,
+    "check_weight_matches_band_rate": 0.9327254369562061,
+    "check_weight_matches_band_rate_ci_low": 0.9086660241467935,
+    "check_weight_matches_band_rate_ci_high": 0.954097578703348,
+    "check_weight_matches_band_rate_n": 65,
+    "check_pitfall_opener_rate": 0.0,
+    "check_pitfall_opener_rate_ci_low": 0.0,
+    "check_pitfall_opener_rate_ci_high": 0.0,
+    "check_pitfall_opener_rate_n": 60,
+    "check_rar_keys_only_rate": 1.0,
+    "check_rar_keys_only_rate_ci_low": 1.0,
+    "check_rar_keys_only_rate_ci_high": 1.0,
+    "check_rar_keys_only_rate_n": 128,
+    "check_no_verbatim_copy_rate": 0.9049039068570319,
+    "check_no_verbatim_copy_rate_ci_low": 0.8815939176925506,
+    "check_no_verbatim_copy_rate_ci_high": 0.9251845173598103,
+    "check_no_verbatim_copy_rate_n": 128,
+    "check_self_contained_rate": 0.9961170014880953,
+    "check_self_contained_rate_ci_low": 0.9920247395833333,
+    "check_self_contained_rate_ci_high": 0.9990234375,
+    "check_self_contained_rate_n": 128,
+    "check_breakdown": {
+      "item_count_7_20": {
+        "unit": "rubric",
+        "n_applicable": 128,
+        "n_failed": 42,
+        "rate": 0.671875,
+        "top_reasons": [
+          {
+            "reason": "6 items",
+            "n": 22
+          },
+          {
+            "reason": "5 items",
+            "n": 17
+          },
+          {
+            "reason": "4 items",
+            "n": 3
+          }
+        ]
+      },
+      "title_2_to_4_words": {
+        "unit": "criterion",
+        "n_applicable": 1229,
+        "n_failed": 57,
+        "rate": 0.9536208299430431,
+        "top_reasons": [
+          {
+            "reason": "title has 5 words",
+            "n": 43
+          },
+          {
+            "reason": "title has 6 words",
+            "n": 8
+          },
+          {
+            "reason": "title has 1 words",
+            "n": 6
+          }
+        ]
+      },
+      "description_single_sentence": {
+        "unit": "criterion",
+        "n_applicable": 1229,
+        "n_failed": 4,
+        "rate": 0.9967453213995118,
+        "top_reasons": [
+          {
+            "reason": "2 sentences",
+            "n": 4
+          }
+        ]
+      },
+      "category_legal": {
+        "unit": "criterion",
+        "n_applicable": 1229,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "weight_in_range": {
+        "unit": "criterion",
+        "n_applicable": 1229,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "weight_matches_band": {
+        "unit": "criterion",
+        "n_applicable": 615,
+        "n_failed": 43,
+        "rate": 0.9300813008130081,
+        "top_reasons": [
+          {
+            "reason": "Important weight=2 not in [3, 4]",
+            "n": 16
+          },
+          {
+            "reason": "Essential weight=4 not in [5]",
+            "n": 13
+          },
+          {
+            "reason": "Essential weight=3 not in [5]",
+            "n": 6
+          },
+          {
+            "reason": "Important weight=5 not in [3, 4]",
+            "n": 4
+          },
+          {
+            "reason": "Optional weight=3 not in [1, 2]",
+            "n": 3
+          }
+        ]
+      },
+      "pitfall_opener": {
+        "unit": "criterion",
+        "n_applicable": 118,
+        "n_failed": 118,
+        "rate": 0.0,
+        "top_reasons": [
+          {
+            "reason": "opens with 'The response avoids naming'",
+            "n": 4
+          },
+          {
+            "reason": "opens with 'The response avoids selecting'",
+            "n": 4
+          },
+          {
+            "reason": "opens with 'Avoids interpreting the faint'",
+            "n": 2
+          },
+          {
+            "reason": "opens with 'Avoids claiming that a'",
+            "n": 2
+          },
+          {
+            "reason": "opens with 'Avoids attributing the defect'",
+            "n": 2
+          }
+        ]
+      },
+      "rar_keys_only": {
+        "unit": "criterion",
+        "n_applicable": 1229,
+        "n_failed": 0,
+        "rate": 1.0,
+        "top_reasons": []
+      },
+      "no_verbatim_copy": {
+        "unit": "criterion",
+        "n_applicable": 1229,
+        "n_failed": 118,
+        "rate": 0.9039869812855981,
+        "top_reasons": [
+          {
+            "reason": "50% of trigrams shared with reference",
+            "n": 29
+          },
+          {
+            "reason": "60% of trigrams shared with reference",
+            "n": 14
+          },
+          {
+            "reason": "100% of trigrams shared with reference",
+            "n": 9
+          },
+          {
+            "reason": "56% of trigrams shared with reference",
+            "n": 7
+          },
+          {
+            "reason": "67% of trigrams shared with reference",
+            "n": 6
+          }
+        ]
+      },
+      "self_contained": {
+        "unit": "criterion",
+        "n_applicable": 1229,
+        "n_failed": 6,
+        "rate": 0.9951179820992677,
+        "top_reasons": [
+          {
+            "reason": "asserts correctness via 'the reference'",
+            "n": 5
+          },
+          {
+            "reason": "asserts correctness via 'correct value'",
+            "n": 1
+          }
+        ]
+      }
+    },
+    "hygiene": {
+      "polarity_single_rate": 1.0,
+      "negative_weight_rate": 0.20458852128774005,
+      "weight_order_violation_rate": 0.2578125,
+      "weight_order_violation_pair_rate": 0.039443694223625786,
+      "pitfall_mirror_rate": 0.2265625,
+      "pitfall_fraction": 0.20458852128774005,
+      "unclassified_polarity_rate": 0.0
+    }
+  },
+  "_metric_family": "lint",
+  "_params": {
+    "sources": [
+      "shipped",
+      "baseline",
+      "agentic",
+      "agentic-tools"
+    ],
+    "copy_trigram_threshold": 0.5,
+    "pitfall_mirror_threshold": 0.6,
+    "mirror_min_df": 2,
+    "mirror_idf_scope": "all criteria of one (rubric_source, domain) group",
+    "checks": [
+      "item_count_7_20",
+      "title_2_to_4_words",
+      "description_single_sentence",
+      "category_legal",
+      "weight_in_range",
+      "weight_matches_band",
+      "pitfall_opener",
+      "rar_keys_only",
+      "no_verbatim_copy",
+      "self_contained"
+    ],
+    "medicine_only_checks": [
+      "weight_matches_band",
+      "pitfall_opener"
+    ],
+    "vacuous_after_schema_normalisation": [
+      "category_legal",
+      "weight_in_range",
+      "rar_keys_only"
+    ]
+  },
+  "_by_domain": {
+    "rar_medicine": {
+      "shipped": {
+        "n_questions": 65,
+        "n_criteria": 626,
+        "compliance_rate": 0.8279050863666249,
+        "fully_compliant_rubric": 0.16923076923076924,
+        "item_count_ok": 1.0,
+        "n_items": 9.63076923076923,
+        "polarity_single_rate": 0.09230769230769231,
+        "negative_weight_rate": 0.14682834259757338,
+        "weight_order_violation_rate": 0.0,
+        "weight_order_violation_pair_rate": 0.0,
+        "pitfall_mirror_rate": 0.15384615384615385,
+        "n_pitfall_mirrors": 0.18461538461538463,
+        "max_pitfall_mirror_similarity": 0.3925962073298601,
+        "pitfall_fraction": 0.14682834259757338,
+        "weight_band_rate": 1.0,
+        "unclassified_polarity_rate": 0.01971878548801626,
+        "check_item_count_7_20_rate": 1.0,
+        "check_title_2_to_4_words_rate": 0.9583647975955669,
+        "check_description_single_sentence_rate": 1.0,
+        "check_category_legal_rate": 1.0,
+        "check_weight_in_range_rate": 1.0,
+        "check_weight_matches_band_rate": 1.0,
+        "check_pitfall_opener_rate": 0.7786458333333333,
+        "check_rar_keys_only_rate": 1.0,
+        "check_no_verbatim_copy_rate": 0.9073554223554223,
+        "check_self_contained_rate": 0.9961538461538462,
+        "check_breakdown": {
+          "item_count_7_20": {
+            "unit": "rubric",
+            "n_applicable": 65,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "title_2_to_4_words": {
+            "unit": "criterion",
+            "n_applicable": 626,
+            "n_failed": 25,
+            "rate": 0.9600638977635783,
+            "top_reasons": [
+              {
+                "reason": "title has 1 words",
+                "n": 17
+              },
+              {
+                "reason": "title has 5 words",
+                "n": 7
+              },
+              {
+                "reason": "title has 6 words",
+                "n": 1
+              }
+            ]
+          },
+          "description_single_sentence": {
+            "unit": "criterion",
+            "n_applicable": 626,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "category_legal": {
+            "unit": "criterion",
+            "n_applicable": 626,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_in_range": {
+            "unit": "criterion",
+            "n_applicable": 626,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_matches_band": {
+            "unit": "criterion",
+            "n_applicable": 626,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "pitfall_opener": {
+            "unit": "criterion",
+            "n_applicable": 91,
+            "n_failed": 23,
+            "rate": 0.7472527472527473,
+            "top_reasons": [
+              {
+                "reason": "opens with 'Does not misinterpret the'",
+                "n": 2
+              },
+              {
+                "reason": "opens with 'Does not omit clear'",
+                "n": 1
+              },
+              {
+                "reason": "opens with 'Does not suggest alternative'",
+                "n": 1
+              },
+              {
+                "reason": "opens with 'Fails to mention the'",
+                "n": 1
+              },
+              {
+                "reason": "opens with 'Includes unnecessary details that'",
+                "n": 1
+              }
+            ]
+          },
+          "rar_keys_only": {
+            "unit": "criterion",
+            "n_applicable": 626,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "no_verbatim_copy": {
+            "unit": "criterion",
+            "n_applicable": 626,
+            "n_failed": 55,
+            "rate": 0.9121405750798722,
+            "top_reasons": [
+              {
+                "reason": "50% of trigrams shared with reference",
+                "n": 11
+              },
+              {
+                "reason": "60% of trigrams shared with reference",
+                "n": 6
+              },
+              {
+                "reason": "67% of trigrams shared with reference",
+                "n": 5
+              },
+              {
+                "reason": "75% of trigrams shared with reference",
+                "n": 5
+              },
+              {
+                "reason": "88% of trigrams shared with reference",
+                "n": 4
+              }
+            ]
+          },
+          "self_contained": {
+            "unit": "criterion",
+            "n_applicable": 626,
+            "n_failed": 2,
+            "rate": 0.9968051118210862,
+            "top_reasons": [
+              {
+                "reason": "asserts correctness via 'the correct answer'",
+                "n": 2
+              }
+            ]
+          }
+        }
+      },
+      "baseline": {
+        "n_questions": 65,
+        "n_criteria": 535,
+        "compliance_rate": 0.8432958067573452,
+        "fully_compliant_rubric": 0.2,
+        "item_count_ok": 0.8769230769230769,
+        "n_items": 8.23076923076923,
+        "polarity_single_rate": 0.03076923076923077,
+        "negative_weight_rate": 0.2162463177847793,
+        "weight_order_violation_rate": 0.1076923076923077,
+        "weight_order_violation_pair_rate": 0.011730064806987883,
+        "pitfall_mirror_rate": 0.3384615384615385,
+        "n_pitfall_mirrors": 0.5230769230769231,
+        "max_pitfall_mirror_similarity": 0.5371402646486576,
+        "pitfall_fraction": 0.2162463177847793,
+        "weight_band_rate": 0.9718934911242603,
+        "unclassified_polarity_rate": 0.0036324786324786326,
+        "check_item_count_7_20_rate": 0.8769230769230769,
+        "check_title_2_to_4_words_rate": 0.979468693699463,
+        "check_description_single_sentence_rate": 1.0,
+        "check_category_legal_rate": 1.0,
+        "check_weight_in_range_rate": 1.0,
+        "check_weight_matches_band_rate": 0.9718934911242603,
+        "check_pitfall_opener_rate": 0.8692307692307693,
+        "check_rar_keys_only_rate": 1.0,
+        "check_no_verbatim_copy_rate": 0.9189075881383574,
+        "check_self_contained_rate": 0.9960372960372962,
+        "check_breakdown": {
+          "item_count_7_20": {
+            "unit": "rubric",
+            "n_applicable": 65,
+            "n_failed": 8,
+            "rate": 0.8769230769230769,
+            "top_reasons": [
+              {
+                "reason": "6 items",
+                "n": 5
+              },
+              {
+                "reason": "5 items",
+                "n": 3
+              }
+            ]
+          },
+          "title_2_to_4_words": {
+            "unit": "criterion",
+            "n_applicable": 535,
+            "n_failed": 12,
+            "rate": 0.9775700934579439,
+            "top_reasons": [
+              {
+                "reason": "title has 5 words",
+                "n": 6
+              },
+              {
+                "reason": "title has 1 words",
+                "n": 5
+              },
+              {
+                "reason": "title has 7 words",
+                "n": 1
+              }
+            ]
+          },
+          "description_single_sentence": {
+            "unit": "criterion",
+            "n_applicable": 535,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "category_legal": {
+            "unit": "criterion",
+            "n_applicable": 535,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_in_range": {
+            "unit": "criterion",
+            "n_applicable": 535,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_matches_band": {
+            "unit": "criterion",
+            "n_applicable": 535,
+            "n_failed": 17,
+            "rate": 0.9682242990654205,
+            "top_reasons": [
+              {
+                "reason": "Essential weight=4 not in [5]",
+                "n": 13
+              },
+              {
+                "reason": "Important weight=2 not in [3, 4]",
+                "n": 3
+              },
+              {
+                "reason": "Important weight=5 not in [3, 4]",
+                "n": 1
+              }
+            ]
+          },
+          "pitfall_opener": {
+            "unit": "criterion",
+            "n_applicable": 115,
+            "n_failed": 14,
+            "rate": 0.8782608695652174,
+            "top_reasons": [
+              {
+                "reason": "opens with 'Does not recommend the'",
+                "n": 2
+              },
+              {
+                "reason": "opens with 'Does not recommend a'",
+                "n": 2
+              },
+              {
+                "reason": "opens with 'Does not incorrectly attribute'",
+                "n": 1
+              },
+              {
+                "reason": "opens with 'Does not recommend shrinkage'",
+                "n": 1
+              },
+              {
+                "reason": "opens with 'Does not identify sodium'",
+                "n": 1
+              }
+            ]
+          },
+          "rar_keys_only": {
+            "unit": "criterion",
+            "n_applicable": 535,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "no_verbatim_copy": {
+            "unit": "criterion",
+            "n_applicable": 531,
+            "n_failed": 43,
+            "rate": 0.9190207156308852,
+            "top_reasons": [
+              {
+                "reason": "50% of trigrams shared with reference",
+                "n": 12
+              },
+              {
+                "reason": "60% of trigrams shared with reference",
+                "n": 9
+              },
+              {
+                "reason": "57% of trigrams shared with reference",
+                "n": 2
+              },
+              {
+                "reason": "86% of trigrams shared with reference",
+                "n": 2
+              },
+              {
+                "reason": "67% of trigrams shared with reference",
+                "n": 2
+              }
+            ]
+          },
+          "self_contained": {
+            "unit": "criterion",
+            "n_applicable": 535,
+            "n_failed": 2,
+            "rate": 0.9962616822429906,
+            "top_reasons": [
+              {
+                "reason": "asserts correctness via 'the correct answer'",
+                "n": 2
+              }
+            ]
+          }
+        }
+      },
+      "agentic": {
+        "n_questions": 65,
+        "n_criteria": 671,
+        "compliance_rate": 0.528724523339908,
+        "fully_compliant_rubric": 0.0,
+        "item_count_ok": 0.8769230769230769,
+        "n_items": 10.323076923076924,
+        "polarity_single_rate": 1.0,
+        "negative_weight_rate": 0.18352436025512947,
+        "weight_order_violation_rate": 0.38461538461538464,
+        "weight_order_violation_pair_rate": 0.057299618292174885,
+        "pitfall_mirror_rate": 0.26153846153846155,
+        "n_pitfall_mirrors": 0.38461538461538464,
+        "max_pitfall_mirror_similarity": 0.5055201349350122,
+        "pitfall_fraction": 0.18352436025512947,
+        "weight_band_rate": 0.8704214588829974,
+        "unclassified_polarity_rate": 0.0,
+        "check_item_count_7_20_rate": 0.8769230769230769,
+        "check_title_2_to_4_words_rate": 0.9555711382634461,
+        "check_description_single_sentence_rate": 0.9967948717948717,
+        "check_category_legal_rate": 1.0,
+        "check_weight_in_range_rate": 1.0,
+        "check_weight_matches_band_rate": 0.8704214588829974,
+        "check_pitfall_opener_rate": 0.0,
+        "check_rar_keys_only_rate": 1.0,
+        "check_no_verbatim_copy_rate": 0.8397867303636535,
+        "check_self_contained_rate": 0.9946275946275945,
+        "check_breakdown": {
+          "item_count_7_20": {
+            "unit": "rubric",
+            "n_applicable": 65,
+            "n_failed": 8,
+            "rate": 0.8769230769230769,
+            "top_reasons": [
+              {
+                "reason": "6 items",
+                "n": 8
+              }
+            ]
+          },
+          "title_2_to_4_words": {
+            "unit": "criterion",
+            "n_applicable": 671,
+            "n_failed": 26,
+            "rate": 0.9612518628912071,
+            "top_reasons": [
+              {
+                "reason": "title has 5 words",
+                "n": 18
+              },
+              {
+                "reason": "title has 1 words",
+                "n": 5
+              },
+              {
+                "reason": "title has 6 words",
+                "n": 3
+              }
+            ]
+          },
+          "description_single_sentence": {
+            "unit": "criterion",
+            "n_applicable": 671,
+            "n_failed": 2,
+            "rate": 0.9970193740685543,
+            "top_reasons": [
+              {
+                "reason": "2 sentences",
+                "n": 2
+              }
+            ]
+          },
+          "category_legal": {
+            "unit": "criterion",
+            "n_applicable": 671,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_in_range": {
+            "unit": "criterion",
+            "n_applicable": 671,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_matches_band": {
+            "unit": "criterion",
+            "n_applicable": 671,
+            "n_failed": 91,
+            "rate": 0.8643815201192251,
+            "top_reasons": [
+              {
+                "reason": "Important weight=2 not in [3, 4]",
+                "n": 41
+              },
+              {
+                "reason": "Essential weight=4 not in [5]",
+                "n": 29
+              },
+              {
+                "reason": "Essential weight=3 not in [5]",
+                "n": 14
+              },
+              {
+                "reason": "Important weight=5 not in [3, 4]",
+                "n": 5
+              },
+              {
+                "reason": "Optional weight=3 not in [1, 2]",
+                "n": 2
+              }
+            ]
+          },
+          "pitfall_opener": {
+            "unit": "criterion",
+            "n_applicable": 124,
+            "n_failed": 124,
+            "rate": 0.0,
+            "top_reasons": [
+              {
+                "reason": "opens with 'Avoids stating that the'",
+                "n": 3
+              },
+              {
+                "reason": "opens with 'The response avoids selecting'",
+                "n": 3
+              },
+              {
+                "reason": "opens with 'Avoids citing persistence of'",
+                "n": 1
+              },
+              {
+                "reason": "opens with 'Avoids diagnosing the cystic'",
+                "n": 1
+              },
+              {
+                "reason": "opens with 'Avoids diagnosing neurofibromatosis type'",
+                "n": 1
+              }
+            ]
+          },
+          "rar_keys_only": {
+            "unit": "criterion",
+            "n_applicable": 671,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "no_verbatim_copy": {
+            "unit": "criterion",
+            "n_applicable": 671,
+            "n_failed": 104,
+            "rate": 0.8450074515648286,
+            "top_reasons": [
+              {
+                "reason": "50% of trigrams shared with reference",
+                "n": 26
+              },
+              {
+                "reason": "60% of trigrams shared with reference",
+                "n": 9
+              },
+              {
+                "reason": "67% of trigrams shared with reference",
+                "n": 8
+              },
+              {
+                "reason": "100% of trigrams shared with reference",
+                "n": 7
+              },
+              {
+                "reason": "75% of trigrams shared with reference",
+                "n": 6
+              }
+            ]
+          },
+          "self_contained": {
+            "unit": "criterion",
+            "n_applicable": 671,
+            "n_failed": 4,
+            "rate": 0.9940387481371088,
+            "top_reasons": [
+              {
+                "reason": "asserts correctness via 'the reference'",
+                "n": 4
+              }
+            ]
+          }
+        }
+      },
+      "agentic-tools": {
+        "n_questions": 65,
+        "n_criteria": 615,
+        "compliance_rate": 0.5775649137187598,
+        "fully_compliant_rubric": 0.0,
+        "item_count_ok": 0.7538461538461538,
+        "n_items": 9.461538461538462,
+        "polarity_single_rate": 1.0,
+        "negative_weight_rate": 0.19780928473236165,
+        "weight_order_violation_rate": 0.35384615384615387,
+        "weight_order_violation_pair_rate": 0.05456661381892175,
+        "pitfall_mirror_rate": 0.27692307692307694,
+        "n_pitfall_mirrors": 0.3384615384615385,
+        "max_pitfall_mirror_similarity": 0.4853985554896868,
+        "pitfall_fraction": 0.19780928473236165,
+        "weight_band_rate": 0.9327254369562061,
+        "unclassified_polarity_rate": 0.0,
+        "check_item_count_7_20_rate": 0.7538461538461538,
+        "check_title_2_to_4_words_rate": 0.9549811726734804,
+        "check_description_single_sentence_rate": 0.997008547008547,
+        "check_category_legal_rate": 1.0,
+        "check_weight_in_range_rate": 1.0,
+        "check_weight_matches_band_rate": 0.9327254369562061,
+        "check_pitfall_opener_rate": 0.0,
+        "check_rar_keys_only_rate": 1.0,
+        "check_no_verbatim_copy_rate": 0.8675356054202207,
+        "check_self_contained_rate": 0.9958791208791209,
+        "check_breakdown": {
+          "item_count_7_20": {
+            "unit": "rubric",
+            "n_applicable": 65,
+            "n_failed": 16,
+            "rate": 0.7538461538461538,
+            "top_reasons": [
+              {
+                "reason": "6 items",
+                "n": 12
+              },
+              {
+                "reason": "5 items",
+                "n": 3
+              },
+              {
+                "reason": "4 items",
+                "n": 1
+              }
+            ]
+          },
+          "title_2_to_4_words": {
+            "unit": "criterion",
+            "n_applicable": 615,
+            "n_failed": 30,
+            "rate": 0.9512195121951219,
+            "top_reasons": [
+              {
+                "reason": "title has 5 words",
+                "n": 22
+              },
+              {
+                "reason": "title has 6 words",
+                "n": 5
+              },
+              {
+                "reason": "title has 1 words",
+                "n": 3
+              }
+            ]
+          },
+          "description_single_sentence": {
+            "unit": "criterion",
+            "n_applicable": 615,
+            "n_failed": 2,
+            "rate": 0.9967479674796748,
+            "top_reasons": [
+              {
+                "reason": "2 sentences",
+                "n": 2
+              }
+            ]
+          },
+          "category_legal": {
+            "unit": "criterion",
+            "n_applicable": 615,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_in_range": {
+            "unit": "criterion",
+            "n_applicable": 615,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_matches_band": {
+            "unit": "criterion",
+            "n_applicable": 615,
+            "n_failed": 43,
+            "rate": 0.9300813008130081,
+            "top_reasons": [
+              {
+                "reason": "Important weight=2 not in [3, 4]",
+                "n": 16
+              },
+              {
+                "reason": "Essential weight=4 not in [5]",
+                "n": 13
+              },
+              {
+                "reason": "Essential weight=3 not in [5]",
+                "n": 6
+              },
+              {
+                "reason": "Important weight=5 not in [3, 4]",
+                "n": 4
+              },
+              {
+                "reason": "Optional weight=3 not in [1, 2]",
+                "n": 3
+              }
+            ]
+          },
+          "pitfall_opener": {
+            "unit": "criterion",
+            "n_applicable": 118,
+            "n_failed": 118,
+            "rate": 0.0,
+            "top_reasons": [
+              {
+                "reason": "opens with 'The response avoids naming'",
+                "n": 4
+              },
+              {
+                "reason": "opens with 'The response avoids selecting'",
+                "n": 4
+              },
+              {
+                "reason": "opens with 'Avoids interpreting the faint'",
+                "n": 2
+              },
+              {
+                "reason": "opens with 'Avoids claiming that a'",
+                "n": 2
+              },
+              {
+                "reason": "opens with 'Avoids attributing the defect'",
+                "n": 2
+              }
+            ]
+          },
+          "rar_keys_only": {
+            "unit": "criterion",
+            "n_applicable": 615,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "no_verbatim_copy": {
+            "unit": "criterion",
+            "n_applicable": 615,
+            "n_failed": 82,
+            "rate": 0.8666666666666667,
+            "top_reasons": [
+              {
+                "reason": "50% of trigrams shared with reference",
+                "n": 24
+              },
+              {
+                "reason": "60% of trigrams shared with reference",
+                "n": 10
+              },
+              {
+                "reason": "100% of trigrams shared with reference",
+                "n": 6
+              },
+              {
+                "reason": "67% of trigrams shared with reference",
+                "n": 5
+              },
+              {
+                "reason": "75% of trigrams shared with reference",
+                "n": 5
+              }
+            ]
+          },
+          "self_contained": {
+            "unit": "criterion",
+            "n_applicable": 615,
+            "n_failed": 4,
+            "rate": 0.9934959349593496,
+            "top_reasons": [
+              {
+                "reason": "asserts correctness via 'the reference'",
+                "n": 4
+              }
+            ]
+          }
+        }
+      }
+    },
+    "rar_science": {
+      "shipped": {
+        "n_questions": 63,
+        "n_criteria": 469,
+        "compliance_rate": 0.9658604182413707,
+        "fully_compliant_rubric": 0.7619047619047619,
+        "item_count_ok": 1.0,
+        "n_items": 7.444444444444445,
+        "polarity_single_rate": 0.9206349206349206,
+        "negative_weight_rate": 0.12962962962962962,
+        "weight_order_violation_rate": 0.38095238095238093,
+        "weight_order_violation_pair_rate": 0.07542358782960286,
+        "pitfall_mirror_rate": 0.0,
+        "n_pitfall_mirrors": 0.0,
+        "max_pitfall_mirror_similarity": 0.288821151864434,
+        "pitfall_fraction": 0.12962962962962962,
+        "weight_band_rate": 0.7800453514739228,
+        "unclassified_polarity_rate": 0.027116402116402115,
+        "check_item_count_7_20_rate": 1.0,
+        "check_title_2_to_4_words_rate": 0.9889455782312926,
+        "check_description_single_sentence_rate": 1.0,
+        "check_category_legal_rate": 1.0,
+        "check_weight_in_range_rate": 1.0,
+        "check_weight_matches_band_rate": NaN,
+        "check_pitfall_opener_rate": NaN,
+        "check_rar_keys_only_rate": 1.0,
+        "check_no_verbatim_copy_rate": 0.9882527084908037,
+        "check_self_contained_rate": 0.9886621315192745,
+        "check_breakdown": {
+          "item_count_7_20": {
+            "unit": "rubric",
+            "n_applicable": 63,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "title_2_to_4_words": {
+            "unit": "criterion",
+            "n_applicable": 469,
+            "n_failed": 5,
+            "rate": 0.9893390191897654,
+            "top_reasons": [
+              {
+                "reason": "title has 1 words",
+                "n": 4
+              },
+              {
+                "reason": "title has 5 words",
+                "n": 1
+              }
+            ]
+          },
+          "description_single_sentence": {
+            "unit": "criterion",
+            "n_applicable": 469,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "category_legal": {
+            "unit": "criterion",
+            "n_applicable": 469,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_in_range": {
+            "unit": "criterion",
+            "n_applicable": 469,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_matches_band": {
+            "unit": "criterion",
+            "n_applicable": 0,
+            "n_failed": 0,
+            "rate": NaN,
+            "top_reasons": []
+          },
+          "pitfall_opener": {
+            "unit": "criterion",
+            "n_applicable": 0,
+            "n_failed": 0,
+            "rate": NaN,
+            "top_reasons": []
+          },
+          "rar_keys_only": {
+            "unit": "criterion",
+            "n_applicable": 469,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "no_verbatim_copy": {
+            "unit": "criterion",
+            "n_applicable": 468,
+            "n_failed": 6,
+            "rate": 0.9871794871794872,
+            "top_reasons": [
+              {
+                "reason": "64% of trigrams shared with question",
+                "n": 1
+              },
+              {
+                "reason": "50% of trigrams shared with question",
+                "n": 1
+              },
+              {
+                "reason": "70% of trigrams shared with question",
+                "n": 1
+              },
+              {
+                "reason": "55% of trigrams shared with question",
+                "n": 1
+              },
+              {
+                "reason": "53% of trigrams shared with question",
+                "n": 1
+              }
+            ]
+          },
+          "self_contained": {
+            "unit": "criterion",
+            "n_applicable": 469,
+            "n_failed": 5,
+            "rate": 0.9893390191897654,
+            "top_reasons": [
+              {
+                "reason": "asserts correctness via 'the reference'",
+                "n": 2
+              },
+              {
+                "reason": "asserts correctness via 'correct conclusion'",
+                "n": 1
+              },
+              {
+                "reason": "asserts correctness via 'the correct answer'",
+                "n": 1
+              },
+              {
+                "reason": "asserts correctness via 'expected value'",
+                "n": 1
+              }
+            ]
+          }
+        }
+      },
+      "baseline": {
+        "n_questions": 63,
+        "n_criteria": 684,
+        "compliance_rate": 0.9542830185687328,
+        "fully_compliant_rubric": 0.6031746031746031,
+        "item_count_ok": 1.0,
+        "n_items": 10.857142857142858,
+        "polarity_single_rate": 0.2698412698412698,
+        "negative_weight_rate": 0.21113291859090177,
+        "weight_order_violation_rate": 0.38095238095238093,
+        "weight_order_violation_pair_rate": 0.04400583390705755,
+        "pitfall_mirror_rate": 0.1111111111111111,
+        "n_pitfall_mirrors": 0.1111111111111111,
+        "max_pitfall_mirror_similarity": 0.4567654416674659,
+        "pitfall_fraction": 0.21113291859090177,
+        "weight_band_rate": 0.9452820198268376,
+        "unclassified_polarity_rate": 0.11442368452172372,
+        "check_item_count_7_20_rate": 1.0,
+        "check_title_2_to_4_words_rate": 0.9810415334224857,
+        "check_description_single_sentence_rate": 1.0,
+        "check_category_legal_rate": 1.0,
+        "check_weight_in_range_rate": 1.0,
+        "check_weight_matches_band_rate": NaN,
+        "check_pitfall_opener_rate": NaN,
+        "check_rar_keys_only_rate": 1.0,
+        "check_no_verbatim_copy_rate": 0.9762717881765499,
+        "check_self_contained_rate": 0.996969696969697,
+        "check_breakdown": {
+          "item_count_7_20": {
+            "unit": "rubric",
+            "n_applicable": 63,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "title_2_to_4_words": {
+            "unit": "criterion",
+            "n_applicable": 684,
+            "n_failed": 13,
+            "rate": 0.9809941520467836,
+            "top_reasons": [
+              {
+                "reason": "title has 1 words",
+                "n": 6
+              },
+              {
+                "reason": "title has 5 words",
+                "n": 6
+              },
+              {
+                "reason": "title has 6 words",
+                "n": 1
+              }
+            ]
+          },
+          "description_single_sentence": {
+            "unit": "criterion",
+            "n_applicable": 684,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "category_legal": {
+            "unit": "criterion",
+            "n_applicable": 684,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_in_range": {
+            "unit": "criterion",
+            "n_applicable": 684,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_matches_band": {
+            "unit": "criterion",
+            "n_applicable": 0,
+            "n_failed": 0,
+            "rate": NaN,
+            "top_reasons": []
+          },
+          "pitfall_opener": {
+            "unit": "criterion",
+            "n_applicable": 0,
+            "n_failed": 0,
+            "rate": NaN,
+            "top_reasons": []
+          },
+          "rar_keys_only": {
+            "unit": "criterion",
+            "n_applicable": 684,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "no_verbatim_copy": {
+            "unit": "criterion",
+            "n_applicable": 684,
+            "n_failed": 14,
+            "rate": 0.97953216374269,
+            "top_reasons": [
+              {
+                "reason": "50% of trigrams shared with reference",
+                "n": 2
+              },
+              {
+                "reason": "75% of trigrams shared with reference",
+                "n": 2
+              },
+              {
+                "reason": "50% of trigrams shared with question",
+                "n": 1
+              },
+              {
+                "reason": "60% of trigrams shared with reference",
+                "n": 1
+              },
+              {
+                "reason": "56% of trigrams shared with question",
+                "n": 1
+              }
+            ]
+          },
+          "self_contained": {
+            "unit": "criterion",
+            "n_applicable": 684,
+            "n_failed": 2,
+            "rate": 0.9970760233918129,
+            "top_reasons": [
+              {
+                "reason": "asserts correctness via 'expected answer'",
+                "n": 1
+              },
+              {
+                "reason": "asserts correctness via 'expected value'",
+                "n": 1
+              }
+            ]
+          }
+        }
+      },
+      "agentic": {
+        "n_questions": 63,
+        "n_criteria": 624,
+        "compliance_rate": 0.8257395382395383,
+        "fully_compliant_rubric": 0.2222222222222222,
+        "item_count_ok": 0.6825396825396826,
+        "n_items": 9.904761904761905,
+        "polarity_single_rate": 1.0,
+        "negative_weight_rate": 0.16650404269451888,
+        "weight_order_violation_rate": 0.3968253968253968,
+        "weight_order_violation_pair_rate": 0.07732194895791855,
+        "pitfall_mirror_rate": 0.1111111111111111,
+        "n_pitfall_mirrors": 0.12698412698412698,
+        "max_pitfall_mirror_similarity": 0.3306575907128198,
+        "pitfall_fraction": 0.16650404269451888,
+        "weight_band_rate": 0.8112316475411713,
+        "unclassified_polarity_rate": 0.0,
+        "check_item_count_7_20_rate": 0.6825396825396826,
+        "check_title_2_to_4_words_rate": 0.9333548065690923,
+        "check_description_single_sentence_rate": 0.9984126984126984,
+        "check_category_legal_rate": 1.0,
+        "check_weight_in_range_rate": 1.0,
+        "check_weight_matches_band_rate": NaN,
+        "check_pitfall_opener_rate": NaN,
+        "check_rar_keys_only_rate": 1.0,
+        "check_no_verbatim_copy_rate": 0.8945861678004535,
+        "check_self_contained_rate": 0.991449357520786,
+        "check_breakdown": {
+          "item_count_7_20": {
+            "unit": "rubric",
+            "n_applicable": 63,
+            "n_failed": 20,
+            "rate": 0.6825396825396826,
+            "top_reasons": [
+              {
+                "reason": "6 items",
+                "n": 20
+              }
+            ]
+          },
+          "title_2_to_4_words": {
+            "unit": "criterion",
+            "n_applicable": 624,
+            "n_failed": 43,
+            "rate": 0.9310897435897436,
+            "top_reasons": [
+              {
+                "reason": "title has 5 words",
+                "n": 33
+              },
+              {
+                "reason": "title has 1 words",
+                "n": 5
+              },
+              {
+                "reason": "title has 6 words",
+                "n": 3
+              },
+              {
+                "reason": "title has 7 words",
+                "n": 2
+              }
+            ]
+          },
+          "description_single_sentence": {
+            "unit": "criterion",
+            "n_applicable": 624,
+            "n_failed": 1,
+            "rate": 0.9983974358974359,
+            "top_reasons": [
+              {
+                "reason": "2 sentences",
+                "n": 1
+              }
+            ]
+          },
+          "category_legal": {
+            "unit": "criterion",
+            "n_applicable": 624,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_in_range": {
+            "unit": "criterion",
+            "n_applicable": 624,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_matches_band": {
+            "unit": "criterion",
+            "n_applicable": 0,
+            "n_failed": 0,
+            "rate": NaN,
+            "top_reasons": []
+          },
+          "pitfall_opener": {
+            "unit": "criterion",
+            "n_applicable": 0,
+            "n_failed": 0,
+            "rate": NaN,
+            "top_reasons": []
+          },
+          "rar_keys_only": {
+            "unit": "criterion",
+            "n_applicable": 624,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "no_verbatim_copy": {
+            "unit": "criterion",
+            "n_applicable": 622,
+            "n_failed": 57,
+            "rate": 0.9083601286173634,
+            "top_reasons": [
+              {
+                "reason": "100% of trigrams shared with reference",
+                "n": 13
+              },
+              {
+                "reason": "50% of trigrams shared with reference",
+                "n": 13
+              },
+              {
+                "reason": "60% of trigrams shared with reference",
+                "n": 4
+              },
+              {
+                "reason": "67% of trigrams shared with reference",
+                "n": 4
+              },
+              {
+                "reason": "80% of trigrams shared with reference",
+                "n": 2
+              }
+            ]
+          },
+          "self_contained": {
+            "unit": "criterion",
+            "n_applicable": 624,
+            "n_failed": 5,
+            "rate": 0.9919871794871795,
+            "top_reasons": [
+              {
+                "reason": "asserts correctness via 'the reference'",
+                "n": 5
+              }
+            ]
+          }
+        }
+      },
+      "agentic-tools": {
+        "n_questions": 63,
+        "n_criteria": 614,
+        "compliance_rate": 0.8982948488900869,
+        "fully_compliant_rubric": 0.2222222222222222,
+        "item_count_ok": 0.5873015873015873,
+        "n_items": 9.746031746031745,
+        "polarity_single_rate": 1.0,
+        "negative_weight_rate": 0.2115829717020193,
+        "weight_order_violation_rate": 0.15873015873015872,
+        "weight_order_violation_pair_rate": 0.02303917127279627,
+        "pitfall_mirror_rate": 0.1746031746031746,
+        "n_pitfall_mirrors": 0.19047619047619047,
+        "max_pitfall_mirror_similarity": 0.37211651556075565,
+        "pitfall_fraction": 0.2115829717020193,
+        "weight_band_rate": 0.8948676984391271,
+        "unclassified_polarity_rate": 0.0,
+        "check_item_count_7_20_rate": 0.5873015873015873,
+        "check_title_2_to_4_words_rate": 0.9561118555166174,
+        "check_description_single_sentence_rate": 0.997732426303855,
+        "check_category_legal_rate": 1.0,
+        "check_weight_in_range_rate": 1.0,
+        "check_weight_matches_band_rate": NaN,
+        "check_pitfall_opener_rate": NaN,
+        "check_rar_keys_only_rate": 1.0,
+        "check_no_verbatim_copy_rate": 0.9434585035775511,
+        "check_self_contained_rate": 0.996362433862434,
+        "check_breakdown": {
+          "item_count_7_20": {
+            "unit": "rubric",
+            "n_applicable": 63,
+            "n_failed": 26,
+            "rate": 0.5873015873015873,
+            "top_reasons": [
+              {
+                "reason": "5 items",
+                "n": 14
+              },
+              {
+                "reason": "6 items",
+                "n": 10
+              },
+              {
+                "reason": "4 items",
+                "n": 2
+              }
+            ]
+          },
+          "title_2_to_4_words": {
+            "unit": "criterion",
+            "n_applicable": 614,
+            "n_failed": 27,
+            "rate": 0.9560260586319218,
+            "top_reasons": [
+              {
+                "reason": "title has 5 words",
+                "n": 21
+              },
+              {
+                "reason": "title has 1 words",
+                "n": 3
+              },
+              {
+                "reason": "title has 6 words",
+                "n": 3
+              }
+            ]
+          },
+          "description_single_sentence": {
+            "unit": "criterion",
+            "n_applicable": 614,
+            "n_failed": 2,
+            "rate": 0.996742671009772,
+            "top_reasons": [
+              {
+                "reason": "2 sentences",
+                "n": 2
+              }
+            ]
+          },
+          "category_legal": {
+            "unit": "criterion",
+            "n_applicable": 614,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_in_range": {
+            "unit": "criterion",
+            "n_applicable": 614,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "weight_matches_band": {
+            "unit": "criterion",
+            "n_applicable": 0,
+            "n_failed": 0,
+            "rate": NaN,
+            "top_reasons": []
+          },
+          "pitfall_opener": {
+            "unit": "criterion",
+            "n_applicable": 0,
+            "n_failed": 0,
+            "rate": NaN,
+            "top_reasons": []
+          },
+          "rar_keys_only": {
+            "unit": "criterion",
+            "n_applicable": 614,
+            "n_failed": 0,
+            "rate": 1.0,
+            "top_reasons": []
+          },
+          "no_verbatim_copy": {
+            "unit": "criterion",
+            "n_applicable": 614,
+            "n_failed": 36,
+            "rate": 0.9413680781758957,
+            "top_reasons": [
+              {
+                "reason": "50% of trigrams shared with reference",
+                "n": 5
+              },
+              {
+                "reason": "56% of trigrams shared with reference",
+                "n": 4
+              },
+              {
+                "reason": "60% of trigrams shared with reference",
+                "n": 4
+              },
+              {
+                "reason": "100% of trigrams shared with reference",
+                "n": 3
+              },
+              {
+                "reason": "56% of trigrams shared with question",
+                "n": 2
+              }
+            ]
+          },
+          "self_contained": {
+            "unit": "criterion",
+            "n_applicable": 614,
+            "n_failed": 2,
+            "rate": 0.996742671009772,
+            "top_reasons": [
+              {
+                "reason": "asserts correctness via 'correct value'",
+                "n": 1
+              },
+              {
+                "reason": "asserts correctness via 'the reference'",
+                "n": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "_shipped_full_corpus_reference": {
+    "rar_medicine": {
+      "n_questions": 22408.0,
+      "n_criteria": 214658.0,
+      "generic_criterion_rate": 0.21969999999999998,
+      "generic_rate_permuted": 0.9854,
+      "weak_grounding_rate": 0.4353,
+      "mean_anchors_per_criterion": 2.066,
+      "weight_mass_on_generic_raw": 0.152,
+      "weight_mass_on_subjective": 0.2125,
+      "subjective_rate": 0.1813,
+      "style_rate": 0.133,
+      "subjective_or_style_rate": 0.2364,
+      "generic_and_subjective_rate": 0.1038,
+      "recyclable_rate": 0.11599999999999999,
+      "mass_produced_title_rate": 0.2526,
+      "mean_trigram_overlap_with_reference": 0.1092,
+      "criteria_with_ge50pct_trigram_overlap": 0.0741,
+      "criteria_with_ge30pct_trigram_overlap": 0.15109999999999998,
+      "mean_4gram_overlap_with_question": 0.0164,
+      "non_self_contained_rate": 0.0069,
+      "weight_order_violation_rate": 0.0,
+      "pitfall_mirror_rate": 0.16210000000000002,
+      "negative_weight_rate": 0.1416,
+      "item_count_in_range_rate": 0.9978,
+      "title_2_to_4_words_rate": 0.9545999999999999,
+      "description_single_sentence_rate": 0.9965,
+      "weight_band_rate": 0.9998999999999999,
+      "pitfall_opener_rate": 0.7856000000000001,
+      "n_items": 9.58,
+      "items_cv": 0.1396,
+      "modal_count_share": 0.3618,
+      "r_items_vs_question_len": 0.256,
+      "r_items_vs_reference_len": 0.3036,
+      "weight_corr_with_uniform": 0.9315,
+      "orphan_subpart_rate": NaN,
+      "subpart_question_rate": 0.0,
+      "mcq_rate": 0.0042
+    },
+    "rar_science": {
+      "n_questions": 22917.0,
+      "n_criteria": 172017.0,
+      "generic_criterion_rate": 0.2887,
+      "generic_rate_permuted": 0.9639,
+      "weak_grounding_rate": 0.5261,
+      "mean_anchors_per_criterion": 1.777,
+      "weight_mass_on_generic_raw": 0.24559999999999998,
+      "weight_mass_on_subjective": 0.4018,
+      "subjective_rate": 0.34159999999999996,
+      "style_rate": 0.1457,
+      "subjective_or_style_rate": 0.396,
+      "generic_and_subjective_rate": 0.13699999999999998,
+      "recyclable_rate": 0.17670000000000002,
+      "mass_produced_title_rate": 0.4227,
+      "mean_trigram_overlap_with_reference": 0.017,
+      "criteria_with_ge50pct_trigram_overlap": 0.0043,
+      "criteria_with_ge30pct_trigram_overlap": 0.013600000000000001,
+      "mean_4gram_overlap_with_question": 0.0097,
+      "non_self_contained_rate": 0.0204,
+      "weight_order_violation_rate": 0.413,
+      "pitfall_mirror_rate": 0.0095,
+      "negative_weight_rate": 0.1305,
+      "item_count_in_range_rate": 0.9997,
+      "title_2_to_4_words_rate": 0.9867,
+      "description_single_sentence_rate": 0.9994,
+      "weight_band_rate": 0.7759,
+      "pitfall_opener_rate": 0.0354,
+      "n_items": 7.506,
+      "items_cv": 0.1068,
+      "modal_count_share": 0.6456000000000001,
+      "r_items_vs_question_len": 0.1895,
+      "r_items_vs_reference_len": 0.2423,
+      "weight_corr_with_uniform": 0.9433,
+      "orphan_subpart_rate": 0.044500000000000005,
+      "subpart_question_rate": 0.029500000000000002,
+      "mcq_rate": 0.09359999999999999
+    }
+  },
+  "_n_errors": 0
+}
