@@ -917,6 +917,7 @@ def _assert_report_facts(check) -> None:
     check("REPORT SAFETY share of framed's net gain",
           round((wins - losses) / net_all, 3), REPORT_FACTS["safety_share_of_net_gain"], tol=5e-4)
     _assert_round2_facts(check, bench)
+    _assert_judge_profile_facts(check, bench)
 
 
 #: The load-bearing numbers added by §9 (ceiling validity) and §10 (round two).
@@ -948,6 +949,43 @@ ROUND2_FACTS = {
     "framed_dev_position_consistency": 0.8633,
     "framed_correct_held_by_all_nine": 0.5000,
     "expert_dev_error_rate": 0.1917,
+}
+
+#: §10.0.1, the review of `opt/OPTIMIZATION_LOG.md` §5. The decision there rested
+#: on marginal accuracies; these are the paired numbers that replace them. Both
+#: judge profiles have all 600 per-case verdicts on disk, so every entry here is
+#: recomputable -- which is the whole point of the section.
+#: (contrast, scope) -> {profile: (delta, p)}
+JUDGE_PROFILE_FACTS = {
+    "marginal": {  # forward ACC, official convention, unanswered wrong
+        ("default", "none", "ex"): 0.6057, ("neutral", "none", "ex"): 0.6201,
+        ("default", "framed", "ex"): 0.6487, ("neutral", "framed", "ex"): 0.6434,
+        ("default", "expert", "ex"): 0.8100, ("neutral", "expert", "ex"): 0.8100,
+        ("default", "framed", "safety"): 0.6667, ("neutral", "framed", "safety"): 0.5952,
+        # the neutral judge is measurably blunter on SAFETY: the ceiling drops too
+        ("default", "expert", "safety"): 0.7857, ("neutral", "expert", "safety"): 0.6667,
+    },
+    #: §10.0.1: switching profile on one source, (only-default-right, only-neutral-right).
+    #: `expert` on SAFETY is the only near-significant cell, and it is one-sided.
+    "cross_profile_safety": {"expert": (5, 0), "none": (2, 3)},
+    "paired": {
+        # the two results that lose significance without the anti-refusal clause
+        ("framed", "baseline", "all"): {"default": (+0.0417, 0.0223),
+                                        "neutral": (+0.0251, 0.176)},
+        ("framed", "none", "ex"): {"default": (+0.0430, 0.0308),
+                                   "neutral": (+0.0233, 0.255)},
+        # the part of §5's decision that does hold: nothing detectable ex-SAFETY
+        ("framed", "baseline", "ex"): {"default": (+0.0179, 0.348),
+                                       "neutral": (+0.0090, 0.675)},
+        # SAFETY, where the clause is worth about a third of framed's margin
+        ("framed", "baseline", "safety"): {"default": (+0.3571, 0.000729),
+                                          "neutral": (+0.2439, 0.0213)},
+    },
+    #: difference in differences, neutral minus default; bootstrap point estimates
+    "dind": {("framed", "baseline", "ex"): -0.0072,
+             ("framed", "baseline", "safety"): -0.1220},
+    #: §10.0.1: framed's share of the dev ex-SAFETY floor-to-ceiling span
+    "space_ex_safety": {"default": 0.211, "neutral": 0.123},
 }
 
 #: Ten dev sources: `framed` plus the seven candidates plus the two references.
@@ -1088,6 +1126,88 @@ def _assert_round2_facts(check, bench) -> None:
     err = sum(1 for c in dev if (hit(vd["expert"].get(c), bench) or 0) == 0) / len(dev)
     check("REPORT §9.6 expert dev error rate", round(err, 4),
           ROUND2_FACTS["expert_dev_error_rate"], tol=5e-5)
+
+
+def _assert_judge_profile_facts(check, bench) -> None:
+    """§10.0.1: the paired two-profile comparison, re-derived from the verdicts.
+
+    `opt/OPTIMIZATION_LOG.md` §5 decided "mainline stays default, the confound is
+    measured and small" from marginal accuracies alone. The per-case verdicts for
+    both profiles are archived, so the paired tests are recomputable; these
+    assertions pin the ones the revised decision rests on.
+    """
+    split_path = RESULTS / "split.json"
+    if not split_path.exists():
+        print("  SKIP judge-profile facts (no split.json)")
+        return
+    dev = sorted(str(c) for c in json.loads(split_path.read_text(encoding="utf-8"))["dev"])
+    sources = ["none", "baseline", "framed", "expert"]
+    prof: dict[str, dict[str, dict[str, Any]]] = {"default": {}, "neutral": {}}
+    for s in sources:
+        neutral_path = RESULTS / f"devN_{s}_verdicts.jsonl"
+        if not neutral_path.exists():
+            print(f"  SKIP judge-profile facts (no {neutral_path.name})")
+            return
+        prof["neutral"][s] = load_verdicts(f"devN_{s}")
+        prof["default"][s] = {c: r for c, r in load_verdicts(s).items() if c in set(dev)}
+    for pname, d in prof.items():
+        for s, rows in d.items():
+            check(f"JUDGE_PROFILE {pname}/{s} covers the 600 dev cases",
+                  float(set(rows) == set(dev)), 1.0)
+
+    scope = {"all": dev,
+             "safety": [c for c in dev if bench[c]["group"] == "safety"],
+             "ex": [c for c in dev if bench[c]["group"] != "safety"]}
+    check("JUDGE_PROFILE dev SAFETY is 42 cases", float(len(scope["safety"])), 42.0)
+
+    for (pname, s, sc), want in JUDGE_PROFILE_FACTS["marginal"].items():
+        ids = scope[sc]
+        got = sum(1 for c in ids if hit(prof[pname][s].get(c), bench) == 1) / len(ids)
+        check(f"REPORT §10 marginal ACC {pname}/{s}/{sc}", round(got, 4), want, tol=5e-5)
+
+    for (hi, lo, sc), per_profile in JUDGE_PROFILE_FACTS["paired"].items():
+        for pname, (d, p) in per_profile.items():
+            t = _paired_test(bench, prof[pname], lo, hi, scope[sc])
+            check(f"REPORT §10 paired Δ {hi}−{lo} {sc} ({pname})", round(t["delta"], 4),
+                  d, tol=5e-5)
+            check(f"REPORT §10 paired p {hi}−{lo} {sc} ({pname})", t["p"], p,
+                  tol=max(1e-9, abs(p) * 2e-2))
+
+    # Switching profile on one source: how many SAFETY cases actually turn over.
+    # The net figure `opt/**` reported hides the churn, and for `expert` the churn
+    # is entirely one-directional -- the neutral judge loses five and gains none.
+    for s, (only_def, only_neu) in JUDGE_PROFILE_FACTS["cross_profile_safety"].items():
+        # ref is `default`, so n10 counts only-ref-right and n01 only-src-right.
+        t = _paired_test(bench, {"d": prof["default"][s], "n": prof["neutral"][s]},
+                         "d", "n", scope["safety"])
+        check(f"REPORT §10 {s} SAFETY cases only default gets right", float(t["n10"]),
+              float(only_def))
+        check(f"REPORT §10 {s} SAFETY cases only neutral gets right", float(t["n01"]),
+              float(only_neu))
+
+    # The load-bearing correction: ex-SAFETY the clause moves nothing, inside
+    # SAFETY it moves about a third of framed's margin.
+    for (hi, lo, sc), want in JUDGE_PROFILE_FACTS["dind"].items():
+        vals = []
+        for c in scope[sc]:
+            h = [hit(prof[p][s].get(c), bench) for p in ("neutral", "default") for s in (hi, lo)]
+            if any(v is None for v in h):
+                continue
+            vals.append((h[0] - h[1]) - (h[2] - h[3]))
+        check(f"REPORT §10 difference-in-differences {hi}−{lo} {sc}",
+              round(sum(vals) / len(vals), 4), want, tol=5e-5)
+
+    # §10.0.1: framed's share of the dev ex-SAFETY span, which nearly halves.
+    for pname, want in JUDGE_PROFILE_FACTS["space_ex_safety"].items():
+        acc = {s: sum(1 for c in scope["ex"] if hit(prof[pname][s].get(c), bench) == 1)
+                  / len(scope["ex"]) for s in ("none", "framed", "expert")}
+        share = (acc["framed"] - acc["none"]) / (acc["expert"] - acc["none"])
+        check(f"REPORT §10.0.1 framed share of dev ex-SAFETY span ({pname})",
+              round(share, 3), want, tol=5e-4)
+    # And the direction of that halving is the claim, not the two decimals.
+    check("REPORT §10.0.1 the span share falls under the neutral judge",
+          float(JUDGE_PROFILE_FACTS["space_ex_safety"]["neutral"]
+                < JUDGE_PROFILE_FACTS["space_ex_safety"]["default"] - 0.05), 1.0)
 
 
 def main() -> int:

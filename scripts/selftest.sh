@@ -47,7 +47,7 @@ for s in gen_rubrics build_responses eval_rubrics aggregate_results \
          main_table report_facts case_study check_prompt_fidelity _repair_jsonl \
          confound_audit rubricbench_run rubricbench_compare rubricbench_verify \
          rubricbench_split rubricbench_gen rubricbench_failures rubricbench_route \
-         rubricbench_rubric_stats rubricbench_tilt_audit; do
+         rubricbench_rubric_stats rubricbench_tilt_audit rubricbench_judge_profile; do
   if python "scripts/$s.py" --help >/dev/null 2>&1; then
     echo "  OK   $s"
   else
@@ -230,9 +230,9 @@ echo "== RubricBench: numeric helpers, and the report still matches its artefact
 # Checks the exact McNemar / Clopper-Pearson / Wilson / Fisher implementations
 # against frozen reference values, and re-derives every headline number in
 # results/rubricbench/REPORT.md from the verdict files -- including §9's ceiling
-# validity result (under a third, independent tokenisation) and §10's round-two
-# candidate deltas and offline bounds. Only the failures are printed; there are
-# ~72 assertions.
+# validity result (under a third, independent tokenisation), §10's round-two
+# candidate deltas and offline bounds, and §10.0.1's paired two-judge-profile
+# comparison. Only the failures are printed; there are ~116 assertions.
 if rb_out=$(python scripts/rubricbench_verify.py --section selftest 2>&1); then
   echo "  OK   $(printf '%s\n' "$rb_out" | grep -c '^  OK') assertions (stats helpers + REPORT.md facts)"
 else

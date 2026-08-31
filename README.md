@@ -59,7 +59,8 @@
 
 完整报告：**[`results/rubricbench/REPORT.md`](results/rubricbench/REPORT.md)**；
 机器生成的核算：[`results/rubricbench/VERIFY.md`](results/rubricbench/VERIFY.md)；
-天花板效度的独立核验：[`results/rubricbench/TILT_AUDIT.md`](results/rubricbench/TILT_AUDIT.md)。
+天花板效度的独立核验：[`results/rubricbench/TILT_AUDIT.md`](results/rubricbench/TILT_AUDIT.md)；
+两个 judge profile 的配对比较：[`results/rubricbench/JUDGE_PROFILE.md`](results/rubricbench/JUDGE_PROFILE.md)。
 
 §0 那张表里最要命的一格是「**结构性指标改善 ≠ reward signal 改善**」——
 本地代理指标全线领先，但没有任何证据说它转化成了更好的 reward signal。
@@ -100,9 +101,12 @@
 - 换成位置偏置受控的口径（正反两序一致才算数），
   `framed` vs `baseline` 掉到 **q=0.079，不再显著**；vs `none` 仍然稳。
 - 我们自己的判定器提示里有一句反拒答的话，SAFETY 的人类标签恰好相反。
-  **已量化**（报告 §10）：那句话只解释 `framed` SAFETY 优势的**约三分之一**，
+  **已量化，两个 profile 的逐题判决都归档、配对检验已做**（报告 §10 与 §10.0.1）：
+  那句话只解释 `framed` SAFETY 优势的**约三分之一**（配对区间 [0, 2/3]），
   且 judge 的反拒答倾向绝大部分是模型的属性 —— 删掉那句话，SAFETY 上的无 rubric 地板
-  只在 42 题里动了 1 题。
+  净移动 1 题（42 题里翻面 5 题）。**SAFETY 之外这句话可证地什么都没动**
+  （差的差 −0.0072 [−0.0449, +0.0305]），**但 dev 上两个总体结果会掉出显著**，
+  因为它们都靠那 42 题抬着。
 
 ### 第二轮：`framed` 之上再优化，七个候选全部关闭
 
@@ -144,6 +148,8 @@ python3 scripts/rubricbench_verify.py --out results/rubricbench/VERIFY.md
 python3 scripts/rubricbench_split.py --verify                    # 冻结切分自校验
 python3 scripts/rubricbench_tilt_audit.py \
     --out results/rubricbench/TILT_AUDIT.md                      # 天花板效度，零 LLM 调用
+python3 scripts/rubricbench_judge_profile.py \
+    --out results/rubricbench/JUDGE_PROFILE.md                   # 两个 judge profile 配对比较
 cd rubricbench && python3 eval_submission.py \
     --submission ../results/rubricbench/framed_submission.csv     # 官方评测器
 ```
@@ -388,6 +394,7 @@ rubric_harness/
 │   ├── rubricbench_route.py      # RubricBench：路由/投票/逐题 oracle 的离线界，零 LLM 调用
 │   ├── rubricbench_rubric_stats.py  # RubricBench：rubric 的形式与内容测量
 │   ├── rubricbench_tilt_audit.py # RubricBench：天花板效度（tilt）的独立核验，零 LLM 调用
+│   ├── rubricbench_judge_profile.py # RubricBench：default/neutral 两个 judge profile 的配对比较
 │   └── rubricbench_verify.py     # RubricBench：脱离 score.json 独立重算全部主张；含 --section selftest
 ├── rubricbench/              # 上游基准（1147 题 + 官方评测器 + 4 个已发表提交），只读
 ├── harness/rubricbench.py    # 适配层：load_cases / judge_all / score / write_submission

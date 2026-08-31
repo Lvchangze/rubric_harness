@@ -18,6 +18,7 @@
 | [`VERIFY.md`](VERIFY.md) | 本报告全部数字的机器生成版本，9 节 |
 | [`COMPARE.md`](COMPARE.md) | 7 来源总表 + 配对检验 + 空间利用率 |
 | [`TILT_AUDIT.md`](TILT_AUDIT.md) / [`TILT_AUDIT_full.md`](TILT_AUDIT_full.md) | §9 的独立核验，dev 596 题 / 全量 1141 题，零 LLM 调用 |
+| [`JUDGE_PROFILE.md`](JUDGE_PROFILE.md) | §10.0.1：`default` / `neutral` 两个 judge profile 在同一批 600 题上的配对检验，零 LLM 调用 |
 | [`opt/`](opt/) | 第二轮优化的完整记录（§10 的来源，作为历史保留，不再修改） |
 | `<tag>_score.json` / `_verdicts.jsonl` / `_rubrics.json` / `_submission.csv` | 每个来源的原始产物 |
 
@@ -29,6 +30,8 @@ python3 scripts/rubricbench_compare.py --sources none baseline agentic \
 python3 scripts/rubricbench_tilt_audit.py --out results/rubricbench/TILT_AUDIT.md
 python3 scripts/rubricbench_tilt_audit.py --scope full \
     --out results/rubricbench/TILT_AUDIT_full.md
+python3 scripts/rubricbench_judge_profile.py \
+    --out results/rubricbench/JUDGE_PROFILE.md
 cd rubricbench && python3 eval_submission.py \
     --submission ../results/rubricbench/framed_submission.csv    # 官方评测器
 ```
@@ -582,10 +585,14 @@ Wilson CI 宽达 0.20（[0.579, 0.778]）。任何关于「提升了多少」的
 （`expert` +0.0217、`none` −0.0198）。它的结论只在子集内配对时成立。
 
 **6. 反拒答先验是我们自己引入的**（§5.4）。
-> ✅ **已做，结论要改**。`neutral` judge profile 删掉那一句重跑了 dev 全部 600 题
-> （§10）。那一句只解释 `framed` SAFETY 优势的**约三分之一**，不是「至少一半」；
-> 而 judge 的反拒答倾向绝大部分是模型的属性，不是我们那句话 —— 删掉它把 SAFETY 上的
-> 无 rubric 地板只挪了 42 题里的 1 题。任何结论都不依赖这个选择，主线保持 `default`。
+> ✅ **已做，配对检验也做了，结论要改两次**。`neutral` judge profile 删掉那一句
+> 重跑了 dev 全部 600 题，逐题判决已归档，配对差与显著性见 §10 与
+> [`JUDGE_PROFILE.md`](JUDGE_PROFILE.md)。那一句只解释 `framed` SAFETY 优势的
+> **约三分之一**（配对区间 [0, 2/3]），不是「至少一半」；judge 的反拒答倾向绝大部分是
+> 模型的属性，不是我们那句话 —— 删掉它，SAFETY 上的无 rubric 地板净移动 1 题
+> （42 题里翻面 5 题）。**但「任何结论都不依赖这个选择」是错的**：
+> SAFETY 之外确实不依赖（差的差 −0.0072，位置受控口径下为 0），
+> 而 dev 上两个总体结果会从显著掉到不显著（§10.0.1）。主线仍保持 `default`。
 
 **7. 未答样本的处理在两处不同。** 官方口径把未答计为错（主表照此）；
 配对检验把未答对**剔除**（2–3 题），因为把一次 JSON 解析失败算成判据的实质错误，
@@ -887,8 +894,87 @@ tilt 正是「懂」的表现**。删掉最偏向的判据会同时删掉最切�
 
 **真正能分开它的实验**（都不在本次范围内）：
 (i) 找一批只看 instruction、不给回答的标注者重写 rubric，比较 tilt；
-(ii) 向基准作者确认 Stage III 的 "held-out model responses" 是否包含本基准的候选回答；
+(ii) 向基准作者确认 Stage III 的 "held-out model responses" 是否包含本基准的候选回答
+（**成本最低且能定案，问法见 §9.9**）；
 (iii) 构造 (i) 那种一对多的数据。
+
+### 9.9 给基准作者的问题（可直接发送）
+
+(ii) 是唯一一个不需要重新标注、也不需要判决预算就能定案的动作：一封邮件。
+下面这段是写好的正文，含证据摘要和它为什么能区分两种解释，
+后续同学直接复制即可，不用重建上下文。
+
+---
+
+> **主题：RubricBench Stage III "held-out model responses" 的一个澄清问题**
+>
+> 我们在用 RubricBench 评测 rubric 生成方法，把专家标注的 rubric 当作天花板、
+> 把「只看 instruction 生成的 rubric」当作被测对象。为了确认这个天花板对
+> 指令派生方法是可达的，我们量了一个指标，结果想请你们澄清一处规程细节。
+>
+> **我们量了什么。** 对每一个成对比较，取专家 rubric 里出现、但 instruction 里
+> 没有出现的实词（即「只能来自标注者、不能由指令复制」的那部分），
+> 看它们命中人类偏好的那个回答、还是命中落选的那个。只统计**恰好命中一侧**的词。
+>
+> **观测到的。** 全量 1141 题上，这类词有 **57.6%（95% CI [56.3%, 59.0%]，
+> 精确二项 p=5.5e-28）落在人类偏好的一侧**。作为对照，我们用九种不同 prompt、
+> 只给 instruction 不给回答生成了 rubric：在 600 题子集上，九种的同一指标落在
+> **0.481–0.515**，没有一种偏向获胜方（最大正偏离 1.5 个百分点，不显著；
+> 唯一显著的一种是 0.4810，p=0.0235，偏向**落选**方），
+> 而专家在同一子集上是 0.5821 (p=7.4e-18)。
+> 把九种的词表并起来（每题 149.7 个新词，单份专家 rubric 只有 34.4 个）再看命中率差，
+> 仍然是 **−0.0014，CI [−0.0049, +0.0022]** —— 词汇量四倍于专家，偏向依然是零。
+> 这个 57.6% 在 16 种度量定义下稳健（分词、词干、df 加权、罕见度阈值、
+> 命中判定方式），不是长度产物 —— 获胜回答系统性地**更短**，
+> 而更短的一侧本该更难被命中。逐字 n-gram 重叠的相对抬升随 n 平坦
+> （n=1 ×1.075 到 n=6 ×1.185），所以不是转写。效应量本身不大：
+> 我们估计它只解释专家相对生成 rubric 的 15.3 点准确率差里的 0.5–1.5 点。
+>
+> **为什么来问你们。** 论文 §3.1 设计原则 (2) 说 rubric "derived solely from the
+> instruction, without access to candidate responses, preventing response-aware
+> leakage in rubric formulation"，§3.4 Stage II 也说 "drafted without knowledge of
+> candidate responses"。同时 §3.4 Stage III (3) Stress Testing 说
+> "validate rubrics against held-out model responses. This ensures the criteria
+> remain discriminative"。**「起草时不看回答、然后筛掉对回答没有判别力的判据」
+> 是一条完全自洽的规程，而它恰好会产生我们观测到的偏向** ——
+> 我们的数据也指向筛选而不是起草：偏向在「生成器也写得出的词」上（+0.0219）
+> 和「没有生成器写得出的词」上（+0.0209）一样大，也就是说差别在
+> **从可派生的判据里挑了哪几条**，而不是引入了回答里的新词。
+>
+> **具体问题，三个。**
+>
+> 1. Stage III Stress Testing 用的 "held-out model responses"，**是否包含本基准里
+>    这 1147 个成对比较的候选回答本身**（或它们的任一子集）？
+> 2. 如果包含：筛选时标注者**是否可见人类偏好标签**（哪个回答被偏好）？
+>    还是只看回答内容、不看标签？
+> 3. Stage III 是否有**逐题的修订记录**（哪些判据在 Stress Testing 后被删除或改写）？
+>    如果有，我们可以在「筛选前」的 rubric 上重算同一指标，这将直接定位偏向的来源。
+>
+> **为什么这三个问题能定案。** 我们观测到的偏向有两种解释，含义完全相反，
+> 而现有数据分不开：**(a) 专家更懂这个任务**，挑中了真正要紧的判据，获胜回答满足它
+> 是因为它确实更好 —— 这不是泄漏，正是好 rubric 应该做的，天花板对指令派生方法可达；
+> **(b) 筛选阶段接触了本题的候选回答**，把「对这一对回答有判别力」的判据留了下来 ——
+> 这使天花板部分带有本题标签信息，指令派生方法**在原理上**到不了那一部分。
+>
+> 问题 1 直接切开这两者：答「不包含」则 (b) 被排除，我们会把偏向归给 (a)
+> 并相应修正报告；答「包含」则 (b) 成立，天花板需要标注为部分 response-aware。
+> 问题 2 决定 (b) 的强度（看内容 vs 看标签是两个量级）。
+> 问题 3 是唯一能把偏向**定量归因**到筛选步骤的证据。
+>
+> 我们的复算脚本与逐项结果在这里（可独立重跑）：`scripts/rubricbench_tilt_audit.py`、
+> `results/rubricbench/TILT_AUDIT_full.md`。需要的话我们可以把逐题的词表和命中明细发过去。
+>
+> 说明一句：我们**不认为**这构成对规程的违反 —— 规程只约束起草阶段，
+> 而起草盲、筛选不盲是自洽的。我们想确认的是**天花板该怎么标注**，
+> 因为这决定了「指令派生方法离专家还有多远」这个数字的含义。
+
+---
+
+**这个问题为什么值得单独列出来。** 它是本报告里唯一一个**成本接近零、
+而且无论答案是什么都会改变结论**的动作。其余所有能分开 (a) 和 (b) 的设计
+（重新标注、一对多数据）都要新的人工标注预算；这个只要一封邮件。
+而如果答案是「包含」，那么受影响的不只是本仓库的天花板口径 ——
+任何把 RubricBench 的专家 rubric 当作 response-agnostic 上界来引用的工作都要改。
 
 ---
 
@@ -957,30 +1043,127 @@ tilt 正是「懂」的表现**。删掉最偏向的判据会同时删掉最切�
 （§5.4 已列为局限）。`neutral` judge profile 删掉这 79 个字符、其余不动，
 在 dev 全部 600 题、两个序上重跑了地板、两个生成器和天花板：
 
-| source | SAFETY (default) | SAFETY (neutral) | overall (default) | overall (neutral) |
-|---|--:|--:|--:|--:|
-| `none` | 0.2619 | 0.2857 | 0.5817 | 0.5967 |
-| `baseline` | 0.3095 | 0.3571 | 0.6083 | 0.6150 |
-| `framed` | 0.6667 | 0.5952 | 0.6500 | 0.6400 |
-| `expert` | 0.7857 | 0.6667 | 0.8083 | 0.8000 |
+| source | SAFETY (default) | SAFETY (neutral) | ex-SAFETY (default) | ex-SAFETY (neutral) | overall (default) | overall (neutral) |
+|---|--:|--:|--:|--:|--:|--:|
+| `none` | 0.2619 | 0.2857 | 0.6057 | 0.6201 | 0.5817 | 0.5967 |
+| `baseline` | 0.3095 | 0.3571 | 0.6308 | 0.6344 | 0.6083 | 0.6150 |
+| `framed` | 0.6667 | 0.5952 | 0.6487 | 0.6434 | 0.6500 | 0.6400 |
+| `expert` | 0.7857 | 0.6667 | 0.8100 | 0.8100 | 0.8083 | 0.8000 |
 
-> ⚠️ **产物完整性**：这是本报告里**唯一**一张无法从磁盘上的判决文件重算的表。
-> `neutral` 那一轮的逐题判决没有归档，只有 `logs/opt_neutral.log` 里的汇总
-> （四个 `forward ACC` 与分域数字与上表逐位一致，可查）。因此上表的**边际值可追溯、
-> 配对检验不可重做**。这也是为什么下面的决定是「保持 `default` 冻结」而不是
-> 「在两个 profile 之间比较」。要恢复可重算性，需要用 `--judge-profile neutral`
-> 重跑并归档 `*_verdicts.jsonl`。
+四个来源在 `neutral` 下的逐题判决都在版本控制里
+（[`devN_none_verdicts.jsonl`](devN_none_verdicts.jsonl)、
+[`devN_baseline_verdicts.jsonl`](devN_baseline_verdicts.jsonl)、
+[`devN_framed_verdicts.jsonl`](devN_framed_verdicts.jsonl)、
+[`devN_expert_verdicts.jsonl`](devN_expert_verdicts.jsonl)，各 600 行，
+`851780e`/`4b0ba49` 归档），`default` 一侧由全量 1147 题的判决文件按 dev case_id 取子集。
+**所以配对检验是能做的。** `opt/OPTIMIZATION_LOG.md` §5 当时只记了边际值；
+下面补上配对差、区间与显著性，口径与 §4 完全一致（McNemar 精确检验只用判得不同的题，
+CI 对不一致对做 Clopper–Pearson 再按不一致比例缩放，未答退出配对）。
+完整的五种口径、跨 profile 同源比较与 SAFETY 的 Wilson 区间在
+[`JUDGE_PROFILE.md`](JUDGE_PROFILE.md)，`python scripts/rubricbench_judge_profile.py` 可重算。
+
+| 对比 | 口径 | n | Δ (default) | p | Δ (neutral) | p |
+|---|---|--:|--:|--:|--:|--:|
+| `framed` − `baseline` | forward, 全部 | 600 / 598 | **+0.0417** | **0.0223** | +0.0251 | 0.176 |
+| `framed` − `baseline` | forward, 不含 SAFETY | 558 / 557 | +0.0179 | 0.348 | +0.0090 | 0.675 |
+| `framed` − `baseline` | 位置受控, 不含 SAFETY | 557 / 555 | +0.0108 | 0.617 | +0.0108 | 0.594 |
+| `framed` − `baseline` | forward, 仅 SAFETY | 42 / 41 | **+0.3571** | **0.000729** | **+0.2439** | **0.0213** |
+| `framed` − `none` | forward, 全部 | 600 / 598 | **+0.0683** | **0.000431** | **+0.0435** | **0.0292** |
+| `framed` − `none` | forward, 不含 SAFETY | 558 / 557 | **+0.0430** | **0.0308** | +0.0233 | 0.255 |
+| `framed` − `none` | 位置受控, 不含 SAFETY | 558 / 555 | **+0.0538** | **0.00545** | +0.0342 | 0.0871 |
+| `framed` − `none` | forward, 仅 SAFETY | 42 / 41 | **+0.4048** | **1.53e-05** | **+0.3171** | **0.0072** |
+
+两列 n 分别是 default / neutral 侧进入配对检验的题数，差 1–3 题是未解析判决退出所致。
+加粗为 p<0.05。每个对比的 10 个检验（5 口径 × 2 profile）在 `JUDGE_PROFILE.md` 里
+做过族内 BH-FDR，校正后：`framed` − `baseline` **只剩 default 的 SAFETY 一行**
+（q=0.00729），forward/全部在 default 下也掉出（q=0.0743），neutral 的 SAFETY 同样掉出
+（q=0.0743）；`framed` − `none` 上表四行 default 全部保住，neutral 只保住
+forward/全部（q=0.0385）与 SAFETY（q=0.012）两行。
+**换句话说，dev 600 题这个样本量下，唯一在两个 profile、校正前后都稳的结论是
+「给 rubric 好过不给」的总体读法**（`framed` − `none`，全部 600 题）——
+连它的 ex-SAFETY 版本在 neutral 下都不显著。「`framed` 好过 `baseline`」在 dev 上
+本来就只靠 SAFETY 支撑；它的全量证据来自 §4.2 的 1147 题，不是这里。
+
+**差的差**（同一批题上 neutral 的 Δ 减 default 的 Δ，20000 次重采样题的 bootstrap，
+seed 20260831）—— 这是判断这句话到底值多少分的量，边际表给不出它：
+
+| 对比 | 口径 | 差的差 | 95% CI |
+|---|---|--:|:--:|
+| `framed` − `baseline` | forward, 不含 SAFETY | −0.0072 | [−0.0449, +0.0305] |
+| `framed` − `baseline` | 位置受控, 不含 SAFETY | +0.0000 | [−0.0360, +0.0360] |
+| `framed` − `baseline` | forward, 仅 SAFETY | **−0.1220** | [−0.2439, +0.0000] |
+| `framed` − `none` | forward, 不含 SAFETY | −0.0197 | [−0.0646, +0.0251] |
+| `framed` − `none` | forward, 仅 SAFETY | −0.0976 | [−0.2683, +0.0488] |
 
 三个结果，第一个不是我预期的：**(i) 这句话不是 judge 反拒答的原因** ——
-删掉它把 SAFETY 上的无 rubric 地板从 0.2619 挪到 0.2857，42 题里动了 1 题；
-偏置绝大部分是模型的属性，不是我们 prompt 的。§5.4 的推断方向对，归因偏重。
-**(ii) `framed` 的 SAFETY 优势大部分存活**：相对 `baseline` 从 +0.3571 降到 +0.2381，
-这句话解释其中约**三分之一**，不是 §5.4 说的「至少一半」。
-**(iii) 不改变任何结论**：SAFETY 之外 `framed` − `baseline` 在 default 下 +0.0179、
-在 neutral 下 +0.0090，两个都远在 dev 的 0.038 之下。主线因此保持 `default` 冻结
-（每一份既有产物都在这个 profile 下产生），`neutral` 作为已记录的稳健性检查留在代码里。
+删掉它把 SAFETY 上的无 rubric 地板从 0.2619 挪到 0.2857，**净移动 1 题**；
+配对看是 42 题里有 5 题翻了面（2 题只有 default 对、3 题只有 neutral 对，Δ=+0.0238，p=1）：
+**动了 5 题、净 1 题**，原来那句「42 题里动了 1 题」说的是净值，把翻动量说小了。
+偏置绝大部分是模型的属性，不是我们 prompt 的：
+四个来源逐个换 profile，SAFETY 之外没有一个动得出来（|Δ| 最大 0.0143，p 全部 ≥0.445）。
+§5.4 的推断方向对，归因偏重。
+**(ii) `framed` 的 SAFETY 优势大部分存活**：相对 `baseline` 从 +0.3571 降到 +0.2381
+（配对口径 +0.3571 → +0.2439），这句话解释其中约**三分之一**，不是 §5.4 说的「至少一半」。
+配对区间给这个「三分之一」定了范围：差的差 −0.1220，CI [−0.2439, +0.0000]，p=0.0659 ——
+**点估计是三分之一，区间从 0 一直到三分之二**，42 题给不出更细的。
+**(iii) SAFETY 之外，这句话动不了任何东西**：`framed` − `baseline` 在 default 下
++0.0179 (p=0.348)、在 neutral 下 +0.0090 (p=0.675)，两个都在 dev 的最小可检出差
+（此处 0.0358 / 0.0377）之下；差的差 −0.0072 [−0.0449, +0.0305]，位置受控口径下正好是 0。
+主线因此保持 `default` 冻结（每一份既有产物都在这个 profile 下产生），
+`neutral` 作为已记录的稳健性检查留在代码里。
 对后续工作的指示不是「换 judge profile」，而是**「别再优化 SAFETY」**：80 题、
 带三分之一的自制成分、且会主导任何包含它的总数。
+
+#### 10.0.1 复核 `opt/OPTIMIZATION_LOG.md` §5 的决定（配对检验之后）
+
+§5 当时的决定是「mainline 保持 `default`、混淆已量化且小」，依据只有边际值。
+`opt/**` 是历史记录不改，复核结论写在这里。**一半成立，一半措辞过强。**
+
+**成立的部分（决定本身不变）。** §5 引用的两个 ex-SAFETY 点估计
+（default +0.0179、neutral +0.0090）从归档判决里逐位重算得到，边际值是对的。
+配对检验补上后方向一致：两者都不显著，都在 dev 的可检出下限之下，差的差居中在 0。
+逐来源换 profile 在 SAFETY 之外一律测不出。**保持 `default` 冻结这个操作决定成立**，
+理由还比当时更强 —— 不是「换了也差不多」，而是「换了在 SAFETY 之外可证地什么都没动」，
+而换 profile 会让磁盘上每一份产物失效。
+
+**不成立的部分：§5 的决定理由第 1 条经不起配对检验。** 原话是
+"**No conclusion depends on it.** Every ordering, every significance verdict and
+every ex-SAFETY number is materially the same under both profiles."
+**「every ordering」和「every ex-SAFETY number」成立，「every significance verdict」不成立。**
+两个在 `default` 下显著的结果在 `neutral` 下不显著：
+
+- `framed` vs `baseline`，forward、全部 600 题：+0.0417 (p=0.0223) → +0.0251 (p=0.176)；
+- `framed` vs `none`，forward、不含 SAFETY 558 题：+0.0430 (p=0.0308) → +0.0233 (p=0.255)。
+
+（两条都是未校正的 p。加上族内 BH 后第一条在 `default` 下也只有 q=0.0743，
+本来就不该当成 dev 上的显著结果；这一点不改变结论的方向 —— 它让「dev 分辨不了
+`framed` 与 `baseline`」这句话在两个 profile 下都更成立。第二条 default q=0.0385
+校正后仍显著，neutral q=0.255 不显著，是这里真正翻面的那一条。）
+
+机制是清楚的，两条都靠那 42 题 SAFETY 抬着：这句话在 SAFETY 上值 `framed` 优势的
+约 0.12，删掉之后总体差值落到 dev 的可检出下限以下。所以正确的措辞是
+**「混淆在 SAFETY 之外小到测不出，在 SAFETY 之内是本节量到的最大单项效应，
+并且大到足以翻转 dev 上总体比较的显著性」**，而不是「不改变任何结论」。
+
+同一件事还有一个说法更直观。dev 上 SAFETY 之外的可用空间（地板 `none` 到天花板
+`expert`）：default 是 0.6057→0.8100，`framed` 吃到 **21.1%**（24/114 题）；neutral 是
+0.6201→0.8100，`framed` 吃到 **12.3%**（13/106）。两个数都带着上面那个不显著的 gain，
+不该当精确值读，但**「`framed` 吃到多少空间」对 judge prompt 里一句话的敏感度，
+和它自身的效应量同量级** —— 这正是 §10.1 把「该动 judge」排在第二位的另一个理由。
+
+**§5 自己记下的那条观察，配对检验支持它，而且它是本节最大的单项效应。**
+原话是 `expert` 在 SAFETY 上换到 `neutral` 反而**变差**（0.7857 → 0.6667），
+所以「删掉那句话让 judge 在 SAFETY 上更好」是错的 —— 它只是让 judge 在那里
+**对 rubric 更不敏感**，把地板和天花板一起压扁。配对看：这 5 题全部是
+「只有 `default` 判对」、没有一题反向（p=0.0625，n=42），
+是逐来源换 profile 里唯一接近显著的一格。**这条比 §5 当时写得更强**：
+不是「中性 judge 不自动更好」，而是**中性 judge 在 SAFETY 上可测地更钝**，
+而 SAFETY 恰好是唯一一个 rubric 能大幅拉开差距的域。
+
+**一条真的局限（这次写准）。** `neutral` 只在 dev 600 题上跑过，
+全量 1147 题没有 `neutral` 运行。因此 §4.2 那张 F1 主表（`framed` vs `baseline`
+q=0.00581）**无法在 `neutral` 下复核**；能说的只是它在 dev 子集上对 profile 敏感。
+要补这一格需要用 `--judge-profile neutral` 跑满 1147 题 × 4 来源 × 2 序。
 
 ### 10.1 最终判断
 
@@ -1073,9 +1256,12 @@ tilt 正是「懂」的表现**。删掉最偏向的判据会同时删掉最切�
 它现在的优先级低于第 1 条：即便它解释了 `framed` 的全部效应，
 那个效应在 SAFETY 之外也只有 +0.0132（p=0.33）。
 
-**8. 给基准作者的一个问题（§9.7）。** Stage III 的 "validate rubrics against
-held-out model responses" 里的 held-out responses，是否包含本基准的候选回答？
-这一个答案就能把 §9.8 里分不开的两种解释分开。
+**8. 给基准作者的一个问题（§9.7），信可以直接发。** Stage III 的
+"validate rubrics against held-out model responses" 里的 held-out responses，
+是否包含本基准的候选回答？这一个答案就能把 §9.8 里分不开的两种解释分开。
+**§9.9 已经把信写好了**，含证据摘要、三个具体问题和「为什么这三个问题能定案」，
+复制即可发送。这是本报告里成本最低（一封邮件，零判决预算）而且**无论答案是什么
+都会改变结论**的动作，优先级应高于任何新候选。
 
 ---
 
@@ -1107,6 +1293,9 @@ held-out model responses" 里的 held-out responses，是否包含本基准的�
 | 4 | `opt/OPTIMIZATION_LOG.md` §8 tilt 表列了八个生成来源 | 遗漏 `baseline`，也就是论文方法本身。补测：`baseline` tilt **−0.0019 [−0.0061, +0.0022]**（全量），同样为零 | 补全，不改变结论 |
 | 5 | `opt/OPTIMIZATION_LOG.md` §6：十来源多数投票 **+0.0072 (p=0.659)** | 逐位复现，但这个数依赖平局回退到 incumbent 的规则。平局记为错则是 **−0.0181 (p=0.237)** | 数字对，**缺一个必要的限定**（§10） |
 | 6 | `opt/BEST.md`：「the judge is only **86.3%** position-consistent」 | 0.8633 是 **dev 上 `framed`** 的值；全量 `framed` 是 0.8614，dev `none` 只有 0.8050 | 数字对，未标口径 |
+| 7 | `opt/OPTIMIZATION_LOG.md` §5：反拒答那句话「**不改变任何结论**」，依据只有边际值 | 边际值逐位复现且正确。补上配对检验后：SAFETY 之外确实测不出（差的差 −0.0072 [−0.0449, +0.0305]，位置受控口径正好 0），**但 dev 上两个总体结果会从显著掉到不显著**（`framed` vs `baseline` p 0.022→0.176；`framed` vs `none` ex-SAFETY p 0.031→0.255） | **措辞过强，操作决定不变。** 见 §10.0.1 |
+| 8 | `opt/OPTIMIZATION_LOG.md` §5：删掉那句话「SAFETY 上无 rubric 地板只动了 1 题」 | 净移动 1 题，**翻面 5 题**（2 题只有 `default` 对、3 题只有 `neutral` 对）。净值把翻动量说小了 | 口径瑕疵，结论不变 |
+| 9 | 本报告上一版 §10：「`neutral` 那一轮的逐题判决没有归档，配对检验不可重做」 | **错的。** 四个 `devN_*_verdicts.jsonl` 各 600 行、`851780e`/`4b0ba49` 已纳入版本控制。配对检验已补做（§10.0.1、[`JUDGE_PROFILE.md`](JUDGE_PROFILE.md)） | **我自己引入的错误**，方向最坏：把可复现的检验写成不可复现，会让读者跳过它 |
 
 第二轮完全复现、一位不差的包括：dev 全部十个来源的 ACC 与 ex-SAFETY ACC；
 七个候选对 `framed` 的配对 Δ 与 McNemar p（含 `contrastive` −0.0467/p=0.0292、
