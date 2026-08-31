@@ -51,3 +51,16 @@ data/
 analysis/out/*.parquet
 *.pdf
 runs/*/screening_pool.jsonl
+
+# RubricBench is an upstream repository vendored here as an input, and it
+# carries its own .git. Committing it would embed a foreign repository as a
+# bare gitlink -- the files would not actually be stored, so it would look
+# tracked while being unreproducible for anyone else. Clone it instead:
+#   git clone http://github.com/planepig/rubricbench.git
+# Our outputs computed from it (results/rubricbench/) are tracked, since no
+# other tracked artefact reconstructs them.
+#
+# The leading slash is load-bearing: an unanchored `rubricbench/` matches a
+# directory of that name at ANY depth, which silently swallows
+# results/rubricbench/ -- i.e. every artefact the report is computed from.
+/rubricbench/

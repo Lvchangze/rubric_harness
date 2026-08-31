@@ -28,6 +28,7 @@ mods = [
     "harness.prompts.tools", "harness.tools", "harness.tools.base",
     "harness.tools.sandbox", "harness.tools.compute", "harness.tools.inspection",
     "harness.tools.verification", "harness.tools.negatives",
+    "harness.rubricbench",
 ]
 bad = 0
 for m in mods:
@@ -44,7 +45,7 @@ echo
 echo "== CLI argument parsing =="
 for s in gen_rubrics build_responses eval_rubrics aggregate_results \
          main_table report_facts case_study check_prompt_fidelity _repair_jsonl \
-         confound_audit; do
+         confound_audit rubricbench_run rubricbench_compare rubricbench_verify; do
   if python "scripts/$s.py" --help >/dev/null 2>&1; then
     echo "  OK   $s"
   else
@@ -221,6 +222,20 @@ else:
     ok = False
 raise SystemExit(0 if ok else 1)
 PY
+
+echo
+echo "== RubricBench: numeric helpers, and the report still matches its artefacts =="
+# Checks the exact McNemar / Clopper-Pearson / Wilson / Fisher implementations
+# against frozen reference values, and re-derives every headline number in
+# results/rubricbench/REPORT.md from the verdict files. Only the failures are
+# printed; there are ~36 assertions.
+if rb_out=$(python scripts/rubricbench_verify.py --section selftest 2>&1); then
+  echo "  OK   $(printf '%s\n' "$rb_out" | grep -c '^  OK') assertions (stats helpers + REPORT.md facts)"
+else
+  printf '%s\n' "$rb_out" | grep -E '^  FAIL|FAILED' | sed 's/^/  /'
+  echo "  FAIL rubricbench verify"
+  fail=1
+fi
 
 echo
 echo "== baseline prompt fidelity vs docs/00_paper_notes.md =="

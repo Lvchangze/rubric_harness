@@ -3,6 +3,10 @@
 > **接手做真实 RL 验证？先读 [`HANDOFF.md`](HANDOFF.md)。**
 > 那份是决策摘要 + 操作手册（证据强度分级、没跑完的实验怎么续、踩过的坑）；
 > 本文件讲工程结构与 CLI 用法；[`results/REPORT.md`](results/REPORT.md) 是证据本体。
+>
+> **只想知道这套方法到底管不管用？** 直接看
+> [`results/rubricbench/REPORT.md`](results/rubricbench/REPORT.md)（§0b 有摘要）——
+> 那是唯一一个**直接**测量 rubric 质量的外部基准，结论与本地代理指标不一致。
 
 本仓库是一个研究 harness，用来验证一个假设：
 
@@ -48,6 +52,68 @@
 > 只有做拆半消融才能发现；**质量评估的正例应一律换成模型 rollout**（§4.4.1）；
 > **(3) 任何 pooled 结论都要先按域拆开看**——本报告最初把一个纯 science 效应写成了普遍结论；
 > **(4) 先筛后生成**——只对结局混合的题生成 rubric（`scripts/screen_questions.py`）。
+
+---
+
+## 0b. RubricBench：第一次直接测量，以及它给上面那张表的答案
+
+完整报告：**[`results/rubricbench/REPORT.md`](results/rubricbench/REPORT.md)**；
+机器生成的核算：[`results/rubricbench/VERIFY.md`](results/rubricbench/VERIFY.md)。
+
+§0 那张表里最要命的一格是「**结构性指标改善 ≠ reward signal 改善**」——
+本地代理指标全线领先，但没有任何证据说它转化成了更好的 reward signal。
+[RubricBench](rubricbench/)（1147 组成对比较、人类偏好标签、专家标注 rubric、
+**无 reference answer** 所以 gold 泄漏在结构上不可能发生）是第一个能直接回答它的外部基准。
+
+**答案是：没有转化，而且现在知道为什么。**
+
+| source | 是什么 | n | forward ACC | vs `baseline` |
+|---|---|--:|--:|---|
+| `none` | 不给 rubric（**地板**） | 1147 | 0.5650 | — |
+| `agentic` | 本仓库的方法，gold 侧关闭 | 1147 | **0.5798** | Δ −0.0079, q=0.74 ❌ |
+| `baseline` | RaR 单次合成（无 reference 变体） | 1147 | 0.5876 | — |
+| `framed` | **只改了生成 prompt 的框架** | 1147 | **0.6260** | Δ +0.0394, **q=0.0058** ✅ |
+| `expert` | 数据集自带专家 rubric（**天花板**） | 1147 | 0.7777 | Δ +0.1916, q=2.9e-39 ✅ |
+| `agentic-tools` | agentic + 可执行工具 | 299 | 0.6054 | 子集内 vs `agentic` +0.0234, q=0.56 ❌ |
+
+三条结论，都要如实读：
+
+1. **`agentic` 在这个基准上没有赢过 `baseline`**（0.5798 vs 0.5876，配对 p=0.63），
+   也没有赢过「不给 rubric」（+0.0148，p=0.33）。**§0 的结构性领先确实没有转化。**
+2. **§0 的结论依然成立，而本次结果恰恰解释了它为什么没转化。**
+   本仓库全部结构性指标测的是判据**写得好不好**（够不够具体、有没有锚点、可不可判定），
+   **没有一个测判据是不是关于对的东西**。RubricBench 上 `baseline` 失败的典型形态是：
+   instruction 要求写未成年角色的裸体描写，生成的 rubric 就把
+   「explicitly describes Carl's butt physique, as requested」列成 4/5 分的得分项——
+   这条判据在所有结构性指标上都是满分（具体、可判定、有锚点、非通用），
+   但它奖励的是人类明确不偏好的行为。**「写得好」和「关于对的东西」是两件事。**
+3. **迄今最有效的干预是改 prompt 框架，不是 agent 流程，也不是工具。**
+   `agentic` 花了 18113 次调用换来 +0.0148（不显著）；`agentic-tools` 再加 6028 次工具调用
+   换来 +0.0234（不显著）；一次 prompt 改写换来 +0.0610（显著）。
+
+**四条必须一起读的限定条件**（详见报告 §8）：
+
+- `framed` 的 prompt 是**在看过本基准失败案例之后**写的，存在过拟合风险。
+  用「其余四域」作准留出集，效应从 +0.0394 掉到 **+0.0132（p=0.33，不显著）**。
+- `framed` 净增量的 **68.9% 来自 80 道 SAFETY 题**；把 SAFETY 拿掉后它相对 `baseline` 不显著。
+- 换成位置偏置受控的口径（正反两序一致才算数），
+  `framed` vs `baseline` 掉到 **q=0.079，不再显著**；vs `none` 仍然稳。
+- 我们自己的判定器提示里有一句反拒答的话，SAFETY 的人类标签恰好相反；
+  `framed` 至少一半的 SAFETY 收益来自对抗这个**我们自己引入的**偏置。
+
+**顺带一个关于该基准的独立发现**：官方排行榜四个已发表系统两两之间
+**0/6 达到显著**（榜首榜尾差 0.0148，p=0.401），而该基准在 n=1147 下的最小可检出差约 **0.027**。
+**这张榜排的是 judge，不是 rubric。** 要在上面主张进步，效应量至少得到 0.03 量级。
+
+```bash
+# 基准本体是上游仓库，带自己的 .git，因此不纳入本仓库版本控制（见 .gitignore）
+git clone http://github.com/planepig/rubricbench.git
+
+python3 scripts/rubricbench_run.py --source framed --limit 0     # 跑一个来源
+python3 scripts/rubricbench_verify.py --out results/rubricbench/VERIFY.md
+cd rubricbench && python3 eval_submission.py \
+    --submission ../results/rubricbench/framed_submission.csv     # 官方评测器
+```
 
 ---
 
@@ -281,7 +347,12 @@ rubric_harness/
 │   ├── screen_questions.py      # 先筛后生成：只保留结局混合的题
 │   ├── run_rollout_v2.sh        # 续跑没做完的 rollout 评测（六个阶段）
 │   ├── resume_when_up.sh        # 等端点恢复后自动续跑
-│   └── run_pilot_driver.sh       # 带原子锁的全流程驱动：generate / evaluate
+│   ├── run_pilot_driver.sh       # 带原子锁的全流程驱动：generate / evaluate
+│   ├── rubricbench_run.py        # RubricBench：跑一个 rubric 来源，出 score/verdicts/submission
+│   ├── rubricbench_compare.py    # RubricBench：7 来源总表 + 配对 McNemar + 空间利用率
+│   └── rubricbench_verify.py     # RubricBench：脱离 score.json 独立重算全部主张；含 --section selftest
+├── rubricbench/              # 上游基准（1147 题 + 官方评测器 + 4 个已发表提交），只读
+├── harness/rubricbench.py    # 适配层：load_cases / judge_all / score / write_submission
 ├── configs/                  # smoke.yaml / pilot.yaml
 ├── runs/<run_name>/          # 运行产物
 │   ├── config.json           #   配置快照
@@ -293,7 +364,12 @@ rubric_harness/
 │   ├── metric_summaries.json
 │   └── llm_stats_*.json      #   调用数 / 缓存命中 / 空响应 / 解析失败
 ├── results/<run_name>/       # 汇总表（summary.csv / summary.json / summary_table.md）
-└── results/REPORT.md         # 实验报告
+├── results/REPORT.md         # 本地代理指标的实验报告
+└── results/rubricbench/      # RubricBench 产物
+    ├── REPORT.md             #   外部基准报告（§0b 的完整版）
+    ├── VERIFY.md             #   机器生成的独立核算，9 节
+    ├── COMPARE.md            #   7 来源总表 + 配对检验
+    └── <tag>_{score.json,verdicts.jsonl,rubrics.json,submission.csv}
 ```
 
 `docs/` 和 `analysis/` 由另一位同学维护（论文精读与数据取证），本 harness 只读不写。
