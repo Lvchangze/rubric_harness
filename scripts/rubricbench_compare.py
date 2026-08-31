@@ -41,7 +41,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--floor", default="none")
     p.add_argument("--ceiling", default="expert")
     p.add_argument("--reference", default="baseline", help="source the pairwise tests compare against")
-    p.add_argument("--results-dir", default=str(RESULTS))
+    p.add_argument("--results-dir", nargs="+", default=[str(RESULTS)],
+                   help="one or more directories to search for <source>_verdicts.jsonl; "
+                        "candidate runs live under opt/runs, the shared controls in the root")
     p.add_argument("--case-ids", default=None,
                    help="restrict every comparison to these cases, e.g. "
                         "results/rubricbench/split.json:dev")
@@ -50,10 +52,13 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def load(source: str, root: Path) -> dict[str, dict[str, Any]]:
-    path = root / f"{source}_verdicts.jsonl"
-    if not path.exists():
-        raise SystemExit(f"missing {path}")
+def load(source: str, roots: Sequence[Path]) -> dict[str, dict[str, Any]]:
+    for root in roots:
+        path = Path(root) / f"{source}_verdicts.jsonl"
+        if path.exists():
+            break
+    else:
+        raise SystemExit(f"no {source}_verdicts.jsonl in any of {[str(r) for r in roots]}")
     out: dict[str, dict[str, Any]] = {}
     for line in path.read_text(encoding="utf-8").splitlines():
         if line.strip():
@@ -62,17 +67,48 @@ def load(source: str, root: Path) -> dict[str, dict[str, Any]]:
     return out
 
 
-def hit(row: dict[str, Any] | None) -> int | None:
-    """1 if the forward-order verdict matched the human label, 0 if not.
+def hit(row: dict[str, Any] | None, mode: str = "forward") -> int | None:
+    """1 if the verdict matched the human label, 0 if not, ``None`` if unusable.
 
-    ``None`` for an unparsable verdict. The official evaluator counts those as
-    wrong; here they are held out of the paired tests and reported as coverage,
-    because scoring a parse failure as a substantive error would attribute a
-    judging bug to the rubric.
+    ``forward`` is the official single-pass protocol. ``swap`` is the
+    position-controlled reading: a case counts as correct only if the same
+    response wins in both presentation orders, and a case the judge flips on
+    counts as **wrong** rather than being dropped -- the same convention
+    VERIFY.md used, and the conservative one, since a verdict that depends on
+    which response was shown first is not evidence about the rubric.
+
+    Unparsable verdicts stay ``None``. The official evaluator counts them wrong;
+    here they are held out of the paired tests and reported as coverage, because
+    scoring a parse failure as a substantive error would attribute a judging bug
+    to the rubric.
     """
     if row is None or row.get("forward") is None:
         return None
-    return int(LETTER[row["forward"]] == row["label"])
+    if mode == "forward":
+        return int(LETTER[row["forward"]] == row["label"])
+    if mode == "swap":
+        if row.get("swapped") is None:
+            return None
+        if row["forward"] != row["swapped"]:
+            return 0
+        return int(LETTER[row["forward"]] == row["label"])
+    raise ValueError(f"unknown mode {mode!r}")
+
+
+def mde(n_discordant: int, n_total: int) -> float:
+    """Smallest |Δ ACC| a two-sided exact McNemar could call significant here.
+
+    Reported because it is the difference between "these two are the same" and
+    "this benchmark cannot tell them apart at this sample size". The published
+    leaderboard's entire span is smaller than its own MDE.
+    """
+    if n_discordant == 0 or n_total == 0:
+        return float("nan")
+    for k in range(n_discordant // 2, -1, -1):
+        tail = sum(math.comb(n_discordant, i) for i in range(k + 1)) / (2 ** n_discordant)
+        if min(1.0, 2 * tail) < 0.05:
+            return (n_discordant - 2 * k) / n_total
+    return float("nan")
 
 
 def mcnemar(a: Sequence[int], b: Sequence[int]) -> tuple[int, int, float]:
@@ -110,8 +146,8 @@ def bh_fdr(pvalues: Sequence[float]) -> list[float]:
 
 def main() -> int:
     args = parse_args()
-    root = Path(args.results_dir)
-    data = {s: load(s, root) for s in args.sources}
+    roots = [Path(r) for r in args.results_dir]
+    data = {s: load(s, roots) for s in args.sources}
     common = sorted(set.intersection(*(set(d) for d in data.values())))
     subset_label = args.label
     if args.case_ids:
@@ -171,6 +207,34 @@ def main() -> int:
              f" | **{overall:.4f}** | {cov:.3f} | {cons} |")
     emit()
 
+    # -- the two readings the headline number hides -----------------------
+    # SAFETY is 7% of the benchmark and carried 69% of `framed`'s net gain over
+    # `baseline`, and part of that gain is a fight with our own judge prompt. A
+    # score reported without the ex-SAFETY figure beside it can be dominated by
+    # 80 cases. The swap-controlled column is here for the same reason in the
+    # other direction: an effect that only exists in forward order is fragile.
+    safety_ids = {c for c in common if group_of(domains[c]) == "safety"}
+    nonsafety = [c for c in common if c not in safety_ids]
+    emit("## 三种口径")
+    emit()
+    emit("| source | forward (全部) | forward (不含 SAFETY) | 位置受控 (全部) | 位置受控 (不含 SAFETY) |")
+    emit("|---|--:|--:|--:|--:|")
+    for source in args.sources:
+        cells = []
+        for mode in ("forward", "swap"):
+            for ids in (common, nonsafety):
+                hs = [hit(data[source].get(c), mode) for c in ids]
+                if all(h is None for h in hs):
+                    cells.append("—")
+                else:
+                    cells.append(f"{sum(0 if h is None else h for h in hs) / len(hs):.4f}")
+        emit(f"| `{source}` | " + " | ".join(cells) + " |")
+    emit()
+    emit(f"不含 SAFETY 为 {len(nonsafety)} 题（SAFETY {len(safety_ids)} 题）。"
+         "位置受控：正反两序判给同一个回答才算对，翻转计为错（与 VERIFY.md 同口径）；"
+         "只有单序运行的来源在该列为 —。")
+    emit()
+
     # -- headroom ---------------------------------------------------------
     floor, ceiling = args.floor, args.ceiling
     if floor in acc and ceiling in acc:
@@ -214,6 +278,54 @@ def main() -> int:
         emit()
         emit(f"q 为在这 {len(rows_out)} 个对照上做 Benjamini-Hochberg 校正后的值；"
              "`**` 表示 q < 0.05。")
+        emit()
+
+        # -- the same tests, restricted and re-scored -------------------------
+        emit(f"## 同样的对照，换口径（参照 `{ref}`）")
+        emit()
+        emit("| source | Δ 不含 SAFETY | p | Δ 位置受控 | p | 判定 |")
+        emit("|---|--:|--:|--:|--:|---|")
+        for source in others:
+            def paired(ids, mode):
+                pr = [(hit(data[ref].get(c), mode), hit(data[source].get(c), mode)) for c in ids]
+                pr = [(a, b) for a, b in pr if a is not None and b is not None]
+                if not pr:
+                    return None, None
+                a_h, b_h = [x[0] for x in pr], [x[1] for x in pr]
+                return (sum(b_h) - sum(a_h)) / len(pr), mcnemar(a_h, b_h)[2]
+
+            d_ns, p_ns = paired(nonsafety, "forward")
+            d_sw, p_sw = paired(common, "swap")
+            full_p = dict((r[0], r[4]) for r in rows_out)[source]
+            # "Fragile" is not a hedge, it is a specific finding: the effect
+            # exists in the headline reading and dissolves in a stricter one.
+            if d_ns is None:
+                note = "—"
+            elif full_p < 0.05 and (p_ns >= 0.05 or (p_sw is not None and p_sw >= 0.05)):
+                note = "**脆弱**（总体显著，换口径后不显著）"
+            elif full_p < 0.05:
+                note = "稳健"
+            else:
+                note = "不显著"
+            fmt = lambda d, p: ("—", "—") if d is None else (f"{d:+.4f}", f"{p:.3g}")
+            a1, a2 = fmt(d_ns, p_ns)
+            b1, b2 = fmt(d_sw, p_sw)
+            emit(f"| `{source}` | {a1} | {a2} | {b1} | {b2} | {note} |")
+        emit()
+
+        # -- what this sample size can even see -------------------------------
+        emit("## 最小可检出差（本样本量下）")
+        emit()
+        emit("| 对比 | 不一致对数 | 最小可检出 \\|Δ\\| | 实际 Δ |")
+        emit("|---|--:|--:|--:|")
+        for source in others:
+            pr = [(hit(data[ref].get(c)), hit(data[source].get(c))) for c in common]
+            pr = [(a, b) for a, b in pr if a is not None and b is not None]
+            nd = sum(1 for a, b in pr if a != b)
+            delta = (sum(x[1] for x in pr) - sum(x[0] for x in pr)) / len(pr)
+            emit(f"| `{ref}` vs `{source}` | {nd}/{len(pr)} | {mde(nd, len(pr)):.4f} | {delta:+.4f} |")
+        emit()
+        emit("比这个下限小的 Δ 不该当成信号，无论它的符号看起来多顺眼。")
         emit()
 
         # -- per-group deltas against the reference -----------------------

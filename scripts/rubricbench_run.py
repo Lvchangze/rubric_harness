@@ -122,9 +122,14 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--model", default=None)
     p.add_argument("--concurrency", type=int, default=64)
     p.add_argument("--judge-max-tokens", type=int, default=8192)
+    p.add_argument("--judge-profile", default="default", choices=sorted(RB.JUDGE_PROFILES),
+                   help="'default' is the prompt every published number was produced under; "
+                        "'neutral' drops the anti-refusal clause and changes nothing else")
     p.add_argument("--single-order", action="store_true",
                    help="skip the swapped pass (matches the official protocol, but leaves position bias in)")
     p.add_argument("--tag", default=None, help="output name; defaults to the source")
+    p.add_argument("--out-dir", default=str(OUT_ROOT),
+                   help="where to write the score/verdicts/rubrics triple")
     p.add_argument("--log-level", default="INFO")
     return p.parse_args()
 
@@ -227,12 +232,13 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str) -> dict[str, 
 
 
 def report(name: str, cases, verdicts, rubrics: dict[str, str], seconds: float,
-           stats: dict, out_dir: Path) -> dict:
+           stats: dict, out_dir: Path, *, judge_profile: str = "default") -> dict:
     modes = ["forward", "swap_consistent"] if any(v.swapped for v in verdicts) else ["forward"]
     scores = {m: RB.score(verdicts, mode=m) for m in modes}
     sizes = [len(t.splitlines()) for t in rubrics.values() if t.strip()]
     payload = {
         "source": name,
+        "judge_profile": judge_profile,
         "n_cases": len(cases),
         "seconds": round(seconds, 1),
         "scores": scores,
@@ -287,7 +293,8 @@ async def main_async() -> int:
     else:
         cases = RB.load_cases(limit=args.limit or None, domains=args.domains, seed=args.seed)
     name = args.tag or args.source.replace(":", "_").replace("/", "_")
-    logger.info("source=%s cases=%d concurrency=%d", args.source, len(cases), args.concurrency)
+    logger.info("source=%s cases=%d concurrency=%d judge=%s",
+                args.source, len(cases), args.concurrency, args.judge_profile)
 
     engine_kwargs = {"concurrency": args.concurrency, "cache_dir": "runs/cache"}
     engine = LLMEngine(args.model, **engine_kwargs) if args.model else LLMEngine(**engine_kwargs)
@@ -298,10 +305,10 @@ async def main_async() -> int:
         logger.info("rubrics ready: %d/%d non-empty", len(cases) - empty, len(cases))
     verdicts = await RB.judge_all(
         engine, cases, rubrics, both_orders=not args.single_order,
-        max_tokens=args.judge_max_tokens,
+        max_tokens=args.judge_max_tokens, profile=args.judge_profile,
     )
     report(name, cases, verdicts, rubrics, time.time() - started,
-           engine.stats_snapshot(), OUT_ROOT)
+           engine.stats_snapshot(), Path(args.out_dir), judge_profile=args.judge_profile)
     return 0
 
 

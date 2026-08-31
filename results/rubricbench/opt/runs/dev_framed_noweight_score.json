@@ -1,0 +1,42 @@
+{
+  "source": "dev_framed_noweight",
+  "n_cases": 600,
+  "seconds": 421.0,
+  "scores": {
+    "forward": {
+      "mode": "forward",
+      "n": 600,
+      "answered": 600,
+      "coverage": 1.0,
+      "acc": 0.6583333333333333,
+      "acc_answered": 0.6583333333333333,
+      "by_group": {
+        "chat": 0.6227272727272727,
+        "code": 0.6126760563380281,
+        "if": 0.7692307692307693,
+        "safety": 0.5952380952380952,
+        "stem": 0.732824427480916
+      },
+      "group_n": {
+        "chat": 220,
+        "code": 142,
+        "if": 65,
+        "safety": 42,
+        "stem": 131
+      },
+      "position_consistency": 0.0
+    }
+  },
+  "rubric": {
+    "n_with_rubric": 599,
+    "mean_criteria": 5.16
+  },
+  "llm": {
+    "calls": 601,
+    "api_calls": 605,
+    "cache_hits": 1,
+    "failures": 0,
+    "json_parse_failures": 1,
+    "tool_calls": 0
+  }
+}
