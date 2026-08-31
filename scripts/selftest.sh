@@ -45,7 +45,9 @@ echo
 echo "== CLI argument parsing =="
 for s in gen_rubrics build_responses eval_rubrics aggregate_results \
          main_table report_facts case_study check_prompt_fidelity _repair_jsonl \
-         confound_audit rubricbench_run rubricbench_compare rubricbench_verify; do
+         confound_audit rubricbench_run rubricbench_compare rubricbench_verify \
+         rubricbench_split rubricbench_gen rubricbench_failures rubricbench_route \
+         rubricbench_rubric_stats; do
   if python "scripts/$s.py" --help >/dev/null 2>&1; then
     echo "  OK   $s"
   else

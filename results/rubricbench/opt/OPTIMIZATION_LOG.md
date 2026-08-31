@@ -323,3 +323,360 @@ identified real defects; they did not establish that those defects were what
 was costing the score.
 
 ---
+
+## 5. The judge's anti-refusal clause: measured, and smaller than feared
+
+**The problem.** Our judge system prompt contains a sentence we wrote, not the
+benchmark's: *"A response that refuses or deflects when the task was answerable
+is a failure."* That is a prior against refusing, and on SAFETY it points the
+wrong way — the humans prefer the refusing side in 29 of the 32 cases where
+exactly one side refuses. If `framed`'s SAFETY gain is mostly the rubric telling
+the judge to override an instruction we ourselves inserted, then it is not
+measuring rubric quality, and every SAFETY-directed optimisation after it is
+shadow-boxing.
+
+**The experiment.** `harness/rubricbench.py` gains a `JUDGE_PROFILES` table.
+`neutral` deletes that one clause (79 characters) and changes nothing else; it
+is derived from the default string by an asserted substring replacement, so the
+two cannot drift, and `default` is verified byte-identical to the prompt every
+number in `REPORT.md` was produced under. Floor, both generators and the ceiling
+were re-scored on all 600 dev cases, both presentation orders.
+
+**Result.**
+
+| source | SAFETY (default) | SAFETY (neutral) | overall (default) | overall (neutral) |
+|---|--:|--:|--:|--:|
+| `none` | 0.2619 | 0.2857 | 0.5817 | 0.5967 |
+| `baseline` | 0.3095 | 0.3571 | 0.6083 | 0.6150 |
+| `framed` | 0.6667 | 0.5952 | 0.6500 | 0.6400 |
+| `expert` | 0.7857 | 0.6667 | 0.8083 | 0.8000 |
+
+Three things fall out, and the first was not what I expected.
+
+**(i) The clause is not what makes the judge anti-refusal.** Deleting it moves
+the rubric-free floor on SAFETY from 0.2619 to 0.2857 — one case out of 42. A
+judge with no rubric and no instruction about refusing *still* picks the
+non-refusing side about 71% of the time on cases where humans prefer the
+refusal. The bias is overwhelmingly a property of the model, not of our prompt.
+The clause was a reasonable suspect and it is largely exonerated.
+
+**(ii) `framed`'s SAFETY advantage mostly survives.** Against `baseline` it goes
+from +0.3571 to +0.2381 — the clause accounts for about **one third** of it, not
+"at least half". Two thirds is the rubric doing work the judge would not have
+done on its own.
+
+**(iii) It changes no conclusion.** Outside SAFETY, `framed` − `baseline` is
++0.0179 under the default judge and **+0.0090** under the neutral one. Both are
+far below dev's 0.038 detection floor. The honest reading of `framed` is the
+same either way: a large, real, partly-self-inflicted SAFETY effect on 42 dev
+cases, and nothing measurable anywhere else.
+
+Note also that `expert` *loses* on SAFETY under the neutral judge (0.7857 →
+0.6667). Removing the clause did not make the judge better at SAFETY; it made
+the judge less responsive to rubrics there, compressing floor and ceiling
+together. A neutral judge is not automatically a better instrument.
+
+### Decision: the mainline stays `default`, frozen
+
+Reasons, in order of weight:
+
+1. **No conclusion depends on it.** Every ordering, every significance verdict
+   and every ex-SAFETY number is materially the same under both profiles. The
+   choice cannot be laundering a result because there is no result to launder.
+2. **The confound is measured and small.** One third of a SAFETY effect on 7% of
+   the benchmark is ≈0.008 of the overall score. It is now quantified rather
+   than suspected, which was the point of running this.
+3. **Comparability.** `default` is the profile behind every existing artefact —
+   the floor, the ceiling, `agentic`, `agentic-tools`, the full-benchmark runs,
+   and the holdout verdicts I have not yet spent. Switching would invalidate all
+   of them and buy nothing under (1).
+
+**This is frozen for the rest of the exercise.** `neutral` stays in the code as
+a documented robustness check, and any SAFETY-specific claim below is reported
+with both readings. The relevant instruction for later work is not "switch
+judges" but **"stop optimising SAFETY"**: it is 80 cases, it carries a
+one-third artefact, and it dominates any overall number it is included in.
+
+---
+
+## 6. CLOSED: per-domain routing, bounded before it was built
+
+`contrastive` recovered the right criteria on CHAT-type cases and lost 16 points
+on STEM (§4). The obvious reading is that different task types want different
+generators, and the obvious next step is a router. A router has two parts —
+inferring the task type, and choosing well once you know it — and the second can
+be bounded with no model call at all, because the per-case verdicts for every
+candidate are already on disk. So the bound went first, with the decision rule
+fixed in advance: **open the routing family only if the oracle clears `framed` by
+dev's minimum detectable difference (+0.038, ex-SAFETY).** A real router must
+infer the type and can only do worse than an oracle handed the label.
+
+`scripts/rubricbench_route.py` recombines existing verdicts. The oracle is
+deliberately generous in two ways that both inflate it: it is given the
+dataset's ground-truth domain label, and each group's winner is chosen on the
+same 600 cases the result is read on, so it also collects the winner's curse.
+
+**Three sources (`framed`, `contrastive`, `balanced`), ex-SAFETY, n=558:**
+
+| group | n | `framed` | `contrastive` | `balanced` | oracle picks |
+|---|--:|--:|--:|--:|---|
+| IF | 65 | 0.7077 | 0.6769 | **0.7385** | `balanced` |
+| STEM | 131 | **0.7328** | 0.5725 | 0.6794 | `framed` |
+| CODE | 142 | 0.5845 | **0.5915** | 0.5845 | `contrastive` |
+| CHAT | 220 | 0.6227 | 0.6000 | **0.6318** | `balanced` |
+| SAFETY | 42 | **0.6667** | 0.4048 | 0.4048 | `framed` |
+
+| reading | `framed` | oracle-routed | Δ | p |
+|---|--:|--:|--:|--:|
+| forward, all (600) | 0.6500 | 0.6583 | +0.0083 | 0.668 |
+| forward, ex-SAFETY (558) | 0.6487 | 0.6577 | **+0.0090** | 0.668 |
+
+**Then the bound was made as loose as it could honestly be made**, by letting the
+oracle choose per group among all eight sources on disk — including `framed_bare`,
+`framed_noweight`, `qform`, `baseline`, and `none`, i.e. allowing it to answer
+"use no rubric at all" for a whole domain:
+
+| reading | `framed` | oracle-routed (8 sources) | Δ | p |
+|---|--:|--:|--:|--:|
+| forward, all (600) | 0.6500 | 0.6750 | +0.0250 | 0.072 |
+| forward, ex-SAFETY (558) | 0.6487 | 0.6720 | **+0.0233** | 0.117 |
+
+**Verdict: the routing family is closed.** +0.0090 with the three candidates the
+idea came from, +0.0233 with a doubly-optimistic eight-way oracle; the threshold
+was +0.038 and neither reading reaches it, and neither is significant on its own
+terms. Since a deployable router must also infer the task type, there is no
+version of this that survives.
+
+Two further readings say the per-group structure is not merely small but absent.
+
+**(i) Chosen out of sample, routing is negative.** Halving dev by a hash of the
+case id and choosing each half's per-group winner on the *other* half:
+
+| sources | Δ vs `framed`, ex-SAFETY | p |
+|---|--:|--:|
+| three | −0.0108 | 0.451 |
+| eight | −0.0036 | 0.888 |
+
+The entire in-sample gain was the winner's curse. Per-group differences of the
+size seen in the table above are what noise looks like at n=65–220 — `contrastive`
+"winning" CODE by 1 case out of 142 is the clearest example.
+
+**(ii) The complementarity is real, per case, and not organised by domain.** The
+per-case oracle — pick the source that happens to be right, case by case — reaches
+**0.8369 ex-SAFETY** across the eight sources, +0.1882 over `framed` and above
+`expert`'s 0.8083. So the sources disagree enormously; the disagreement simply has
+nothing to do with task type, which is why bucketing by domain captures a
+thirteenth of it.
+
+Re-run afterwards with §7's two few-shot arms added, ten sources in total: the
+bound is **unchanged at +0.0233** (neither arm ever wins a group), cross-fitted
+routing is −0.0036, and the per-case oracle rises to 0.8459 ex-SAFETY (+0.1971).
+`route_bound_all.md` holds the ten-source version.
+
+And that per-case spread is not reachable without labels either. Majority vote
+over the eight sources' verdicts (implementable, unlike the oracle, at eight
+judge passes per case) gives **+0.0072 ex-SAFETY, p=0.618**. Eight rubrics and
+eight judge calls buy nothing measurable. The honest reading of a +0.188 per-case
+oracle next to a +0.007 vote is that most of the spread between rubric sources is
+judge noise that only a label-aware oracle can exploit, not rubric quality that a
+better generator could capture.
+
+Artefacts: `route_bound.md` (three sources), `route_bound_all.md` (eight). Cost:
+zero LLM calls.
+
+---
+
+## 7. FAILED: few-shot expert rubrics — content moved, score fell
+
+**Why this one was different.** Every candidate so far was a prompt I or the
+previous round wrote from an understanding of the problem, and §4's lesson is
+that my understanding of the failures has been a poor guide. Few-shot removes me
+from the loop: show the generator real expert rubrics from the dev half and let
+it learn the target distribution rather than my theory of it.
+
+**Disclosure of supervision.** This uses labelled data. The example pool is the
+**dev half only** — 600 cases, all with expert rubrics — and never holdout, so a
+holdout score would remain honest; the featuriser is fitted on dev text alone
+for the same reason. The query case is excluded from its own retrieval, audited
+on 200 cases for both self-inclusion and holdout contamination. It is legitimate
+in the way training data is legitimate, and `framed` remains the comparison a
+zero-supervision method has to beat.
+
+**Two arms, both on `framed`'s own prompt.** `framed_decl` in
+`rubricbench_gen.py` is asserted byte-identical to the shipped `FRAMED_SYSTEM`,
+and — because the LLM cache key covers messages, system and params — regenerating
+it on dev produced **604 cache hits, 0 API calls, and rubrics byte-identical to
+`framed_rubrics.json` on 600/600 dev cases**. So this pipeline reproduces the
+incumbent exactly, and a `--fewshot` run differs from `framed` in one thing only:
+a block of examples prepended to the user message. That is a cleaner control than
+round 1 had, where each candidate replaced the whole system prompt.
+
+- **`fs_sim5`** — 5 nearest dev instructions by TF-IDF (bigrams, sublinear tf).
+  Retrieval is weak in absolute terms (median top-1 cosine 0.067) but
+  informative about task family: neighbours share the query's domain group 46.0%
+  of the time against a 25.4% chance rate.
+- **`fs_fix5`** — the same 5 examples for every case, one per domain group,
+  taken as the median case id inside each group so the set is not something I
+  could have tuned. The style-only arm: any gain cannot be attributed to
+  retrieval.
+
+**Result on dev (n=600), paired against `framed`, BH-corrected across 5
+comparisons:**
+
+| candidate | ACC | Δ | p | q | ACC ex-SAFETY | Δ ex-SAFETY | p |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| `framed` | 0.6500 | — | — | — | 0.6487 | — | — |
+| `fs_fix5` | 0.6233 | −0.0251 | 0.176 | 0.176 | 0.6237 | −0.0234 | 0.218 |
+| `fs_sim5` | 0.6050 | −0.0436 | 0.0157 | 0.0262 ** | 0.6075 | **−0.0396** | 0.0315 |
+
+Per-domain, `fs_sim5` is worse in all five groups (IF −0.077, CODE −0.042, CHAT
+−0.032, STEM −0.031, SAFETY −0.095) and so is `fs_fix5`. This is not a trade
+between domains; it is uniform degradation.
+
+**Verdict: both dropped.** `fs_sim5` is a *detectable* regression — the first
+candidate other than `contrastive` to fall outside dev's detection floor. Neither
+arm comes near the +0.038 the round required.
+
+**And the mechanism check is the part worth keeping.** §3 warned that a variant
+which only changes surface form is reproducing a known null, so
+`rubricbench_rubric_stats.py` measures form and content separately.
+`expert_recall_novel` is the share of the expert rubric's content tokens *that do
+not appear in the instruction* which the candidate also uses — a content measure
+that gives no credit for echoing the prompt.
+
+Ordered by content distance from `framed`, least to most:
+
+| source | ends `?` | words/crit | **expert_recall_novel** | F1 vs `framed` | Δ ACC ex-SAFETY |
+|---|--:|--:|--:|--:|--:|
+| `framed` | 0.00 | 22.1 | **0.187** | 1.000 | — |
+| `framed_noweight` | 0.00 | 17.2 | **0.160** | 0.902 | +0.0143 |
+| `framed_bare` | 0.00 | 16.2 | **0.160** | 0.902 | −0.0018 |
+| `qform` | 1.00 | 17.5 | **0.191** | 0.366 | −0.0197 |
+| `balanced` | 1.00 | 17.1 | **0.177** | 0.359 | −0.0054 |
+| `contrastive` | 1.00 | 19.1 | **0.192** | 0.336 | −0.0467 |
+| `fs_fix5` | 0.00 | 25.9 | **0.238** | 0.404 | −0.0234 |
+| `fs_sim5` | 0.00 | 24.8 | **0.225** | 0.412 | −0.0396 |
+| `expert` | 0.95 | 17.4 | **1.000** | 0.244 | +0.1634 |
+
+Few-shot did what it was supposed to do, and only that. It did **not** change
+form — both arms stayed at 0.00 interrogative, exactly like `framed`, because the
+output contract was untouched — and it moved content further toward the expert
+rubrics than anything previously tried: 0.187 → 0.225 and 0.238, while token F1
+against `framed` fell to ~0.41. So this is not §3's null repeated.
+
+**And the table runs the wrong way.** `fs_fix5` has the highest expert-content
+overlap of any candidate ever run here (0.238) and `fs_sim5` the second highest
+(0.225); both regress. The only candidate with a positive Δ, `framed_noweight` at
++0.0143, has the **lowest** overlap of all (0.160) — it is a mechanical strip of
+`framed`'s titles and weights, so it moved *away* from the expert content and
+scored better than everything that moved toward it. Across the seven variants
+there is no positive relationship between resembling the expert rubrics' content
+and scoring like them.
+
+One honest alternative explanation, and what speaks against it: the few-shot
+prompt is much longer, so the regression could be dilution rather than content
+imitation. If it were dilution, the arm with *irrelevant* fixed examples should
+suffer at least as much as the retrieved one, and it suffers less (−0.023 vs
+−0.040) — the more relevant the examples, the worse the result. That gap is
+itself below the detection floor, so it is a hint and not a finding; a k=2 arm
+would settle it and was not run, because the round's stopping rule had already
+been met.
+
+---
+
+## 8. Why the ceiling resists imitation: the expert rubrics know who won
+
+Three rounds have now failed to move the score by imitating `expert` — its form
+(§3), its discriminative intent (§4), and its content distribution (§7). §7's
+content measurement makes the obvious hypothesis testable.
+
+A rubric written from the instruction alone cannot know which of the two
+responses the humans preferred, so its vocabulary should sit symmetrically
+between them. An annotator with the pair in front of them can name the thing
+only the preferred response does. **Tilt** measures this: for each case, take the
+rubric's content tokens that do not occur in the instruction, and compare how
+many appear in the preferred response against the rejected one.
+
+| source | in preferred | in rejected | tilt | 95% CI |
+|---|--:|--:|--:|---|
+| `framed` | 0.142 | 0.142 | +0.001 | [−0.005, +0.007] |
+| `fs_sim5` | 0.141 | 0.141 | +0.000 | [−0.005, +0.006] |
+| `fs_fix5` | 0.135 | 0.137 | −0.002 | [−0.008, +0.004] |
+| `contrastive` | 0.158 | 0.159 | −0.000 | [−0.007, +0.007] |
+| `balanced` | 0.186 | 0.184 | +0.001 | [−0.007, +0.009] |
+| `framed_bare` | 0.161 | 0.158 | +0.003 | [−0.004, +0.009] |
+| **`expert`** | **0.152** | **0.132** | **+0.020** | **[+0.013, +0.028]** |
+
+2000 case-level bootstrap resamples, seed 20260831, 597 dev cases.
+
+**Every generated rubric has a tilt of zero, with a CI containing zero. `expert`
+has a tilt an order of magnitude larger, with a CI excluding zero.** The expert
+rubrics carry information about which response won — they were written against
+these specific pairs — and no instruction-only generator has any route to that
+information. This reframes the ceiling: `expert` at 0.8083 is not "what a
+sufficiently good instruction-derived rubric achieves". It is partly an oracle,
+and the 16-point gap to `framed` is not all of it a quality gap.
+
+### What the 112 addressable cases actually look like
+
+§1 defined the addressable pool as the 112 dev cases (18.7%) where `framed` is
+wrong and `expert` right. Across the nine sources now on disk (`fs_sim5`,
+`fs_fix5`, `contrastive`, `balanced`, `qform`, `framed_bare`, `framed_noweight`,
+`baseline`, and `none` — no rubric at all):
+
+- **80 of the 112 (71.4%) are fixed by at least one of them.** The pool is
+  genuinely rubric-responsive; these are not hopeless cases.
+- **A given addressable case is fixed by 30.4% of the nine on average**, and only
+  29 of 112 are fixed by half or more. There is no consistency to which variant
+  fixes what.
+- Meanwhile **only 195 of the 390 cases `framed` gets right are held by all
+  nine.** Half of the incumbent's correct answers are one rubric rewrite away
+  from flipping.
+- Every candidate's wins are enriched in the pool (73–83% of wins land there,
+  against a 53.3% base rate) — and every candidate still loses more than it wins:
+
+| candidate | wins over `framed` | of those, in-pool | losses | net |
+|---|--:|--:|--:|--:|
+| `framed_noweight` | 39 | 31 | 34 | −3 |
+| `framed_bare` | 37 | 25 | 36 | −11 |
+| `fs_fix5` | 46 | 38 | 61 | −23 |
+| `qform` | 46 | 32 | 59 | −27 |
+| `balanced` | 52 | 38 | 66 | −28 |
+| `baseline` | 43 | 35 | 68 | −33 |
+| `fs_sim5` | 41 | 30 | 67 | −37 |
+| `contrastive` | 55 | 40 | 92 | −52 |
+
+Roughly 40 cases flip each way on every rewrite, and the direction does not
+depend on which rewrite. That is the signature of variance, not of quality: on
+these cases the judge's verdict is close to a coin flip that any perturbation of
+the rubric can turn over. It is also why dev's detection floor is 0.038 — the
+floor and this instability are the same phenomenon measured two ways.
+
+And the variance is not cheaply exploitable. §6's majority vote over the ten
+sources' verdicts — ten judge passes per case, no labels — returns **+0.0072
+ex-SAFETY (p=0.659)**, against a per-case oracle of +0.1971.
+
+### The conclusion this round reaches
+
+**Under this benchmark, this judge and this model, one-pass prompt rewriting
+(`framed`) is the limit of what rubric generation reaches, and the remaining gap
+is not a gap in how the rubric is written.** Seven candidates across two rounds,
+attacking form, intent, restraint balance, criterion count, task-type routing and
+the target distribution itself, produced no positive result outside the noise
+floor and two detectable regressions. The evidence that this is a real limit
+rather than seven failures of imagination:
+
+1. The ceiling is partly an oracle (tilt +0.020, CI excluding zero), so part of
+   the 16-point gap is unreachable by construction, not by insufficient effort.
+2. Oracle routing with ground-truth labels over ten sources buys +0.023 and
+   the honest out-of-sample version buys nothing, so the differences between
+   generators are not organised by anything a method could condition on.
+3. Content convergence on the expert rubrics is anti-correlated with score
+   across seven variants — the two highest-overlap candidates are among the
+   worst-scoring.
+4. Half the incumbent's correct answers flip under some rubric rewrite, so the
+   quantity being optimised is mostly not a property of the rubric.
+
+`BEST.md` carries this forward with what it does not explain.
+
+---

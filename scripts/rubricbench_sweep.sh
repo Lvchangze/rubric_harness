@@ -5,10 +5,11 @@
 # requests, so the budget is one process at --concurrency 64 rather than several
 # smaller ones whose sum drifts past it.
 #
-# Dev scoring uses --single-order. The forward-order judge call is byte-identical
-# with and without the swapped pass (verified: 40/40 forward verdicts reproduced
-# `framed`'s), and forward ACC is the reported metric, so this halves the judge
-# cost without touching any number that gets read.
+# Dev scoring runs BOTH presentation orders, because the protocol reports the
+# position-controlled reading (a case counts only if the verdict survives the
+# swap) alongside the forward one. Set ORDER=single to halve the judge cost when
+# only forward is wanted: the forward call is byte-identical either way, verified
+# at 40/40 against `framed`'s original both-order run.
 #
 # Specs:
 #   <variant>                        generate that variant under its own name
@@ -24,6 +25,8 @@ cd "$(dirname "$0")/.."
 export LLM_REQUEST_TIMEOUT_S=1200
 SPLIT="${SPLIT:-results/rubricbench/split.json:dev}"
 CONC="${CONC:-64}"
+ORDER_FLAG=""
+[[ "${ORDER:-both}" == "single" ]] && ORDER_FLAG="--single-order"
 RUBRICS=results/rubricbench/opt/rubrics
 
 for spec in "$@"; do
@@ -49,7 +52,7 @@ for spec in "$@"; do
 
   echo "=== [$(date +%H:%M:%S)] judge $name ==="
   python3 scripts/rubricbench_run.py --source "file:$RUBRICS/$name.json" \
-    --case-ids "$SPLIT" --single-order --concurrency "$CONC" --tag "dev_$name" --out-dir results/rubricbench/opt/runs \
+    --case-ids "$SPLIT" $ORDER_FLAG --concurrency "$CONC" --tag "dev_$name" --out-dir results/rubricbench/opt/runs \
     || { echo "FAILED judge $name"; continue; }
   echo "=== [$(date +%H:%M:%S)] done $name ==="
 done

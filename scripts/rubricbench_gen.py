@@ -361,22 +361,27 @@ VARIANTS: dict[str, tuple[str, str]] = {
 }
 
 
-def _check_ablation_control() -> None:
-    """`abl_none` must be `baseline`'s prompt character for character.
+def _assert_same(got_name: str, got: str, want_name: str, want: str) -> None:
+    if got == want:
+        return
+    import difflib  # noqa: PLC0415
 
-    If it is not, the three ablations are not measuring one change each and the
-    whole decomposition is worthless -- so this fails loudly rather than
-    producing a plausible table.
+    diff = "\n".join(difflib.unified_diff(want.splitlines(), got.splitlines(),
+                                          want_name, got_name, lineterm="", n=1))
+    raise SystemExit(f"{got_name} does not reproduce {want_name}:\n{diff}")
+
+
+def check_controls() -> None:
+    """Both prompt controls must reproduce the shipped prompts exactly.
+
+    `abl_none` must be `baseline` and `framed_decl` must be `framed`. If either
+    drifts, the variants built on top of them stop being single-variable changes
+    and the comparisons silently become meaningless, so this fails loudly.
     """
-    from rubricbench_run import BASELINE_SYSTEM  # noqa: PLC0415
+    from rubricbench_run import BASELINE_SYSTEM, FRAMED_SYSTEM  # noqa: PLC0415
 
-    if _ABLATIONS["abl_none"] != BASELINE_SYSTEM:
-        import difflib  # noqa: PLC0415
-
-        diff = "\n".join(difflib.unified_diff(
-            BASELINE_SYSTEM.splitlines(), _ABLATIONS["abl_none"].splitlines(),
-            "baseline", "abl_none", lineterm="", n=1))
-        raise SystemExit("abl_none does not reproduce BASELINE_SYSTEM:\n" + diff)
+    _assert_same("abl_none", _ABLATIONS["abl_none"], "BASELINE_SYSTEM", BASELINE_SYSTEM)
+    _assert_same("framed_decl", VARIANTS["framed_decl"][0], "FRAMED_SYSTEM", FRAMED_SYSTEM)
 
 # Second pass for `--prune-to`. Selection is by index so the kept criteria are
 # provably the generated ones rather than a quiet rewrite.
@@ -487,15 +492,33 @@ class FewShot:
         self.vec = TfidfVectorizer(stop_words="english", max_features=50_000,
                                    ngram_range=(1, 2), sublinear_tf=True)
         self.matrix = self.vec.fit_transform(self.texts)
-        logger.info("few-shot pool: %d dev cases with expert rubrics (k=%d, %s)",
-                    len(pool), k, mode)
+        self.fixed = self._pick_fixed()
+        logger.info("few-shot pool: %d dev cases with expert rubrics (k=%d, %s)%s",
+                    len(pool), k, mode,
+                    "; fixed set " + ", ".join(f"{c.case_id}({c.group})" for c in self.fixed)
+                    if mode == "fixed" else "")
+
+    def _pick_fixed(self) -> list:
+        """One example per domain group, chosen without discretion.
+
+        The fixed set is the style-only arm: every case sees the same examples,
+        so a gain cannot be attributed to having retrieved a relevant neighbour.
+        Covering the five groups keeps it from being an accidental argument for
+        one task type, and taking the median case id inside each group means the
+        set is not something I could have tuned.
+        """
+        by_group: dict[str, list] = {}
+        for case in self.pool:
+            by_group.setdefault(case.group or "other", []).append(case)
+        out = []
+        for group in sorted(by_group):
+            members = sorted(by_group[group], key=lambda c: c.case_id)
+            out.append(members[len(members) // 2])
+        return out[: self.k] if self.k < len(out) else out
 
     def examples(self, case) -> list:
         if self.mode == "fixed":
-            # A style-only control: the same k examples for every case, so any
-            # gain cannot be attributed to retrieving a relevant neighbour.
-            return [c for c in self.pool[:: max(1, len(self.pool) // self.k)]
-                    if c.case_id != case.case_id][: self.k]
+            return [c for c in self.fixed if c.case_id != case.case_id][: self.k]
         import numpy as np  # noqa: PLC0415
 
         sims = (self.matrix @ self.vec.transform([case.instruction]).T).toarray().ravel()
@@ -617,8 +640,7 @@ async def main_async() -> int:
         if not args.variant:
             raise SystemExit("give --variant or --from/--transform")
         name = args.name or args.variant
-        if args.variant.startswith("abl_"):
-            _check_ablation_control()
+        check_controls()
         cases = [c for c in RB.load_cases() if wanted is None or c.case_id in wanted]
         shots = None
         if args.fewshot:
