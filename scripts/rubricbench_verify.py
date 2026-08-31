@@ -916,6 +916,178 @@ def _assert_report_facts(check) -> None:
               if hit(verdicts["baseline"][c], bench) == 1 and hit(verdicts["framed"][c], bench) == 0)
     check("REPORT SAFETY share of framed's net gain",
           round((wins - losses) / net_all, 3), REPORT_FACTS["safety_share_of_net_gain"], tol=5e-4)
+    _assert_round2_facts(check, bench)
+
+
+#: The load-bearing numbers added by §9 (ceiling validity) and §10 (round two).
+#: `opt/**` is frozen history, so these are pinned against REPORT.md, not against
+#: the optimisation log.
+ROUND2_FACTS = {
+    # §9.4, the claim the ceiling revision rests on: share of the expert rubric's
+    # discriminating content words that land in the human-preferred response.
+    "expert_winner_share": 0.5763,
+    "framed_winner_share": 0.5092,
+    # §10: dev ACC for every source that exists on dev, forward, unanswered wrong
+    "dev_acc": {"none": 0.5817, "baseline": 0.6083, "framed": 0.6500, "expert": 0.8083,
+                "framed_bare": 0.6517, "framed_noweight": 0.6583, "qform": 0.6283,
+                "balanced": 0.6267, "contrastive": 0.5867, "fs_sim5": 0.6050,
+                "fs_fix5": 0.6233},
+    # §10: candidate vs `framed`, ex-SAFETY, unanswered dropped (the report's
+    # paired convention). src -> (delta, p)
+    "dev_ex_safety_vs_framed": {
+        "framed_noweight": (+0.0143, 0.403), "framed_bare": (-0.0018, 1.0),
+        "qform": (-0.0197, 0.315), "balanced": (-0.0054, 0.845),
+        "fs_fix5": (-0.0234, 0.218), "fs_sim5": (-0.0396, 0.0316),
+        "contrastive": (-0.0467, 0.0292), "expert": (+0.1634, 8.49e-19),
+    },
+    # §10: the offline bounds that closed two families
+    "route_oracle_ex_safety": +0.0233,
+    "per_case_oracle_ex_safety": 0.8459,
+    "vote_ex_safety_tie_to_incumbent": +0.0072,
+    # §9.6 / §10.1: the two fragility numbers the "bottleneck is the judge" claim uses
+    "framed_dev_position_consistency": 0.8633,
+    "framed_correct_held_by_all_nine": 0.5000,
+    "expert_dev_error_rate": 0.1917,
+}
+
+#: Ten dev sources: `framed` plus the seven candidates plus the two references.
+_DEV_SOURCES = ["framed", "framed_bare", "framed_noweight", "qform", "balanced",
+                "contrastive", "fs_sim5", "fs_fix5", "baseline", "none"]
+
+
+def _load_dev_verdicts(source: str) -> dict[str, dict[str, Any]] | None:
+    """Verdicts for a dev-only candidate, which live under ``opt/runs``."""
+    for path in (RESULTS / f"{source}_verdicts.jsonl",
+                 RESULTS / "opt" / "runs" / f"dev_{source}_verdicts.jsonl"):
+        if path.exists():
+            rows: dict[str, dict[str, Any]] = {}
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if line.strip():
+                    row = json.loads(line)
+                    rows[str(row["case_id"])] = row
+            return rows
+    return None
+
+
+def _content_words(text: str) -> set[str]:
+    """A third independent tokenisation of "content word", for §9.4.
+
+    Deliberately not the one in ``rubricbench_rubric_stats.py`` (which produced
+    the number) nor the one in ``rubricbench_tilt_audit.py`` (which audited it):
+    if 57.6% survives a third arbitrary choice of stop list and word regex, it is
+    not a property of any of them.
+    """
+    stop = {"the", "and", "for", "that", "this", "with", "not", "are", "was", "have",
+            "has", "does", "response", "answer", "any", "all", "its", "their", "they",
+            "which", "when", "where", "how", "can", "should", "would", "there"}
+    return {w for w in re.findall(r"[a-z]{3,}", (text or "").lower()) if w not in stop}
+
+
+def _assert_round2_facts(check, bench) -> None:
+    """Re-derive §9 and §10's headline numbers from the artefacts."""
+    split_path = RESULTS / "split.json"
+    if not split_path.exists():
+        print("  SKIP round-2 facts (no split.json)")
+        return
+
+    # -- §9.4: does the expert rubric's discriminating vocabulary favour the winner?
+    raw = json.loads(BENCH.read_text(encoding="utf-8"))
+    shares: dict[str, float] = {}
+    framed_rub = load_rubrics("framed") if (RESULTS / "framed_rubrics.json").exists() else {}
+    for label, getter in (("expert", lambda r: str(r.get("rubrics") or "")),
+                          ("framed", lambda r: framed_rub.get(str(r["case_id"]), ""))):
+        w_only = l_only = 0
+        for r in raw:
+            text = getter(r)
+            if not text.strip():
+                continue
+            instr = _content_words(r.get("instruction", ""))
+            tok = _content_words(text) - instr
+            a, b = str(r.get("response_a", "")), str(r.get("response_b", ""))
+            win, lose = (b, a) if int(r["label"]) == 1 else (a, b)
+            wt, lt = _content_words(win) - instr, _content_words(lose) - instr
+            w_only += len((tok & wt) - lt)
+            l_only += len((tok & lt) - wt)
+        shares[label] = w_only / (w_only + l_only) if (w_only + l_only) else 0.5
+    # A third tokenisation cannot reproduce the reported figure to the digit, and
+    # is not supposed to: the claim is that the effect does not depend on the
+    # choice. So this asserts agreement within a percentage point, and that the
+    # gap to `framed` survives.
+    check("REPORT §9.4 expert discriminating words in winner (3rd tokenisation)",
+          shares["expert"], ROUND2_FACTS["expert_winner_share"], tol=0.015)
+    check("REPORT §9.4 framed discriminating words in winner (3rd tokenisation)",
+          shares["framed"], ROUND2_FACTS["framed_winner_share"], tol=0.015)
+    check("REPORT §9.4 expert favours the winner and framed does not",
+          float(shares["expert"] - shares["framed"] > 0.04), 1.0)
+    check("REPORT §9.4 expert share excludes 0.5 by a wide margin",
+          float(shares["expert"] > 0.54), 1.0)
+
+    # -- §10: dev scores, candidate deltas, and the offline bounds
+    dev = sorted(json.loads(split_path.read_text(encoding="utf-8"))["dev"])
+    vd = {s: _load_dev_verdicts(s) for s in [*_DEV_SOURCES, "expert"]}
+    if any(v is None for v in vd.values()):
+        missing = [s for s, v in vd.items() if v is None]
+        print(f"  SKIP round-2 dev facts (no verdicts for {missing})")
+        return
+    ex_safety = [c for c in dev if bench[c]["group"] != "safety"]
+
+    for s, want in ROUND2_FACTS["dev_acc"].items():
+        got = sum(hit(vd[s].get(c), bench) or 0 for c in dev) / len(dev)
+        check(f"REPORT dev ACC {s}", round(got, 4), want, tol=5e-5)
+
+    for s, (d, p) in ROUND2_FACTS["dev_ex_safety_vs_framed"].items():
+        t = _paired_test(bench, vd, "framed", s, ex_safety)
+        check(f"REPORT dev Δ ex-SAFETY {s} vs framed", round(t["delta"], 4), d, tol=5e-5)
+        check(f"REPORT dev p ex-SAFETY {s} vs framed", t["p"], p, tol=max(1e-9, abs(p) * 2e-2))
+
+    hits = {s: {c: hit(vd[s].get(c), bench) for c in dev} for s in _DEV_SOURCES}
+    # Oracle routing: ground-truth group label, winner chosen in sample, ten sources.
+    by_group: dict[str, list[str]] = {}
+    for c in ex_safety:
+        by_group.setdefault(bench[c]["group"], []).append(c)
+    pick = {}
+    for g, ids in by_group.items():
+        scores = {s: sum(hits[s][c] or 0 for c in ids) / len(ids) for s in _DEV_SOURCES}
+        pick[g] = max(_DEV_SOURCES, key=lambda s: (scores[s], s == "framed"))
+    routed = sum(hits[pick[bench[c]["group"]]][c] or 0 for c in ex_safety) / len(ex_safety)
+    base = sum(hits["framed"][c] or 0 for c in ex_safety) / len(ex_safety)
+    check("REPORT §10 oracle routing Δ ex-SAFETY", round(routed - base, 4),
+          ROUND2_FACTS["route_oracle_ex_safety"], tol=5e-5)
+
+    oracle = sum(int(any(hits[s][c] for s in _DEV_SOURCES)) for c in ex_safety) / len(ex_safety)
+    check("REPORT §10 per-case oracle ex-SAFETY", round(oracle, 4),
+          ROUND2_FACTS["per_case_oracle_ex_safety"], tol=5e-5)
+
+    # Majority vote, ties falling back to the incumbent (the artefact's rule).
+    letter = {"A": 0, "B": 1}
+    vote_hits = {}
+    for c in ex_safety:
+        picks = [vd[s][c].get("forward") for s in _DEV_SOURCES if c in vd[s]]
+        picks = [p for p in picks if p]
+        if not picks:
+            continue
+        top = max(set(picks), key=picks.count)
+        vote_hits[c] = (hits["framed"][c] if picks.count(top) * 2 == len(picks)
+                        else int(letter[top] == bench[c]["label"]))
+    ids = [c for c in ex_safety if vote_hits.get(c) is not None and hits["framed"][c] is not None]
+    delta = sum(vote_hits[c] - hits["framed"][c] for c in ids) / len(ids)
+    check("REPORT §10 majority vote Δ ex-SAFETY (ties to incumbent)", round(delta, 4),
+          ROUND2_FACTS["vote_ex_safety_tie_to_incumbent"], tol=5e-5)
+
+    # Fragility: the two numbers "the bottleneck is the judge" is built on.
+    pc = sum(1 for c in dev if vd["framed"][c].get("forward") is not None
+             and vd["framed"][c]["forward"] == vd["framed"][c].get("swapped")) / len(dev)
+    check("REPORT §10 framed dev position consistency", round(pc, 4),
+          ROUND2_FACTS["framed_dev_position_consistency"], tol=5e-5)
+    others = [s for s in _DEV_SOURCES if s != "framed"]
+    right = [c for c in dev if hits["framed"][c] == 1]
+    held = [c for c in right if all(hits[s][c] == 1 for s in others)]
+    check("REPORT §10 share of framed's correct answers held by all nine",
+          round(len(held) / len(right), 4),
+          ROUND2_FACTS["framed_correct_held_by_all_nine"], tol=5e-5)
+    err = sum(1 for c in dev if (hit(vd["expert"].get(c), bench) or 0) == 0) / len(dev)
+    check("REPORT §9.6 expert dev error rate", round(err, 4),
+          ROUND2_FACTS["expert_dev_error_rate"], tol=5e-5)
 
 
 def main() -> int:

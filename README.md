@@ -58,7 +58,8 @@
 ## 0b. RubricBench：第一次直接测量，以及它给上面那张表的答案
 
 完整报告：**[`results/rubricbench/REPORT.md`](results/rubricbench/REPORT.md)**；
-机器生成的核算：[`results/rubricbench/VERIFY.md`](results/rubricbench/VERIFY.md)。
+机器生成的核算：[`results/rubricbench/VERIFY.md`](results/rubricbench/VERIFY.md)；
+天花板效度的独立核验：[`results/rubricbench/TILT_AUDIT.md`](results/rubricbench/TILT_AUDIT.md)。
 
 §0 那张表里最要命的一格是「**结构性指标改善 ≠ reward signal 改善**」——
 本地代理指标全线领先，但没有任何证据说它转化成了更好的 reward signal。
@@ -98,12 +99,41 @@
 - `framed` 净增量的 **68.9% 来自 80 道 SAFETY 题**；把 SAFETY 拿掉后它相对 `baseline` 不显著。
 - 换成位置偏置受控的口径（正反两序一致才算数），
   `framed` vs `baseline` 掉到 **q=0.079，不再显著**；vs `none` 仍然稳。
-- 我们自己的判定器提示里有一句反拒答的话，SAFETY 的人类标签恰好相反；
-  `framed` 至少一半的 SAFETY 收益来自对抗这个**我们自己引入的**偏置。
+- 我们自己的判定器提示里有一句反拒答的话，SAFETY 的人类标签恰好相反。
+  **已量化**（报告 §10）：那句话只解释 `framed` SAFETY 优势的**约三分之一**，
+  且 judge 的反拒答倾向绝大部分是模型的属性 —— 删掉那句话，SAFETY 上的无 rubric 地板
+  只在 42 题里动了 1 题。
 
-**顺带一个关于该基准的独立发现**：官方排行榜四个已发表系统两两之间
-**0/6 达到显著**（榜首榜尾差 0.0148，p=0.401），而该基准在 n=1147 下的最小可检出差约 **0.027**。
-**这张榜排的是 judge，不是 rubric。** 要在上面主张进步，效应量至少得到 0.03 量级。
+### 第二轮：`framed` 之上再优化，七个候选全部关闭
+
+冻结切分（dev 600 / holdout 547，**holdout 至今 0/3 未动用**）之后又跑了一整轮。
+七个候选攻过 rubric 的形式、判别性意图、restraint 平衡和目标分布本身，
+**没有一个正向结果超出 dev 的检出下限（0.038），两个是可检出的回归**
+（`fs_sim5` −0.0396 p=0.032、`contrastive` −0.0467 p=0.029，均为 ex-SAFETY）。
+两个族在写候选之前就被离线的界关闭了：按域路由的双重乐观 oracle 只有 +0.0233
+（阈值 +0.038），诚实的样本外版本 −0.0036；逐题 oracle 能到 **0.8459**（高于 `expert`），
+但十来源多数投票只换来 +0.0072 (p=0.659) —— 信息在离散里，可用的选择信号不存在。
+
+**最终判断：在这个基准、这个 judge、这个模型下，一次性 prompt 改写已经到顶，
+瓶颈在 judge 而不在 rubric 生成方法。** judge 只有 86.3% 的位置一致率（dev, `framed`），
+约 14% 的判决只取决于呈现顺序，而 `framed` 判对的 390 题里只有 195 题（**50.0%**）
+能被另外九个 rubric 来源全部保住。**下一步该动 judge，不该再写第八个 rubric 候选。**
+
+### 两个关于该基准本身的独立发现
+
+1. **官方排行榜排的是 judge，不是 rubric。** 四个已发表系统两两之间 **0/6 达到显著**
+   （榜首榜尾差 0.0148，p=0.401），而该基准在 n=1147 下的最小可检出差约 **0.027**。
+   要在上面主张进步，效应量至少得到 0.03 量级。
+2. **天花板不是干净的天花板。** 基准的 README 与论文都写着专家 rubric
+   "derived strictly from instructions … without access to candidate responses,
+   preventing response-aware leakage"，但专家 rubric 的**判别性词汇有 57.6%
+   落在人类偏好的那一侧**（CI [56.3%, 59.0%]，p=5.5e-28），而九个只看 instruction 的
+   生成器全部落在 50%。这个测量经过五项检验（置换零分布、四种长度处理、16 种度量定义、
+   五个域、剂量效应）全部通过。
+   **但它值多少分是另一回事：剂量检验给出 0.5–1.5 个百分点**，占 `expert` − `framed`
+   那 15.3 点的 3%–10%。所以修正后的可用空间是 **≈20.3 点（区间 19.8–20.8）**，
+   `framed` 吃到 **≈30.1%** —— 比未修正的 28.7% **更高**，不是更低。
+   核验细节、以及为什么「泄漏」和「专家更懂这个任务」在现有数据下分不开，见报告 §9。
 
 ```bash
 # 基准本体是上游仓库，带自己的 .git，因此不纳入本仓库版本控制（见 .gitignore）
@@ -111,6 +141,9 @@ git clone http://github.com/planepig/rubricbench.git
 
 python3 scripts/rubricbench_run.py --source framed --limit 0     # 跑一个来源
 python3 scripts/rubricbench_verify.py --out results/rubricbench/VERIFY.md
+python3 scripts/rubricbench_split.py --verify                    # 冻结切分自校验
+python3 scripts/rubricbench_tilt_audit.py \
+    --out results/rubricbench/TILT_AUDIT.md                      # 天花板效度，零 LLM 调用
 cd rubricbench && python3 eval_submission.py \
     --submission ../results/rubricbench/framed_submission.csv     # 官方评测器
 ```
@@ -350,6 +383,11 @@ rubric_harness/
 │   ├── run_pilot_driver.sh       # 带原子锁的全流程驱动：generate / evaluate
 │   ├── rubricbench_run.py        # RubricBench：跑一个 rubric 来源，出 score/verdicts/submission
 │   ├── rubricbench_compare.py    # RubricBench：7 来源总表 + 配对 McNemar + 空间利用率
+│   ├── rubricbench_split.py      # RubricBench：冻结的 dev/holdout 切分（拒绝覆盖，--verify 重导）
+│   ├── rubricbench_gen.py        # RubricBench：离线 rubric 生成与机械变换（形式 vs 内容）
+│   ├── rubricbench_route.py      # RubricBench：路由/投票/逐题 oracle 的离线界，零 LLM 调用
+│   ├── rubricbench_rubric_stats.py  # RubricBench：rubric 的形式与内容测量
+│   ├── rubricbench_tilt_audit.py # RubricBench：天花板效度（tilt）的独立核验，零 LLM 调用
 │   └── rubricbench_verify.py     # RubricBench：脱离 score.json 独立重算全部主张；含 --section selftest
 ├── rubricbench/              # 上游基准（1147 题 + 官方评测器 + 4 个已发表提交），只读
 ├── harness/rubricbench.py    # 适配层：load_cases / judge_all / score / write_submission
