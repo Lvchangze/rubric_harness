@@ -544,7 +544,8 @@ which only changes surface form is reproducing a known null, so
 not appear in the instruction* which the candidate also uses — a content measure
 that gives no credit for echoing the prompt.
 
-Ordered by content distance from `framed`, least to most:
+Grouped: the mechanical transforms of `framed` first, then round 1's
+regenerations, then round 2's few-shot arms.
 
 | source | ends `?` | words/crit | **expert_recall_novel** | F1 vs `framed` | Δ ACC ex-SAFETY |
 |---|--:|--:|--:|--:|--:|
@@ -567,9 +568,10 @@ against `framed` fell to ~0.41. So this is not §3's null repeated.
 **And the table runs the wrong way.** `fs_fix5` has the highest expert-content
 overlap of any candidate ever run here (0.238) and `fs_sim5` the second highest
 (0.225); both regress. The only candidate with a positive Δ, `framed_noweight` at
-+0.0143, has the **lowest** overlap of all (0.160) — it is a mechanical strip of
-`framed`'s titles and weights, so it moved *away* from the expert content and
-scored better than everything that moved toward it. Across the seven variants
++0.0143, has the **lowest** overlap in the table (0.160, tied with
+`framed_bare`) — it is a mechanical strip of `framed`'s titles and weights, so it
+moved *away* from the expert content and scored better than everything that moved
+toward it. Across the seven variants
 there is no positive relationship between resembling the expert rubrics' content
 and scoring like them.
 
@@ -600,20 +602,29 @@ many appear in the preferred response against the rejected one.
 | source | in preferred | in rejected | tilt | 95% CI |
 |---|--:|--:|--:|---|
 | `framed` | 0.142 | 0.142 | +0.001 | [−0.005, +0.007] |
+| `framed_noweight` | 0.161 | 0.158 | +0.003 | [−0.004, +0.010] |
+| `framed_bare` | 0.161 | 0.158 | +0.003 | [−0.004, +0.010] |
+| `qform` | 0.172 | 0.169 | +0.003 | [−0.004, +0.011] |
+| `balanced` | 0.186 | 0.184 | +0.001 | [−0.006, +0.009] |
+| `contrastive` | 0.158 | 0.159 | −0.000 | [−0.007, +0.006] |
 | `fs_sim5` | 0.141 | 0.141 | +0.000 | [−0.005, +0.006] |
-| `fs_fix5` | 0.135 | 0.137 | −0.002 | [−0.008, +0.004] |
-| `contrastive` | 0.158 | 0.159 | −0.000 | [−0.007, +0.007] |
-| `balanced` | 0.186 | 0.184 | +0.001 | [−0.007, +0.009] |
-| `framed_bare` | 0.161 | 0.158 | +0.003 | [−0.004, +0.009] |
-| **`expert`** | **0.152** | **0.132** | **+0.020** | **[+0.013, +0.028]** |
+| `fs_fix5` | 0.135 | 0.137 | −0.002 | [−0.008, +0.003] |
+| **`expert`** | **0.152** | **0.132** | **+0.020** | **[+0.012, +0.027]** |
 
-2000 case-level bootstrap resamples, seed 20260831, 597 dev cases.
+2000 case-level bootstrap resamples, seed 20260831, 596 dev cases (those with an
+expert rubric and a non-empty rubric from all nine sources).
 
 **Every generated rubric has a tilt of zero, with a CI containing zero. `expert`
 has a tilt an order of magnitude larger, with a CI excluding zero.** The expert
 rubrics carry information about which response won — they were written against
 these specific pairs — and no instruction-only generator has any route to that
-information. This reframes the ceiling: `expert` at 0.8083 is not "what a
+information.
+
+The obvious objection is length: if preferred responses are systematically longer,
+any rubric's tokens would land in them more often. They would — for every source
+equally, since all nine are measured against the same pairs by the same rule. That
+`framed` sits at +0.001 is what rules the artefact out; the asymmetry belongs to
+the expert rubrics, not to the responses. This reframes the ceiling: `expert` at 0.8083 is not "what a
 sufficiently good instruction-derived rubric achieves". It is partly an oracle,
 and the 16-point gap to `framed` is not all of it a quality gap.
 
@@ -646,8 +657,9 @@ wrong and `expert` right. Across the nine sources now on disk (`fs_sim5`,
 | `fs_sim5` | 41 | 30 | 67 | −37 |
 | `contrastive` | 55 | 40 | 92 | −52 |
 
-Roughly 40 cases flip each way on every rewrite, and the direction does not
-depend on which rewrite. That is the signature of variance, not of quality: on
+Each rewrite flips 37–55 cases toward itself and 34–92 against, and the balance
+does not track what the rewrite says. That is the signature of variance, not of
+quality: on
 these cases the judge's verdict is close to a coin flip that any perturbation of
 the rubric can turn over. It is also why dev's detection floor is 0.038 — the
 floor and this instability are the same phenomenon measured two ways.
@@ -661,9 +673,10 @@ ex-SAFETY (p=0.659)**, against a per-case oracle of +0.1971.
 **Under this benchmark, this judge and this model, one-pass prompt rewriting
 (`framed`) is the limit of what rubric generation reaches, and the remaining gap
 is not a gap in how the rubric is written.** Seven candidates across two rounds,
-attacking form, intent, restraint balance, criterion count, task-type routing and
-the target distribution itself, produced no positive result outside the noise
-floor and two detectable regressions. The evidence that this is a real limit
+attacking form, discriminative intent, restraint balance and the target
+distribution itself, produced no positive result outside the noise floor and two
+detectable regressions; task-type routing and criterion selection were closed on
+bounds without needing a candidate. The evidence that this is a real limit
 rather than seven failures of imagination:
 
 1. The ceiling is partly an oracle (tilt +0.020, CI excluding zero), so part of
@@ -671,9 +684,9 @@ rather than seven failures of imagination:
 2. Oracle routing with ground-truth labels over ten sources buys +0.023 and
    the honest out-of-sample version buys nothing, so the differences between
    generators are not organised by anything a method could condition on.
-3. Content convergence on the expert rubrics is anti-correlated with score
-   across seven variants — the two highest-overlap candidates are among the
-   worst-scoring.
+3. Content convergence on the expert rubrics does not buy score: the two
+   highest-overlap candidates both regress, and the only candidate with a
+   positive Δ has the lowest overlap of the seven.
 4. Half the incumbent's correct answers flip under some rubric rewrite, so the
    quantity being optimised is mostly not a property of the rubric.
 

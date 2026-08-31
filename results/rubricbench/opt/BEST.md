@@ -142,7 +142,7 @@ independent measurements support it.
 
 **(i) The ceiling is partly an oracle.** Expert rubric vocabulary that does not
 appear in the instruction shows up in the *preferred* response more than the
-rejected one — tilt **+0.020, 95% CI [+0.013, +0.028]**. Every generated rubric
+rejected one — tilt **+0.020, 95% CI [+0.012, +0.027]**. Every generated rubric
 has tilt zero with a CI containing zero. The expert rubrics were written against
 these specific response pairs and encode which one won; an instruction-only
 generator has no route to that information. So part of the 16-point gap to
