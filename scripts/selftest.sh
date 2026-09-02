@@ -27,7 +27,7 @@ mods = [
     "harness.eval.adaptivity",
     "harness.prompts.tools", "harness.tools", "harness.tools.base",
     "harness.tools.sandbox", "harness.tools.compute", "harness.tools.inspection",
-    "harness.tools.verification", "harness.tools.negatives",
+    "harness.tools.verification", "harness.tools.negatives", "harness.tools.websearch",
     "harness.rubricbench",
 ]
 bad = 0
@@ -183,6 +183,16 @@ if sorted(reg.names) != sorted(DEFAULT_TOOLS):
     print(f"  FAIL registry {sorted(reg.names)} != {sorted(DEFAULT_TOOLS)}"); ok = False
 else:
     print(f"  OK   {len(reg)} tools registered")
+
+# The network tools must stay opt-in: silently adding them to the default belt
+# would redefine `agentic-tools` and invalidate the results recorded under it.
+from harness.tools import WEB_TOOLS  # noqa: E402
+if leaked := [t for t in WEB_TOOLS if t in DEFAULT_TOOLS]:
+    print(f"  FAIL network tools leaked into DEFAULT_TOOLS: {leaked}"); ok = False
+elif sorted(build_registry(list(WEB_TOOLS)).names) != sorted(WEB_TOOLS):
+    print("  FAIL WEB_TOOLS do not build"); ok = False
+else:
+    print("  OK   network tools build and stay out of the default belt")
 
 for schema in reg.schemas():
     fn = schema["function"]

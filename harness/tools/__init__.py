@@ -18,6 +18,12 @@ Model-backed:
                                  whether they fire
 * ``make_counterexample``      — build a wrong answer, verified to be wrong
 
+Network-backed, opt-in (:data:`WEB_TOOLS`, not in :data:`DEFAULT_TOOLS`):
+
+* ``web_search``               — DuckDuckGo, no API key
+* ``wikipedia_lookup``         — article summaries, faster and more reliable
+                                 than search for textbook facts
+
 The split matters for interpreting results. Five of the seven cost nothing and
 are exactly reproducible; the claim that a criterion is question-specific rests
 on those, not on the model's assurance.
@@ -32,6 +38,7 @@ from .compute import CheckEquivalenceTool, CheckUnitsTool, PythonEvalTool
 from .inspection import CheckSpecificityTool, FindSimilarQuestionsTool, clear_corpus_cache
 from .negatives import FLAW_TYPES, MakeCounterexampleTool
 from .verification import ExecuteCriterionTool, ExtractReferenceClaimsTool, resolve_targets
+from .websearch import WebSearchTool, WikipediaTool, search_cache_stats
 
 __all__ = [
     "Tool",
@@ -47,12 +54,16 @@ __all__ = [
     "ExtractReferenceClaimsTool",
     "ExecuteCriterionTool",
     "MakeCounterexampleTool",
+    "WebSearchTool",
+    "WikipediaTool",
     "FLAW_TYPES",
     "DEFAULT_TOOLS",
     "ZERO_LLM_TOOLS",
+    "WEB_TOOLS",
     "build_registry",
     "resolve_targets",
     "clear_corpus_cache",
+    "search_cache_stats",
 ]
 
 #: Registration order is also the order the model sees, so the cheap
@@ -76,6 +87,15 @@ ZERO_LLM_TOOLS: tuple[str, ...] = (
     "find_similar_questions",
 )
 
+#: Outbound network. Deliberately **not** in :data:`DEFAULT_TOOLS`: putting them
+#: there would silently redefine what `agentic-tools` means and invalidate the
+#: comparison against the results already recorded for that arm. Ask for them by
+#: name, and give the new arm a new name.
+WEB_TOOLS: tuple[str, ...] = (
+    "web_search",
+    "wikipedia_lookup",
+)
+
 _FACTORIES = {
     "python_eval": PythonEvalTool,
     "check_equivalence": CheckEquivalenceTool,
@@ -85,6 +105,8 @@ _FACTORIES = {
     "extract_reference_claims": ExtractReferenceClaimsTool,
     "execute_criterion": ExecuteCriterionTool,
     "make_counterexample": MakeCounterexampleTool,
+    "web_search": WebSearchTool,
+    "wikipedia_lookup": WikipediaTool,
 }
 
 
