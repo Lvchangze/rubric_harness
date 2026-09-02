@@ -147,6 +147,8 @@ async def build_rubrics(
         return {str(r["case_id"]): RB.rubric_to_text(r.get("rubric")) for r in raw}
     if source in {"baseline", "framed"}:
         return await _generate_baseline(cases, engine, framed=(source == "framed"))
+    if source == "framed_web":
+        return await _generate_framed_web(cases, engine)
     if source in {"agentic", "agentic-tools"}:
         return await _generate_agentic(cases, engine, source)
     raise SystemExit(f"unknown --source {source!r}")
@@ -168,19 +170,125 @@ async def _generate_baseline(cases, engine: LLMEngine, *, framed: bool = False) 
         except Exception as exc:  # noqa: BLE001 - one bad case must not stop the run
             logger.warning("%s failed for %s: %s", tag, case.case_id, str(exc)[:160])
             return case.case_id, ""
-        lines = []
-        for i, item in enumerate(raw if isinstance(raw, list) else [], start=1):
-            if not isinstance(item, dict):
-                continue
-            desc = str(item.get("description", "")).strip()
-            if not desc:
-                continue
-            title = str(item.get("title", "")).strip()
-            weight = item.get("weight", 3)
-            lines.append(f"{i}." + (f" [{title}]" if title else "") + f" {desc} (importance {weight}/5)")
-        return case.case_id, "\n".join(lines)
+        return case.case_id, _render_rubric_lines(raw)
 
     pairs = await asyncio.gather(*(one(c) for c in cases))
+    return dict(pairs)
+
+
+# `framed` plus the ability to look a fact up, and nothing else. The rubric
+# contract below is `FRAMED_SYSTEM` verbatim (asserted at call time), so the only
+# difference between the two arms is tool access — which is the whole point:
+# REPORT.md §11.2 will only credit an eighth candidate that brings a new
+# information source, and §9.8 identified "knows the right answer" as one.
+_WEB_PREAMBLE = """You have web search and Wikipedia. Use them BEFORE writing the \
+checklist, whenever a criterion would turn on a fact you cannot verify from the \
+instruction alone: a constant, a formula, a definition, an API signature, a date, a \
+standard, a claim about the world.
+
+The point is not to research the topic. It is that a criterion asserting something \
+false is worse than no criterion — it will mark the correct response wrong. So look \
+up the specific things your criteria will assert, and write them to match what you \
+found. If a lookup fails or is inconclusive, write the criterion so it does not \
+depend on the unverified detail.
+
+Do not look anything up for instructions that turn on style, preference, safety or \
+task framing rather than fact; searching there wastes a turn and changes nothing.
+
+When you are done looking things up, output the checklist.
+
+"""
+
+_WEB_CLOSING = (
+    "No further tool calls are possible. Write the checklist now from what you have, "
+    "and do not assert any fact a lookup did not confirm. Output ONLY the JSON array."
+)
+
+
+def _render_rubric_lines(raw: Any) -> str:
+    """Shared renderer so every arm emits an identically-shaped checklist."""
+    lines: list[str] = []
+    for i, item in enumerate(raw if isinstance(raw, list) else [], start=1):
+        if not isinstance(item, dict):
+            continue
+        desc = str(item.get("description", "")).strip()
+        if not desc:
+            continue
+        title = str(item.get("title", "")).strip()
+        weight = item.get("weight", 3)
+        lines.append(f"{i}." + (f" [{title}]" if title else "") + f" {desc} (importance {weight}/5)")
+    return "\n".join(lines)
+
+
+async def _generate_framed_web(cases, engine: LLMEngine, *, max_rounds: int = 4) -> dict[str, str]:
+    """`framed`, with web lookup available through a tool loop.
+
+    Only the two network tools are exposed. The other six would confound the
+    comparison: this arm exists to price web access specifically, and
+    `agentic-tools` already measured the rest (and lost).
+    """
+    from harness.llm import JSONParseError, extract_json  # noqa: PLC0415
+    from harness.tools import WEB_TOOLS, ToolContext, build_registry  # noqa: PLC0415
+
+    registry = build_registry(list(WEB_TOOLS))
+    system = _WEB_PREAMBLE + FRAMED_SYSTEM
+    assert FRAMED_SYSTEM in system, "the rubric contract must stay byte-identical to framed"
+
+    done = 0
+    lock = asyncio.Lock()
+    stats = {"tool_calls": 0, "searched": 0, "no_json": 0}
+
+    async def one(case) -> tuple[str, str]:
+        nonlocal done
+        example = Example(
+            uid=case.case_id, domain=case.domain, split="bench", row_index=0,
+            question=case.instruction, reference_answer="",
+            question_source=case.source, shipped_rubric=Rubric(),
+        )
+        ctx = ToolContext(example=example, engine=engine, extras={})
+        calls: list[Any] = []
+
+        async def dispatch(name: str, arguments: Any, call_id: str) -> Any:
+            inv = await registry.dispatch(name, arguments, ctx, call_id=call_id)
+            calls.append(inv)
+            return inv
+
+        prompt = (
+            f"<instruction>\n{case.instruction[:8000]}\n</instruction>\n\n"
+            "Look up whatever your criteria will depend on, then write the checklist."
+        )
+        text = ""
+        try:
+            loop = await engine.chat_tools(
+                prompt, tools=registry.schemas(), dispatch=dispatch, system=system,
+                max_rounds=max_rounds, max_tokens=8192, max_parallel_tools=3,
+                tag="rbench:gen:framed_web", closing_instruction=_WEB_CLOSING,
+            )
+            text = loop.content
+        except Exception as exc:  # noqa: BLE001 - one bad case must not stop the run
+            logger.warning("framed_web failed for %s: %s", case.case_id, str(exc)[:160])
+
+        rendered = ""
+        if text:
+            try:
+                rendered = _render_rubric_lines(extract_json(text, expect="array"))
+            except JSONParseError:
+                pass
+        async with lock:
+            done += 1
+            stats["tool_calls"] += len(calls)
+            stats["searched"] += int(bool(calls))
+            stats["no_json"] += int(not rendered)
+            if done % 50 == 0:
+                logger.info("framed_web %d/%d | %d tool calls so far, %d cases searched",
+                            done, len(cases), stats["tool_calls"], stats["searched"])
+        return case.case_id, rendered
+
+    pairs = await asyncio.gather(*(one(c) for c in cases))
+    logger.info(
+        "framed_web done: %d tool calls over %d/%d cases that searched; %d produced no JSON",
+        stats["tool_calls"], stats["searched"], len(cases), stats["no_json"],
+    )
     return dict(pairs)
 
 

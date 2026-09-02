@@ -1,0 +1,66 @@
+{
+  "source": "dev_framed_web",
+  "judge_profile": "default",
+  "n_cases": 600,
+  "seconds": 1801.2,
+  "scores": {
+    "forward": {
+      "mode": "forward",
+      "n": 600,
+      "answered": 600,
+      "coverage": 1.0,
+      "acc": 0.6316666666666667,
+      "acc_answered": 0.6316666666666667,
+      "by_group": {
+        "chat": 0.6227272727272727,
+        "code": 0.6126760563380281,
+        "if": 0.6153846153846154,
+        "safety": 0.6428571428571429,
+        "stem": 0.6717557251908397
+      },
+      "group_n": {
+        "chat": 220,
+        "code": 142,
+        "if": 65,
+        "safety": 42,
+        "stem": 131
+      },
+      "position_consistency": 0.8583333333333333
+    },
+    "swap_consistent": {
+      "mode": "swap_consistent",
+      "n": 600,
+      "answered": 515,
+      "coverage": 0.8583333333333333,
+      "acc": 0.55,
+      "acc_answered": 0.6407766990291263,
+      "by_group": {
+        "chat": 0.5545454545454546,
+        "code": 0.5211267605633803,
+        "if": 0.5384615384615384,
+        "safety": 0.5238095238095238,
+        "stem": 0.5877862595419847
+      },
+      "group_n": {
+        "chat": 220,
+        "code": 142,
+        "if": 65,
+        "safety": 42,
+        "stem": 131
+      },
+      "position_consistency": 0.8583333333333333
+    }
+  },
+  "rubric": {
+    "n_with_rubric": 593,
+    "mean_criteria": 5.82
+  },
+  "llm": {
+    "calls": 2967,
+    "api_calls": 2958,
+    "cache_hits": 20,
+    "failures": 0,
+    "json_parse_failures": 3,
+    "tool_calls": 1707
+  }
+}
