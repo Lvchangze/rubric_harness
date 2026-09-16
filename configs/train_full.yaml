@@ -1,0 +1,88 @@
+# Rubric generation over the whole RaR train split.
+#
+# Scale, measured from `runs/tools_v1` rather than guessed:
+#
+#   baseline        1 LLM call/question    ~29k calls    ~4 h at concurrency 64
+#   agentic-tools   78 LLM calls/question  ~2.2M calls   ~5 days at concurrency 128
+#                   (20.3 tool calls/question on top, all model-backed;
+#                    no web tools — those are opt-in and not in DEFAULT_TOOLS)
+#
+# Both stages resume by uid from whatever is already on disk, so an interrupted
+# run costs only the questions that had not finished. Every finished call is in
+# the content-addressed cache, so a rerun of a completed question is free.
+run_name: train_full
+runs_dir: runs
+results_dir: results
+
+generators:
+  - baseline
+  - agentic-tools
+
+llm:
+  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  # Overridden per stage on the command line: 64 for baseline, 128 for
+  # agentic-tools. 128 is above anything measured here — the highest verified
+  # clean setting is 64, and a 192-concurrency screening load preceded the
+  # 08-28 endpoint outage — so the agentic-tools launch ramps rather than
+  # starting flat out.
+  concurrency: 64
+  reasoning_effort: high
+  max_tokens: 16384
+  max_attempts: 4
+  cache_dir: runs/cache
+  request_timeout_s: 1200
+
+sample:
+  domains: [rar_science, rar_medicine]
+  split: train
+  # Larger than either split; `sample_examples` takes everything that passes.
+  n_per_domain: 20000
+  seed: 1234
+
+  # Keep the duplicate filter: 1,883 train questions repeat verbatim, and
+  # generating for both spends the budget twice for one object.
+  deduplicate_questions: true
+
+  # Upper bounds lifted to cover the corpus (longest question 10,975 chars,
+  # longest reference 10,251). The shipped defaults of 6,000/12,000 exist so a
+  # judging prompt fits; generation has no such limit and dropping 900+
+  # questions for it would be discarding work for a constraint that does not
+  # apply here.
+  max_question_chars: 12000
+  max_reference_chars: 14000
+
+  # Lower bounds kept, and they are doing real work: 4,677 train rows carry a
+  # reference answer under 40 characters, the shortest being a single
+  # character. A rubric derived from those is not short, it is noise.
+  min_question_chars: 80
+  min_reference_chars: 40
+  min_rubric_items: 4
+
+agentic:
+  n_rollouts: 3
+  enable_decompose: true
+  enable_rollouts: true
+  enable_reconcile: true
+  enable_pitfalls: true
+  enable_critic: true
+  enable_calibration: true
+  rollout_max_tokens: 12000
+  drop_gold_failures: true
+  demote_indiscriminate: true
+  target_min_items: 6
+  target_max_items: 16
+  max_pitfall_fraction: 0.25
+
+  # `agentic-tools` forces this on; the eight default tools, no web access.
+  enable_tools: true
+  tool_max_rounds: 8
+  tool_max_parallel: 4
+  tool_timeout_s: 120.0
+  sandbox_timeout_s: 20.0
+  tool_corpus_limit: 4000
+
+eval:
+  # Generation only. Nothing here is scored: this run exists to produce rubrics
+  # for downstream RL, and the quality question was already settled on the
+  # evaluation runs (see HANDOFF.md §2).
+  metrics: []

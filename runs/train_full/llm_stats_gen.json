@@ -1,0 +1,22 @@
+{
+  "calls": 29247,
+  "cache_hits": 22,
+  "api_calls": 29239,
+  "retries": 14,
+  "empty_responses": 14,
+  "failures": 0,
+  "json_parse_failures": 429,
+  "tool_calls": 0,
+  "tool_loop_rounds": 0,
+  "prompt_chars": 0,
+  "response_chars": 63062404,
+  "reasoning_chars": 86741234,
+  "wall_seconds": 122398364.6052413,
+  "by_tag": {
+    "gen:baseline": 28720,
+    "gen:baseline:json_repair": 527
+  },
+  "cache_hit_rate": 0.0007522139022805758,
+  "model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
+  "concurrency": 64
+}

@@ -112,6 +112,7 @@ def sample_examples(
     root: str | Path | None = None,
     min_question_chars: int = 80,
     max_question_chars: int = 6000,
+    min_reference_chars: int = 40,
     max_reference_chars: int = 12000,
     min_rubric_items: int = 4,
     question_sources: Sequence[str] | None = None,
@@ -139,7 +140,7 @@ def sample_examples(
     r_len = df["reference_answer"].astype(str).str.len()
     mask = (
         q_len.between(min_question_chars, max_question_chars)
-        & r_len.between(40, max_reference_chars)
+        & r_len.between(min_reference_chars, max_reference_chars)
         & df["rubric_count"].fillna(0).astype(int).ge(min_rubric_items)
     )
     pool = df[mask]

@@ -66,6 +66,11 @@ def resolve_examples(config: RunConfig, run_dir: RunDir) -> list[Example]:
                 n=config.sample.n_per_domain,
                 seed=config.sample.seed,
                 deduplicate_questions=config.sample.deduplicate_questions,
+                min_question_chars=config.sample.min_question_chars,
+                max_question_chars=config.sample.max_question_chars,
+                min_reference_chars=config.sample.min_reference_chars,
+                max_reference_chars=config.sample.max_reference_chars,
+                min_rubric_items=config.sample.min_rubric_items,
             )
         )
     write_examples_jsonl(examples, path)
@@ -83,8 +88,26 @@ async def generate_rubrics(
     generator_kwargs: dict[str, Any] | None = None,
     resume: bool = True,
     progress_every: int = 10,
+    max_in_flight: int | None = None,
 ) -> dict[str, Rubric]:
-    """Run one generator over ``examples``, streaming results to disk."""
+    """Run one generator over ``examples``, streaming results to disk.
+
+    ``max_in_flight`` bounds how many *questions* are being generated at once,
+    which is a different limit from the engine's cap on in-flight HTTP requests
+    and is the one that matters for multi-call generators.
+
+    Without it every question starts immediately and they all interleave on the
+    shared request slots, so a question's calls are spread across the whole
+    queue and nothing finishes until nearly everything does. That is invisible
+    at a few hundred questions — `tools_v1` ran 128 of them fine — and fatal at
+    scale: a 28,720-question agentic run completed 3 questions in 14 hours
+    because ~2.2M calls were being served round-robin across 28,717 live
+    pipelines. Single-call generators such as `baseline` are unaffected, which
+    is why the same code path had always looked healthy.
+
+    Bounding it also keeps memory flat: one ``_Run`` and its trace per in-flight
+    question rather than one per question in the split.
+    """
     from .generators import build_generator  # local import keeps import graph shallow
 
     generator = build_generator(source, engine=engine, **(generator_kwargs or {}))
@@ -101,7 +124,16 @@ async def generate_rubrics(
     counter = {"n": 0}
     started = time.time()
 
+    gate = asyncio.Semaphore(max_in_flight) if max_in_flight and max_in_flight > 0 else None
+
     async def one(example: Example) -> None:
+        if gate is None:
+            await _generate_one(example)
+            return
+        async with gate:
+            await _generate_one(example)
+
+    async def _generate_one(example: Example) -> None:
         t0 = time.time()
         try:
             result = await generator.generate(example)
@@ -121,9 +153,11 @@ async def generate_rubrics(
         counter["n"] += 1
         if counter["n"] % progress_every == 0:
             rate = counter["n"] / max(1e-6, time.time() - started)
+            eta_h = (len(todo) - counter["n"]) / rate / 3600 if rate > 0 else float("inf")
             logger.info(
-                "generator=%s progress %d/%d (%.2f samples/s) llm_calls=%d cache_hits=%d",
-                source, counter["n"], len(todo), rate, engine.stats.calls, engine.stats.cache_hits,
+                "generator=%s progress %d/%d (%.2f samples/s, ETA %.1fh) llm_calls=%d cache_hits=%d",
+                source, counter["n"], len(todo), rate, eta_h,
+                engine.stats.calls, engine.stats.cache_hits,
             )
 
     await asyncio.gather(*(one(ex) for ex in todo))

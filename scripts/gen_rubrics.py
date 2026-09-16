@@ -66,6 +66,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--model", default=None)
     p.add_argument("--concurrency", type=int, default=None)
     p.add_argument("--n-rollouts", type=int, default=None)
+    p.add_argument("--max-in-flight", type=int, default=None,
+                   help="how many questions generate at once. Distinct from --concurrency, "
+                        "which caps in-flight HTTP requests. Multi-call generators need this: "
+                        "without it every question starts at once and none finishes.")
     p.add_argument("--no-resume", action="store_true", help="regenerate even if results exist")
     p.add_argument("--log-level", default="INFO")
     return p.parse_args()
@@ -123,7 +127,7 @@ async def main_async() -> int:
         original_writer_name = source
         rubrics = await _generate_as(
             engine, examples, gen_name, original_writer_name, run_dir, config, kwargs,
-            resume=not args.no_resume,
+            resume=not args.no_resume, max_in_flight=args.max_in_flight,
         )
         sizes = [len(r) for r in rubrics.values()]
         logger.info(
@@ -137,12 +141,12 @@ async def main_async() -> int:
     return 0
 
 
-async def _generate_as(engine, examples, gen_name, writer_name, run_dir, config, kwargs, *, resume):
+async def _generate_as(engine, examples, gen_name, writer_name, run_dir, config, kwargs, *, resume, max_in_flight=None):
     """Run generator ``gen_name`` but persist under ``writer_name``."""
     if gen_name == writer_name:
         return await generate_rubrics(
             engine, examples, gen_name, run_dir=run_dir, config=config,
-            generator_kwargs=kwargs, resume=resume,
+            generator_kwargs=kwargs, resume=resume, max_in_flight=max_in_flight,
         )
     from harness.generators import REGISTRY, register
 
@@ -150,7 +154,7 @@ async def _generate_as(engine, examples, gen_name, writer_name, run_dir, config,
     register(alias)
     return await generate_rubrics(
         engine, examples, writer_name, run_dir=run_dir, config=config,
-        generator_kwargs=kwargs, resume=resume,
+        generator_kwargs=kwargs, resume=resume, max_in_flight=max_in_flight,
     )
 
 

@@ -47,6 +47,20 @@ class SampleConfig:
     # 9.15% of RaR-Science rows repeat a question verbatim; sampling one twice
     # would double-count it in the paired statistics (forensics §10).
     deduplicate_questions: bool = True
+    # Length bounds, exposed because the defaults were chosen for *evaluation*
+    # and are wrong for bulk generation.
+    #
+    # The upper bounds exist so a question, its reference and a rubric all fit
+    # in a judging prompt; generation has no such constraint and the model has
+    # a 384k context, so capping there silently discards work for no reason.
+    # The lower bounds are different in kind and should be kept: the corpus
+    # contains reference answers as short as one character, and a rubric
+    # derived from those is not a short rubric, it is noise.
+    min_question_chars: int = 80
+    max_question_chars: int = 6000
+    min_reference_chars: int = 40
+    max_reference_chars: int = 12000
+    min_rubric_items: int = 4
 
 
 @dataclass
