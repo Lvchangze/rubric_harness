@@ -48,6 +48,10 @@ def parse_args() -> argparse.Namespace:
                    help="restrict every comparison to these cases, e.g. "
                         "results/rubricbench/split.json:dev")
     p.add_argument("--label", default=None, help="name for the case subset, used in the header")
+    p.add_argument("--judge-model", default="hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
+                   help="judge named in the report header. Verdict files do not record it, so it "
+                        "cannot be inferred; the default is the retired GLM-5.2 endpoint that "
+                        "produced every archived run. Pass the actual judge for newer runs.")
     p.add_argument("--out", default=None)
     return p.parse_args()
 
@@ -172,7 +176,7 @@ def main() -> int:
     emit(f"# RubricBench{where}: {len(common)} cases judged identically across "
          f"{len(args.sources)} rubric sources")
     emit()
-    emit("判定器与生成同模型（`hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2`）；ACC 为官方口径的"
+    emit(f"判定器与生成同模型（`{args.judge_model}`）；ACC 为官方口径的"
          "单序（forward）准确率，未答计为错。")
     emit()
 

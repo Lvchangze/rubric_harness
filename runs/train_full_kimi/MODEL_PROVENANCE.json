@@ -1,0 +1,8 @@
+{
+  "model": "Kimi-K3-H20-cz-GY",
+  "switched_on": "2026-09-17",
+  "reason": "glm5.2 (hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2) was retired mid-run; every other GLM-5.2 deployment in the registry was probed and is also down.",
+  "predecessor": "runs/train_full_glm52 (glm5.2; baseline complete, agentic-tools partial 5,381)",
+  "do_not_merge": "Both stages are regenerated here. baseline works as a control only because it shares a generator model with agentic-tools, so the two runs cannot be mixed across the model switch.",
+  "throughput_note": "~5x slower than glm5.2; endpoint saturates near conc 128 (0.71 samples/s at 64, 0.88 at 256 with heavy stream errors)."
+}

@@ -1,0 +1,23 @@
+{
+  "model": "GLM-5.3-H20-t1",
+  "switched_on": "2026-09-17",
+  "reason": "User directive. glm5.2 (hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2) was retired mid-run and every other GLM-5.2 deployment in the registry is also down; Kimi-K3 was an interim stopgap and is superseded by this.",
+  "predecessors": {
+    "runs/train_full_glm52": "glm5.2. baseline complete (28,720), agentic-tools partial (5,381). Died 2026-09-17 12:02 when the endpoint began returning 400s.",
+    "runs/train_full_kimi": "Kimi-K3-H20-cz-GY. baseline partial (8,321), stopped 2026-09-17 17:17 when GLM-5.3 was chosen."
+  },
+  "do_not_merge": "Both stages are regenerated here. baseline works as a control only because it shares a generator model with agentic-tools, so runs cannot be mixed across a model switch. Every row now carries a `model` field, and the two predecessor runs were backfilled with theirs, so a mixed file is detectable.",
+  "endpoint_probe": {
+    "tool": "scripts/probe_endpoint.py",
+    "date": "2026-09-17",
+    "levels": {
+      "32": "5.80 rps, p50 7.7s, 64/64 ok",
+      "64": "7.47 rps, p50 12.3s, 128/128 ok",
+      "128": "11.65 rps, p50 15.7s, 256/256 ok",
+      "256": "12.05 rps, p50 24.5s, 512/512 ok"
+    },
+    "chosen": "concurrency 128 — clean at every level tested (Kimi threw stream errors at 256), but throughput is flat past 128 while latency keeps rising.",
+    "tool_calling": "verified on this endpoint in both streaming and non-streaming mode, tool_call arguments parse as JSON in both. Unlike the glm5.2 L20A deployment, no `stream: false` workaround is needed."
+  },
+  "scheduling_note": "Launched with --max-in-flight (128 baseline, 192 agentic-tools). The glm5.2 attempt omitted it, so all 28,717 question pipelines opened at once and its rate decayed from 0.53 to 0.07 samples/s over 23h. The bound was committed in 691b66f but that run was never relaunched under it."
+}

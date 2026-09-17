@@ -27,7 +27,7 @@ generators:
   - agentic-tools  # the same method, with executable tools
 
 llm:
-  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  model: GLM-5.3-H20-t1
   # 64 is what the powered rollout run held without an error. The endpoint
   # outage on 08-28 began under a 192-concurrency screening load, so this is
   # deliberately not pushed further even though the model is free.
@@ -77,7 +77,7 @@ agentic:
   tool_corpus_limit: 4000
 
 eval:
-  judge_model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  judge_model: GLM-5.3-H20-t1
   judge_max_tokens: 12288
   judge_reasoning_effort: high
   shuffle_criteria: true

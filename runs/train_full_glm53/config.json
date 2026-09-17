@@ -1,0 +1,96 @@
+{
+  "run_name": "train_full_glm53",
+  "runs_dir": "runs",
+  "results_dir": "results",
+  "generators": [
+    "baseline",
+    "agentic-tools"
+  ],
+  "llm": {
+    "model": "GLM-5.3-H20-t1",
+    "concurrency": 128,
+    "reasoning_effort": "high",
+    "max_tokens": 16384,
+    "max_attempts": 4,
+    "cache_dir": "runs/cache",
+    "request_timeout_s": 1200
+  },
+  "sample": {
+    "domains": [
+      "rar_science",
+      "rar_medicine"
+    ],
+    "split": "train",
+    "n_per_domain": 20000,
+    "seed": 1234,
+    "deduplicate_questions": true,
+    "min_question_chars": 80,
+    "max_question_chars": 12000,
+    "min_reference_chars": 40,
+    "max_reference_chars": 14000,
+    "min_rubric_items": 4
+  },
+  "agentic": {
+    "n_rollouts": 3,
+    "enable_decompose": true,
+    "enable_rollouts": true,
+    "enable_reconcile": true,
+    "enable_pitfalls": true,
+    "enable_critic": true,
+    "enable_calibration": true,
+    "rollout_max_tokens": 12000,
+    "use_gold_signal": true,
+    "use_negative_signal": true,
+    "drop_gold_failures": true,
+    "demote_indiscriminate": true,
+    "negatives_from_rollouts_only": false,
+    "max_rollout_negatives": 2,
+    "mine_hard_negatives": true,
+    "target_min_items": 6,
+    "target_max_items": 16,
+    "max_pitfall_fraction": 0.25,
+    "enable_tools": true,
+    "tool_names": [],
+    "enable_tool_investigation": true,
+    "enable_tool_critic": true,
+    "tool_max_rounds": 8,
+    "tool_max_parallel": 4,
+    "tool_timeout_s": 120.0,
+    "sandbox_timeout_s": 20.0,
+    "tool_corpus_limit": 4000
+  },
+  "eval": {
+    "judge_model": "GLM-5.3-H20-t1",
+    "judge_max_tokens": 12288,
+    "judge_reasoning_effort": "high",
+    "judge_temperature": null,
+    "shuffle_criteria": true,
+    "shuffle_seed": 7,
+    "aggregation": "paper_explicit",
+    "report_all_aggregations": true,
+    "polarity_mode": "detected",
+    "polarity_sensitivity_modes": [
+      "favourable",
+      "all_avoidance",
+      "all_failure"
+    ],
+    "comparator_sources": [
+      "shipped"
+    ],
+    "run_implicit_judge": false,
+    "count_controlled": true,
+    "response_variants": [
+      "gold",
+      "missing_step",
+      "numeric_error",
+      "right_method_wrong_answer",
+      "verbose_empty",
+      "terse_correct",
+      "off_topic"
+    ],
+    "metrics": [],
+    "self_agreement_repeats": 2,
+    "bootstrap_iters": 10000
+  },
+  "_snapshot_time": "2026-09-17 17:22:49"
+}

@@ -48,6 +48,23 @@ runs/*/metrics/*_per_rollout_rows.jsonl
 **/discriminative_responses.jsonl
 **/discriminative_questions.jsonl
 runs/_selftest/
+
+# The train-split generation runs are a different scale from the evaluation
+# runs above: one `examples.jsonl` is 107 MB and one arm's rubrics are 87 MB,
+# against a repository that the policy above keeps near 100 MB total. GitHub
+# also refuses any blob over 100 MB outright, so tracking them does not merely
+# bloat the clone, it blocks the push.
+#
+# Nothing is lost by excluding them. `examples.jsonl` is a deterministic
+# function of the config, the seed and `data/`, and the rubrics themselves are
+# the deliverable but reach consumers two other ways: `scripts/export_rubrics.py`
+# writes the curated per-domain JSONL under `exports/` (3.7 MB, tracked), and
+# the full runs stay on the shared filesystem next to this checkout, which is
+# where the downstream RL jobs read them from anyway.
+runs/*/examples.jsonl
+runs/train_full*/rubrics_*.jsonl
+runs/train_full*/*.preescapefix
+
 nohup.out
 *.log
 logs/

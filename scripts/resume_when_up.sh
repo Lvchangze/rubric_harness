@@ -27,7 +27,7 @@ sys.path.insert(0, '/apdcephfs_zwfy6/share_302970870/hunyuan/changzelv/dev/hyctx
 from contextagent.llm import LLMClient
 
 async def main():
-    client = LLMClient('hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2', concurrency=1, reasoning_effort='high')
+    client = LLMClient('GLM-5.3-H20-t1', concurrency=1, reasoning_effort='high')
     out = await client.chat('What is 2+2? Reply with just the number.', max_tokens=1024)
     text = out.get('response', '') if isinstance(out, dict) else str(out)
     sys.exit(0 if text.strip() else 1)

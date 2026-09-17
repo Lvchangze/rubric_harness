@@ -44,7 +44,7 @@ __all__ = [
     "DEFAULT_MODEL",
 ]
 
-DEFAULT_MODEL = "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2"
+DEFAULT_MODEL = "GLM-5.3-H20-t1"
 
 
 class JSONParseError(ValueError):
@@ -268,7 +268,9 @@ class LLMEngine:
     Parameters
     ----------
     model:
-        Registry key, e.g. ``hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2``.
+        Registry key, e.g. ``GLM-5.3-H20-t1``. Note the key is part of every
+        cache key, so switching models invalidates cached replies rather than
+        silently serving another model's output.
     concurrency:
         Upper bound on in-flight requests (enforced both by the underlying
         client and by our own semaphore so cache hits stay cheap).

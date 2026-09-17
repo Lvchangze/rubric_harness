@@ -140,12 +140,17 @@ async def generate_rubrics(
         except Exception as exc:  # noqa: BLE001 - a generator bug must not kill the run
             logger.exception("generator %s crashed on %s", source, example.uid)
             record = {"uid": example.uid, "source": source, "rubric": {"items": [], "meta": {"source": source}},
-                      "error": f"crash: {exc}"[:400]}
+                      "error": f"crash: {exc}"[:400], "model": engine.model}
             writer.write(record)
             return
         result.wall_seconds = result.wall_seconds or (time.time() - t0)
         payload = result.to_dict()
         payload["domain"] = example.domain
+        # Stamped per row, not per run: a resumed run can span endpoints (the
+        # GLM-5.2 deployment was retired mid-run), and a file whose rows came
+        # from two generators is indistinguishable from one that did not unless
+        # each row says so.
+        payload["model"] = engine.model
         writer.write(payload)
         if result.trace:
             run_dir.write_trace(f"{source}_{example.uid}", result.trace)

@@ -1,0 +1,6 @@
+{
+  "model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2",
+  "note": "Generated before the glm5.2 deployment was retired on 2026-09-17. baseline is complete (28,720); agentic-tools is a partial (model died mid-run). Do not mix with the Kimi run: the whole point of `baseline` is that it holds the generator model fixed against `agentic-tools`, and that only holds within one model.",
+  "baseline_rows": 28720,
+  "agentic_tools_rows": 5381
+}

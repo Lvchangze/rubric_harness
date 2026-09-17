@@ -23,7 +23,7 @@ generators:
   - agentic-realneg   # ablation: negative-side only, with real failed rollouts as negatives
 
 llm:
-  model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  model: GLM-5.3-H20-t1
   concurrency: 64          # measured: 96-way held with 0 errors; 64 leaves headroom
   reasoning_effort: high
   max_tokens: 16384
@@ -68,7 +68,7 @@ agentic:
   max_pitfall_fraction: 0.25
 
 eval:
-  judge_model: hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2
+  judge_model: GLM-5.3-H20-t1
   judge_max_tokens: 12288
   judge_reasoning_effort: high
   shuffle_criteria: true

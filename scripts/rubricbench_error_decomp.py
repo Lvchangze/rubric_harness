@@ -51,6 +51,12 @@ LETTER = {"A": 0, "B": 1}
 
 #: Must match what `rubricbench_run.py` sent, or every lookup misses. The engine
 #: drops None-valued params before hashing, so only these two appear.
+#:
+#: Deliberately pinned to GLM-5.2 even though that endpoint is now retired: this
+#: script reads back the *archived* judgments from the RubricBench runs, which
+#: were all produced by 5.2. Retargeting it at the current model would not
+#: re-judge anything, it would just miss every cache entry and report zeros. To
+#: decompose a run made with a different judge, pass that judge's name here.
 PARAMS = {"model": "hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2", "reasoning_effort": "high"}
 
 

@@ -1,20 +1,12 @@
-# Rubric generation over the whole RaR train split, on GLM-5.3.
+# Rubric generation over the whole RaR train split, on Kimi-K3.
 #
-# This is a full re-run, not a continuation, and it is the third generator model
-# this run has used. The history matters for reading the artefacts on disk:
-#
-#   runs/train_full_glm52  glm5.2, retired mid-run on 2026-09-17.
-#                          baseline complete (28,720), agentic-tools partial (5,381).
-#   runs/train_full_kimi   Kimi-K3, an interim choice after glm5.2 died.
-#                          baseline partial (8,321), stopped when GLM-5.3 was picked.
-#   runs/train_full_glm53  this run.
-#
-# None of the three may be merged. `baseline` earns its place as a control only
-# by holding the generator model fixed against `agentic-tools`, which is true
-# within a model and false across two, so baseline is regenerated here even
-# though a complete glm5.2 copy already exists. Each output row now carries a
-# `model` field (harness/pipeline.py) so a mixed file is detectable rather than
-# merely improbable.
+# This is a full re-run, not a continuation. The glm5.2 deployment was retired
+# mid-generation on 2026-09-17; its output is kept under `runs/train_full_glm52`
+# (baseline complete, agentic-tools partial at 5,381). The two are not
+# interchangeable and must not be merged: `baseline` earns its place as a
+# control only by holding the generator model fixed against `agentic-tools`,
+# which is true within a model and false across two. So baseline is regenerated
+# here as well, even though a complete glm5.2 copy already exists.
 #
 # Per-question call counts carry over from `runs/tools_v1` (a property of the
 # pipeline, not the model); wall-clock does not, since it depends on this
@@ -26,12 +18,12 @@
 #                    no web tools — those are opt-in and not in DEFAULT_TOOLS)
 #
 # The cache key includes the model name (harness/llm.py), so nothing generated
-# under glm5.2 or Kimi is reachable from this run — expect a cold cache.
+# under glm5.2 is reachable from this run — expect a cold cache throughout.
 #
 # Both stages resume by uid from whatever is already on disk, so an interrupted
 # run costs only the questions that had not finished. Every finished call is in
 # the content-addressed cache, so a rerun of a completed question is free.
-run_name: train_full_glm53
+run_name: train_full_kimi
 runs_dir: runs
 results_dir: results
 
@@ -40,20 +32,12 @@ generators:
   - agentic-tools
 
 llm:
-  model: GLM-5.3-H20-t1
-  # Measured on this endpoint rather than inherited — concurrency does not
-  # transfer between deployments, and too high a setting degrades throughput
-  # without erroring. `scripts/probe_endpoint.py`, 2026-09-17:
-  #
-  #   conc  32   5.80 rps   p50  7.7s   64/64 ok
-  #   conc  64   7.47 rps   p50 12.3s   128/128 ok
-  #   conc 128  11.65 rps   p50 15.7s   256/256 ok
-  #   conc 256  12.05 rps   p50 24.5s   512/512 ok
-  #
-  # Clean at every level (unlike Kimi, which threw stream errors at 256), but
-  # throughput is flat past 128 while latency keeps climbing: 2x the concurrency
-  # buys 3% more work. 128 is the knee, so both stages run there.
-  concurrency: 128
+  model: Kimi-K3-H20-cz-GY
+  # Overridden per stage on the command line. The glm5.2 settings (64 baseline,
+  # 128 agentic-tools) are not evidence about this endpoint: it is a different
+  # deployment on different hardware, so the safe concurrency is re-measured
+  # rather than inherited. See `logs/kimi_probe.log`.
+  concurrency: 64
   reasoning_effort: high
   max_tokens: 16384
   max_attempts: 4
