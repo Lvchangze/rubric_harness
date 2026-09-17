@@ -462,6 +462,36 @@ AUC 只看排序，best-of-n 受并列和触顶影响，两者背离通常意味
 
 ## 6. 真实 RL 验证怎么设计
 
+### 6.0 训练用的 rubric 在哪（**先读这节，它决定你能不能直接开跑**）
+
+train split 全量 rubric 的生成在 `runs/train_full_glm53/`，两个臂各约 28.7k 题：
+`rubrics_baseline.jsonl`（论文式单次合成，对照组）与
+`rubrics_agentic-tools.jsonl`（本 harness，实验组）。
+生成器模型是 **`GLM-5.3-H20-t1`**，配置见 `configs/train_full.yaml`。
+
+**这些文件不在 git 里**：单个 87MB 起，超出仓库既定的体积政策，
+`examples.jsonl` 更是 107MB、直接越过 GitHub 单文件 100MB 硬上限。
+它们就在共享存储上这个 checkout 旁边，而你的训练任务本来也是在这套文件系统上读数——
+需要精简版可用 `scripts/export_rubrics.py` 导到 `exports/`。
+
+**一条硬约束：三个模型的产物不能混用。**
+这个 run 换过两次生成器模型，磁盘上因此留着三份：
+
+| 目录 | 模型 | 状态 |
+|---|---|---|
+| `runs/train_full_glm52` | `hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2` | baseline 28,720 完整；agentic-tools 仅 5,381。端点已永久下线 |
+| `runs/train_full_kimi` | `Kimi-K3-H20-cz-GY` | 临时过渡，已废弃；仅留 provenance 记录 |
+| `runs/train_full_glm53` | `GLM-5.3-H20-t1` | **正式交付的那一份** |
+
+看到 glm52 那份 baseline 是完整的，会很想拿它去配 glm53 的 agentic-tools 省一轮生成。
+**不要这么做。** baseline 之所以算对照组，靠的就是它和 agentic-tools 共用同一个生成模型；
+跨模型拼接之后，"agentic 更好"和"5.3 比 5.2 更好"就再也分不开了。
+glm53 这一份的 baseline 是从零重跑的，正是为了这个。
+
+每行现在都带 `model` 字段（`harness/pipeline.py` 写入，两份历史产物已回填），
+所以混用是查得出来的——合并前 `set(r['model'] for r in rows)` 应当只有一个值。
+各目录的 `MODEL_PROVENANCE.json` 记录了换模型的原因、端点实测容量和当时的状态。
+
 ### 6.1 必须先做的数据清洗（不做的话下游数字不可信）
 
 来自 `docs/01_data_forensics.md` §10，在**全量 45k 行**上统计：
@@ -606,10 +636,16 @@ rubric_harness/
 │  ├─ run_rollout_v2.sh    续跑没做完的实验
 │  ├─ resume_when_up.sh    等端点恢复后自动续跑
 │  ├─ dryrun_resume.py     不联网排练续跑路径
+│  ├─ probe_endpoint.py    长跑前实测端点可用并发（并发设置不能跨部署照搬）
+│  ├─ run_train_full.sh    train 全量两阶段串跑（baseline → agentic-tools）
+│  ├─ export_rubrics.py    把 runs/ 的 rubric 导成 exports/ 下的精简 JSONL
 │  ├─ rubricbench_*.py     外部基准：跑/比/核验/切分/生成/离线界/tilt 核验
 │  └─ selftest.sh          极性/统计/prompt 逐字一致性 + REPORT.md 事实断言
-├─ configs/                pilot.yaml（主实验）、rollout_v2.yaml（未跑完的）
+├─ configs/                pilot.yaml（主实验）、rollout_v2.yaml（未跑完的）、
+│                          train_full.yaml（train 全量，当前模型 GLM-5.3）
+├─ exports/rubrics/        精简版 rubric JSONL，3.7MB，入版本控制
 ├─ runs/                   逐题产物（cache 与逐条 verdict 不入版本控制）
+│  └─ train_full_*/        train 全量：每个模型一份，**不可跨目录合并**（§6.0）
 └─ results/
    ├─ REPORT.md            本地代理指标的完整报告（证据本体，105KB）
    └─ rubricbench/         外部基准
