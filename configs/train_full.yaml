@@ -40,20 +40,27 @@ generators:
   - agentic-tools
 
 llm:
-  model: GLM-5.3-H20-t1
-  # Measured on this endpoint rather than inherited — concurrency does not
-  # transfer between deployments, and too high a setting degrades throughput
-  # without erroring. `scripts/probe_endpoint.py`, 2026-09-17:
+  model: GLM-5.3-H20-t2-copy
+  # Re-measured per deployment, because concurrency does not transfer and too
+  # high a setting degrades throughput without erroring. `probe_endpoint.py`,
+  # 2026-09-22, on t2-copy:
   #
-  #   conc  32   5.80 rps   p50  7.7s   64/64 ok
-  #   conc  64   7.47 rps   p50 12.3s   128/128 ok
-  #   conc 128  11.65 rps   p50 15.7s   256/256 ok
-  #   conc 256  12.05 rps   p50 24.5s   512/512 ok
+  #   conc  64   6.14 rps   p50 15.3s
+  #   conc 128   9.76 rps   p50 17.4s
+  #   conc 256  13.96 rps   p50 22.3s
+  #   conc 384  16.88 rps   p50 26.1s   <- knee
+  #   conc 512  16.82 rps   p50 32.1s
+  #   conc 768  17.26 rps   p50 45.2s
   #
-  # Clean at every level (unlike Kimi, which threw stream errors at 256), but
-  # throughput is flat past 128 while latency keeps climbing: 2x the concurrency
-  # buys 3% more work. 128 is the knee, so both stages run there.
-  concurrency: 128
+  # Clean at every level. Throughput flattens after 384 while latency keeps
+  # climbing, so 384 is the knee — 3x the 128 the retired t1 supported, which is
+  # exactly why this is measured per deployment rather than carried over.
+  #
+  # Treat the absolute rps as an upper bound, not a forecast: the probe sends
+  # short prompts, and real generation calls (long prompts, high reasoning) ran
+  # ~7x slower than the probe suggested on t1. The ranking between levels is
+  # what transfers; the level itself is not a throughput prediction.
+  concurrency: 384
   reasoning_effort: high
   # Left at 16384, and the reason is worth recording because the obvious
   # "improvement" here is a trap. Empty replies (reasoning trace eats the budget,
