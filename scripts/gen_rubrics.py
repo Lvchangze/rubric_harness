@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import logging
 import sys
 import time
@@ -71,8 +72,34 @@ def parse_args() -> argparse.Namespace:
                         "which caps in-flight HTTP requests. Multi-call generators need this: "
                         "without it every question starts at once and none finishes.")
     p.add_argument("--no-resume", action="store_true", help="regenerate even if results exist")
+    p.add_argument("--shard", default=None, metavar="I/N",
+                   help="process only shard I of N (0-based), partitioned by a stable hash of "
+                        "the uid. For splitting one source across several endpoints: run each "
+                        "shard as its own process with its own --model. Each shard writes its "
+                        "own `rubrics_<source>.sI-of-N.jsonl` and resumes from it, because two "
+                        "processes appending rubric-sized lines to one file would interleave "
+                        "mid-line. Recombine with scripts/merge_shards.py.")
     p.add_argument("--log-level", default="INFO")
-    return p.parse_args()
+    args = p.parse_args()
+    args.shard_index, args.shard_count = _parse_shard(args.shard, p)
+    return args
+
+
+def _parse_shard(spec: str | None, p: argparse.ArgumentParser) -> tuple[int, int]:
+    if spec is None:
+        return 0, 1
+    try:
+        i, n = (int(x) for x in spec.split("/", 1))
+    except ValueError:
+        p.error(f"--shard wants I/N, got {spec!r}")
+    if not 0 < n or not 0 <= i < n:
+        p.error(f"--shard needs 0 <= I < N, got {spec!r}")
+    return i, n
+
+
+def shard_of(uid: str, count: int) -> int:
+    """Stable across processes, runs and Python versions, unlike hash()."""
+    return int(hashlib.sha256(uid.encode("utf-8")).hexdigest()[:8], 16) % count
 
 
 def resolve_config(args: argparse.Namespace) -> RunConfig:
@@ -116,6 +143,14 @@ async def main_async() -> int:
     examples = resolve_examples(config, run_dir)
     engine = build_engine(config)
 
+    shard_suffix = ""
+    if args.shard_count > 1:
+        total = len(examples)
+        examples = [ex for ex in examples if shard_of(ex.uid, args.shard_count) == args.shard_index]
+        shard_suffix = f".s{args.shard_index}-of-{args.shard_count}"
+        logger.info("shard %d/%d: %d of %d examples",
+                    args.shard_index, args.shard_count, len(examples), total)
+
     logger.info("run=%s examples=%d sources=%s model=%s concurrency=%d",
                 config.run_name, len(examples), sources, config.llm.model, config.llm.concurrency)
 
@@ -124,7 +159,7 @@ async def main_async() -> int:
         started = time.time()
         # Output file is keyed by the *run-level* source name so the ablation
         # lands in its own file rather than overwriting `agentic`.
-        original_writer_name = source
+        original_writer_name = source + shard_suffix
         rubrics = await _generate_as(
             engine, examples, gen_name, original_writer_name, run_dir, config, kwargs,
             resume=not args.no_resume, max_in_flight=args.max_in_flight,

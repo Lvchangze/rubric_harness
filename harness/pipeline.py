@@ -89,6 +89,7 @@ async def generate_rubrics(
     resume: bool = True,
     progress_every: int = 10,
     max_in_flight: int | None = None,
+    dead_endpoint_after: int = 50,
 ) -> dict[str, Rubric]:
     """Run one generator over ``examples``, streaming results to disk.
 
@@ -121,17 +122,50 @@ async def generate_rubrics(
         if record.get("uid") in done:
             rubrics[record["uid"]] = Rubric.from_dict(record["rubric"])
 
-    counter = {"n": 0}
+    counter = {"n": 0, "consecutive_empty": 0}
     started = time.time()
 
     gate = asyncio.Semaphore(max_in_flight) if max_in_flight and max_in_flight > 0 else None
+    aborted: list[str] = []
 
     async def one(example: Example) -> None:
+        if aborted:
+            return
         if gate is None:
             await _generate_one(example)
             return
         async with gate:
+            if aborted:
+                return
             await _generate_one(example)
+
+    def _check_dead_endpoint(example: Example, produced_items: bool) -> None:
+        """Stop the run when the endpoint has gone away, instead of recording it.
+
+        A question that yields no criteria is written to disk like any other
+        result, and on resume its uid counts as done. That is correct for a
+        question the generator genuinely could not handle, and catastrophic when
+        the endpoint has disappeared: the GLM-5.3 t1 deployment vanished eleven
+        hours into a run and the loop kept going at full speed, writing 13,111
+        empty rows that a later resume would have skipped forever. The output
+        looked complete (14,294 rows) while being 92% empty.
+
+        Consecutive failures are what separates the two cases. Isolated empties
+        are normal; a long unbroken run of them is infrastructure, not content.
+        """
+        if produced_items:
+            counter["consecutive_empty"] = 0
+            return
+        counter["consecutive_empty"] += 1
+        if counter["consecutive_empty"] >= dead_endpoint_after and not aborted:
+            aborted.append(example.uid)
+            logger.error(
+                "generator=%s aborting: %d consecutive questions produced no criteria "
+                "(last uid=%s). This is the signature of a dead endpoint, not of hard "
+                "questions. Nothing further will be written; rerun to resume once the "
+                "endpoint is back.",
+                source, counter["consecutive_empty"], example.uid,
+            )
 
     async def _generate_one(example: Example) -> None:
         t0 = time.time()
@@ -142,6 +176,7 @@ async def generate_rubrics(
             record = {"uid": example.uid, "source": source, "rubric": {"items": [], "meta": {"source": source}},
                       "error": f"crash: {exc}"[:400], "model": engine.model}
             writer.write(record)
+            _check_dead_endpoint(example, produced_items=False)
             return
         result.wall_seconds = result.wall_seconds or (time.time() - t0)
         payload = result.to_dict()
@@ -155,6 +190,7 @@ async def generate_rubrics(
         if result.trace:
             run_dir.write_trace(f"{source}_{example.uid}", result.trace)
         rubrics[example.uid] = result.rubric
+        _check_dead_endpoint(example, produced_items=bool(result.rubric.items))
         counter["n"] += 1
         if counter["n"] % progress_every == 0:
             rate = counter["n"] / max(1e-6, time.time() - started)
@@ -166,6 +202,12 @@ async def generate_rubrics(
             )
 
     await asyncio.gather(*(one(ex) for ex in todo))
+    if aborted:
+        raise RuntimeError(
+            f"generator={source} aborted after {dead_endpoint_after} consecutive empty results "
+            f"(endpoint presumed dead). {counter['n']} questions completed this session; "
+            f"rerun to resume."
+        )
     return rubrics
 
 

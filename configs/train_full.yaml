@@ -55,9 +55,22 @@ llm:
   # buys 3% more work. 128 is the knee, so both stages run there.
   concurrency: 128
   reasoning_effort: high
+  # Left at 16384, and the reason is worth recording because the obvious
+  # "improvement" here is a trap. Empty replies (reasoning trace eats the budget,
+  # no visible content) cost a full call plus an escalated retry, 255 of them in
+  # four hours, so raising the cap looks free — a cap is not a target. It is not
+  # free: under `reasoning_effort: high` the model *does* spend the extra room.
+  # Raising this to 24576 alongside rollout_max_tokens turned a 1.5% empty-reply
+  # rate into a 41% timeout rate and cut throughput 5x. Budgets here trade
+  # against latency, not just against truncation.
   max_tokens: 16384
   max_attempts: 4
   cache_dir: runs/cache
+  # Left at 1200 for the same reason. Tightening it to 600 does not make stuck
+  # calls finish, it reclassifies slow-but-legitimate ones as failures and pays
+  # for them again on retry: this endpoint decodes at roughly 41 tok/s, so a
+  # full-budget generation needs ~400s and a 600s ceiling sits right on top of
+  # the legitimate tail.
   request_timeout_s: 1200
 
 sample:
@@ -94,6 +107,16 @@ agentic:
   enable_pitfalls: true
   enable_critic: true
   enable_calibration: true
+  # 12000, measured against the alternative rather than assumed. Rollouts are
+  # the slowest and most numerous stage, and they dominate both failure modes,
+  # so this number decides the run's throughput more than any other.
+  #
+  # At 12000 they produce ~15% empty replies (trace exhausts the budget) and
+  # 47 timeouts per four hours. Raising it to 24576 to fix that backfired
+  # badly: a full-budget generation then needs ~600s at this endpoint's ~41
+  # tok/s, rollouts took 200 of 456 timeouts in 43 minutes, and end-to-end
+  # throughput fell 5x. The empty replies are the cheaper failure — they cost
+  # one call, whereas a timeout costs the full ceiling and then retries.
   rollout_max_tokens: 12000
   drop_gold_failures: true
   demote_indiscriminate: true
