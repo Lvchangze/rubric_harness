@@ -15,18 +15,17 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 CFG=configs/train_full.yaml
 RUN=train_full_glm53
-CONC=384
+CONC=128
 
 # --max-in-flight bounds live *questions*, separate from --concurrency (live
 # requests), and it is what actually governs throughput. Omitting it is not a
 # neutral default, it is unbounded: the glm5.2 attempt ran without it, opened
 # all 28,717 pipelines at once and decayed from 0.53 to 0.07 samples/s over 23h.
 #
-# Scaled from the one setting that was measured rather than guessed: at 192
-# in-flight the driver held all 128 connections open, a ratio of 1.5, so 384
-# slots want ~576. A question is mostly sequential, which is why in-flight has
-# to exceed concurrency for the slots to stay full.
-INFLIGHT=576
+# 192 is the measured pairing for 128 slots: at that setting the driver held
+# all 128 connections open. A question is mostly sequential, which is why
+# in-flight has to exceed concurrency for the slots to stay full.
+INFLIGHT=192
 
 echo "$(date '+%F %T') === baseline, concurrency $CONC (no-op if already complete) ==="
 python3 scripts/gen_rubrics.py --config "$CFG" --run-name "$RUN" \

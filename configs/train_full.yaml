@@ -45,22 +45,23 @@ llm:
   # high a setting degrades throughput without erroring. `probe_endpoint.py`,
   # 2026-09-22, on t2-copy:
   #
-  #   conc  64   6.14 rps   p50 15.3s
-  #   conc 128   9.76 rps   p50 17.4s
-  #   conc 256  13.96 rps   p50 22.3s
-  #   conc 384  16.88 rps   p50 26.1s   <- knee
-  #   conc 512  16.82 rps   p50 32.1s
-  #   conc 768  17.26 rps   p50 45.2s
+  #   conc  16   3.16 rps   p50  6.8s
+  #   conc  32   6.01 rps   p50  5.4s
+  #   conc  64   8.55 rps   p50 10.5s
+  #   conc 128  12.51 rps   p50 14.4s
   #
-  # Clean at every level. Throughput flattens after 384 while latency keeps
-  # climbing, so 384 is the knee — 3x the 128 the retired t1 supported, which is
-  # exactly why this is measured per deployment rather than carried over.
+  # 128 despite the curve still rising there, because on this endpoint the probe
+  # has already been wrong once in the direction that costs days. Its earlier
+  # sweep called 384 the knee at 16.88 rps; a real run at 384 then completed
+  # *zero* questions in an hour while holding all 384 connections open, and the
+  # endpoint's max batch size has since been reduced. Short-prompt probes do not
+  # predict behaviour under long prompts with high reasoning effort — treat the
+  # numbers as a ranking between levels, never as a throughput forecast.
   #
-  # Treat the absolute rps as an upper bound, not a forecast: the probe sends
-  # short prompts, and real generation calls (long prompts, high reasoning) ran
-  # ~7x slower than the probe suggested on t1. The ranking between levels is
-  # what transfers; the level itself is not a throughput prediction.
-  concurrency: 384
+  # 128 is the one setting with a real agentic-tools run behind it (on the
+  # retired t1, 0.03 samples/s sustained). Raise it only against a measured
+  # agentic-tools rate, not against another probe.
+  concurrency: 128
   reasoning_effort: high
   # Left at 16384, and the reason is worth recording because the obvious
   # "improvement" here is a trap. Empty replies (reasoning trace eats the budget,

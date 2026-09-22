@@ -262,6 +262,31 @@ class LLMStats:
 # ---------------------------------------------------------------------------
 
 
+def _disable_prompt_truncation() -> None:
+    """Turn off the streaming client's left-truncation retry ladder.
+
+    On a failed request that client retries with progressively more of the user
+    message cut from the left (10%, 20%, ... 99%), and returns whatever the
+    first surviving attempt produces. The caller is never told the prompt was
+    cut. That is a reasonable last resort for a genuinely over-long prompt and
+    the wrong response to anything else, because a criterion written against 1%
+    of a question looks exactly like one written against all of it.
+
+    Here it is only ever the wrong response. Prompt size is bounded by the
+    sampling config (12k question / 14k reference characters) against a
+    long-context model, and what actually triggered the ladder on GLM-5.3
+    t2-copy was ``no available instances`` — an infrastructure error that
+    shortening the prompt cannot fix. 373 requests rode it all the way to 99%
+    in two hours. Switching it off makes those failures honest, and the engine's
+    own retry (``max_attempts``) then re-sends the prompt intact.
+    """
+    from contextagent.llm import hy_stream  # noqa: PLC0415 - needs sys.path set
+
+    if hy_stream.TRUNC_SCHEDULE:
+        hy_stream.TRUNC_SCHEDULE = ()
+        logger.info("prompt truncation ladder disabled; failures retry with the prompt intact")
+
+
 class LLMEngine:
     """Cached, retrying, JSON-aware facade over one model endpoint.
 
@@ -295,11 +320,15 @@ class LLMEngine:
         escalate_max_tokens: float = 1.5,
         request_timeout_s: int = 1200,
         seed: int = 0,
+        allow_prompt_truncation: bool = False,
     ) -> None:
         os.environ.setdefault("LLM_REQUEST_TIMEOUT_S", str(request_timeout_s))
         if _HYCTX_PATH not in sys.path:
             sys.path.insert(0, _HYCTX_PATH)
         from contextagent.llm import LLMClient  # noqa: PLC0415 - late, needs sys.path
+
+        if not allow_prompt_truncation:
+            _disable_prompt_truncation()
 
         self.model = model
         self.concurrency = concurrency

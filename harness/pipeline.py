@@ -90,6 +90,7 @@ async def generate_rubrics(
     progress_every: int = 10,
     max_in_flight: int | None = None,
     dead_endpoint_after: int = 50,
+    stall_timeout_s: float = 3600.0,
 ) -> dict[str, Rubric]:
     """Run one generator over ``examples``, streaming results to disk.
 
@@ -201,12 +202,56 @@ async def generate_rubrics(
                 engine.stats.calls, engine.stats.cache_hits,
             )
 
-    await asyncio.gather(*(one(ex) for ex in todo))
+    async def _stall_watchdog(main: asyncio.Future) -> None:
+        """Abort when nothing completes for a long stretch.
+
+        The consecutive-empty guard only fires on questions that *finish*
+        empty. It is blind to the other way an endpoint fails: staying up
+        enough to accept connections while serving almost nothing, so questions
+        neither finish nor fail.         GLM-5.3 t2-copy did exactly that — 384
+        connections held open, zero questions completed in an hour, and the run
+        would have sat there indefinitely.
+
+        This has to cancel the in-flight work rather than just stop feeding new
+        questions in: the stuck tasks are blocked inside the generator and will
+        never return on their own, so a flag alone leaves the run hanging.
+        """
+        last_seen = -1
+        while not aborted:
+            await asyncio.sleep(min(300.0, stall_timeout_s / 4))
+            if counter["n"] != last_seen:
+                last_seen = counter["n"]
+                stall_start[0] = time.time()
+                continue
+            stalled = time.time() - stall_start[0]
+            if stalled >= stall_timeout_s:
+                aborted.append("<stall>")
+                logger.error(
+                    "generator=%s aborting: no question has completed in %.0f minutes "
+                    "(%d done this session). The endpoint is accepting work without "
+                    "returning it; rerun to resume once it is healthy.",
+                    source, stalled / 60, counter["n"],
+                )
+                main.cancel()
+                return
+
+    stall_start = [time.time()]
+    main_task = asyncio.ensure_future(asyncio.gather(*(one(ex) for ex in todo)))
+    watchdog = asyncio.ensure_future(_stall_watchdog(main_task))
+    try:
+        await main_task
+    except asyncio.CancelledError:
+        if not aborted:
+            raise
+    finally:
+        watchdog.cancel()
     if aborted:
+        why = ("stalled: nothing completed for "
+               f"{stall_timeout_s / 60:.0f} minutes" if aborted[0] == "<stall>"
+               else f"{dead_endpoint_after} consecutive empty results")
         raise RuntimeError(
-            f"generator={source} aborted after {dead_endpoint_after} consecutive empty results "
-            f"(endpoint presumed dead). {counter['n']} questions completed this session; "
-            f"rerun to resume."
+            f"generator={source} aborted ({why}); endpoint presumed unhealthy. "
+            f"{counter['n']} questions completed this session; rerun to resume."
         )
     return rubrics
 
