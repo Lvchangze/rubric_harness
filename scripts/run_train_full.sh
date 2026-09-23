@@ -22,9 +22,9 @@ CONC=128
 # neutral default, it is unbounded: the glm5.2 attempt ran without it, opened
 # all 28,717 pipelines at once and decayed from 0.53 to 0.07 samples/s over 23h.
 #
-# 192 is the measured pairing for 128 slots: at that setting the driver held
-# all 128 connections open. A question is mostly sequential, which is why
-# in-flight has to exceed concurrency for the slots to stay full.
+# Held at 1.5x concurrency, the ratio measured to keep the slots full: at 192
+# in-flight the driver held all 128 connections open. A question is mostly
+# sequential, which is why in-flight has to exceed concurrency at all.
 INFLIGHT=192
 
 echo "$(date '+%F %T') === baseline, concurrency $CONC (no-op if already complete) ==="

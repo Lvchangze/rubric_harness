@@ -50,17 +50,29 @@ llm:
   #   conc  64   8.55 rps   p50 10.5s
   #   conc 128  12.51 rps   p50 14.4s
   #
-  # 128 despite the curve still rising there, because on this endpoint the probe
-  # has already been wrong once in the direction that costs days. Its earlier
-  # sweep called 384 the knee at 16.88 rps; a real run at 384 then completed
-  # *zero* questions in an hour while holding all 384 connections open, and the
-  # endpoint's max batch size has since been reduced. Short-prompt probes do not
-  # predict behaviour under long prompts with high reasoning effort — treat the
-  # numbers as a ranking between levels, never as a throughput forecast.
+  # Raised 128 -> 256 on 09-23 because the endpoint's GPUs were not saturated
+  # at 128. Both numbers have a real agentic-tools run behind them, which is the
+  # only evidence that counts here: short-prompt probes have already been wrong
+  # on this endpoint in the direction that costs days, calling 384 the knee at
+  # 16.88 rps shortly before a real run at 384 completed *zero* questions in an
+  # hour while holding all 384 connections open. (That was before the max batch
+  # size was reduced, so 384 is not necessarily bad now — it is just untested.)
   #
-  # 128 is the one setting with a real agentic-tools run behind it (on the
-  # retired t1, 0.03 samples/s sustained). Raise it only against a measured
-  # agentic-tools rate, not against another probe.
+  # Measured rates, agentic-tools, this endpoint:
+  #   conc 128   0.0433 samples/s   (stable across 3h/6h/12h windows)
+  #   conc 256   0.0007 samples/s   (3 questions in 73 minutes)
+  #
+  # 256 was tried on 09-23 because the endpoint's GPUs were not saturated at
+  # 128, and it was 60x worse. The endpoint stayed healthy throughout — a side
+  # probe answered in 1.7-3.4s while the run was starved — so this is queueing,
+  # not failure: past the server's (deliberately reduced) max batch size the
+  # extra requests do not get served, they wait, while still holding our slots.
+  # Client concurrency above the server's batch capacity buys nothing and costs
+  # everything. Unsaturated GPUs are a reason to raise the batch size on the
+  # serving side, not the concurrency on ours.
+  #
+  # Move this only against a measured agentic-tools rate over hours, never
+  # against a probe, and change nothing else at the same time.
   concurrency: 128
   reasoning_effort: high
   # Left at 16384, and the reason is worth recording because the obvious
