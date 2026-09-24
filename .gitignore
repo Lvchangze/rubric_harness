@@ -65,6 +65,13 @@ runs/*/examples.jsonl
 runs/train_full*/rubrics_*.jsonl
 runs/train_full*/*.preescapefix
 
+# Same reasoning for the train-split exports, which are the same data in a
+# self-contained shape: 85 MB and 99 MB per domain because every row repeats
+# the question and reference answer. exports/rubrics/ (the val-split evaluation
+# exports, 3.7 MB) stays tracked — that one is small enough to be worth the
+# convenience of having it in the clone.
+exports/train/
+
 nohup.out
 *.log
 logs/
