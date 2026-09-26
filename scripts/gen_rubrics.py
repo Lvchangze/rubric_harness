@@ -135,6 +135,10 @@ async def main_async() -> int:
         level=getattr(logging, args.log_level.upper(), logging.INFO),
         format="%(asctime)s %(levelname)s %(name)s | %(message)s",
     )
+    # httpx logs every request at INFO, which at 128 concurrency is most of the
+    # log by volume. Silenced here rather than with `| grep -v` so the process
+    # can be launched without a pipe and supervised by its own pid.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
     config = resolve_config(args)
     sources = args.sources or config.generators
 

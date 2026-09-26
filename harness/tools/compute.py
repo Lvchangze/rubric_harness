@@ -10,6 +10,7 @@ network and no model involved.
 
 from __future__ import annotations
 
+import json
 import math
 import re
 from typing import Any
@@ -94,6 +95,49 @@ def _sympy():
         return None
 
 
+#: Runs in the sandbox, never in this process. ``sympify`` evaluates its input
+#: (sympy's own docs warn against feeding it untrusted strings, and these are
+#: model-written), and ``simplify`` can run for hours on an unlucky expression.
+#: In-process, either one holds the event loop outright, and ``asyncio.wait_for``
+#: cannot interrupt code that never awaits. That is not hypothetical: one
+#: ``simplify`` call froze a 28k-question generation run on 2026-09-26, py-spy
+#: showing the main thread pinned at 100% inside ``logcombine`` with every other
+#: question, the stall watchdog included, starved behind it.
+_EQUIV_SNIPPET = """\
+import json
+import sympy as sp
+left, right = {left!r}, {right!r}
+out = {{}}
+try:
+    le = sp.sympify(left, rational=True)
+    re_ = sp.sympify(right, rational=True)
+    diff = sp.simplify(le - re_)
+    out["symbolic"] = bool(diff == 0)
+    out["diff"] = str(diff)[:300]
+    if not out["symbolic"]:
+        try:
+            lv, rv = complex(sp.N(le)), complex(sp.N(re_))
+            out["lv"] = [lv.real, lv.imag]
+            out["rv"] = [rv.real, rv.imag]
+        except (TypeError, ValueError, AttributeError):
+            pass
+except Exception as exc:
+    out["parse_error"] = type(exc).__name__
+print({marker!r} + json.dumps(out))
+"""
+_EQUIV_MARKER = "__equivalence__"
+
+
+def _marked_json(stdout: str, marker: str) -> dict[str, Any] | None:
+    for line in reversed(stdout.splitlines()):
+        if line.startswith(marker):
+            try:
+                return json.loads(line[len(marker):])
+            except ValueError:
+                return None
+    return None
+
+
 def _to_float(text: str) -> float | None:
     match = _NUM_RE.search(text.replace(",", ""))
     if match is None:
@@ -126,6 +170,12 @@ class CheckEquivalenceTool(Tool):
         "required": ["left", "right"],
     }
 
+    # A genuine equivalence check simplifies in well under a second; the budget
+    # is mostly the sandbox interpreter importing sympy.
+    def __init__(self, *, timeout_s: float = 15.0, cpu_seconds: int = 10) -> None:
+        self.timeout_s = timeout_s
+        self.cpu_seconds = cpu_seconds
+
     async def run(self, ctx: ToolContext, **kwargs: Any) -> ToolResult:
         left = str(kwargs.get("left") or "").strip()
         right = str(kwargs.get("right") or "").strip()
@@ -140,25 +190,31 @@ class CheckEquivalenceTool(Tool):
         symbolic: bool | None = None
         numeric: bool | None = None
 
-        sp = _sympy()
-        if sp is not None:
-            try:
-                le = sp.sympify(left, rational=True)
-                re_ = sp.sympify(right, rational=True)
-                diff = sp.simplify(le - re_)
-                symbolic = bool(diff == 0)
+        if _sympy() is not None:
+            outcome = await run_python(
+                _EQUIV_SNIPPET.format(left=left, right=right, marker=_EQUIV_MARKER),
+                timeout_s=self.timeout_s,
+                cpu_seconds=self.cpu_seconds,
+            )
+            payload = _marked_json(outcome.stdout, _EQUIV_MARKER)
+            if payload is None:
+                findings.append(
+                    f"symbolic check abandoned after {self.timeout_s:.0f}s (too costly to simplify)"
+                    if outcome.timed_out
+                    else f"symbolic check did not complete ({outcome.error or 'no output'})"
+                )
+            elif "parse_error" in payload:
+                # sympify rejects prose readily; that is an answer, not a fault.
+                findings.append(f"could not parse symbolically ({payload['parse_error']})")
+            else:
+                symbolic = bool(payload.get("symbolic"))
                 findings.append(
                     "symbolically identical" if symbolic
-                    else f"symbolic difference simplifies to {diff}"
+                    else f"symbolic difference simplifies to {payload.get('diff')}"
                 )
-                if not symbolic:
-                    try:
-                        lv, rv = complex(sp.N(le)), complex(sp.N(re_))
-                        numeric = _close(lv.real, rv.real, tol) and _close(lv.imag, rv.imag, tol)
-                    except (TypeError, ValueError, AttributeError):
-                        pass
-            except Exception as exc:  # noqa: BLE001 - sympify rejects prose readily
-                findings.append(f"could not parse symbolically ({type(exc).__name__})")
+                lv, rv = payload.get("lv"), payload.get("rv")
+                if not symbolic and lv and rv:
+                    numeric = _close(lv[0], rv[0], tol) and _close(lv[1], rv[1], tol)
 
         if numeric is None:
             lf, rf = _to_float(left), _to_float(right)
