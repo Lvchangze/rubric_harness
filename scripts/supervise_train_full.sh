@@ -14,7 +14,10 @@
 # generator exits cleanly (every question attempted). Resume is by uid, so a
 # restart costs only the questions that were in flight.
 #
-#   nohup setsid bash scripts/supervise_train_full.sh > logs/supervise.log 2>&1 &
+# Launch it under tmux, restarted if it is killed, so that it sits outside
+# whatever session started it:
+#
+#   tmux new-session -d -s rubric-train "bash scripts/keep_supervisor.sh"
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
@@ -43,6 +46,15 @@ PROBE=${PROBE:-1}
 PROBE_INTERVAL_S=${PROBE_INTERVAL_S:-120}
 
 log() { echo "$(date '+%F %T') [supervise] $*"; }
+
+# Generators for this run and source that this supervisor did not start: one
+# left running after a previous supervisor was killed on its own. Matched on the
+# executable as well as the arguments, because any shell whose command text
+# merely mentions these strings would otherwise count as a generator.
+others() {
+  ps -eo pid=,comm=,args= | awk -v run="--run-name $RUN" -v src="--sources $SOURCE" \
+    '$2 ~ /^python/ && index($0, "gen_rubrics.py") && index($0, run) && index($0, src) {print $1}'
+}
 
 rows() { if [ -f "$OUT" ]; then wc -l < "$OUT"; else echo 0; fi; }
 
@@ -105,6 +117,13 @@ wait_healthy() {
 
 fast_fails=0
 while true; do
+  # Never a second writer on the same file. This supervisor cannot `wait` on a
+  # process it did not start, so it polls until the survivor is gone.
+  if [ -n "$(others)" ]; then
+    log "generator already running for this run (pid $(others | tr '\n' ' ')); waiting for it to exit"
+    while [ -n "$(others)" ]; do sleep "$POLL_S"; done
+    log "previous generator gone"
+  fi
   [ "$PROBE" = 1 ] && wait_healthy
   purge_empty | sed "s/^/$(date '+%F %T') [supervise] /"
 
@@ -112,8 +131,12 @@ while true; do
   last=$(rows)
   last_change=$started
   log "starting generator (rows=$last)"
-  # exec so that $! is the generator's own pid, not a wrapper shell's.
-  bash -c "exec $GEN_CMD" >> "$GEN_LOG" 2>&1 &
+  # Its own session, so a kill aimed at this supervisor's process group does not
+  # take the generator with it and vice versa: on 2026-09-27 both vanished at
+  # once, leaving nothing to notice. setsid runs in place here (a background job
+  # of a non-interactive shell is not a group leader) and bash execs, so $! is
+  # the generator's own pid.
+  setsid bash -c "exec $GEN_CMD" >> "$GEN_LOG" 2>&1 &
   pid=$!
 
   next_check=$(( started + CHECK_S ))
