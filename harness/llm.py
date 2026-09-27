@@ -352,29 +352,27 @@ class LLMEngine:
         blob = json.dumps(payload, sort_keys=True, ensure_ascii=False, default=str)
         return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
-    def _cache_path(self, key: str) -> Path:
+    def _cache_path(self, key: str, *, create: bool = False) -> Path:
         assert self._cache_dir is not None
         # Two-level fan-out keeps directory listings usable at 100k+ entries.
         sub = self._cache_dir / key[:2] / key[2:4]
-        sub.mkdir(parents=True, exist_ok=True)
+        if create:
+            sub.mkdir(parents=True, exist_ok=True)
         return sub / f"{key}.json"
 
     def _cache_read(self, key: str) -> dict[str, Any] | None:
         if self._cache_dir is None:
             return None
-        path = self._cache_path(key)
-        if not path.exists():
-            return None
         try:
-            with path.open("r", encoding="utf-8") as fh:
+            with self._cache_path(key).open("r", encoding="utf-8") as fh:
                 return json.load(fh)
-        except Exception:  # noqa: BLE001 - a corrupt cache entry is just a miss
+        except Exception:  # noqa: BLE001 - a missing or corrupt entry is just a miss
             return None
 
     def _cache_write(self, key: str, value: dict[str, Any]) -> None:
         if self._cache_dir is None:
             return
-        path = self._cache_path(key)
+        path = self._cache_path(key, create=True)
         tmp = path.with_suffix(f".tmp{os.getpid()}")
         try:
             with self._io_lock:
@@ -383,6 +381,19 @@ class LLMEngine:
                 tmp.replace(path)
         except Exception as exc:  # noqa: BLE001
             logger.debug("cache write failed: %s", exc)
+
+    # The cache lives on a network filesystem, where a single open costs 50-130ms.
+    # Inline, every lookup stalled the event loop for that long, and after a
+    # restart — when the in-flight questions replay thousands of cached calls
+    # back to back — the loop did nothing but file I/O: one connection open
+    # instead of 128 for over ten minutes, py-spy finding the main thread in
+    # open/stat/mkdir/json.load on every sample. Off the loop, lookups overlap
+    # with each other and with the network work.
+    async def _cache_get(self, key: str) -> dict[str, Any] | None:
+        return await asyncio.to_thread(self._cache_read, key)
+
+    async def _cache_put(self, key: str, value: dict[str, Any]) -> None:
+        await asyncio.to_thread(self._cache_write, key, value)
 
     # -- core call --------------------------------------------------------
 
@@ -431,7 +442,7 @@ class LLMEngine:
         self.stats.by_tag[tag] = self.stats.by_tag.get(tag, 0) + 1
 
         if use_cache:
-            cached = self._cache_read(key)
+            cached = await self._cache_get(key)
             if cached is not None and cached.get("response"):
                 self.stats.cache_hits += 1
                 if return_reasoning:
@@ -467,7 +478,7 @@ class LLMEngine:
                 self.stats.reasoning_chars += len(reasoning)
                 if text:
                     self.stats.response_chars += len(text)
-                    self._cache_write(key, {"response": text, "reasoning": reasoning, "tag": tag})
+                    await self._cache_put(key, {"response": text, "reasoning": reasoning, "tag": tag})
                     if return_reasoning:
                         return text, reasoning
                     return text
@@ -565,7 +576,7 @@ class LLMEngine:
         self.stats.calls += 1
         self.stats.by_tag[tag] = self.stats.by_tag.get(tag, 0) + 1
 
-        if use_cache and (cached := self._cache_read(key)) is not None:
+        if use_cache and (cached := await self._cache_get(key)) is not None:
             if cached.get("content") or cached.get("tool_calls"):
                 self.stats.cache_hits += 1
                 return {
@@ -596,7 +607,7 @@ class LLMEngine:
                 self.stats.reasoning_chars += len((out or {}).get("reasoning_content") or "")
                 if content or calls:
                     self.stats.response_chars += len(content)
-                    self._cache_write(key, {"content": content, "tool_calls": calls, "tag": tag})
+                    await self._cache_put(key, {"content": content, "tool_calls": calls, "tag": tag})
                     return {"content": content, "tool_calls": calls}
                 self.stats.empty_responses += 1
                 budget = int(budget * self.escalate_max_tokens)
