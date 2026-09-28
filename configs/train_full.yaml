@@ -112,9 +112,21 @@ sample:
   max_question_chars: 12000
   max_reference_chars: 14000
 
-  # Lower bounds kept, and they are doing real work: 4,677 train rows carry a
-  # reference answer under 40 characters, the shortest being a single
-  # character. A rubric derived from those is not short, it is noise.
+  # Lower bounds kept for this run, but not for the reason first given here,
+  # which was that a rubric derived from a short reference "is not short, it is
+  # noise". Sampling the excluded rows on 09-28 showed otherwise: they are
+  # mostly ordinary exam questions with concise final answers ("20 m",
+  # "Parotid cancer.", "Emergency embolectomy"; median 11 characters in
+  # science, 20 in medicine), plus a few genuinely broken ones ("What does it
+  # show?" with the image missing). The bounds were inherited from the
+  # evaluation sampler, which wants substantive reference answers; for
+  # covering a training set they are too strict.
+  #
+  # What they remove after deduplication: questions under 80 characters (566
+  # medicine, 905 science) and references under 40 (917, 3,268) — 5,656
+  # questions with no rubric in either arm. Kept by decision rather than
+  # oversight: downstream handles short-answer questions separately, and both
+  # arms share the same question set, so the comparison is unaffected.
   min_question_chars: 80
   min_reference_chars: 40
   min_rubric_items: 4
