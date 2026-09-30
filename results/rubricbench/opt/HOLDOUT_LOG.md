@@ -60,6 +60,14 @@ thing to an unbiased estimate of it that exists is the verification's
 quasi-holdout — the four domains its prompt was not written from — at **+0.0132
 over `baseline`, p=0.33**.
 
+## GLM-5.3 re-run (2026-09-30): no spend
+
+All six sources were re-generated and re-judged with GLM-5.3 on the dev half
+only. The rule, fixed before the run, was to spend one holdout score only if
+`agentic-tools` beat `baseline` on dev by at least the dev detection limit
+(about 0.037). It did not: it came out 0.0134 *below* `baseline` (p=0.50).
+Nothing on the holdout was computed or read. Still **0 of 3** used.
+
 ## If a later run does spend one
 
 Record, before reading the result: which of the three this is, the exact
