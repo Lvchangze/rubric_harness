@@ -468,15 +468,15 @@ AUC 只看排序，best-of-n 受并列和触顶影响，两者背离通常意味
 
 ```
 exports/train/rar_medicine_baseline_glm53.jsonl        16,028 行   对照组：论文式单次合成
-exports/train/rar_medicine_agentic-tools_glm53.jsonl   16,025 行   实验组：本 harness
+exports/train/rar_medicine_agentic-tools_glm53.jsonl   16,028 行   实验组：本 harness
 exports/train/rar_science_baseline_glm53.jsonl         12,692 行
-exports/train/rar_science_agentic-tools_glm53.jsonl    12,690 行
+exports/train/rar_science_agentic-tools_glm53.jsonl    12,692 行
 ```
 
-两臂按 `uid` 配对，配对题的题面和参考答案逐字一致。agentic 比 baseline 少 5 题
-（医学 3、科学 2）：它们两次都在 draft 阶段产不出可解析的 criteria，
-而那次调用本身成功、坏结果进了缓存，所以重跑只会原样重放；要补得绕过缓存。
-**做两臂对比时请取交集（28,715 题）**，否则两臂的题集不同。
+两臂按 `uid` 一一对应，共 28,720 对，配对题的题面和参考答案逐字一致。
+有 5 题（医学 3、科学 2）第一次没进 agentic：draft 调用在 HTTP 层成功了，
+但内容解析不出 criteria，坏结果进了缓存，原样重跑只会重放。
+09-30 用一份独立缓存重生成了这 5 题，现在两臂题集相同。
 
 生成器是 GLM-5.3（`GLM-5.3-H20-t1` / `-t2` / `-t2-copy` 三个部署，同权重不同硬件，
 每行的 `generator_model` 字段记着具体是哪个），配置见 `configs/train_full.yaml`，
