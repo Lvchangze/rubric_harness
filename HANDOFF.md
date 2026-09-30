@@ -493,7 +493,7 @@ exports/train/rar_science_agentic-tools_glm53.jsonl    12,690 行
 |---|---|---|
 | `runs/train_full_glm52` | `hy-t2t-glm-5.2-384k-fp8-L20A-t1-v2` | baseline 28,720 完整；agentic-tools 仅 5,381。端点已永久下线 |
 | `runs/train_full_kimi` | `Kimi-K3-H20-cz-GY` | 临时过渡，已废弃；仅留 provenance 记录 |
-| `runs/train_full_glm53` | `GLM-5.3-H20-t1` | **正式交付的那一份** |
+| `runs/train_full_glm53` | GLM-5.3（`-t1` / `-t2` / `-t2-copy`，同权重） | **正式交付的那一份** |
 
 看到 glm52 那份 baseline 是完整的，会很想拿它去配 glm53 的 agentic-tools 省一轮生成。
 **不要这么做。** baseline 之所以算对照组，靠的就是它和 agentic-tools 共用同一个生成模型；
