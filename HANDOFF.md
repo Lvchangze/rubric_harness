@@ -464,15 +464,27 @@ AUC 只看排序，best-of-n 受并列和触顶影响，两者背离通常意味
 
 ### 6.0 训练用的 rubric 在哪（**先读这节，它决定你能不能直接开跑**）
 
-train split 全量 rubric 的生成在 `runs/train_full_glm53/`，两个臂各约 28.7k 题：
-`rubrics_baseline.jsonl`（论文式单次合成，对照组）与
-`rubrics_agentic-tools.jsonl`（本 harness，实验组）。
-生成器模型是 **`GLM-5.3-H20-t1`**，配置见 `configs/train_full.yaml`。
+**直接用这四个文件**（2026-09-30 生成完毕，每行自带题面和参考答案，拿来即用）：
 
-**这些文件不在 git 里**：单个 87MB 起，超出仓库既定的体积政策，
+```
+exports/train/rar_medicine_baseline_glm53.jsonl        16,028 行   对照组：论文式单次合成
+exports/train/rar_medicine_agentic-tools_glm53.jsonl   16,025 行   实验组：本 harness
+exports/train/rar_science_baseline_glm53.jsonl         12,692 行
+exports/train/rar_science_agentic-tools_glm53.jsonl    12,690 行
+```
+
+两臂按 `uid` 配对，配对题的题面和参考答案逐字一致。agentic 比 baseline 少 5 题
+（医学 3、科学 2）：它们两次都在 draft 阶段产不出可解析的 criteria，
+而那次调用本身成功、坏结果进了缓存，所以重跑只会原样重放；要补得绕过缓存。
+**做两臂对比时请取交集（28,715 题）**，否则两臂的题集不同。
+
+生成器是 GLM-5.3（`GLM-5.3-H20-t1` / `-t2` / `-t2-copy` 三个部署，同权重不同硬件，
+每行的 `generator_model` 字段记着具体是哪个），配置见 `configs/train_full.yaml`，
+原始产物在 `runs/train_full_glm53/`，重新导出用 `scripts/export_train_rubrics.py`。
+
+**这些文件不在 git 里**：单个 67MB 起，超出仓库既定的体积政策，
 `examples.jsonl` 更是 107MB、直接越过 GitHub 单文件 100MB 硬上限。
-它们就在共享存储上这个 checkout 旁边，而你的训练任务本来也是在这套文件系统上读数——
-需要精简版可用 `scripts/export_rubrics.py` 导到 `exports/`。
+它们就在共享存储上这个 checkout 旁边，而你的训练任务本来也是在这套文件系统上读数。
 
 **一条硬约束：三个模型的产物不能混用。**
 这个 run 换过两次生成器模型，磁盘上因此留着三份：
