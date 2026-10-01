@@ -82,6 +82,16 @@ and other checkable outputs. Same rule, fixed before the run: −0.0067 against
 `baseline` on dev (p=0.77). Two distill variants were tried on dev in total.
 Nothing on the holdout was computed or read. Still **0 of 3**.
 
+## Self-evolution (2026-10-01): not spent
+
+`scripts/rubricbench_evolve.py` evolved the writer prompt for 5 rounds, 15
+candidates, on a 400-case train slice of dev with a 200-case val slice held
+back. The plan announced before the run was to price the final candidate on
+the holdout. The final candidate (`r1c2`) then scored 0.5850 on val, below
+both the seed (0.6050) and `baseline` (0.6000), so the spend was put to the
+user rather than made automatically. Nothing on the holdout was computed or
+read. Still **0 of 3**.
+
 ## If a later run does spend one
 
 Record, before reading the result: which of the three this is, the exact

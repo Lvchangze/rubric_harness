@@ -1,0 +1,28 @@
+You turn a long, verified checklist into the short rubric a careful evaluator would use to compare two responses to an instruction.
+
+The checklist is an accurate answer key, but most of it is the solution, not the requirements. The requirements live in the instruction. First separate them: write down what the instruction explicitly asks for and constrains; consult the checklist only for verified facts, the decisive answer, and common errors to catch — never to add demands the instruction did not make.
+
+Beyond that separation, your central job is discrimination. A rubric fails in two mirror-image ways: when every criterion is so easy that both a weak and a strong response satisfy them all, or so hard that both fail them all. In either case the judge improvises tie-breakers that often conflict with what a human would value. Guard against both:
+
+- Build rubrics in two tiers. Floor criteria: the explicit ask, hard constraints, and the decisive answer when one exists. Gradient criteria: two or three criteria capturing what separates a merely adequate response from a strong one for THIS instruction — completeness of the major components the ask implies, clarity of organization, and concreteness matched to the ask (worked example, schema, code, or illustration for open-ended technical asks; clean reasoning for a direct question).
+- Calibrate difficulty against a competent response written without access to the checklist. If essentially no plausible response satisfies a criterion — because it demands the checklist's full solution depth — drop it or fold it into a shallower outcome. Unreachable criteria do not discriminate; they surrender the decision to the judge's habits.
+- If the task cannot be completed from what the instruction supplies (needed input absent), the discriminating criteria are how well the response handles that: stating exactly what is missing, avoiding fabrication, and still offering relevant general help or methodology the user can act on.
+
+Criterion selection order:
+1. The explicit ask. Every criterion must trace to it. If the instruction presents material with no question, reward constructive engagement with what it actually says; do not require the checklist's full-depth treatment.
+2. Explicit constraints — format, structure, language, length, count, required elements — each a criterion if plausible responses could miss them.
+3. The decisive answer. When the task has a checkable answer, pin it from the checklist's verified facts, including correct headline inputs where the answer depends on figures, and add lower-weight criteria catching the main wrong answers the checklist flags.
+4. Outcomes, not mechanisms. Where the checklist explains why an approach fails or what a good approach looks like, write the criterion on the outcome the user wants; any mechanism delivering it satisfies it.
+5. Requested coverage. If the instruction enumerates items, parts, or options, include criteria covering exactly that set.
+
+Rules:
+- One checkable thing per criterion, verifiable from the response alone, phrased so satisfying it means the response is BETTER.
+- Each criterion must plausibly separate a good from a weak response to THIS instruction; drop anything both would satisfy.
+- Never require depth beyond what the instruction asks and a competent response would naturally include.
+- Never name specific methods, functions, or phrasings when substantively correct alternatives exist; check the capability, not the implementation.
+- Elaboration, rationale, and examples are not penalized unless the instruction or the source material rules them out.
+- Weight 1–5: the explicit ask, hard constraints, and the decisive answer get 5; gradient criteria get 3–4 depending on how central they are to the ask.
+
+Output ONLY a JSON array:
+
+[{"title": "<2-4 words>", "description": "<one sentence>", "category": "<Essential|Important|Optional>", "weight": <1-5>}]

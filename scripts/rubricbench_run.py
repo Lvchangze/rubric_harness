@@ -135,6 +135,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--single-order", action="store_true",
                    help="skip the swapped pass (matches the official protocol, but leaves position bias in)")
     p.add_argument("--tag", default=None, help="output name; defaults to the source")
+    p.add_argument("--distill-prompt", default=None,
+                   help="with a -distill source: read the distillation system prompt from this file "
+                        "(e.g. results/rubricbench_glm53/evolve/final_prompt.txt)")
     p.add_argument("--out-dir", default=str(OUT_ROOT),
                    help="where to write the score/verdicts/rubrics triple")
     p.add_argument("--log-level", default="INFO")
@@ -142,7 +145,7 @@ def parse_args() -> argparse.Namespace:
 
 
 async def build_rubrics(
-    source: str, cases, engine: LLMEngine, *, concurrency: int
+    source: str, cases, engine: LLMEngine, *, concurrency: int, distill_prompt: str | None = None
 ) -> dict[str, str]:
     """Return ``case_id -> checklist text`` for the requested source."""
     if source == "none":
@@ -158,7 +161,7 @@ async def build_rubrics(
         return await _generate_framed_web(cases, engine)
     if source in {"agentic", "agentic-tools", "agentic-distill", "agentic-tools-distill",
                   "agentic-distill2", "agentic-tools-distill2"}:
-        return await _generate_agentic(cases, engine, source)
+        return await _generate_agentic(cases, engine, source, distill_prompt=distill_prompt)
     raise SystemExit(f"unknown --source {source!r}")
 
 
@@ -300,7 +303,8 @@ async def _generate_framed_web(cases, engine: LLMEngine, *, max_rounds: int = 4)
     return dict(pairs)
 
 
-async def _generate_agentic(cases, engine: LLMEngine, source: str) -> dict[str, str]:
+async def _generate_agentic(cases, engine: LLMEngine, source: str, *,
+                            distill_prompt: str | None = None) -> dict[str, str]:
     """Run the agentic pipeline with the reference-dependent half disabled.
 
     RubricBench has no reference answer, so `use_gold_signal` is off and
@@ -323,7 +327,10 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str) -> dict[str, 
         n_rollouts=3,
         distill_final=(base != source),
         distill_variant=variant,
+        distill_system_path=distill_prompt or "",
     )
+    if distill_prompt and base == source:
+        raise SystemExit("--distill-prompt needs a -distill source")
     gen = build_generator(base, engine=engine, config=config)
     if base == "agentic-tools" and not getattr(gen, "tools_active", False):
         raise SystemExit("agentic-tools requested but no toolbelt could be built")
@@ -425,7 +432,8 @@ async def main_async() -> int:
     engine_kwargs = {"concurrency": args.concurrency, "cache_dir": "runs/cache"}
     engine = LLMEngine(args.model, **engine_kwargs) if args.model else LLMEngine(**engine_kwargs)
     started = time.time()
-    rubrics = await build_rubrics(args.source, cases, engine, concurrency=args.concurrency)
+    rubrics = await build_rubrics(args.source, cases, engine, concurrency=args.concurrency,
+                                  distill_prompt=args.distill_prompt)
     for key, texts in SIDE_OUTPUTS.items():
         side = Path(args.out_dir) / f"{name}_{key}.json"
         side.parent.mkdir(parents=True, exist_ok=True)

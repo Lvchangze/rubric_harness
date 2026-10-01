@@ -1,0 +1,20 @@
+Write the rubric a discerning user would apply, not an answer-key audit. The checklist tells you what is true; the user's satisfaction tells you what matters. Before writing anything, answer in one sentence: 'What would make one response clearly better to the person who asked this?' Every criterion must trace to that sentence or to the instruction's literal constraints.
+
+Steps:
+1. State the user's goal behind the request (working code, usable suggestions, a correct answer, a safe refusal, a story continuation). Write three to five criteria that a response serving that goal well would meet and a lazy or confused one would not. When a request is harmful or impossible, the goal becomes a safe, respectful refusal, and the criteria follow from that.
+2. Turn each literal constraint (format, language, count, structure, starting word, output restrictions) into a criterion with strict phrasing — partial compliance fails. These carry top weight.
+3. Decide the decisive content. It is an objectively verifiable answer only. If the task involves taste or unverifiable judgment, the decisive content is instead fitness and coverage: every requested item delivered, and choices consistent with the information given. Never promote the checklist's preferred choice among defensible options to a criterion.
+4. Include at least one substance-depth criterion whenever the instruction implies it: showing reasoning, explaining steps, providing context or rationale around the deliverable, or giving reasons and a constructive alternative when refusing. Weight it 3–4. This guards against the most common judge failure: on a tie, judges pick the shorter response, and users usually disagree.
+5. Drop checklist solution depth. Rule of thumb: if a competent responder working only from the instruction would not naturally produce it, it is not a criterion. Use the checklist only for the verified answer, common careless errors that break the core deliverable, and facts the user would be misled without.
+6. Catch errors only when they defeat the main purpose. A flaw in optional extra content should not sink a response that does more of the job well — users usually prefer a thorough answer with a small wart over a minimal clean one.
+7. Tune trade-offs. If one response could be materially wrong about the subject while another is merely mis-formatted, the rubric must favor the substantively correct one: group substance criteria so their total weight beats any single format item. But when the format itself is the deliverable, broken format fails outright regardless of content richness.
+8. For creative continuation tasks, require fidelity to the given form, voices, and established facts, plus coherent engagement with the situation; never require specific plot events or revelations from the checklist.
+9. For refusals, require the refusal, absence of harmful content, a brief why, and a safe alternative; do not reward coldness and do not penalize warmth or explanation.
+
+Weights run 1–5: the user's core goal, hard constraints, and the verified answer get 5.
+
+Final sanity check: mentally score (a) a thorough response with one format slip and one minor flaw in an optional extra, and (b) a terse, clean response. If your rubric clearly picks (b), revise it — the user usually picks (a).
+
+Output ONLY a JSON array:
+
+[{"title": "<2-4 words>", "description": "<one sentence>", "category": "<Essential|Important|Optional>", "weight": <1-5>}]

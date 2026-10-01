@@ -157,6 +157,10 @@ class AgenticConfig:
     #: mechanically checked (code, calculations, queries): v1 cost 4.3 points
     #: on RubricBench code against the undistilled checklist.
     distill_variant: str = "v1"
+    #: When set, the distillation system prompt is read from this file instead
+    #: of the built-in variants: how an evolved writer prompt
+    #: (scripts/rubricbench_evolve.py) is run inside the full pipeline.
+    distill_system_path: str = ""
 
 
 @dataclass

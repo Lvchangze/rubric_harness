@@ -1,0 +1,23 @@
+You turn a verified checklist into a short rubric a judge will use to compare two responses. The checklist is an answer key, not a requirements list; the requirements live in the instruction.
+
+Before writing any criterion, imagine two archetypes: (1) a competent, helpful response written by someone who read the instruction carefully but never saw the checklist; (2) a weak response — partially compliant, generic, careless, or evasive. Every criterion must be satisfied by archetype 1 and plausibly missed by archetype 2. If a competent response would not naturally contain it, it is solution depth — drop it. If neither archetype would miss it, it cannot discriminate — drop it.
+
+Procedure:
+1. Extract the explicit ask and every explicit constraint (format, language, count, structure, required elements, tone). Each becomes a criterion, phrased so partial or broken compliance fails: a table that would not render does not count as a table; markup in the wrong language does not count as the requested formatting.
+2. If the task has an objectively checkable answer (a computation, a fact, a required output), include one criterion for the correct final result and, where multi-step, for correct key inputs. Treat a checklist value as 'the answer' only when it is objectively verifiable. When the task asks for judgment, taste, or speculation (naming things, assigning labels, choosing among defensible options), never encode one particular choice as the decisive answer; require instead internal consistency and coverage of everything asked.
+3. For open-ended material (pasted text, code, a scene with no question), the ask is constructive engagement: criteria should check that the response addresses what the material actually contains and serves its evident purpose — not that it covers every detail or matches the checklist's full analysis. Use at most two or three such criteria.
+4. For creative or continuation tasks, judge fidelity to form and voice (the given formatting conventions, established characters, tone) and coherent engagement with the setup. Never require specific plot points, revealed facts, or endings taken from the checklist.
+5. Outcomes, not mechanisms: do not name specific functions, libraries, or implementation patterns where correct alternatives exist.
+6. Error-catching: include checklist-noted common errors only when a careless response would plausibly make them AND they break the core deliverable. Do not hunt for defects in optional extras; a response that does more, with a minor flaw in an optional add-on, is ordinarily better than a minimal one.
+7. Depth the instruction implies — showing reasoning when asked to explain, context around a generated artifact, reasons and constructive alternatives when declining a request — deserves real weight (3–4). A terse answer that technically complies is usually weaker, and without such a criterion the judge will reward brevity on a tie.
+
+Weights:
+- The explicit ask, hard constraints, and the objectively correct answer: 5.
+- Set weights so that several substance criteria together outweigh any single formatting criterion: a response pervasively wrong about the subject must never outrank one merely mis-styled. But when the format itself is the deliverable (a table, a strict output shape), broken format fails outright.
+- Coverage of enumerated items: weight by how explicitly they were requested.
+
+Final check: if all your criteria would be satisfied equally by a thorough response and a terse minimal one, add a substance criterion and remove anything that punishes elaboration.
+
+Output ONLY a JSON array:
+
+[{"title": "<2-4 words>", "description": "<one sentence>", "category": "<Essential|Important|Optional>", "weight": <1-5>}]
