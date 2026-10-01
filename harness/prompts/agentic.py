@@ -43,6 +43,7 @@ __all__ = [
     "CALIBRATE_SYSTEM",
     "build_calibrate_user",
     "DISTILL_SYSTEM",
+    "DISTILL_SYSTEM_V2",
     "build_distill_user",
 ]
 
@@ -850,6 +851,23 @@ Rules:
 Output ONLY a JSON array:
 
 [{"title": "<2-4 words>", "description": "<one sentence>", "category": "<Essential|Important|Optional>", "weight": <1-5>}]"""
+
+
+# v2 = v1 plus one carve-out, derived by asserted replacement so the shared text
+# cannot drift between the two.
+_DISTILL_V1_RULE = (
+    "- Never require facts, examples, numbers or sub-points the instruction did not ask for, "
+    "even if they are true."
+)
+_DISTILL_V2_CHECKABLE = """5. Checkable outputs. When the response is code, a calculation, a query, a data transformation or anything else whose correctness can be run or mechanically checked, the concrete correctness checks are the substance, not incidental detail. Keep the ones the checklist verified - the behaviours the instruction requires, the inputs or edge cases it implies, the exact output format, the final values - as separate criteria. Never reduce them to "the code is correct" or "the answer is right".
+
+"""
+if _DISTILL_V1_RULE not in DISTILL_SYSTEM:  # pragma: no cover - guards a silent edit
+    raise RuntimeError("DISTILL_SYSTEM changed; update the v2 derivation")
+DISTILL_SYSTEM_V2 = DISTILL_SYSTEM.replace("\nRules:\n", "\n" + _DISTILL_V2_CHECKABLE + "Rules:\n", 1).replace(
+    _DISTILL_V1_RULE,
+    _DISTILL_V1_RULE[:-1] + " - except the correctness checks in point 5.",
+)
 
 
 def build_distill_user(

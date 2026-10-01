@@ -75,6 +75,13 @@ checklist into 3-7 evaluative criteria. Same rule as above, fixed before the
 run. On dev it came out +0.0101 over `baseline` (p=0.64) against a detection
 limit of 0.037. Nothing on the holdout was computed or read. Still **0 of 3**.
 
+## Distill v2 (2026-10-01): no spend
+
+`agentic-tools-distill2` keeps verified concrete correctness checks for code
+and other checkable outputs. Same rule, fixed before the run: −0.0067 against
+`baseline` on dev (p=0.77). Two distill variants were tried on dev in total.
+Nothing on the holdout was computed or read. Still **0 of 3**.
+
 ## If a later run does spend one
 
 Record, before reading the result: which of the three this is, the exact

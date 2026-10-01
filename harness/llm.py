@@ -720,8 +720,10 @@ class LLMEngine:
             # finds the target depended on which finished first — and on replay
             # the cached producer returns instantly, so the outcome flipped, the
             # next turn's cache key changed, and every later call in the stage
-            # missed the cache (81% replay hit rate instead of ~100%). Across
-            # many questions the endpoint, not this loop, bounds throughput.
+            # missed the cache. Across many questions the endpoint, not this
+            # loop, bounds throughput. This removes one source of divergence,
+            # not all: failed calls are never cached, so at scale a replay still
+            # re-requests them and drifts (results/rubricbench/REPORT.md §12.2).
             limited = calls[:max_parallel_tools]
             invocations = []
             for c in limited:

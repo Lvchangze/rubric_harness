@@ -152,6 +152,11 @@ class AgenticConfig:
     distill_final: bool = False
     distill_min_items: int = 3
     distill_max_items: int = 7
+    #: "v1" collapses every detail into the dimension it instantiates. "v2"
+    #: keeps verified concrete correctness checks when the output can be run or
+    #: mechanically checked (code, calculations, queries): v1 cost 4.3 points
+    #: on RubricBench code against the undistilled checklist.
+    distill_variant: str = "v1"
 
 
 @dataclass

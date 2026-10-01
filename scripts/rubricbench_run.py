@@ -156,7 +156,8 @@ async def build_rubrics(
         return await _generate_baseline(cases, engine, framed=(source == "framed"))
     if source == "framed_web":
         return await _generate_framed_web(cases, engine)
-    if source in {"agentic", "agentic-tools", "agentic-distill", "agentic-tools-distill"}:
+    if source in {"agentic", "agentic-tools", "agentic-distill", "agentic-tools-distill",
+                  "agentic-distill2", "agentic-tools-distill2"}:
         return await _generate_agentic(cases, engine, source)
     raise SystemExit(f"unknown --source {source!r}")
 
@@ -310,16 +311,18 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str) -> dict[str, 
     """
     from harness.generators import build_generator  # noqa: PLC0415
 
-    # `-distill` adds one call after the lint and changes nothing upstream, so
-    # every earlier stage replays from the cache of the undistilled run.
-    base = source.removesuffix("-distill")
+    # `-distill` / `-distill2` add one call after the lint and change nothing
+    # upstream, so every earlier stage replays from the cache of the plain run.
+    variant = "v2" if source.endswith("-distill2") else "v1"
+    base = source.removesuffix("-distill2").removesuffix("-distill")
     config = AgenticConfig(
         use_gold_signal=False,
         drop_gold_failures=False,
         enable_tools=(base == "agentic-tools"),
         tool_max_rounds=8,
         n_rollouts=3,
-        distill_final=source.endswith("-distill"),
+        distill_final=(base != source),
+        distill_variant=variant,
     )
     gen = build_generator(base, engine=engine, config=config)
     if base == "agentic-tools" and not getattr(gen, "tools_active", False):

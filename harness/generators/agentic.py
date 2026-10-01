@@ -2171,11 +2171,12 @@ class AgenticGenerator(RubricGenerator):
                 min_items=int(self.config.distill_min_items),
                 max_items=int(self.config.distill_max_items),
             )
-            rec["input"] = {"system": P.DISTILL_SYSTEM, "user": user, "n_in": len(rubric)}
+            system = P.DISTILL_SYSTEM_V2 if self.config.distill_variant == "v2" else P.DISTILL_SYSTEM
+            rec["input"] = {"system": system, "user": user, "n_in": len(rubric)}
             raw = await self._chat_json(
                 run,
                 user,
-                system=P.DISTILL_SYSTEM,
+                system=system,
                 expect="array",
                 max_tokens=_MAX_TOKENS["distill"],
                 tag="gen:agentic:distill",
