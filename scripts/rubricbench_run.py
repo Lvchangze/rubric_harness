@@ -135,6 +135,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--single-order", action="store_true",
                    help="skip the swapped pass (matches the official protocol, but leaves position bias in)")
     p.add_argument("--tag", default=None, help="output name; defaults to the source")
+    p.add_argument("--no-judge", action="store_true",
+                   help="generate and write the rubrics (and side outputs) but score nothing. "
+                        "Producing holdout rubrics this way reads no holdout score.")
     p.add_argument("--distill-prompt", default=None,
                    help="with a -distill source: read the distillation system prompt from this file "
                         "(e.g. results/rubricbench_glm53/evolve/final_prompt.txt)")
@@ -443,6 +446,13 @@ async def main_async() -> int:
     if rubrics:
         empty = sum(1 for c in cases if not rubrics.get(c.case_id, "").strip())
         logger.info("rubrics ready: %d/%d non-empty", len(cases) - empty, len(cases))
+    if args.no_judge:
+        out = Path(args.out_dir) / f"{name}_rubrics.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps([{"case_id": k, "rubric": v} for k, v in rubrics.items()],
+                                  ensure_ascii=False, indent=2), encoding="utf-8")
+        logger.info("--no-judge: wrote %d rubrics to %s; nothing scored", len(rubrics), out)
+        return 0
     verdicts = await RB.judge_all(
         engine, cases, rubrics, both_orders=not args.single_order,
         max_tokens=args.judge_max_tokens, profile=args.judge_profile,
