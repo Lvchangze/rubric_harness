@@ -86,6 +86,7 @@ STAGE_ORDER: tuple[str, ...] = (
     "critic_tools",
     "calibrate",
     "dedup",
+    "distill",
 )
 
 #: Per-stage output budgets. Reasoning models spend most of the budget before
@@ -101,6 +102,7 @@ _MAX_TOKENS: dict[str, int] = {
     "calibrate": 16384,
     "investigate": 14336,
     "critic_tools": 14336,
+    "distill": 12288,
 }
 
 #: High enough that k rollouts explore genuinely different solution paths;
@@ -1028,6 +1030,8 @@ class AgenticGenerator(RubricGenerator):
             logger.exception("agentic pipeline aborted uid=%s", example.uid)
 
         rubric = self._finalise(run)
+        if not error and len(rubric) and self.config.distill_final:
+            rubric = await self._stage_distill(run, rubric)
         if error:
             rubric.meta["error"] = error
         elif not len(rubric):
@@ -2149,6 +2153,54 @@ class AgenticGenerator(RubricGenerator):
                 },
             },
         )
+
+    async def _stage_distill(self, run: _Run, rubric: Rubric) -> Rubric:
+        """Rewrite the finished checklist into a few evaluative criteria.
+
+        Runs after the lint on purpose and is not re-linted: the lint removes
+        format, focus and restraint criteria as style, which are the ones this
+        stage exists to add. On failure the undistilled rubric is kept.
+        """
+        distilled: list[Criterion] = []
+        async with _stage(run, "distill") as rec:
+            user = P.build_distill_user(
+                run.example.question,
+                [{"title": c.title, "description": c.description, "weight": c.weight}
+                 for c in rubric.items],
+                reference_answer=run.example.reference_answer or "",
+                min_items=int(self.config.distill_min_items),
+                max_items=int(self.config.distill_max_items),
+            )
+            rec["input"] = {"system": P.DISTILL_SYSTEM, "user": user, "n_in": len(rubric)}
+            raw = await self._chat_json(
+                run,
+                user,
+                system=P.DISTILL_SYSTEM,
+                expect="array",
+                max_tokens=_MAX_TOKENS["distill"],
+                tag="gen:agentic:distill",
+            )
+            rec["output"] = raw
+            candidates = _parse_candidates(raw)[: int(self.config.distill_max_items)]
+            if not candidates:
+                raise ValueError("distillation returned no usable criteria")
+            for cand in candidates:
+                cand.provenance["stage"] = "distill"
+                distilled.append(cand.to_criterion())
+        if not distilled:
+            return rubric
+        meta = dict(rubric.meta)
+        meta["n_items"] = len(distilled)
+        meta["stages_run"] = list(run.stages_run)
+        meta["stages_failed"] = list(run.stages_failed)
+        meta["n_items_before_distill"] = len(rubric)
+        # Kept so the undistilled checklist from this same run can be scored
+        # too: that isolates the distillation from everything upstream of it.
+        meta["pre_distill"] = [
+            {"title": c.title, "description": c.description, "weight": c.weight}
+            for c in rubric.items
+        ]
+        return Rubric(items=distilled, meta=meta)
 
     def _stage_dedup(self, run: _Run, chosen: Sequence[_Candidate]) -> list[_Candidate]:
         """Whole-rubric pass: mirror merge, re-lint, then size.

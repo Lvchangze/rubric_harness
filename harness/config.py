@@ -139,6 +139,20 @@ class AgenticConfig:
     #: Questions sampled for the portability probe and nearest-neighbour search.
     tool_corpus_limit: int = 4000
 
+    # -- final distillation -------------------------------------------------
+    # Off by default: every reported number and the delivered train-split
+    # rubrics were produced without it. When on, one extra call after the lint
+    # pass rewrites the verified checklist into a few evaluative criteria. It
+    # exists because on RubricBench the finished rubric read like an answer key
+    # — a dozen specific facts from the pipeline's own solutions — which
+    # rewards whichever response mentions more, and because the lint strips
+    # exactly the dimensions that decide a comparison (format compliance,
+    # focus, no unrequested additions). Its output is deliberately not
+    # re-linted, or the lint would undo it.
+    distill_final: bool = False
+    distill_min_items: int = 3
+    distill_max_items: int = 7
+
 
 @dataclass
 class EvalConfig:

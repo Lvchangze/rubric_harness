@@ -448,6 +448,7 @@ class LLMEngine:
                 if return_reasoning:
                     return cached["response"], cached.get("reasoning", "")
                 return cached["response"]
+            logger.debug("cache miss tag=%s key=%s", tag, key[:12])
 
         kwargs: dict[str, Any] = {}
         if temperature is not None:
@@ -583,6 +584,8 @@ class LLMEngine:
                     "content": cached.get("content") or "",
                     "tool_calls": cached.get("tool_calls") or [],
                 }
+        if use_cache:
+            logger.debug("cache miss tag=%s key=%s", tag, key[:12])
 
         last_error: Exception | None = None
         budget = max_tokens
@@ -710,12 +713,19 @@ class LLMEngine:
                 result.stop_reason = "completed"
                 return result
 
-            # The model may request several tools at once; they are independent
-            # by construction, so running them concurrently costs nothing.
+            # Run in the order the model listed them, one after another. They
+            # looked independent but are not: make_counterexample registers a
+            # text that execute_criterion can target by name, and the model often
+            # asks for both in one turn. Run concurrently, whether the second
+            # finds the target depended on which finished first — and on replay
+            # the cached producer returns instantly, so the outcome flipped, the
+            # next turn's cache key changed, and every later call in the stage
+            # missed the cache (81% replay hit rate instead of ~100%). Across
+            # many questions the endpoint, not this loop, bounds throughput.
             limited = calls[:max_parallel_tools]
-            invocations = await asyncio.gather(
-                *(dispatch(c["name"], c["arguments"], c["id"]) for c in limited)
-            )
+            invocations = []
+            for c in limited:
+                invocations.append(await dispatch(c["name"], c["arguments"], c["id"]))
             self.stats.tool_calls += len(invocations)
             result.invocations.extend(invocations)
 

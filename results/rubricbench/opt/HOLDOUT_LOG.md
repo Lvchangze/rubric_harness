@@ -68,6 +68,13 @@ only. The rule, fixed before the run, was to spend one holdout score only if
 (about 0.037). It did not: it came out 0.0134 *below* `baseline` (p=0.50).
 Nothing on the holdout was computed or read. Still **0 of 3** used.
 
+## Distill variant (2026-10-01): no spend
+
+`agentic-tools-distill` adds one call after the lint that rewrites the verified
+checklist into 3-7 evaluative criteria. Same rule as above, fixed before the
+run. On dev it came out +0.0101 over `baseline` (p=0.64) against a detection
+limit of 0.037. Nothing on the holdout was computed or read. Still **0 of 3**.
+
 ## If a later run does spend one
 
 Record, before reading the result: which of the three this is, the exact

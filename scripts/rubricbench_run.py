@@ -28,6 +28,7 @@ import logging
 import sys
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -40,6 +41,12 @@ from harness.schema import Example, Rubric  # noqa: E402
 logger = logging.getLogger("rubricbench_run")
 
 OUT_ROOT = Path("results/rubricbench")
+
+#: Extra per-case rubric texts a generator produced alongside its main output,
+#: written next to the main artefacts as `<name>_<key>.json` in the format
+#: `--source file:` reads. `-distill` sources fill "predistill" with the
+#: checklist as it stood before distillation, from the same run.
+SIDE_OUTPUTS: dict[str, dict[str, str]] = {}
 
 # RubricBench gives an instruction and nothing else, so the RaR prompt -- which
 # is built around a reference answer -- cannot be used verbatim. This keeps its
@@ -112,7 +119,7 @@ Output ONLY a JSON array:
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--source", required=True, help="none | expert | baseline | agentic | agentic-tools | file:<path>")
+    p.add_argument("--source", required=True, help="none | expert | baseline | agentic | agentic-tools | agentic-distill | agentic-tools-distill | file:<path>")
     p.add_argument("--limit", type=int, default=0, help="stratified subset size; 0 = all 1147")
     p.add_argument("--domains", nargs="+", default=None)
     p.add_argument("--case-ids", default=None,
@@ -149,7 +156,7 @@ async def build_rubrics(
         return await _generate_baseline(cases, engine, framed=(source == "framed"))
     if source == "framed_web":
         return await _generate_framed_web(cases, engine)
-    if source in {"agentic", "agentic-tools"}:
+    if source in {"agentic", "agentic-tools", "agentic-distill", "agentic-tools-distill"}:
         return await _generate_agentic(cases, engine, source)
     raise SystemExit(f"unknown --source {source!r}")
 
@@ -303,15 +310,19 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str) -> dict[str, 
     """
     from harness.generators import build_generator  # noqa: PLC0415
 
+    # `-distill` adds one call after the lint and changes nothing upstream, so
+    # every earlier stage replays from the cache of the undistilled run.
+    base = source.removesuffix("-distill")
     config = AgenticConfig(
         use_gold_signal=False,
         drop_gold_failures=False,
-        enable_tools=(source == "agentic-tools"),
+        enable_tools=(base == "agentic-tools"),
         tool_max_rounds=8,
         n_rollouts=3,
+        distill_final=source.endswith("-distill"),
     )
-    gen = build_generator(source, engine=engine, config=config)
-    if source == "agentic-tools" and not getattr(gen, "tools_active", False):
+    gen = build_generator(base, engine=engine, config=config)
+    if base == "agentic-tools" and not getattr(gen, "tools_active", False):
         raise SystemExit("agentic-tools requested but no toolbelt could be built")
 
     done = 0
@@ -327,6 +338,10 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str) -> dict[str, 
         try:
             result = await gen.generate(example)
             text = RB.rubric_to_text(result.rubric)
+            if pre := result.rubric.meta.get("pre_distill"):
+                SIDE_OUTPUTS.setdefault("predistill", {})[case.case_id] = RB.rubric_to_text(
+                    SimpleNamespace(items=[SimpleNamespace(**item) for item in pre])
+                )
         except Exception as exc:  # noqa: BLE001
             logger.warning("%s failed for %s: %s", source, case.case_id, str(exc)[:160])
             text = ""
@@ -408,6 +423,12 @@ async def main_async() -> int:
     engine = LLMEngine(args.model, **engine_kwargs) if args.model else LLMEngine(**engine_kwargs)
     started = time.time()
     rubrics = await build_rubrics(args.source, cases, engine, concurrency=args.concurrency)
+    for key, texts in SIDE_OUTPUTS.items():
+        side = Path(args.out_dir) / f"{name}_{key}.json"
+        side.parent.mkdir(parents=True, exist_ok=True)
+        side.write_text(json.dumps([{"case_id": k, "rubric": v} for k, v in texts.items()],
+                                   ensure_ascii=False, indent=2), encoding="utf-8")
+        logger.info("wrote %d %s rubrics to %s", len(texts), key, side)
     if rubrics:
         empty = sum(1 for c in cases if not rubrics.get(c.case_id, "").strip())
         logger.info("rubrics ready: %d/%d non-empty", len(cases) - empty, len(cases))
