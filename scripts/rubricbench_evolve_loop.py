@@ -99,6 +99,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--n-fail", type=int, default=18)
     p.add_argument("--n-win", type=int, default=4)
     p.add_argument("--seed", type=int, default=20261001)
+    p.add_argument("--resume", action="store_true",
+                   help="rebuild the pool, val results and holdout looks from --out/log.jsonl and "
+                        "continue after the last completed round")
     p.add_argument("--log-level", default="INFO")
     return p.parse_args()
 
@@ -187,6 +190,8 @@ async def build_dossier(ev, cases_by_id, train_ids, res, base_right, args, tag) 
         detail = await ev.judge_detail(c, rubric)
         marks = {}
         for e in detail.get("per_criterion") or []:
+            if not isinstance(e, dict):
+                continue
             try:
                 marks[int(e.get("id"))] = (bool(e.get("a")), bool(e.get("b")))
             except (TypeError, ValueError):
@@ -219,7 +224,9 @@ async def propose(engine, guidance, dossier, summary, k, salt) -> list[dict[str,
         return []
     out = []
     for item in raw if isinstance(raw, list) else []:
-        g = str((item or {}).get("guidance") or "").strip()
+        if not isinstance(item, dict):
+            continue
+        g = str(item.get("guidance") or "").strip()
         if 200 <= len(g) <= 7000:
             out.append({"diagnosis": str(item.get("diagnosis") or "")[:400], "guidance": g})
     return out[:k]
@@ -260,21 +267,44 @@ async def main_async() -> int:
     engine = LLMEngine(args.model, concurrency=args.concurrency, cache_dir="runs/cache")
     ev = Evaluator(engine)
 
-    seeds = {"seed_v1": SEED_GUIDANCE, "seed_framed": SEED_FRAMED}
-    for path in args.seeds:
-        seeds[Path(path).stem] = _strip_contract(Path(path).read_text(encoding="utf-8"))
     pool: dict[str, dict[str, Any]] = {}
-    for name, guidance in seeds.items():
-        (out / "prompts" / f"{name}.txt").write_text(guidance + CONTRACT, encoding="utf-8")
-        res = await ev.evaluate(train, checklists, guidance)
-        pool[name] = {"guidance": guidance, "train": res}
-        logger.info("seed %-14s train %.4f", name, res["acc"])
-        log({"event": "seed", "name": name, "train": res["acc"], "by_group": res["by_group"]})
-
     looks_used = 0
     holdout_baseline = None
     sent: set[str] = set()
     val_cache: dict[str, float] = {}
+    start_round = 1
+
+    if args.resume and log_path.exists():
+        # Every evaluation is cached, so only the members that will be expanded
+        # need their full results back; the rest only compete on train accuracy.
+        rows = [json.loads(l) for l in log_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+        for r in rows:
+            if r.get("event") in ("seed", "candidate"):
+                guidance = _strip_contract((out / "prompts" / f"{r['name']}.txt").read_text(encoding="utf-8"))
+                pool[r["name"]] = {"guidance": guidance, "train": {"acc": r["train"]}, "parent": r.get("parent")}
+            elif r.get("event") == "val":
+                val_cache[r["name"]] = r["val"]
+            elif r.get("event") == "holdout":
+                sent.add(r["name"])
+                looks_used = max(looks_used, int(r["looks_used"]))
+        start_round = 1 + max((r["round"] for r in rows if r.get("event") == "candidate"), default=0)
+        top = sorted(pool, key=lambda n: pool[n]["train"]["acc"], reverse=True)[: args.beam]
+        for name in top:
+            pool[name]["train"] = await ev.evaluate(train, checklists, pool[name]["guidance"])
+        logger.info("resumed: %d in pool, %d val results, %d holdout looks; starting at round %d; beam %s",
+                    len(pool), len(val_cache), looks_used, start_round,
+                    ", ".join(f"{n}={pool[n]['train']['acc']:.4f}" for n in top))
+        log({"event": "resume", "start_round": start_round, "pool": len(pool)})
+    else:
+        seeds = {"seed_v1": SEED_GUIDANCE, "seed_framed": SEED_FRAMED}
+        for path in args.seeds:
+            seeds[Path(path).stem] = _strip_contract(Path(path).read_text(encoding="utf-8"))
+        for name, guidance in seeds.items():
+            (out / "prompts" / f"{name}.txt").write_text(guidance + CONTRACT, encoding="utf-8")
+            res = await ev.evaluate(train, checklists, guidance)
+            pool[name] = {"guidance": guidance, "train": res}
+            logger.info("seed %-14s train %.4f", name, res["acc"])
+            log({"event": "seed", "name": name, "train": res["acc"], "by_group": res["by_group"]})
 
     async def val_acc(name):
         if name not in val_cache:
@@ -333,7 +363,7 @@ async def main_async() -> int:
     def beam():
         return sorted(pool, key=lambda n: pool[n]["train"]["acc"], reverse=True)[: args.beam]
 
-    for rnd in range(1, args.max_rounds + 1):
+    for rnd in range(start_round, args.max_rounds + 1):
         members = beam()
         # gate: any beam member that clears train and val margins goes to the holdout
         for name in members:
