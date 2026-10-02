@@ -160,10 +160,13 @@ async def build_rubrics(
         return {str(r["case_id"]): RB.rubric_to_text(r.get("rubric")) for r in raw}
     if source in {"baseline", "framed"}:
         return await _generate_baseline(cases, engine, framed=(source == "framed"))
+    if source == "baseline-contrast":
+        return await _generate_baseline_contrast(cases, engine)
     if source == "framed_web":
         return await _generate_framed_web(cases, engine)
     if source in {"agentic", "agentic-tools", "agentic-distill", "agentic-tools-distill",
-                  "agentic-distill2", "agentic-tools-distill2", "agentic-contrast", "agentic-tools-contrast"}:
+                  "agentic-distill2", "agentic-tools-distill2", "agentic-contrast", "agentic-tools-contrast",
+                  "agentic-contrast2", "agentic-tools-contrast2"}:
         return await _generate_agentic(cases, engine, source, distill_prompt=distill_prompt)
     raise SystemExit(f"unknown --source {source!r}")
 
@@ -185,6 +188,64 @@ async def _generate_baseline(cases, engine: LLMEngine, *, framed: bool = False) 
             logger.warning("%s failed for %s: %s", tag, case.case_id, str(exc)[:160])
             return case.case_id, ""
         return case.case_id, _render_rubric_lines(raw)
+
+    pairs = await asyncio.gather(*(one(c) for c in cases))
+    return dict(pairs)
+
+
+async def _generate_baseline_contrast(cases, engine: LLMEngine) -> dict[str, str]:
+    """The agentic contrastive stage run on the `baseline` rubric instead of the agentic upstream.
+
+    The baseline call is the one behind the `baseline` row (same prompt, so a
+    cache hit); a case whose stage fails keeps that rubric text unchanged.
+    """
+    from harness.generators import build_generator  # noqa: PLC0415
+    from harness.schema import Criterion  # noqa: PLC0415
+
+    config = AgenticConfig(use_gold_signal=False, drop_gold_failures=False, enable_tools=False,
+                           contrast_final=True)
+    gen = build_generator("agentic", engine=engine, config=config)
+    done = 0
+    lock = asyncio.Lock()
+
+    def weight_of(item: dict) -> int:
+        try:
+            return int(item.get("weight", 3))
+        except (TypeError, ValueError):
+            return 3
+
+    async def one(case) -> tuple[str, str]:
+        nonlocal done
+        prompt = (
+            f"<instruction>\n{case.instruction[:8000]}\n</instruction>\n\n"
+            "Write the grading checklist for this instruction. Output the JSON array now."
+        )
+        text = ""
+        try:
+            raw = await engine.chat_json(
+                prompt, system=BASELINE_SYSTEM, expect="array", max_tokens=8192, tag="rbench:gen:baseline",
+            )
+            text = _render_rubric_lines(raw)
+            items = [
+                Criterion(title=str(it.get("title", "")), description=str(it["description"]), weight=weight_of(it))
+                for it in raw if isinstance(it, dict) and str(it.get("description", "")).strip()
+            ]
+            if items:
+                example = Example(
+                    uid=case.case_id, domain=case.domain, split="bench", row_index=0,
+                    question=case.instruction, reference_answer="",
+                    question_source=case.source, shipped_rubric=Rubric(),
+                )
+                rubric = await gen.contrast_only(example, Rubric(items=items))
+                if rubric.meta.get("pre_final"):
+                    text = RB.rubric_to_text(rubric)
+        except Exception as exc:  # noqa: BLE001 - one bad case must not stop the run
+            logger.warning("baseline-contrast failed for %s: %s", case.case_id, str(exc)[:160])
+        async with lock:
+            done += 1
+            if done % 25 == 0:
+                logger.info("generated %d/%d rubrics", done, len(cases))
+        return case.case_id, text
 
     pairs = await asyncio.gather(*(one(c) for c in cases))
     return dict(pairs)
@@ -321,8 +382,9 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str, *,
     # `-distill` / `-distill2` add one call after the lint and change nothing
     # upstream, so every earlier stage replays from the cache of the plain run.
     variant = "v2" if source.endswith("-distill2") else "v1"
-    contrast = source.endswith("-contrast")
-    base = source.removesuffix("-contrast").removesuffix("-distill2").removesuffix("-distill")
+    contrast = source.endswith(("-contrast", "-contrast2"))
+    base = (source.removesuffix("-contrast2").removesuffix("-contrast")
+            .removesuffix("-distill2").removesuffix("-distill"))
     config = AgenticConfig(
         use_gold_signal=False,
         drop_gold_failures=False,
@@ -333,6 +395,8 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str, *,
         distill_variant=variant,
         distill_system_path=distill_prompt or "",
         contrast_final=contrast,
+        contrast_keep_upstream=2 if source.endswith("-contrast2") else 0,
+        contrast_keep_upstream_domains=tuple(RB.DOMAIN_GROUPS["stem"] | RB.DOMAIN_GROUPS["code"]),
     )
     if distill_prompt and (base == source or contrast):
         raise SystemExit("--distill-prompt needs a -distill source")

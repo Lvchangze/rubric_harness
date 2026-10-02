@@ -137,6 +137,43 @@ detection limit for this pair is 0.0386. The rule needed Δ ≥ +0.037 and p < 0
 and neither condition held. Nothing on the holdout was computed or read. Still
 **0 of 3**.
 
+## Contrastive variants 2 and 3 (2026-10-02): rule fixed before either run
+
+Both were chosen after reading the dev result above, so they are the second and
+third tries of this family, and their dev numbers are optimistic by construction.
+Prompts are unchanged (`SIMULATE_SYSTEM` `6b53f9c0b216`, `CONTRAST_DRAFT_SYSTEM`
+`4f99d2ac4f47`).
+
+- **`agentic-tools-contrast2`** answers the STEM/CODE shortfall. Its rubric is the
+  `agentic-tools-contrast` rubric from the 2026-10-02 run. For cases whose domain
+  group is `stem` or `code` (273 of 600), it adds the two highest-weight
+  positive criteria of the same run's upstream rubric (`pre_final`). Any
+  upstream criterion whose word-set Jaccard overlap with an already kept
+  criterion is ≥ 0.5 is skipped. It is built from the saved artefacts with the
+  same function the generator uses (`keep_upstream`), so the upstream is
+  identical to the first variant's, and then judged. The domain group is an
+  input field of each case, not a label.
+- **`baseline-contrast`** answers the upstream gap. The contrastive stage runs on
+  the GLM-5.3 `baseline` rubric (the cached call behind the `baseline` row,
+  byte-identical) instead of the agentic upstream. Nothing else changes. If the
+  stage fails, the case keeps the `baseline` rubric text unchanged.
+
+Rule: each variant is compared with `baseline` on dev, paired, exact McNemar. A
+variant qualifies only if Δ ≥ +0.037 and p < 0.05. This family spends at most
+one holdout. If both qualify, the one with the larger dev Δ goes. The holdout
+test is an exact McNemar against `baseline` at α/3 = 0.0167, logged here before
+anything is scored.
+
+**Outcome (2026-10-02 23:34): not spent.** Neither variant qualified.
+
+| variant | dev ACC | only it right / only `baseline` right | Δ | p |
+|---|--:|--:|--:|--:|
+| `agentic-tools-contrast2` | 0.6400 | 74 / 56 | +0.0302 | 0.136 |
+| `baseline-contrast` | 0.6317 | 53 / 40 | +0.0218 | 0.213 |
+
+Three variants of the contrastive stage have now been tried on dev. Nothing on
+the holdout was computed or read. Still **0 of 3**.
+
 ## If a later run does spend one
 
 Record, before reading the result: which of the three this is, the exact

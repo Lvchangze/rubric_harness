@@ -1491,6 +1491,46 @@ STEM、CODE 仍低于 `baseline`。一个可能的原因：模拟器和判定器
 据此再改就算这一族的第二个变体。产物：`../rubricbench_glm53/agentic-tools-contrast_*`、
 `agentic-tools-prefinal_*`、`COMPARE_contrast.md`、`COMPARE_contrast_ablation.md`。
 
+### 12.6 对比阶段的第二、三个变体（2026-10-02，dev）
+
+两个变体都是看了 §12.5 的 dev 结果之后定的，规则在跑之前写进了 `opt/HOLDOUT_LOG.md`，提示词不变。
+
+- `agentic-tools-contrast2`：针对 STEM/CODE 落后。STEM、CODE 的题（600 题里有 273 题）在对比阶段的
+  条目之外，再补上前段权重最高的 2 条正权重条目；和已有条目词集 Jaccard ≥ 0.5 的跳过（`keep_upstream`）。
+  它直接用 §12.5 那次运行的产物构建（`scripts/build_contrast2.py`，和生成器用的是同一个函数），
+  前段完全相同，所以和 `-contrast` 的差别只有补进来的条目。264 题补了共 526 条，其中 15 条权重为 1–2：
+  文本渲染对权重取了绝对值，这些可能是 pitfall 条目。
+- `baseline-contrast`：针对前段比 `baseline` 低。对比阶段的输入换成 GLM-5.3 的 `baseline` rubric
+  （`baseline` 那一行用的同一次调用），失败的题保留 `baseline` 原文（26 题）。
+
+| 来源 | ACC | 对 `baseline` Δ | p | 不含 SAFETY Δ | 位置受控 Δ |
+|---|--:|--:|--:|--:|--:|
+| `agentic-tools-contrast` | 0.6300 | +0.0218 | 0.279 | +0.0090 | +0.0220 |
+| `agentic-tools-contrast2` | **0.6400** | +0.0302 | 0.136 | +0.0180 | +0.0338 (p=0.095) |
+| `baseline-contrast` | 0.6317 | +0.0218 | 0.213 | +0.0144 | +0.0102 |
+
+分域 Δ（对 `baseline`）：
+
+| 来源 | IF | STEM | CODE | SAFETY | CHAT |
+|---|--:|--:|--:|--:|--:|
+| `agentic-tools-contrast` | +0.092 | −0.023 | −0.021 | +0.190 | +0.023 |
+| `agentic-tools-contrast2` | +0.092 | −0.016 | +0.007 | +0.190 | +0.023 |
+| `baseline-contrast` | +0.063 | +0.039 | −0.007 | +0.119 | +0.000 |
+
+- 补前段条目只改动了 33 题的判决（19 对 14，对 `-contrast` p=0.49）。CODE 从落后 2.1 个点变成领先 0.7，
+  STEM 从落后 2.3 缩到落后 1.6，方向符合预期，但量太小，单独测不出来。
+- 接在 `baseline` 后面，对比阶段只多拿 2.2 个点，少于接在 agentic 前段后面的 3.35 个点。冒烟时看到一个例子：
+  `baseline` 把有害请求当成规格来写，模拟器的"好回答"就跟着选了"加免责声明照写"，
+  推出的条目奖励的是照做。SAFETY 上它只比 `baseline` 多 11.9 个点，agentic 那两个多 19.0 个点。
+- 两条路线分域互补：接 `baseline` 时 STEM 强，接 agentic 前段时 IF、SAFETY、CHAT 强。这是看了结果才发现的，
+  事后按领域挑组合就是 §10 已经否掉的按领域路由，这里不做。
+
+**结论**：三个变体都没过事先的门槛，holdout 仍是 0/3。最好的是 `agentic-tools-contrast2`：0.6400，
+吃到 29.0% 的可用空间（`framed` 23.7%、`baseline` 16.0%），位置受控口径 +3.4 个点、p=0.095。
+这是 agentic 一侧到目前为止最接近显著的结果，但它是同一族的第三次尝试，又是看着 dev 分域结果改出来的，
+dev 上的数字要打折扣看。产物：`../rubricbench_glm53/agentic-tools-contrast2_*`、`baseline-contrast_*`、
+`COMPARE_contrast2.md`、`COMPARE_contrast_family.md`。
+
 ---
 
 ## 附录 A：与口头记录的差异（第一轮）

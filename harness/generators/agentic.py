@@ -2160,6 +2160,10 @@ class AgenticGenerator(RubricGenerator):
             },
         )
 
+    async def contrast_only(self, example: Example, rubric: Rubric) -> Rubric:
+        """Run just the contrastive stage on a rubric produced by another generator."""
+        return await self._stage_contrast(_Run(example=example), rubric)
+
     async def _stage_contrast(self, run: _Run, rubric: Rubric) -> Rubric:
         """Test candidate criteria against simulated good and tempting-but-worse responses.
 
@@ -2252,6 +2256,9 @@ class AgenticGenerator(RubricGenerator):
         for cand in chosen:
             cand.provenance["stage"] = "contrast"
             items.append(cand.to_criterion())
+        domains = {d.lower() for d in self.config.contrast_keep_upstream_domains}
+        if self.config.contrast_keep_upstream > 0 and (run.example.domain or "").lower() in domains:
+            items = keep_upstream(items, rubric.items, int(self.config.contrast_keep_upstream))
         meta = dict(rubric.meta)
         meta.update({
             "n_items": len(items),
@@ -2446,6 +2453,34 @@ class AgenticToolsGenerator(AgenticGenerator):
 # ---------------------------------------------------------------------------
 # Parsing / post-processing
 # ---------------------------------------------------------------------------
+
+
+def keep_upstream(kept: Sequence[Any], upstream: Sequence[Any], k: int, *,
+                  overlap: float = 0.5) -> list[Any]:
+    """Append the ``k`` highest-weight positive upstream criteria ``kept`` lacks.
+
+    Works on anything with ``description`` and ``weight`` attributes, so saved
+    rubrics parsed back from text go through the same rule as live ones. An
+    upstream criterion counts as already present when its word-set Jaccard
+    overlap with a kept one is at least ``overlap``.
+    """
+    def words(text: str) -> set[str]:
+        return set(re.findall(r"[a-z0-9]+", str(text or "").lower()))
+
+    out = list(kept)
+    seen = [words(c.description) for c in out]
+    ranked = sorted(enumerate(upstream), key=lambda p: (-int(p[1].weight or 0), p[0]))
+    for _, cand in ranked:
+        if len(out) - len(kept) >= k:
+            break
+        if int(cand.weight or 0) <= 0:
+            continue
+        w = words(cand.description)
+        if any(len(w & s) / max(1, len(w | s)) >= overlap for s in seen):
+            continue
+        out.append(cand)
+        seen.append(w)
+    return out
 
 
 def _clip_chars(text: str, limit: int) -> str:

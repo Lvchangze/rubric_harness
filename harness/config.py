@@ -174,6 +174,11 @@ class AgenticConfig:
     contrast_final: bool = False
     contrast_min_items: int = 3
     contrast_max_items: int = 7
+    # Where the task has a checkable answer, the simulated GOOD response can be
+    # wrong whenever the model cannot solve it, so the stage also keeps this many
+    # of the highest-weight upstream criteria for examples in these domains.
+    contrast_keep_upstream: int = 0
+    contrast_keep_upstream_domains: tuple[str, ...] = ()
 
 
 @dataclass
