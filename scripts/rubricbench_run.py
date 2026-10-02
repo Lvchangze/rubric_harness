@@ -163,7 +163,7 @@ async def build_rubrics(
     if source == "framed_web":
         return await _generate_framed_web(cases, engine)
     if source in {"agentic", "agentic-tools", "agentic-distill", "agentic-tools-distill",
-                  "agentic-distill2", "agentic-tools-distill2"}:
+                  "agentic-distill2", "agentic-tools-distill2", "agentic-contrast", "agentic-tools-contrast"}:
         return await _generate_agentic(cases, engine, source, distill_prompt=distill_prompt)
     raise SystemExit(f"unknown --source {source!r}")
 
@@ -321,18 +321,20 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str, *,
     # `-distill` / `-distill2` add one call after the lint and change nothing
     # upstream, so every earlier stage replays from the cache of the plain run.
     variant = "v2" if source.endswith("-distill2") else "v1"
-    base = source.removesuffix("-distill2").removesuffix("-distill")
+    contrast = source.endswith("-contrast")
+    base = source.removesuffix("-contrast").removesuffix("-distill2").removesuffix("-distill")
     config = AgenticConfig(
         use_gold_signal=False,
         drop_gold_failures=False,
         enable_tools=(base == "agentic-tools"),
         tool_max_rounds=8,
         n_rollouts=3,
-        distill_final=(base != source),
+        distill_final=(base != source and not contrast),
         distill_variant=variant,
         distill_system_path=distill_prompt or "",
+        contrast_final=contrast,
     )
-    if distill_prompt and base == source:
+    if distill_prompt and (base == source or contrast):
         raise SystemExit("--distill-prompt needs a -distill source")
     gen = build_generator(base, engine=engine, config=config)
     if base == "agentic-tools" and not getattr(gen, "tools_active", False):
@@ -351,10 +353,11 @@ async def _generate_agentic(cases, engine: LLMEngine, source: str, *,
         try:
             result = await gen.generate(example)
             text = RB.rubric_to_text(result.rubric)
-            if pre := result.rubric.meta.get("pre_distill"):
-                SIDE_OUTPUTS.setdefault("predistill", {})[case.case_id] = RB.rubric_to_text(
-                    SimpleNamespace(items=[SimpleNamespace(**item) for item in pre])
-                )
+            for meta_key, side_key in (("pre_distill", "predistill"), ("pre_final", "prefinal")):
+                if pre := result.rubric.meta.get(meta_key):
+                    SIDE_OUTPUTS.setdefault(side_key, {})[case.case_id] = RB.rubric_to_text(
+                        SimpleNamespace(items=[SimpleNamespace(**item) for item in pre])
+                    )
         except Exception as exc:  # noqa: BLE001
             logger.warning("%s failed for %s: %s", source, case.case_id, str(exc)[:160])
             text = ""

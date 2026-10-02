@@ -87,6 +87,7 @@ STAGE_ORDER: tuple[str, ...] = (
     "calibrate",
     "dedup",
     "distill",
+    "contrast",
 )
 
 #: Per-stage output budgets. Reasoning models spend most of the budget before
@@ -103,6 +104,9 @@ _MAX_TOKENS: dict[str, int] = {
     "investigate": 14336,
     "critic_tools": 14336,
     "distill": 12288,
+    "simulate": 16384,
+    "contrast": 12288,
+    "contrast_test": 12288,
 }
 
 #: High enough that k rollouts explore genuinely different solution paths;
@@ -1030,7 +1034,9 @@ class AgenticGenerator(RubricGenerator):
             logger.exception("agentic pipeline aborted uid=%s", example.uid)
 
         rubric = self._finalise(run)
-        if not error and len(rubric) and self.config.distill_final:
+        if not error and len(rubric) and self.config.contrast_final:
+            rubric = await self._stage_contrast(run, rubric)
+        elif not error and len(rubric) and self.config.distill_final:
             rubric = await self._stage_distill(run, rubric)
         if error:
             rubric.meta["error"] = error
@@ -2154,6 +2160,109 @@ class AgenticGenerator(RubricGenerator):
             },
         )
 
+    async def _stage_contrast(self, run: _Run, rubric: Rubric) -> Rubric:
+        """Test candidate criteria against simulated good and tempting-but-worse responses.
+
+        Writes one GOOD response and two TEMPTING ones (better-looking, worse in a
+        way that matters), drafts criteria meant to prefer GOOD, executes every
+        draft criterion on all three, and keeps those GOOD satisfies; the ones at
+        least one TEMPTING response fails are what the rubric is built around.
+        Runs after the lint and is not re-linted. On failure the input is kept.
+        """
+        from ..eval.judge import JUDGE_SYSTEM, build_judge_prompt  # noqa: PLC0415
+
+        facts = [c.description for c in rubric.items][:16]
+        chosen: list[_Candidate] = []
+        async with _stage(run, "contrast") as rec:
+            sim = await self._chat_json(
+                run,
+                P.build_simulate_user(run.example.question, facts),
+                system=P.SIMULATE_SYSTEM,
+                expect="object",
+                max_tokens=_MAX_TOKENS["simulate"],
+                tag="gen:agentic:simulate",
+            )
+            sim = sim if isinstance(sim, dict) else {}
+            good = str(sim.get("good") or "").strip()
+            tempting = [
+                {"flaw": str(t.get("flaw") or ""), "text": str(t.get("text") or "").strip()}
+                for t in (sim.get("tempting") or [])
+                if isinstance(t, dict) and str(t.get("text") or "").strip()
+            ][:2]
+            if not good or not tempting:
+                raise ValueError("simulation returned no usable responses")
+
+            raw = await self._chat_json(
+                run,
+                P.build_contrast_draft_user(run.example.question, facts, good, tempting),
+                system=P.CONTRAST_DRAFT_SYSTEM,
+                expect="array",
+                max_tokens=_MAX_TOKENS["contrast"],
+                tag="gen:agentic:contrast_draft",
+            )
+            cands = _parse_candidates(raw)[:10]
+            if not cands:
+                raise ValueError("contrastive draft returned no usable criteria")
+
+            statements = [Criterion(title="", description=c.description, weight=3) for c in cands]
+            texts = [("good", good)] + [(f"tempting_{i + 1}", t["text"]) for i, t in enumerate(tempting)]
+            truth: dict[str, list[bool | None]] = {}
+            for name, text in texts:
+                parsed = await self._chat_json(
+                    run,
+                    build_judge_prompt(_clip_chars(run.example.question, 8000), _clip_chars(text, 12000), statements),
+                    system=JUDGE_SYSTEM,
+                    expect="array",
+                    max_tokens=_MAX_TOKENS["contrast_test"],
+                    tag="gen:agentic:contrast_test",
+                    cache_salt=f"contrast:{name}",
+                )
+                truth[name] = _truth_vector(parsed, len(statements))
+
+            separating, ties = [], []
+            for i, cand in enumerate(cands):
+                if truth["good"][i] is not True:
+                    continue
+                if any(truth[name][i] is False for name, _ in texts[1:]):
+                    cand.weight = max(int(cand.weight), 4)
+                    separating.append(cand)
+                else:
+                    cand.weight = min(int(cand.weight), 3)
+                    ties.append(cand)
+            separating.sort(key=lambda c: -int(c.weight))
+            ties.sort(key=lambda c: (c.category is not Category.ESSENTIAL, -int(c.weight)))
+            low, high = int(self.config.contrast_min_items), int(self.config.contrast_max_items)
+            chosen = separating[:high]
+            if len(chosen) < low:
+                chosen += ties[: low - len(chosen)]
+            if not separating or not chosen:
+                raise ValueError("no draft criterion separated the simulated responses")
+            rec["input"] = {"n_facts": len(facts), "request_type": sim.get("request_type"),
+                            "flaws": [t["flaw"] for t in tempting]}
+            rec["output"] = {
+                "draft": [c.description for c in cands],
+                "truth": truth,
+                "n_separating": len(separating),
+                "n_ties": len(ties),
+                "kept": [c.description for c in chosen],
+            }
+        if not chosen:
+            return rubric
+        items = []
+        for cand in chosen:
+            cand.provenance["stage"] = "contrast"
+            items.append(cand.to_criterion())
+        meta = dict(rubric.meta)
+        meta.update({
+            "n_items": len(items),
+            "stages_run": list(run.stages_run),
+            "stages_failed": list(run.stages_failed),
+            "n_items_before_final": len(rubric),
+            "pre_final": [{"title": c.title, "description": c.description, "weight": c.weight}
+                          for c in rubric.items],
+        })
+        return Rubric(items=items, meta=meta)
+
     async def _stage_distill(self, run: _Run, rubric: Rubric) -> Rubric:
         """Rewrite the finished checklist into a few evaluative criteria.
 
@@ -2337,6 +2446,24 @@ class AgenticToolsGenerator(AgenticGenerator):
 # ---------------------------------------------------------------------------
 # Parsing / post-processing
 # ---------------------------------------------------------------------------
+
+
+def _clip_chars(text: str, limit: int) -> str:
+    text = str(text or "")
+    return text if len(text) <= limit else text[:limit] + " ..."
+
+
+def _truth_vector(parsed: Any, n: int) -> list[bool | None]:
+    """Per-statement literal truth from a JUDGE_SYSTEM reply, aligned to ids 1..n."""
+    by_id: dict[int, Any] = {}
+    for pos, entry in enumerate(parsed if isinstance(parsed, list) else [], start=1):
+        if not isinstance(entry, dict):
+            continue
+        try:
+            by_id.setdefault(int(entry.get("id", pos)), entry.get("true"))
+        except (TypeError, ValueError):
+            by_id.setdefault(pos, entry.get("true"))
+    return [by_id[i] if isinstance(by_id.get(i), bool) else None for i in range(1, n + 1)]
 
 
 def _parse_candidates(raw: Any) -> list[_Candidate]:

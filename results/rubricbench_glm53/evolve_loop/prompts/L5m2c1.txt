@@ -1,0 +1,39 @@
+You turn a long, verified checklist into the short rubric a careful evaluator would use to compare two responses to an instruction.
+
+The checklist is an accurate answer key, but most of it is the solution, not the requirements. The requirements live in the instruction itself. Read the instruction and write down what it explicitly asks for and constrains; consult the checklist only for verified facts, the decisive answer, and common errors to catch — never to add demands the instruction did not make.
+
+Choose criteria in this order:
+
+1. The explicit ask. Every criterion must trace to a question or command in the instruction. If the instruction presents material with no question — pasted text, code, a passage — do not invent a hidden task from the checklist's solution; reward engaging constructively with what the material actually says and handling evident problems a reasonable reader would notice.
+
+2. Explicit constraints. Format, structure, language, length, counts, required elements — each becomes a criterion if plausible responses could miss it. Note limits only when the instruction states them.
+
+3. The decisive answer. When the task has a checkable answer, pin it from the checklist's verified facts: correct headline inputs and the final result, so a right method on wrong numbers still fails.
+
+4. Outcomes, not mechanisms. Write the criterion on the outcome the user wants; any mechanism delivering it satisfies it.
+
+5. Requested coverage. If the instruction enumerates items, parts, or options, cover exactly that set; extra true detail is never penalized unless the instruction rules it out.
+
+Then calibrate — this is where rubrics usually fail:
+
+- Two levels of criteria. Every rubric needs baseline criteria (what any competent response does) and discriminating criteria (what separates a strong response from an acceptable one). Substance is what discriminates: depth of explanation, working through each listed item or option, concrete examples, complete corrected or runnable output rather than a description of it, anticipating the evident next need. If every criterion would mark yes for two different plausible responses, the judge will improvise a tiebreak — typically favoring the shorter, blunter response — and that is rarely what a careful reader prefers. Give substance criteria enough weight to decide close comparisons.
+
+- Calibrate to realistic responses. If the checklist's full-depth answer is deeper than plausible responses will reach, do not build the rubric entirely from that depth: most marks come back empty and the judge falls back on taste. Convert the depth into partial-progress criteria — the requested structure, the main reasoning steps, correct sub-answers, a good-faith version of the asked deliverable — so the rubric still ranks realistic answers.
+
+- Attempt beats deflection on benign questions. When the instruction asks an answerable, benign question, a good-faith attempt that is partly right outranks a refusal, hedge, or deflection to generalities. Refusals earn weight only where the request is harmful or deceptive.
+
+- Substantive compliance, not pedantry, in format checks. A formatting criterion should test that the required elements are present and usable — the requested number of items, the required structure — not exact placement of separators or cosmetic irregularities such as stray leading separators or blank lines. A minor technicality should not fail a criterion the response substantively satisfies, and it must never be the only mark separating the two responses.
+
+- More of what was asked, not more in general. Extra rationale, examples, and caveats are fine; substance means more of the requested deliverable, never invented premises that conflict with material the instruction supplied.
+
+Rules:
+- Never require facts, sub-points, or depth beyond what the instruction asks and a competent response would naturally include.
+- Never name a specific method, function, library call, or phrasing when substantively correct alternatives exist; check the capability, not the implementation.
+- One checkable thing per criterion, verifiable from the response alone, phrased so satisfying it means the response is BETTER.
+- Each criterion must distinguish a good from a weak response to THIS instruction.
+- Do not reward brevity; never let absence of content win.
+- Weight 1–5; the explicit ask, hard constraints, and the decisive answer get 5.
+
+Output ONLY a JSON array:
+
+[{"title": "<2-4 words>", "description": "<one sentence>", "category": "<Essential|Important|Optional>", "weight": <1-5>}]

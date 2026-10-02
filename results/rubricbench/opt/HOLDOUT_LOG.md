@@ -92,6 +92,51 @@ both the seed (0.6050) and `baseline` (0.6000), so the spend was put to the
 user rather than made automatically. Nothing on the holdout was computed or
 read. Still **0 of 3**.
 
+## Evolution loop (2026-10-01 to 10-02): not spent
+
+`scripts/rubricbench_evolve_loop.py` ran 17 rounds (67 candidates) before the
+user stopped it at the start of round 18. Its gate, fixed before the run, sent a
+beam member to the holdout only if it beat `baseline` by 0.02 on the train slice
+and 0.03 on the val slice. Four cleared the train margin; on val they scored
+0.5750, 0.5600, 0.5750 and 0.5900 against `baseline`'s 0.6000. None reached the
+holdout. Still **0 of 3**.
+
+## Contrastive stage (2026-10-02): rule fixed before the dev run
+
+`agentic-tools-contrast` swaps the distill rewrite for an empirical test. After
+the lint it writes one GOOD response and two TEMPTING ones, which look better at
+a glance but are worse in a way that matters (`SIMULATE_SYSTEM`, sha256
+`6b53f9c0b216`). It drafts criteria meant to prefer GOOD (`CONTRAST_DRAFT_SYSTEM`,
+`4f99d2ac4f47`), then runs every draft criterion on all three responses with the
+bench's literal-truth judge prompt. Criteria GOOD satisfies and at least one
+TEMPTING response fails are kept first, weighted at least 4. If fewer than 3
+survive, criteria GOOD satisfies that no TEMPTING response fails fill the gap,
+weighted at most 3. At most 7 are kept. If nothing separates the responses, the
+finalised rubric is kept unchanged.
+
+Before this entry it had only been run on the three dev cases in
+`/tmp/rb_smoke3.json`. That run exposed a format bug: the simulator returned one
+TEMPTING response instead of two in 2 of 3 cases, and the output instruction was
+fixed. The first smoke run printed a 3-case accuracy (2/3). At n=3 that number
+carries no information, and no decision used it.
+
+Rule, fixed now: one run on the 600 dev cases, with the same judge and protocol
+as every other GLM-5.3 dev number. Forward accuracy is compared with `baseline`
+(0.6117), paired, using an exact McNemar test. Holdout spend #1 happens only if
+Δ ≥ +0.037 and p < 0.05. If it happens, the entry is written here first. Then
+contrast rubrics are generated for the 547 holdout cases (generation computes no
+score), and they are scored together with the `baseline` rubrics that already
+exist. The test is an exact McNemar at α/3 = 0.0167. Otherwise nothing is spent
+and the dev number is reported as it is. Any prompt change after the dev number
+is a new variant, and the number of variants tried is reported with it.
+
+**Outcome (2026-10-02 20:34): not spent.** Dev forward accuracy 0.6300 against
+`baseline` 0.6117. On the 596 cases both answered, 68 were right only under
+contrast and 55 only under `baseline`: Δ +0.0218, exact McNemar p = 0.279. The
+detection limit for this pair is 0.0386. The rule needed Δ ≥ +0.037 and p < 0.05,
+and neither condition held. Nothing on the holdout was computed or read. Still
+**0 of 3**.
+
 ## If a later run does spend one
 
 Record, before reading the result: which of the three this is, the exact

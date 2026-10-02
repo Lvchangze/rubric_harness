@@ -162,6 +162,19 @@ class AgenticConfig:
     #: (scripts/rubricbench_evolve.py) is run inside the full pipeline.
     distill_system_path: str = ""
 
+    # -- contrastive final stage --------------------------------------------
+    # Off by default. When on, it replaces the distillation: the pipeline
+    # writes one good response and two tempting-but-worse ones (longer, more
+    # polished, wrong in a way that matters), drafts criteria meant to prefer
+    # the good one for the right reason, executes every draft criterion on all
+    # three, and keeps those that actually separate them. Built because the
+    # dominant failure the evolution loop kept diagnosing was ties — both real
+    # responses satisfying every criterion — and no stage had ever tested a
+    # rubric against the kind of pair RubricBench is made of.
+    contrast_final: bool = False
+    contrast_min_items: int = 3
+    contrast_max_items: int = 7
+
 
 @dataclass
 class EvalConfig:

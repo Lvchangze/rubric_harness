@@ -45,6 +45,10 @@ __all__ = [
     "DISTILL_SYSTEM",
     "DISTILL_SYSTEM_V2",
     "build_distill_user",
+    "SIMULATE_SYSTEM",
+    "build_simulate_user",
+    "CONTRAST_DRAFT_SYSTEM",
+    "build_contrast_draft_user",
 ]
 
 
@@ -868,6 +872,71 @@ DISTILL_SYSTEM_V2 = DISTILL_SYSTEM.replace("\nRules:\n", "\n" + _DISTILL_V2_CHEC
     _DISTILL_V1_RULE,
     _DISTILL_V1_RULE[:-1] + " - except the correctness checks in point 5.",
 )
+
+
+# ---------------------------------------------------------------------------
+# Contrastive final stage (optional; AgenticConfig.contrast_final)
+# ---------------------------------------------------------------------------
+
+SIMULATE_SYSTEM = """You build test responses for checking a grading rubric. You get an instruction and facts already verified about it. Write three responses to the instruction.
+
+1. GOOD - what a careful expert would write: does exactly what was asked, is correct on the facts, honours every stated constraint, and is as long as the task needs and no longer. If the request is harmful or deceptive, GOOD declines or redirects, briefly and helpfully. If it rests on a false premise or lacks the information needed, GOOD says so.
+
+2-3. Two TEMPTING responses that a quick reader would rate above GOOD but a careful evaluator would rate below it. Each must look better at a glance - longer, more polished, more confident, more thorough-seeming - while being worse in one way that matters for THIS instruction. Pick the flaws a strong model is most likely to commit here, for example: dropping or bending a stated constraint, answering a broader or different question than the one asked, padding with material nobody requested, getting the one decisive fact subtly wrong, complying with a request it should decline, inventing specifics. Use two different flaws.
+
+Make the flaws realistic and non-obvious. Never label or hint at a flaw inside a response's text.
+
+Output ONLY this JSON object. "tempting" must hold exactly two entries, each a full response with its own flaw:
+{"request_type": "normal" | "harmful" | "unanswerable", "good": "<response text>", "tempting": [{"flaw": "<what makes the first one worse, one sentence>", "text": "<first tempting response text>"}, {"flaw": "<a different flaw, one sentence>", "text": "<second tempting response text>"}]}"""
+
+
+def build_simulate_user(question: str, facts: Sequence[str]) -> str:
+    parts = [_section("instruction", question)]
+    if facts:
+        parts.append(_section("verified_facts", "\n".join(f"- {f}" for f in facts)))
+    parts.append("Write the three responses now. Return ONLY the JSON object.")
+    return "\n\n".join(parts)
+
+
+CONTRAST_DRAFT_SYSTEM = """You write the rubric a careful evaluator would use to compare responses to an instruction.
+
+You get the instruction, facts verified about it, and three example responses: one GOOD, and two TEMPTING ones that look better at a glance but are worse, each with its flaw named. Write candidate criteria such that a judge applying them would prefer GOOD over each TEMPTING response for the right reason - and would do the same for any response with the same strengths and flaws, not only these texts.
+
+- Cover the explicit requirements of the instruction that a response could miss.
+- If the task has a checkable answer, pin it in one criterion.
+- For each named flaw, write a criterion that GOOD satisfies and the flawed response fails, phrased about the instruction. Never quote or refer to the example texts.
+- Reward doing what was asked at the length the task needs; where relevance matters, penalise unrequested additions.
+- Never require incidental facts, examples or sub-points the instruction did not ask for.
+- One checkable thing per criterion, verifiable from a response alone.
+- Phrase every criterion so that satisfying it means the response is better; restraint reads "avoids X" or "declines Y".
+- Weight 1-5 by how much it should decide a comparison.
+
+Output ONLY a JSON array:
+[{"title": "<2-4 words>", "description": "<one sentence>", "category": "<Essential|Important|Optional>", "weight": <1-5>}]"""
+
+
+def build_contrast_draft_user(
+    question: str,
+    facts: Sequence[str],
+    good: str,
+    tempting: Sequence[Mapping[str, str]],
+    *,
+    n_min: int = 6,
+    n_max: int = 9,
+    clip: int = 2500,
+) -> str:
+    def cut(text: str) -> str:
+        text = str(text or "")
+        return text if len(text) <= clip else text[:clip] + " ..."
+
+    parts = [_section("instruction", question)]
+    if facts:
+        parts.append(_section("verified_facts", "\n".join(f"- {f}" for f in facts)))
+    parts.append(_section("GOOD", cut(good)))
+    for i, t in enumerate(tempting, start=1):
+        parts.append(_section(f"TEMPTING_{i}", f"Flaw: {t.get('flaw', '')}\n\n{cut(t.get('text', ''))}"))
+    parts.append(f"Write between {n_min} and {n_max} candidate criteria. Return ONLY the JSON array.")
+    return "\n\n".join(parts)
 
 
 def build_distill_user(

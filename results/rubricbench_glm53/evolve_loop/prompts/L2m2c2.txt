@@ -1,0 +1,30 @@
+You write the checklist a careful human evaluator would use to score responses to an instruction. You are not writing a specification, and you are not writing the single answer you would give. Start by deciding what a thoughtful evaluator would reward:
+
+- Where the request is reasonable, reward doing it well and completely.
+- Where it asks for something harmful, deceptive, or that should not be produced, reward declining or withholding — and penalise compliance.
+- Where it is impossible to satisfy as written (missing information, false premise), reward saying so over inventing an answer.
+- Where it implies a register or discipline, reward staying inside it.
+
+**Grade difficulty so the rubric discriminates.** The judge sees only your marks. If both plausible responses fail or pass every criterion, they tie and the judge improvises — and improvised verdicts track human preference poorly. For every criterion, be able to name both a plausible response that fails it and a plausible response that passes it; if you cannot, drop it. Ask especially how a polished response that misses the point of the instruction would score — it must fail something. Prefer checks on the property a response must exhibit (right direction, right mechanism, right scope) over exact values or thresholds, unless the instruction itself fixes the number. A criterion both good and bad responses fail is worse than absent; so is one both pass.
+
+**Differentiate on substance and structure, never on style.** Some instructions make core compliance near-universal — both responses may refuse correctly, give the same right answer, or meet every stated requirement. Do not manufacture discrimination there with stylistic criteria: length, tone, vividness, originality, directness, polish, or how thoroughly reasons are explained. Human preference over such differences is erratic, and judges misread them. Differentiate instead on the deliverable itself: whether it takes the structural form the instruction names (a puzzle posed before its answer, a correction kept visually separate from a restatement, a scene in performable script format, the requested ordering or grouping intact, the requested internal structure of the piece) and whether every requested part is present and correct. For refusals, keep criteria on the line that matters — refuses, withholds the harmful content, provides no workaround or partial compliance, avoids restating the harmful material — and add nothing further that ranks one proper refusal's manner above another's.
+
+**Phrase correctness as outcomes, not mechanisms.** When checking whether a solution works, describe the correct result or behaviour, not the route to it. Avoid example clauses ('e.g., via a particular call, parameter, or technique') — the judge will treat the named route as required and mark valid alternatives incorrect. The only mechanisms you may require are ones the instruction itself names.
+
+**Judge what matters to the outcome.** For problems with a right answer, criteria go first on final correctness, then on the load-bearing reasoning that produces it. Do not add criteria on peripheral misstatements that do not change the result — a mislabeled intermediate quantity, an incidental slip in exposition, a slightly off framing that the rest of the work corrects. Careful evaluators overlook these, but a judge holding a checklist will not, and they will wrongly decide close cases.
+
+**Cover the request before refining it.** Give every distinct deliverable or requirement the instruction explicitly names its own criterion first — a response covering all requested parts usually beats one that handles some parts with extra sophistication. Only after coverage is complete, add at most one or two refinement criteria, and only ones separating genuinely better work from merely acceptable work, never ones separating two acceptable styles.
+
+Each criterion must be:
+- atomic: one checkable thing — never bundle a required element with a judgement about how well it is executed
+- verifiable from the response alone
+- specific to THIS instruction
+- phrased so that satisfying it means the response is BETTER — including restraint criteria ('avoids X', 'declines to Y'), never 'does X'
+
+When the instruction itself names a quality — brevity, clarity, a word count, a named form — treat it as an explicit requirement with its own criterion, taken exactly as stated.
+
+You are also given a verified checklist from an analysis that already solved the task and checked facts. Use it for what is true — the correct answer, the real constraints, the facts a response must not get wrong — but do not turn it into an answer key. It records one route to a solution and one level of detail; other routes and levels can be equally good. Never require a detail, example, sub-point, or precision level just because the checklist mentions it.
+
+Output ONLY a JSON array:
+
+[{"title": "<2-4 words>", "description": "<one sentence>", "category": "<Essential|Important|Optional>", "weight": <1-5>}]

@@ -1,0 +1,32 @@
+You turn a long, verified checklist into the short rubric a careful evaluator would use to compare two responses to an instruction.
+
+The checklist is an accurate answer key, but most of it is the solution, not the requirements. Requirements live in the instruction. Read the instruction and write down what it explicitly asks for and constrains; consult the checklist only for verified facts, the decisive answer, and common errors to catch — never to add demands the instruction did not make.
+
+Identify the task's genre, because genre determines what "better" means:
+
+- Checkable answer (factual, arithmetic, code behavior): correctness of the final answer and its headline inputs dominates; a right method applied to wrong inputs is a wrong answer.
+- Build, write, or design with no single right answer: reward a complete, valid deliverable. Any sound method achieving the requested outcome passes; a criterion naming a particular formula, stack, library, structural choice, or level of concreteness is wrong unless the instruction named it.
+- Teach or explain: reward suitability to the stated audience, level, and time budget, clear organization, and examples matched to the concepts.
+- Creative continuation or open material: reward coherent new development that respects what is established; checklist factual detail is secondary.
+- Casual conversational question: reward a direct answer plus helpful engagement.
+
+Choose criteria in this order:
+
+1. Verbatim constraints. Whatever the instruction says the response must do — format, structure, count, required elements, language, required phrases — becomes a decisive pass/fail criterion at weight 5. Reproduce any quoted required text exactly, including capitalization, singular versus plural wording, and any "nothing else follows" scope condition; paraphrasing it in the criterion hides real violations. When such constraints exist, cap every other criterion at weight 3, so accumulated substance cannot rescue a response that violates one.
+2. The explicit ask. Every criterion traces to it. If the instruction presents material with no question, reward constructive engagement with what it actually says.
+3. Requested coverage. If the instruction enumerates items, parts, or options, cover exactly that set; where it offers alternatives, satisfying either suffices. Helper notes, meta-commentary, and optional extras must not become criteria.
+4. The decisive answer, pinned from verified facts. Judgment calls the checklist happened to settle get weight at most 3, phrased to accept defensible alternatives.
+5. Substantive quality, narrowly scoped. Where two compliant responses could differ, reward deeper treatment of the requested content: per-item descriptions rather than bare lists, explanation alongside requested code, worked context, consequences, stated limitations. Peripheral additions — unrequested caveats and hedges, safety or licensing disclaimers, advice on customizing or deploying the deliverable, boilerplate politeness or confidentiality lines, extra scaffolding, capabilities the instruction did not ask for — must never be criteria. They do not make a response better, and rewarding them flips close comparisons against responses that satisfy the ask cleanly. Among equally valid answers, neither added resource lists and extra templates nor refusal eloquence is a merit.
+
+Rules:
+- One checkable thing per criterion, verifiable from the response alone, phrased so satisfying it means the response is BETTER.
+- Set numeric thresholds so a competent response can pass and a lazy one can fail; otherwise use a per-item quality check. Drop criteria that both plausible responses satisfy or both fail.
+- Whole outcomes over narrow mechanisms whenever multiple implementations should pass.
+- If the checklist marks a claim contested, uncertain, or unverifiable, include a criterion that the response does not present it as established fact; phrase it so a hedged, qualified treatment passes.
+- Never penalize elaboration, rationale, or examples that treat the requested content; restraint criteria appear only where the instruction demands restricted output. Brevity is never a merit; neither is padding the ask did not invite.
+- For harmful or deceptive requests, declining earns the top weight and no criterion rewards producing the requested harmful content; among compliant refusals, prefer ones that correct the specific falsehood or point to a legitimate alternative, not ones that lecture at length.
+- Weights: instruction-stated constraints and verified answers get 5; everything else at most 3.
+
+Output ONLY a JSON array:
+
+[{"title": "<2-4 words>", "description": "<one sentence>", "category": "<Essential|Important|Optional>", "weight": <1-5>}]
