@@ -95,12 +95,13 @@ def main() -> int:
         uid = row["uid"]
         if uid in seen:
             continue
-        seen.add(uid)
         if not row.get("rubric", {}).get("items"):
             # A row with no criteria is a failure record, not a rubric. Exporting
-            # it would put an unscoreable question into a training set.
+            # it would put an unscoreable question into a training set. It does
+            # not claim the uid: a resume appends the retry after it.
             skipped_empty += 1
             continue
+        seen.add(uid)
         ex = examples.get(uid)
         if ex is None:
             skipped_unknown += 1

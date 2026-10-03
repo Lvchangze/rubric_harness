@@ -43,6 +43,7 @@ single, declared direction is the point rather than a detail.
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import re
 import sys
@@ -2162,7 +2163,11 @@ class AgenticGenerator(RubricGenerator):
 
     async def contrast_only(self, example: Example, rubric: Rubric) -> Rubric:
         """Run just the contrastive stage on a rubric produced by another generator."""
-        return await self._stage_contrast(_Run(example=example), rubric)
+        return (await self._contrast_run(example, rubric))[0]
+
+    async def _contrast_run(self, example: Example, rubric: Rubric) -> tuple[Rubric, _Run]:
+        run = _Run(example=example)
+        return await self._stage_contrast(run, rubric), run
 
     async def _stage_contrast(self, run: _Run, rubric: Rubric) -> Rubric:
         """Test candidate criteria against simulated good and tempting-but-worse responses.
@@ -2448,6 +2453,75 @@ class AgenticToolsGenerator(AgenticGenerator):
                 "identical to `agentic` and must not be reported as a tools result",
                 self.name,
             )
+
+
+@register
+class AgenticToolsContrast2Generator(AgenticGenerator):
+    """The contrastive stage with ``keep_upstream``, run on finished ``agentic-tools`` rubrics.
+
+    The upstream is read from ``base_path`` (an ``agentic-tools`` rubrics jsonl)
+    rather than re-run: a re-run re-draws every call that failed the first time
+    and so changes most upstreams, while this way each output differs from the
+    delivered ``agentic-tools`` rubric by the final stage only. A question the
+    stage cannot improve keeps that rubric, marked ``contrast_applied: False``.
+    """
+
+    name = "agentic-tools-contrast2"
+
+    def __init__(self, engine: LLMEngine | None = None, *, base_path: str | Path = "", **kwargs: Any) -> None:
+        kwargs["enable_tools"] = False
+        kwargs["contrast_final"] = True
+        super().__init__(engine=engine, **kwargs)
+        if self.config.contrast_keep_upstream <= 0:
+            self.config = replace(self.config, contrast_keep_upstream=2)
+        self._base: dict[str, dict[str, Any]] = {}
+        if base_path:
+            with open(base_path, encoding="utf-8") as fh:
+                for line in fh:
+                    if not line.strip():
+                        continue
+                    row = json.loads(line)
+                    rubric = row.get("rubric") or {}
+                    if row.get("uid") and rubric.get("items"):
+                        self._base.setdefault(row["uid"], rubric)
+        logger.info("%s: %d base rubrics from %s; keeps %d upstream criteria in %s",
+                    self.name, len(self._base), base_path, self.config.contrast_keep_upstream,
+                    sorted(self.config.contrast_keep_upstream_domains) or "no domain")
+
+    async def generate(self, example: Example) -> GenerationResult:
+        started = time.perf_counter()
+        raw = self._base.get(example.uid)
+        if raw is None:
+            return GenerationResult(uid=example.uid, source=self.name, rubric=Rubric(),
+                                    error="no agentic-tools rubric to start from",
+                                    wall_seconds=time.perf_counter() - started)
+        base = Rubric.from_dict(raw)
+        out, run = await self._contrast_run(example, base)
+        applied = "pre_final" in out.meta
+        if not applied:
+            failed = next((s for s in run.stages if s.get("stage") == "contrast" and not s.get("ok")), None)
+            reason = str((failed or {}).get("error") or "")
+            # An endpoint failure must come back empty and with an error, so the
+            # dead-endpoint guard counts it and a resume retries it; kept as a
+            # fallback row it would look finished. ": None" means every attempt
+            # returned only reasoning, a property of the question, not the endpoint.
+            if reason.startswith("RuntimeError: LLM call failed") and not reason.endswith(": None"):
+                return GenerationResult(uid=example.uid, source=self.name, rubric=Rubric(),
+                                        error=f"contrast stage call failed: {reason}"[:400],
+                                        trace={"stages": run.stages}, n_llm_calls=run.n_calls,
+                                        wall_seconds=time.perf_counter() - started)
+        meta = dict(base.meta)
+        if applied:
+            meta.update({k: v for k, v in out.meta.items() if k not in ("pre_final", "stages_run", "stages_failed")})
+        meta["stages_run"] = list(base.meta.get("stages_run") or []) + list(run.stages_run)
+        meta["stages_failed"] = list(base.meta.get("stages_failed") or []) + list(run.stages_failed)
+        meta["contrast_applied"] = applied
+        meta["source"] = self.name
+        return GenerationResult(
+            uid=example.uid, source=self.name, rubric=Rubric(items=list(out.items), meta=meta),
+            trace={"stages": run.stages, "n_base_items": len(base)}, n_llm_calls=run.n_calls,
+            wall_seconds=time.perf_counter() - started,
+        )
 
 
 # ---------------------------------------------------------------------------

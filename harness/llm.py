@@ -119,6 +119,19 @@ def _strip_trailing_commas(text: str) -> str:
     return re.sub(r",(\s*[}\]])", r"\1", text)
 
 
+_JSON_ESCAPE_RE = re.compile(r'\\(["\\/bfnrt]|u[0-9a-fA-F]{4})|\\')
+
+
+def _escape_stray_backslashes(text: str) -> str:
+    """Double every backslash that does not start a legal JSON escape.
+
+    Models write LaTeX such as ``\\alpha`` straight into JSON strings. Legal
+    escapes are matched first and kept, so ``\\\\alpha`` stays as it was; ``\\frac``
+    still parses as a form feed, which no rule can tell apart from intent.
+    """
+    return _JSON_ESCAPE_RE.sub(lambda m: m.group(0) if m.group(1) else "\\\\", text)
+
+
 def extract_json(text: str, *, expect: str | None = None) -> Any:
     """Best-effort JSON extraction from a chatty model response.
 
@@ -145,7 +158,8 @@ def extract_json(text: str, *, expect: str | None = None) -> Any:
 
     errors: list[str] = []
     for candidate in candidates:
-        for attempt in (candidate, _strip_trailing_commas(candidate)):
+        stripped = _strip_trailing_commas(candidate)
+        for attempt in (candidate, stripped, _escape_stray_backslashes(stripped)):
             try:
                 value = json.loads(attempt)
             except Exception as exc:  # noqa: BLE001 - collected for diagnostics

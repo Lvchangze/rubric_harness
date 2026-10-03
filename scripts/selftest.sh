@@ -42,6 +42,16 @@ raise SystemExit(1 if bad else 0)
 PY
 
 echo
+echo "== JSON extraction =="
+python - <<'PY' || fail=1
+from harness.llm import extract_json
+assert extract_json(r'{"a": "Use \alpha and \sqrt{2}"}', expect="object") == {"a": r"Use \alpha and \sqrt{2}"}
+assert extract_json(r'{"a": "keep \\beta, caf\u00e9"}', expect="object") == {"a": "keep \\beta, café"}
+assert extract_json('[{"w": 5},]', expect="array") == [{"w": 5}]
+print("  LaTeX backslashes, legal escapes and trailing commas parse as intended")
+PY
+
+echo
 echo "== CLI argument parsing =="
 for s in gen_rubrics build_responses eval_rubrics aggregate_results \
          main_table report_facts case_study check_prompt_fidelity _repair_jsonl \

@@ -126,6 +126,14 @@ def generator_kwargs(source: str, config: RunConfig) -> tuple[str, dict]:
         return "agentic", {"config": replace(config.agentic, **ABLATIONS[source])}
     if source == "agentic":
         return "agentic", {"config": config.agentic}
+    if source == "agentic-tools-contrast2":
+        # Every RaR row has a reference answer, i.e. a checkable one, which is the
+        # case `keep_upstream` was added for, so every domain of the run qualifies.
+        return source, {
+            "config": replace(config.agentic, contrast_keep_upstream=2,
+                              contrast_keep_upstream_domains=tuple(config.sample.domains)),
+            "base_path": str(Path(config.runs_dir) / config.run_name / "rubrics_agentic-tools.jsonl"),
+        }
     return source, {}
 
 
