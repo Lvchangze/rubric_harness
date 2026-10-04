@@ -57,7 +57,17 @@
     "tool_max_parallel": 4,
     "tool_timeout_s": 120.0,
     "sandbox_timeout_s": 20.0,
-    "tool_corpus_limit": 4000
+    "tool_corpus_limit": 4000,
+    "distill_final": false,
+    "distill_min_items": 3,
+    "distill_max_items": 7,
+    "distill_variant": "v1",
+    "distill_system_path": "",
+    "contrast_final": false,
+    "contrast_min_items": 3,
+    "contrast_max_items": 7,
+    "contrast_keep_upstream": 0,
+    "contrast_keep_upstream_domains": []
   },
   "eval": {
     "judge_model": "GLM-5.3-H20-t1",
@@ -92,5 +102,5 @@
     "self_agreement_repeats": 2,
     "bootstrap_iters": 10000
   },
-  "_snapshot_time": "2026-09-30 10:28:55"
+  "_snapshot_time": "2026-10-04 12:35:18"
 }

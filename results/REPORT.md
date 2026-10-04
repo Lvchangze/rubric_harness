@@ -35,7 +35,9 @@
 
 > **更新（2026-09-30）：训练用 rubric 已生成完毕，见 §8.0。**
 > RaR train 上的 `baseline` 与 `agentic-tools` 各 28,720 题，按 `uid` 一一对应，
-> 导出在 `exports/train/`。这一条是交付状态，**不改变上文任何质量结论**：
+> 导出在 `exports/train/`。2026-10-04 又加了第三组 `agentic-tools-contrast2`
+> （`agentic-tools` 加对比阶段，见 [`rubricbench/REPORT.md`](rubricbench/REPORT.md) §12.5–§13），
+> 同样 28,720 题、按 `uid` 对应。这一条是交付状态，**不改变上文任何质量结论**：
 > 那些数字仍是 2026-08-28 的 `pilot_v2` / `rollout_v2`，生成器当时是 GLM-5.2。
 > 训练集用的是 GLM-5.3（`-t1` / `-t2` / `-t2-copy`，同权重）。
 
@@ -1174,18 +1176,22 @@ choice (A)/(C)/(D)"，逐字重复，只换字母。前 4 条正向条目里有"
 
 ## 8. 给后续同学的建议
 
-### 8.0 训练用的 rubric（2026-09-30 已生成）
+### 8.0 训练用的 rubric（2026-09-30 已生成，第三组 2026-10-04）
 
-直接用这四个文件。每行自带题面和参考答案，两臂按 `uid` 配对，配对题的题面和参考答案逐字一致：
+直接用这六个文件。每行自带题面和参考答案，三组按 `uid` 配对，配对题的题面和参考答案逐字一致：
 
 ```
-exports/train/rar_medicine_baseline_glm53.jsonl        16,028
-exports/train/rar_medicine_agentic-tools_glm53.jsonl   16,028
-exports/train/rar_science_baseline_glm53.jsonl         12,692
-exports/train/rar_science_agentic-tools_glm53.jsonl    12,692
+exports/train/rar_medicine_baseline_glm53.jsonl                  16,028
+exports/train/rar_medicine_agentic-tools_glm53.jsonl             16,028
+exports/train/rar_medicine_agentic-tools-contrast2_glm53.jsonl   16,028
+exports/train/rar_science_baseline_glm53.jsonl                   12,692
+exports/train/rar_science_agentic-tools_glm53.jsonl              12,692
+exports/train/rar_science_agentic-tools-contrast2_glm53.jsonl    12,692
 ```
 
-合计 28,720 对。生成器是 GLM-5.3，三个部署名（`GLM-5.3-H20-t1`、`-t2`、`-t2-copy`）是同一份权重在不同机器上，每行的 `generator_model` 记着具体是哪个，可以混在一个训练集里。原始产物在 `runs/train_full_glm53/`，重新导出用 `scripts/export_train_rubrics.py`。这些文件不进 git（单文件 67–99 MB）。
+每组 28,720 题。第三组是在 `agentic-tools` 的 rubric 上补跑对比阶段得到的，只差最后这一步；
+326 题（1.1%）没跑成，保留了 `agentic-tools` 的 rubric。它在 RubricBench dev 上比 `baseline` 高 3.0 个点，
+但不显著，细节见 [`HANDOFF.md`](../HANDOFF.md) §6.0。生成器是 GLM-5.3，三个部署名（`GLM-5.3-H20-t1`、`-t2`、`-t2-copy`）是同一份权重在不同机器上，每行的 `generator_model` 记着具体是哪个，可以混在一个训练集里。原始产物在 `runs/train_full_glm53/`，重新导出用 `scripts/export_train_rubrics.py`。这些文件不进 git（单文件 67–99 MB）。
 
 **覆盖范围小于原始 train。** 生成前按题面去重，并丢掉题面短于 80 字符、参考答案短于 40 字符的行：
 
@@ -1201,7 +1207,7 @@ exports/train/rar_science_agentic-tools_glm53.jsonl    12,692
 
 **评分时按 `|weight|` 计分，方向取 `polarity`。** 两个语料对负权重的约定相反（science 的 pitfall 是“避免了就加分”，medicine 的是“犯了就扣分”），直接拿 weight 的符号做加减会让其中一个域整体反号。见 `docs/01_data_forensics.md` F6 和 §4.2。
 
-有 5 题第一次没进 `agentic-tools`：draft 调用在 HTTP 层成功，但解析不出 criteria，坏结果进了缓存。2026-09-30 用一份独立缓存重生成后补齐，现在两臂题集相同。
+有 5 题第一次没进 `agentic-tools`：draft 调用在 HTTP 层成功，但解析不出 criteria，坏结果进了缓存。2026-09-30 用一份独立缓存重生成后补齐，现在三组题集相同。
 
 ### 8.1 必须先处理的两个数据问题
 

@@ -36,6 +36,7 @@ rubric 质量的证据，与本地代理指标结论不一致，见 §2 表第 1
 > 在流程末尾加了「用模拟回答实测条目」的对比阶段后，最好的变体 `agentic-tools-contrast2`
 > 到 0.6400（Δ +0.0302，p=0.136），是所有生成式方法里最高的，但**不显著**，holdout 仍 0/3。
 > 以 RubricBench 的规模，+3 个点量级的差距本来就测不出：真实差距 +3 个点时，holdout 上的功效约 16%。
+> 这个变体的训练集 rubric 已经生成，作为第三组交付（§6.0），留给 RL 做下游检验。
 > 见 §2 表第 27–30 行、§5c，以及 RubricBench 报告 §13。
 
 **背景三句**：
@@ -497,25 +498,37 @@ AUC 只看排序，best-of-n 受并列和触顶影响，两者背离通常意味
 
 ### 6.0 训练用的 rubric 在哪（**先读这节，它决定你能不能直接开跑**）
 
-**直接用这四个文件**（2026-09-30 生成完毕，每行自带题面和参考答案，拿来即用）：
+**直接用这六个文件**（每行自带题面和参考答案，拿来即用）：
 
 ```
-exports/train/rar_medicine_baseline_glm53.jsonl        16,028 行   对照组：论文式单次合成
-exports/train/rar_medicine_agentic-tools_glm53.jsonl   16,028 行   实验组：本 harness
-exports/train/rar_science_baseline_glm53.jsonl         12,692 行
-exports/train/rar_science_agentic-tools_glm53.jsonl    12,692 行
+exports/train/rar_medicine_baseline_glm53.jsonl                  16,028 行   对照组：论文式单次合成
+exports/train/rar_medicine_agentic-tools_glm53.jsonl             16,028 行   实验组一：本 harness
+exports/train/rar_medicine_agentic-tools-contrast2_glm53.jsonl   16,028 行   实验组二：实验组一 + 对比阶段
+exports/train/rar_science_baseline_glm53.jsonl                   12,692 行
+exports/train/rar_science_agentic-tools_glm53.jsonl              12,692 行
+exports/train/rar_science_agentic-tools-contrast2_glm53.jsonl    12,692 行
 ```
 
-两臂按 `uid` 一一对应，共 28,720 对，配对题的题面和参考答案逐字一致。
+三组按 `uid` 一一对应，共 28,720 题，配对题的题面和参考答案逐字一致（2026-10-04 逐题核对过）。
+前两组 2026-09-30 生成，第三组 2026-10-04 生成。
 
-**交付的 agentic-tools rubric 不含对比阶段**（§5c）。这个阶段在 RubricBench dev 上把 agentic 流程
-提高了 3.35 个点（p=0.065），但没有显著超过 `baseline`，所以没有补到训练集上。要在 RL 里试，
-可以直接在这两份 agentic 文件的 rubric 上补跑（`AgenticGenerator.contrast_only`，不用重跑前段），
-按 RubricBench 上的吞吐约 28 小时。它是在没有参考答案的 RubricBench 上设计和测试的，
-用到有参考答案的训练集之前，先抽一小批看产出。
+**第三组 `agentic-tools-contrast2`** 是在同一题实验组一的 rubric 上补跑对比阶段（§5c），不重跑前段，
+所以它和实验组一只差最后这一步：让模型写一个好回答和两个乍看更好、实际更差的回答，
+把候选条目在三者上实际执行，只留下能分开好坏的，再补上实验组一里权重最高的 2 条。
+RubricBench 上只对 STEM/CODE 补这 2 条；RaR 两个领域都有可核对的参考答案，所以都补。
+平均每题 7.7 条（医学）/ 6.9 条（科学），实验组一是 8.6 / 8.8。
+326 题（1.1%：科学 239、医学 87）对比阶段没跑成，保留了实验组一的 rubric，
+多是模型输出的 JSON 坏了且修复失败（213）或模拟没产出可用回答（89）；
+名单和原因在 `exports/train/agentic-tools-contrast2_glm53_not_contrasted.json`。
+**它在 RubricBench dev 上比 `baseline` 高 3.0 个点，但不显著**（§2 表第 27 行）：
+这一组是给 RL 做下游检验的，不是已经证明更好的 rubric。
+生成命令是 `scripts/gen_rubrics.py --sources agentic-tools-contrast2`，约 13 小时（含一轮重试）。
+每行的 `generator_model` 是对比阶段用的 `GLM-5.3-H20-t2-copy`；补进来的 2 条出自实验组一，同为 GLM-5.3。
+重跑时若有题反复失败，跑完一轮重试后用 `scripts/fill_contrast_fallbacks.py` 给它们补上实验组一的 rubric，
+三组才能保持一一对应。
 有 5 题（医学 3、科学 2）第一次没进 agentic：draft 调用在 HTTP 层成功了，
 但内容解析不出 criteria，坏结果进了缓存，原样重跑只会重放。
-09-30 用一份独立缓存重生成了这 5 题，现在两臂题集相同。
+09-30 用一份独立缓存重生成了这 5 题，现在三组题集相同。
 
 生成器是 GLM-5.3（`GLM-5.3-H20-t1` / `-t2` / `-t2-copy` 三个部署，同权重不同硬件，
 每行的 `generator_model` 字段记着具体是哪个），配置见 `configs/train_full.yaml`，
@@ -559,7 +572,7 @@ glm53 这一份的 baseline 是从零重跑的，正是为了这个。
 它们大多是答案简洁的正常考题（"20 m"、"Parotid cancer."），不是废题——
 这两个下限是从评测抽样器继承来的，对训练集偏严。
 09-28 决定不补，由下游对短答案题另作处理（比如规则打分）。
-如果以后要补，放宽 `configs/train_full.yaml` 的两个下限后两臂都要生成。
+如果以后要补，放宽 `configs/train_full.yaml` 的两个下限后三组都要生成（第三组读第二组的结果，要排在它之后）。
 
 ### 6.1 必须先做的数据清洗（不做的话下游数字不可信）
 
@@ -710,6 +723,7 @@ rubric_harness/
 │  ├─ export_rubrics.py    把 runs/ 的 rubric 导成 exports/ 下的精简 JSONL
 │  ├─ rubricbench_*.py     外部基准：跑/比/核验/切分/生成/离线界/tilt 核验/进化/功效
 │  ├─ build_contrast2.py   在已保存的 contrast 产物上构建 contrast2（不重跑前段）
+│  ├─ fill_contrast_fallbacks.py  训练集 contrast2 里反复失败的题补上 agentic-tools 的 rubric
 │  └─ selftest.sh          极性/统计/prompt 逐字一致性 + REPORT.md 事实断言
 ├─ configs/                pilot.yaml（主实验）、rollout_v2.yaml（未跑完的）、
 │                          train_full.yaml（train 全量，当前模型 GLM-5.3）
